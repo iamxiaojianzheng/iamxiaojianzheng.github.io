@@ -16,7 +16,7 @@
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/2021/01/29/hello-world/</url>
+    <url>/2021/02/01/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
@@ -27,5 +27,18 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>配置免密登录linux</title>
+    <url>/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/</url>
+    <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>切换到git环境下</p>
+<p><strong>没有git环境的，自行百度安装</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 切换目录</span></span><br><span class="line">cd ~/.ssh</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 新建config文件</span></span><br><span class="line">vim config</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 输入以下内容</span></span><br><span class="line">Host centos # 自定义, 用户后续的免密登录</span><br><span class="line">HostName 192.168.117.29 # 服务器地址ip</span><br><span class="line">User root # 登录的用户名</span><br><span class="line">Port 22 # 端口</span><br><span class="line">IdentityFile ~/.ssh/id_rsa # 私钥路径, id_rsa.pub是公钥</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 生成密钥对, 可以自行指定文件名, 默认为id_rsa和id_rsa.pub</span></span><br><span class="line">ssh-keygen</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 发送id_rsa.pub文件至Linux服务器上</span></span><br><span class="line">scp id_rsa.pub 用户名@ip:/home/</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 登录Linux服务器后, 进行操作</span></span><br><span class="line">mv /home/id_rsa.pub ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 修改sshd_config配置, 确保以下几项配置前面没有<span class="comment">#字符</span></span></span><br><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile  .ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 重启ssh服务</span></span><br><span class="line">systemctl restart sshd</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 返回Windows，打开cmd</span></span><br><span class="line">ssh centos # 这里的centos, 对应config文件中Host配置的内容</span><br></pre></td></tr></table></figure>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><p>操作顺序一致，无需安装git环境，不过需要确保ssh和scp命令可执行</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+        <tag>ssh</tag>
+      </tags>
   </entry>
 </search>
