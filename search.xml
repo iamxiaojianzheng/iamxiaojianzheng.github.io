@@ -20,20 +20,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ansible笔记（1）：ansible的基本概念</title>
-    <url>/2021/01/29/ansible%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9Aansible%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</url>
-    <content><![CDATA[<div class="pdfobject-container" data-target="/pdf/a.pdf" data-height="800px"></div>
-
-<blockquote>
-<p>原文地址: <a href="http://www.zsythink.net/archives/2481/">http://www.zsythink.net/archives/2481/</a></p>
-</blockquote>
-]]></content>
-      <tags>
-        <tag>ebook</tag>
-        <tag>Ansible</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>配置免密登录linux</title>
     <url>/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/</url>
     <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>切换到git环境下</p>

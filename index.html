@@ -216,7 +216,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-02-03 16:21:30 / 修改时间：20:55:15" itemprop="dateCreated datePublished" datetime="2021-02-03T16:21:30+08:00">2021-02-03</time>
+              <time title="创建时间：2021-02-03 16:21:30 / 修改时间：21:04:20" itemprop="dateCreated datePublished" datetime="2021-02-03T16:21:30+08:00">2021-02-03</time>
             </span>
 
           
@@ -280,7 +280,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-03 20:55:15" itemprop="dateModified" datetime="2021-02-03T20:55:15+08:00">2021-02-03</time>
+                <time title="修改时间：2021-02-03 21:04:20" itemprop="dateModified" datetime="2021-02-03T21:04:20+08:00">2021-02-03</time>
               </span>
 
           
@@ -345,7 +345,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-03 20:55:15" itemprop="dateModified" datetime="2021-02-03T20:55:15+08:00">2021-02-03</time>
+                <time title="修改时间：2021-02-03 21:04:20" itemprop="dateModified" datetime="2021-02-03T21:04:20+08:00">2021-02-03</time>
               </span>
 
           
@@ -363,75 +363,6 @@
 <p><strong>没有git环境的，自行百度安装</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> 切换目录</span><br>cd ~/.ssh<br><br><span class="hljs-meta">#</span><span class="bash"> 新建config文件</span><br>vim config<br><br><span class="hljs-meta">#</span><span class="bash"> 输入以下内容</span><br>Host centos # 自定义, 用于后续的免密登录<br>HostName 192.168.117.29 # 服务器地址ip<br>User root # 登录的用户名<br>Port 22 # 端口<br>IdentityFile ~/.ssh/id_rsa # 私钥路径, id_rsa.pub是公钥<br><br><span class="hljs-meta">#</span><span class="bash"> 生成密钥对, 可以自行指定文件名, 默认为id_rsa和id_rsa.pub</span><br>ssh-keygen<br><br><span class="hljs-meta">#</span><span class="bash"> 发送id_rsa.pub文件至Linux服务器上</span><br>scp id_rsa.pub 用户名@ip:/home/<br><br><span class="hljs-meta">#</span><span class="bash"> 登录Linux服务器后, 进行操作</span><br>mv /home/id_rsa.pub ~/.ssh/authorized_keys<br><br><span class="hljs-meta">#</span><span class="bash"> 修改sshd_config配置, 确保以下几项配置前面没有<span class="hljs-comment">#字符</span></span><br>vim /etc/ssh/sshd_config<br><br>PubkeyAuthentication yes<br>AuthorizedKeysFile  .ssh/authorized_keys<br><br><span class="hljs-meta">#</span><span class="bash"> 重启ssh服务</span><br>systemctl restart sshd<br><br><span class="hljs-meta">#</span><span class="bash"> 返回Windows，打开cmd</span><br>ssh centos # 这里的centos, 对应config文件中Host配置的内容<br></code></pre></td></tr></table></figure>
 <h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><p>操作顺序一致，无需安装git环境，不过需要确保ssh和scp命令可执行</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/01/29/ansible%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9Aansible%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/01/29/ansible%E7%AC%94%E8%AE%B0%EF%BC%881%EF%BC%89%EF%BC%9Aansible%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">ansible笔记（1）：ansible的基本概念</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2021-01-29 15:59:11" itemprop="dateCreated datePublished" datetime="2021-01-29T15:59:11+08:00">2021-01-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-02-03 20:55:15" itemprop="dateModified" datetime="2021-02-03T20:55:15+08:00">2021-02-03</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <div class="pdfobject-container" data-target="/pdf/a.pdf" data-height="800px"></div>
-
-<blockquote>
-<p>原文地址: <a target="_blank" rel="noopener" href="http://www.zsythink.net/archives/2481/">http://www.zsythink.net/archives/2481/</a></p>
-</blockquote>
 
       
     </div>
@@ -513,14 +444,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
