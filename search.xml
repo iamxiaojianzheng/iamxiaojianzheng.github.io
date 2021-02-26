@@ -115,6 +115,282 @@
       </tags>
   </entry>
   <entry>
+    <title>redis常用命令</title>
+    <url>/2021/02/26/redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<p>下面总结并演示了 Redis 的 常用管理命令、key 操作、字符串、集合、列表、散列类型的操作命令。</p>
+<a id="more"></a>
+
+<h1 id="常用管理命令"><a href="#常用管理命令" class="headerlink" title="常用管理命令"></a>常用管理命令</h1><h2 id="1、启动-Redis"><a href="#1、启动-Redis" class="headerlink" title="1、启动 Redis"></a>1、启动 Redis</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> redis-server [--port 6379]</span><br></code></pre></td></tr></table></figure>
+<p>如果命令参数过多，建议通过配置文件来启动 Redis。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> redis-server [xx/xx/redis.conf]</span><br></code></pre></td></tr></table></figure>
+<p>6379 是 Redis 默认端口号。</p>
+<h2 id="2、连接-Redis"><a href="#2、连接-Redis" class="headerlink" title="2、连接 Redis"></a>2、连接 Redis</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> ./redis-cli [-h 127.0.0.1 -p 6379]</span><br></code></pre></td></tr></table></figure>
+<h2 id="3、停止-Redis"><a href="#3、停止-Redis" class="headerlink" title="3、停止 Redis"></a>3、停止 Redis</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> redis-cli shutdown</span><br><br><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">kill</span> redis-pid</span><br></code></pre></td></tr></table></figure>
+<p>以上两条停止 Redis 命令效果一样。</p>
+<h2 id="4、发送命令"><a href="#4、发送命令" class="headerlink" title="4、发送命令"></a>4、发送命令</h2><p>给 Redis 发送命令有两种方式：</p>
+<h3 id="1、redis-cli-带参数运行，如："><a href="#1、redis-cli-带参数运行，如：" class="headerlink" title="1、redis-cli 带参数运行，如："></a>1、redis-cli 带参数运行，如：</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> redis-cli shutdown</span><br>not connected&gt;<br></code></pre></td></tr></table></figure>
+<p>这样默认是发送到本地的 6379 端口。</p>
+<h3 id="2、redis-cli-不带参数运行，如："><a href="#2、redis-cli-不带参数运行，如：" class="headerlink" title="2、redis-cli 不带参数运行，如："></a>2、redis-cli 不带参数运行，如：</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> ./redis-cli</span><br><br>127.0.0.1:6379&gt; shutdown<br>not connected&gt;<br></code></pre></td></tr></table></figure>
+<h2 id="5、测试连通性"><a href="#5、测试连通性" class="headerlink" title="5、测试连通性"></a>5、测试连通性</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; ping<br>PONG<br></code></pre></td></tr></table></figure>
+<h1 id="key-操作命令"><a href="#key-操作命令" class="headerlink" title="key 操作命令"></a>key 操作命令</h1><h2 id="获取所有键"><a href="#获取所有键" class="headerlink" title="获取所有键"></a>获取所有键</h2><blockquote>
+<p>语法：keys pattern  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; keys *<br>1) &quot;javastack&quot;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><ul>
+<li>表示通配符，表示任意字符，会遍历所有键显示所有的键列表，时间复杂度 O(n)，在生产环境不建议使用。</li>
+</ul>
+</li>
+</ul>
+<h2 id="获取键总数"><a href="#获取键总数" class="headerlink" title="获取键总数"></a>获取键总数</h2><blockquote>
+<p>语法：dbsize  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; dbsize<br>(integer) 6<br></code></pre></td></tr></table></figure>
+<p>获取键总数时不会遍历所有的键，直接获取内部变量，时间复杂度 O(1)。</p>
+<h2 id="查询键是否存在"><a href="#查询键是否存在" class="headerlink" title="查询键是否存在"></a>查询键是否存在</h2><blockquote>
+<p>语法：exists key [key …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; exists javastack java<br>(integer) 2<br></code></pre></td></tr></table></figure>
+<p>查询查询多个，返回存在的个数。</p>
+<h2 id="删除键"><a href="#删除键" class="headerlink" title="删除键"></a>删除键</h2><blockquote>
+<p>语法：del key [key …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; del java javastack<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<p>可以删除多个，返回删除成功的个数。</p>
+<h2 id="查询键类型"><a href="#查询键类型" class="headerlink" title="查询键类型"></a>查询键类型</h2><blockquote>
+<p>语法： type key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; type javastack<br>string<br></code></pre></td></tr></table></figure>
+<h2 id="移动键"><a href="#移动键" class="headerlink" title="移动键"></a>移动键</h2><blockquote>
+<p>语法：move key db  </p>
+</blockquote>
+<p>如把 javastack 移到 2 号数据库。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; move javastack 2<br>(integer) 1<br>127.0.0.1:6379&gt; select 2<br>OK<br>127.0.0.1:6379[2]&gt; keys *<br>1) &quot;javastack&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="查询-key-的生命周期（秒）"><a href="#查询-key-的生命周期（秒）" class="headerlink" title="查询 key 的生命周期（秒）"></a>查询 key 的生命周期（秒）</h2><blockquote>
+<p>秒语法：ttl key<br>毫秒语法：pttl key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; ttl javastack<br>(integer) -1<br></code></pre></td></tr></table></figure>
+<p>-1：永远不过期。</p>
+<h2 id="设置过期时间"><a href="#设置过期时间" class="headerlink" title="设置过期时间"></a>设置过期时间</h2><blockquote>
+<p>秒语法：expire key seconds<br>毫秒语法：pexpire key milliseconds  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; expire javastack 60<br>(integer) 1<br>127.0.0.1:6379[2]&gt; ttl javastack<br>(integer) 55<br></code></pre></td></tr></table></figure>
+<h2 id="设置永不过期"><a href="#设置永不过期" class="headerlink" title="设置永不过期"></a>设置永不过期</h2><blockquote>
+<p>语法：persist key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; persist javastack<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<h2 id="更改键名称"><a href="#更改键名称" class="headerlink" title="更改键名称"></a>更改键名称</h2><blockquote>
+<p>语法：rename key newkey  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; rename javastack javastack123<br>OK<br></code></pre></td></tr></table></figure>
+<h1 id="字符串操作命令"><a href="#字符串操作命令" class="headerlink" title="字符串操作命令"></a>字符串操作命令</h1><p><strong>字符串是 Redis 中最基本的数据类型，单个数据能存储的最大空间是 512M。</strong></p>
+<h2 id="存放键值"><a href="#存放键值" class="headerlink" title="存放键值"></a>存放键值</h2><blockquote>
+<p>语法：set key value [EX seconds] [PX milliseconds] [NX|XX]  </p>
+</blockquote>
+<p>nx：如果 key 不存在则建立，xx：如果 key 存在则修改其值，也可以直接使用 setnx/setex 命令。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; set javastack 666<br>OK<br></code></pre></td></tr></table></figure>
+<h2 id="获取键值"><a href="#获取键值" class="headerlink" title="获取键值"></a>获取键值</h2><blockquote>
+<p>语法：get key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; get javastack<br>&quot;666&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="值递增-递减"><a href="#值递增-递减" class="headerlink" title="值递增 / 递减"></a>值递增 / 递减</h2><p>如果字符串中的值是数字类型的，可以使用 incr 命令每次递增，不是数字类型则报错。</p>
+<blockquote>
+<p>语法：incr key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; incr javastack<br>(integer) 667<br></code></pre></td></tr></table></figure>
+<p>一次想递增 N 用 incrby 命令，如果是浮点型数据可以用 incrbyfloat 命令递增。</p>
+<p>同样，递减使用 decr、decrby 命令。</p>
+<h2 id="批量存放键值"><a href="#批量存放键值" class="headerlink" title="批量存放键值"></a>批量存放键值</h2><blockquote>
+<p>语法：mset key value [key value …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; mset java1 1 java2 2 java3 3<br>OK<br></code></pre></td></tr></table></figure>
+<h2 id="获取获取键值"><a href="#获取获取键值" class="headerlink" title="获取获取键值"></a>获取获取键值</h2><blockquote>
+<p>语法：mget key [key …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; mget java1 java2<br>1) &quot;1&quot;<br>2) &quot;2&quot;<br></code></pre></td></tr></table></figure>
+<p>Redis 接收的是 UTF-8 的编码，如果是中文一个汉字将占 3 位返回。</p>
+<h2 id="获取值长度"><a href="#获取值长度" class="headerlink" title="获取值长度"></a>获取值长度</h2><blockquote>
+<p>语法：strlen key<br>127.0.0.1:6379[2]&gt; strlen javastack (integer) 3  </p>
+</blockquote>
+<h2 id="追加内容"><a href="#追加内容" class="headerlink" title="追加内容"></a>追加内容</h2><blockquote>
+<p>语法：append key value  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379[2]&gt; append javastack hi<br>(integer) 5<br></code></pre></td></tr></table></figure>
+<p>向键值尾部添加，如上命令执行后由 666 变成 666hi</p>
+<h2 id="获取部分字符"><a href="#获取部分字符" class="headerlink" title="获取部分字符"></a>获取部分字符</h2><blockquote>
+<p>语法：getrange key start end  </p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="code"><pre><code class="hljs css">&gt; 127.0.0.1<span class="hljs-selector-pseudo">:6379</span><span class="hljs-selector-attr">[2]</span>&gt; <span class="hljs-selector-tag">getrange</span> <span class="hljs-selector-tag">javastack</span> 0 4<br>&quot;<span class="hljs-selector-tag">javas</span>&quot;<br></code></pre></td></tr></table></figure>
+<h1 id="集合操作命令"><a href="#集合操作命令" class="headerlink" title="集合操作命令"></a>集合操作命令</h1><p>集合类型和列表类型相似，只不过是集合是无序且不可重复的。</p>
+<p>集合</p>
+<h2 id="存储值"><a href="#存储值" class="headerlink" title="存储值"></a>存储值</h2><blockquote>
+<p>语法：sadd key member [member …]  </p>
+</blockquote>
+<figure class="highlight accesslog"><table><tr><td class="code"><pre><code class="hljs accesslog">// 这里有<span class="hljs-number">8</span>个值（<span class="hljs-number">2</span>个java），只存了<span class="hljs-number">7</span>个<br><span class="hljs-number">127.0.0.1:6379</span>&gt; sadd langs java php c++ go ruby python kotlin java<br>(integer) <span class="hljs-number">7</span><br></code></pre></td></tr></table></figure>
+<h2 id="获取元素"><a href="#获取元素" class="headerlink" title="获取元素"></a>获取元素</h2><blockquote>
+<p>获取所有元素语法：smembers key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; smembers langs<br>1) &quot;php&quot;<br>2) &quot;kotlin&quot;<br>3) &quot;c++&quot;<br>4) &quot;go&quot;<br>5) &quot;ruby&quot;<br>6) &quot;python&quot;<br>7) &quot;java&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>随机获取语法：srandmember langs count  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; srandmember langs 3<br>1) &quot;c++&quot;<br>2) &quot;java&quot;<br>3) &quot;php&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="判断集合是否存在元素"><a href="#判断集合是否存在元素" class="headerlink" title="判断集合是否存在元素"></a>判断集合是否存在元素</h2><blockquote>
+<p>语法：sismember key member  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; sismember langs go<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<h2 id="获取集合元素个数"><a href="#获取集合元素个数" class="headerlink" title="获取集合元素个数"></a>获取集合元素个数</h2><blockquote>
+<p>语法：scard key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; scard langs<br>(integer) 7<br></code></pre></td></tr></table></figure>
+<h2 id="删除集合元素"><a href="#删除集合元素" class="headerlink" title="删除集合元素"></a>删除集合元素</h2><blockquote>
+<p>语法：srem key member [member …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; srem langs ruby kotlin<br>(integer) 2<br></code></pre></td></tr></table></figure>
+<h2 id="弹出元素"><a href="#弹出元素" class="headerlink" title="弹出元素"></a>弹出元素</h2><blockquote>
+<p>语法：spop key [count]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; spop langs 2<br>1) &quot;go&quot;<br>2) &quot;java&quot;<br></code></pre></td></tr></table></figure>
+<h1 id="有序集合"><a href="#有序集合" class="headerlink" title="有序集合"></a>有序集合</h1><blockquote>
+<p>和列表的区别：</p>
+<p>1、列表使用链表实现，两头快，中间慢。有序集合是散列表和跳跃表实现的，即使读取中间的元素也比较快。</p>
+<p>2、列表不能调整元素位置，有序集合能。</p>
+<p>3、有序集合比列表更占内存。</p>
+</blockquote>
+<h2 id="存储值-1"><a href="#存储值-1" class="headerlink" title="存储值"></a>存储值</h2><blockquote>
+<p>语法：zadd key [NX|XX] [CH] [INCR] score member [score member …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zadd footCounts 16011 tid 20082 huny 2893 nosy<br>(integer) 3<br></code></pre></td></tr></table></figure>
+<h2 id="获取元素分数"><a href="#获取元素分数" class="headerlink" title="获取元素分数"></a>获取元素分数</h2><blockquote>
+<p>语法：zscore key member  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zscore footCounts tid<br>&quot;16011&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>获取排名范围排名语法：zrange key start stop [WITHSCORES]  </p>
+</blockquote>
+<figure class="highlight awk"><table><tr><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span> 获取所有，没有分数<br><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">6379</span>&gt; zrange footCounts <span class="hljs-number">0</span> -<span class="hljs-number">1</span><br><span class="hljs-number">1</span>) <span class="hljs-string">&quot;nosy&quot;</span><br><span class="hljs-number">2</span>) <span class="hljs-string">&quot;tid&quot;</span><br><span class="hljs-number">3</span>) <span class="hljs-string">&quot;huny&quot;</span><br><br><span class="hljs-regexp">//</span> 获取所有及分数<br><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">6379</span>&gt; zrange footCounts <span class="hljs-number">0</span> -<span class="hljs-number">1</span> Withscores<br><span class="hljs-number">1</span>) <span class="hljs-string">&quot;nosy&quot;</span><br><span class="hljs-number">2</span>) <span class="hljs-string">&quot;2893&quot;</span><br><span class="hljs-number">3</span>) <span class="hljs-string">&quot;tid&quot;</span><br><span class="hljs-number">4</span>) <span class="hljs-string">&quot;16011&quot;</span><br><span class="hljs-number">5</span>) <span class="hljs-string">&quot;huny&quot;</span><br><span class="hljs-number">6</span>) <span class="hljs-string">&quot;20082&quot;</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>获取指定分数范围排名语法：zrangebyscore key min max [WITHSCORES] [LIMIT offset count]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zrangebyscore footCounts 3000 30000 withscores limit 0 1<br>1) &quot;tid&quot;<br>2) &quot;16011&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="增加指定元素分数"><a href="#增加指定元素分数" class="headerlink" title="增加指定元素分数"></a>增加指定元素分数</h2><blockquote>
+<p>语法：zincrby key increment member  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zincrby footCounts 2000 tid<br>&quot;18011&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="获取集合元素个数-1"><a href="#获取集合元素个数-1" class="headerlink" title="获取集合元素个数"></a>获取集合元素个数</h2><blockquote>
+<p>语法：zcard key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zcard footCounts<br>(integer) 3<br></code></pre></td></tr></table></figure>
+<h2 id="获取指定范围分数个数"><a href="#获取指定范围分数个数" class="headerlink" title="获取指定范围分数个数"></a>获取指定范围分数个数</h2><blockquote>
+<p>语法：zcount key min max  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zcount footCounts 2000 20000<br>(integer) 2<br></code></pre></td></tr></table></figure>
+<h2 id="删除指定元素"><a href="#删除指定元素" class="headerlink" title="删除指定元素"></a>删除指定元素</h2><blockquote>
+<p>语法：zrem key member [member …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zrem footCounts huny<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<h2 id="获取元素排名"><a href="#获取元素排名" class="headerlink" title="获取元素排名"></a>获取元素排名</h2><blockquote>
+<p>语法：zrank key member  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; zrank footCounts tid<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<h1 id="列表操作命令"><a href="#列表操作命令" class="headerlink" title="列表操作命令"></a>列表操作命令</h1><p>列表类型是一个有序的字段串列表，内部是使用双向链表实现，所有可以向两端操作元素，获取两端的数据速度快，通过索引到具体的行数比较慢。</p>
+<p>列表类型的元素是有序且可以重复的。</p>
+<h2 id="存储值-2"><a href="#存储值-2" class="headerlink" title="存储值"></a>存储值</h2><blockquote>
+<p>左端存值语法：lpush key value [value …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; lpush list lily sandy<br>(integer) 2<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>右端存值语法：rpush key value [value …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; rpush list tom kitty<br>(integer) 4<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>索引存值语法：lset key index value  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; lset list 3 uto<br>OK<br></code></pre></td></tr></table></figure>
+<h2 id="弹出元素-1"><a href="#弹出元素-1" class="headerlink" title="弹出元素"></a>弹出元素</h2><blockquote>
+<p>左端弹出语法：lpop key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; lpop list<br>&quot;sandy&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>右端弹出语法：rpop key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; rpop list<br>&quot;kitty&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="获取元素个数"><a href="#获取元素个数" class="headerlink" title="获取元素个数"></a>获取元素个数</h2><blockquote>
+<p>语法：llen key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; llen list<br>(integer) 2<br></code></pre></td></tr></table></figure>
+<h2 id="获取列表元素"><a href="#获取列表元素" class="headerlink" title="获取列表元素"></a>获取列表元素</h2><blockquote>
+<p>两边获取语法：lrange key start stop  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; lpush users tom kitty land pony jack maddy<br>(integer) 6<br><br>127.0.0.1:6379&gt; lrange users 0 3<br>1) &quot;maddy&quot;<br>2) &quot;jack&quot;<br>3) &quot;pony&quot;<br>4) &quot;land&quot;<br><br>// 获取所有<br>127.0.0.1:6379&gt; lrange users 0 -1<br>1) &quot;maddy&quot;<br>2) &quot;jack&quot;<br>3) &quot;pony&quot;<br>4) &quot;land&quot;<br>5) &quot;kitty&quot;<br>6) &quot;tom&quot;<br><br>// 从右端索引<br>127.0.0.1:6379&gt; lrange users -3 -1<br>1) &quot;land&quot;<br>2) &quot;kitty&quot;<br>3) &quot;tom&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>索引获取语法：lindex key index  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; lindex list 2<br>&quot;ketty&quot;<br><br>// 从右端获取<br>127.0.0.1:6379&gt; lindex list -5<br>&quot;sady&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h2><blockquote>
+<p>根据值删除语法：lrem key count value  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; lpush userids 111 222 111 222 222 333 222 222<br>(integer) 8<br><br>// count=0 删除所有<br>127.0.0.1:6379&gt; lrem userids 0 111<br>(integer) 2<br><br>// count &gt; 0 从左端删除前count个<br>127.0.0.1:6379&gt; lrem userids 3 222<br>(integer) 3<br><br>// count &lt; 0 从右端删除前count个<br>127.0.0.1:6379&gt; lrem userids -3 222<br>(integer) 2<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>范围删除语法：ltrim key start stop  </p>
+</blockquote>
+<figure class="highlight accesslog"><table><tr><td class="code"><pre><code class="hljs accesslog">// 只保留<span class="hljs-number">2</span>-<span class="hljs-number">4</span>之间的元素<br><span class="hljs-number">127.0.0.1:6379</span>&gt; ltrim list <span class="hljs-number">2</span> <span class="hljs-number">4</span><br>OK<br></code></pre></td></tr></table></figure>
+<h1 id="散列操作命令"><a href="#散列操作命令" class="headerlink" title="散列操作命令"></a>散列操作命令</h1><p>redis 字符串类型键和值是字典结构形式，这里的散列类型其值也可以是字典结构。</p>
+<h2 id="存放键值-1"><a href="#存放键值-1" class="headerlink" title="存放键值"></a>存放键值</h2><blockquote>
+<p>单个语法：hset key field value  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hset user name javastack<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>多个语法：hmset key field value [field value …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hmset user name javastack age 20 address china<br>OK<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>不存在时语法：hsetnx key field value  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hsetnx user tall 180<br>(integer) 0<br></code></pre></td></tr></table></figure>
+<h2 id="获取字段值"><a href="#获取字段值" class="headerlink" title="获取字段值"></a>获取字段值</h2><blockquote>
+<p>单个语法：hget key field  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hget user age<br>&quot;20&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>多个语法：hmget key field [field …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hmget user name age address<br>1) &quot;javastack&quot;<br>2) &quot;20&quot;<br>3) &quot;china&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>获取所有键与值语法：hgetall key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hgetall user<br>1) &quot;name&quot;<br>2) &quot;javastack&quot;<br>3) &quot;age&quot;<br>4) &quot;20&quot;<br>5) &quot;address&quot;<br>6) &quot;china&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>获取所有字段语法：hkeys key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hkeys user<br>1) &quot;name&quot;<br>2) &quot;address&quot;<br>3) &quot;tall&quot;<br>4) &quot;age&quot;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>获取所有值语法：hvals key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hvals user<br>1) &quot;javastack&quot;<br>2) &quot;china&quot;<br>3) &quot;170&quot;<br>4) &quot;20&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="判断字段是否存在"><a href="#判断字段是否存在" class="headerlink" title="判断字段是否存在"></a>判断字段是否存在</h2><blockquote>
+<p>语法：hexists key field  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hexists user address<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<h2 id="获取字段数量"><a href="#获取字段数量" class="headerlink" title="获取字段数量"></a>获取字段数量</h2><blockquote>
+<p>语法：hlen key  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hlen user<br>(integer) 4<br></code></pre></td></tr></table></figure>
+<h2 id="递增-减"><a href="#递增-减" class="headerlink" title="递增 / 减"></a>递增 / 减</h2><blockquote>
+<p>语法：hincrby key field increment  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hincrby user tall -10<br>(integer) 170<br></code></pre></td></tr></table></figure>
+<h2 id="删除字段"><a href="#删除字段" class="headerlink" title="删除字段"></a>删除字段</h2><blockquote>
+<p>语法：hdel key field [field …]  </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">127.0.0.1:6379&gt; hdel user age<br>(integer) 1<br></code></pre></td></tr></table></figure>
+<p>都是基本的命令用法，不会用了就来翻一下吧！</p>
+]]></content>
+      <tags>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>配置免密登录linux</title>
     <url>/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/</url>
     <content><![CDATA[<h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>切换到git环境下</p>
