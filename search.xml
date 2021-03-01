@@ -87,7 +87,7 @@
   <entry>
     <title>Java对Zip格式压缩和解压缩</title>
     <url>/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/</url>
-    <content><![CDATA[<h1 id="ZIP-和-GZIP-的区别"><a href="#ZIP-和-GZIP-的区别" class="headerlink" title="ZIP 和 GZIP 的区别"></a>ZIP 和 GZIP 的区别</h1><p>*<em>gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（</em>.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX/Linux 上经常看到的压缩包后缀都是 <em>.tar.gz 或 <em>.tgz，也就是先用 tar 把多个文件打包成单个文件，再用 gzip 压缩的结果。</em></em></p>
+    <content><![CDATA[<h1 id="ZIP-和-GZIP-的区别"><a href="#ZIP-和-GZIP-的区别" class="headerlink" title="ZIP 和 GZIP 的区别"></a>ZIP 和 GZIP 的区别</h1><p><strong>gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX/Linux 上经常看到的压缩包后缀都是 *.tar.gz 或 *.tgz，也就是先用 tar 把多个文件打包成单个文件，再用 gzip 压缩的结果。</strong></p>
 <p><strong>zip 只是一种数据结构，跟 rar 同类型。zip 是适用于压缩多个文件的格式（相应的工具有 PkZip 和 WinZip 等），因此，zip 文件还要进一步包含文件目录结构的信息，比 gzip 的头信息更多。但需要注意，zip 格式可采用多种压缩算法，我们常见的 zip 文件大多不是用 zlib 的算法压缩的，其压缩数据的格式与 gzip 大不一样。</strong></p>
 <h1 id="相关类与接口"><a href="#相关类与接口" class="headerlink" title="相关类与接口"></a>相关类与接口</h1><p><strong>Checksum</strong>：表示数据校验和的接口, 被类 Adler32 和 CRC32 实现<br><strong>Adler32</strong> ：使用 Alder32 算法来计算 Checksum 数目<br><strong>CRC32</strong>：使用 CRC32 算法来计算 Checksum 数目</p>
 <p><strong>CheckedInputStream</strong>：InputStream 派生类，可得到输入流的校验和 Checksum, 用于校验数据的完整性<br><strong>CheckedOutputStream</strong> ：OutputStream 派生类，可得到输出流的校验 Checksum， 用于校验数据的完整性</p>
