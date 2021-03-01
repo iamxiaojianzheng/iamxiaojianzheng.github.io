@@ -216,7 +216,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-01 11:12:12 / 修改时间：11:25:43" itemprop="dateCreated datePublished" datetime="2021-03-01T11:12:12+08:00">2021-03-01</time>
+              <time title="创建时间：2021-03-01 11:12:12 / 修改时间：11:30:38" itemprop="dateCreated datePublished" datetime="2021-03-01T11:12:12+08:00">2021-03-01</time>
             </span>
 
           
@@ -232,36 +232,14 @@
       
           <h1 id="ZIP-和-GZIP-的区别"><a href="#ZIP-和-GZIP-的区别" class="headerlink" title="ZIP 和 GZIP 的区别"></a>ZIP 和 GZIP 的区别</h1><p><strong>gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX/Linux 上经常看到的压缩包后缀都是 *.tar.gz 或 *.tgz，也就是先用 tar 把多个文件打包成单个文件，再用 gzip 压缩的结果。</strong></p>
 <p><strong>zip 只是一种数据结构，跟 rar 同类型。zip 是适用于压缩多个文件的格式（相应的工具有 PkZip 和 WinZip 等），因此，zip 文件还要进一步包含文件目录结构的信息，比 gzip 的头信息更多。但需要注意，zip 格式可采用多种压缩算法，我们常见的 zip 文件大多不是用 zlib 的算法压缩的，其压缩数据的格式与 gzip 大不一样。</strong></p>
-<h1 id="相关类与接口"><a href="#相关类与接口" class="headerlink" title="相关类与接口"></a>相关类与接口</h1><p><strong>Checksum</strong>：表示数据校验和的接口, 被类 Adler32 和 CRC32 实现<br><strong>Adler32</strong> ：使用 Alder32 算法来计算 Checksum 数目<br><strong>CRC32</strong>：使用 CRC32 算法来计算 Checksum 数目</p>
-<p><strong>CheckedInputStream</strong>：InputStream 派生类，可得到输入流的校验和 Checksum, 用于校验数据的完整性<br><strong>CheckedOutputStream</strong> ：OutputStream 派生类，可得到输出流的校验 Checksum， 用于校验数据的完整性</p>
-<p><strong>DeflaterOutputStream</strong> ：压缩类的基类<br><strong>ZipOutputStream</strong>：DeflaterOutputStream 的一个子类，把数据压缩成 Zip 文件格式<br><strong>GZIPOutputStream</strong> ：DeflaterOutputStream 的一个子类，把数据压缩成 GZip 文件格式</p>
-<p>I<strong>nflaterInputStream</strong>：解压缩类的基类<br><strong>ZipInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据<br><strong>GZIPInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据</p>
-<p><strong>ZipEntry</strong>：表示 ZIP 文件条目<br><strong>ZipFile</strong>：此类用于从 ZIP 文件读取条目</p>
-<h1 id="压缩文件"><a href="#压缩文件" class="headerlink" title="压缩文件"></a>压缩文件</h1><p>下面实例我们使用了 apache 的 zip 工具包（所在包为 ant.jar ），因为 java 类型自带的不支持中文路径，不过两者使用的方式是一样的，只是 apache 压缩工具多了设置编码方式的接口，其他基本上是一样的。另外，如果使用 org.apache.tools.zip.ZipOutputStream 来压缩的话，我们只能使用 org.apache.tools.zip.ZipEntry 来解压，而不能使用 java.util.zip.ZipInputStream 来解压读取了，当然 apache 并未提供 ZipInputStream 类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 压缩</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compress</span><span class="hljs-params">(String srcFilePath, String destFilePath)</span> </span>&#123;<br><br>    File src = <span class="hljs-keyword">new</span> File(srcFilePath);<br>    <span class="hljs-keyword">if</span> (!src.exists()) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(srcFilePath + <span class="hljs-string">&quot;不存在&quot;</span>);<br>    &#125;<br><br>    File zipFile = <span class="hljs-keyword">new</span> File(destFilePath);<br>    <span class="hljs-keyword">try</span> &#123;<br>        FileOutputStream fos = <span class="hljs-keyword">new</span> FileOutputStream(zipFile);<br>        CheckedOutputStream cos = <span class="hljs-keyword">new</span> CheckedOutputStream(fos, <span class="hljs-keyword">new</span> CRC32());<br>        ZipOutputStream zos = <span class="hljs-keyword">new</span> ZipOutputStream(cos);<br>        String baseDir = <span class="hljs-string">&quot;&quot;</span>;<br>        compressbyType(src, zos, baseDir);<br>        zos.close();<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 根据文件类型压缩</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compressbyType</span><span class="hljs-params">(File src, ZipOutputStream zos, String baseDir)</span> </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (!src.exists())<br>        <span class="hljs-keyword">return</span>;<br><br>    System.out.println(<span class="hljs-string">&quot;压缩&quot;</span> + baseDir + src.getName());<br>    <span class="hljs-keyword">if</span> (src.isFile()) &#123;<br>        compressFile(src, zos, baseDir);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (src.isDirectory()) &#123;<br>        compressDir(src, zos, baseDir);<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 压缩文件</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compressFile</span><span class="hljs-params">(File file, ZipOutputStream zos, String baseDir)</span> </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (!file.exists())<br>        <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        BufferedInputStream bis = <span class="hljs-keyword">new</span> BufferedInputStream(<span class="hljs-keyword">new</span> FileInputStream(file));<br>        ZipEntry entry = <span class="hljs-keyword">new</span> ZipEntry(baseDir + file.getName());<br>        zos.putNextEntry(entry);<br><br>        <span class="hljs-keyword">int</span> count;<br>        <span class="hljs-keyword">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[BUFSIZE];<br>        <span class="hljs-keyword">while</span> ((count = bis.read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>            zos.write(buf, <span class="hljs-number">0</span>, count);<br>        &#125;<br><br>        bis.close();<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 压缩文件夹</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compressDir</span><span class="hljs-params">(File dir, ZipOutputStream zos, String baseDir)</span> </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (!dir.exists())<br>        <span class="hljs-keyword">return</span>;<br><br>    File[] files = dir.listFiles();<br>    <span class="hljs-keyword">if</span>(files.length == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            zos.putNextEntry(<span class="hljs-keyword">new</span> ZipEntry(baseDir + dir.getName() + File.separator));<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (File file : files) &#123;<br>        compressbyType(file, zos, baseDir + dir.getName() + File.separator);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>总结步骤：</p>
-<ol>
-<li><p>创建压缩到的文件 File zipFile = <strong>new</strong> File(destFilePath);</p>
-</li>
-<li><p>根据 zipFile 生成 ZipOutputStream 用于写入即将被压缩的文件</p>
-<p> <strong>FileOutputStream fos = new FileOutputStream(zipFile);</strong></p>
-<p> <strong>CheckedOutputStream cos = new CheckedOutputStream(fos, new CRC32());</strong></p>
-<p> <strong>ZipOutputStream zos = new ZipOutputStream(cos);</strong></p>
-</li>
-<li><p>循环遍历源文件，首先需要创建 ZipEntry 用于标记压缩文件中含有的条目</p>
-<p> <strong>ZipEntry entry = new ZipEntry(baseDir + file.getName());</strong></p>
-<p> 然后将条目增加到 ZipOutputStream 中，<strong>zos.putNextEntry(entry);</strong></p>
-<p> 最后再调用要写入条目对应文件的输入流读取文件内容写入到压缩文件中。</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">BufferedInputStream bis = <span class="hljs-keyword">new</span> BufferedInputStream(<span class="hljs-keyword">new</span> FileInputStream(file));<br>ZipEntry entry = <span class="hljs-keyword">new</span> ZipEntry(baseDir + file.getName());<br>zos.putNextEntry(entry);<br><span class="hljs-keyword">int</span> count;<br><span class="hljs-keyword">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_BUFSIZE_];<br><span class="hljs-keyword">while</span> ((count = bis.read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>    zos.write(buf, <span class="hljs-number">0</span>, count);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p> <strong>注意：</strong>如果是空目录<strong>直接</strong> <strong>zos.putNextEntry(new ZipEntry(baseDir +     dir.getName()+ File.<em>separator</em>))</strong> 并不用写入文件内容，<strong>其中最主要的涉及到目录的压缩的，就是这一句话  out.putNextEntry(new ZipEntry(base + “/“)); // 放入一级目录 (防止空目录被丢弃)</strong></p>
-</li>
-</ol>
-<h1 id="解压-zip-文件"><a href="#解压-zip-文件" class="headerlink" title="解压 zip 文件"></a>解压 zip 文件</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 解压缩</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> srcPath 	压缩文件路径</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> dest		解压路径</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">decompress</span><span class="hljs-params">(String srcPath, String dest)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br><br>    File file = <span class="hljs-keyword">new</span> File(srcPath);<br>    <span class="hljs-keyword">if</span> (!file.exists()) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(srcPath + <span class="hljs-string">&quot; 所指文件不存在 &quot;</span>);<br>    &#125;<br><br>    ZipFile zf = <span class="hljs-keyword">new</span> ZipFile(file);<br>    Enumeration entries = zf.getEntries();<br>    ZipEntry entry;<br><br>    <span class="hljs-keyword">while</span> (entries.hasMoreElements()) &#123;<br>        entry = (ZipEntry) entries.nextElement();<br>        System._out_.println(<span class="hljs-string">&quot; 解压 &quot;</span> + entry.getName());<br><br>        <span class="hljs-keyword">if</span> (entry.isDirectory()) &#123;<br><br>            String dirPath = dest + File._separator_ + entry.getName();<br>            File dir = <span class="hljs-keyword">new</span> File(dirPath);<br>            dir.mkdirs();<br><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br><br>            <span class="hljs-comment">// 表示文件</span><br>            File f = <span class="hljs-keyword">new</span> File(dest + File._separator_ + entry.getName());<br>            <span class="hljs-keyword">if</span> (!f.exists()) &#123;<br>                String dirs = FileUtils._getParentPath_(f);<br>                File parentDir = <span class="hljs-keyword">new</span> File(dirs);<br>                parentDir.mkdirs();<br>            &#125;<br><br>            f.createNewFile();<br>            <span class="hljs-comment">// 将压缩文件内容写入到这个文件中</span><br>            InputStream is = zf.getInputStream(entry);<br>            FileOutputStream fos = <span class="hljs-keyword">new</span> FileOutputStream(f);<br>            <span class="hljs-keyword">int</span> count;<br>            <span class="hljs-keyword">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">8192</span>];<br>            <span class="hljs-keyword">while</span> ((count = is.read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>                fos.write(buf, <span class="hljs-number">0</span>, count);<br>            &#125;<br>            is.close();<br>            fos.close();<br>        &#125;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>原文地址 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljdblog/p/5844184.html">https://www.cnblogs.com/ljdblog/p/5844184.html</a></p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -311,7 +289,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
@@ -385,7 +363,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
@@ -457,7 +435,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
@@ -532,7 +510,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
@@ -597,7 +575,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
@@ -669,7 +647,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
@@ -734,7 +712,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-03-01 11:25:43" itemprop="dateModified" datetime="2021-03-01T11:25:43+08:00">2021-03-01</time>
+                <time title="修改时间：2021-03-01 11:30:38" itemprop="dateModified" datetime="2021-03-01T11:30:38+08:00">2021-03-01</time>
               </span>
 
           
