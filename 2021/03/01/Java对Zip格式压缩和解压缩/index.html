@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,14 +15,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-
-  <meta name="description" content="ZIP 和 GZIP 的区别gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX&#x2F;Linux 上经常看到的压缩包后缀都是 *.tar.">
+<meta name="description" content="ZIP 和 GZIP 的区别gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX&#x2F;Linux 上经常看到的压缩包后缀都是 *.tar.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java对Zip格式压缩和解压缩">
 <meta property="og:url" content="https://xiaojianzheng.cn/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/index.html">
@@ -28,7 +30,7 @@
 <meta property="og:description" content="ZIP 和 GZIP 的区别gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX&#x2F;Linux 上经常看到的压缩包后缀都是 *.tar.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-01T03:12:12.000Z">
-<meta property="article:modified_time" content="2021-03-01T03:30:38.655Z">
+<meta property="article:modified_time" content="2021-03-01T03:57:10.924Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="zip">
 <meta property="article:tag" content="java">
@@ -36,10 +38,11 @@
 <meta property="article:tag" content="解压缩">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://xiaojianzheng.cn/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -48,60 +51,69 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>Java对Zip格式压缩和解压缩 | JIAHE</title>
+<title>Java对Zip格式压缩和解压缩 | JIAHE</title>
   
-
-
 
 
 
 
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container">
-    <div class="headband"></div>
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">JIAHE</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
   </div>
 
@@ -114,34 +126,13 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
-
-  </li>
-        <li class="menu-item menu-item-navigation">
-
-    <a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a>
-
-  </li>
-        <li class="menu-item menu-item-ebook">
-
-    <a href="/ebook/" rel="section"><i class="fa fa-book fa-fw"></i>电子书</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>navigation</a></li>
+        <li class="menu-item menu-item-ebook"><a href="/ebook/" rel="section"><i class="fa fa-book fa-fw"></i>ebook</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -152,23 +143,22 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
            placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
 
@@ -176,171 +166,18 @@
   </div>
 
 </div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Java对Zip格式压缩和解压缩
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2021-03-01 11:12:12 / 修改时间：11:30:38" itemprop="dateCreated datePublished" datetime="2021-03-01T11:12:12+08:00">2021-03-01</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h1 id="ZIP-和-GZIP-的区别"><a href="#ZIP-和-GZIP-的区别" class="headerlink" title="ZIP 和 GZIP 的区别"></a>ZIP 和 GZIP 的区别</h1><p><strong>gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX/Linux 上经常看到的压缩包后缀都是 *.tar.gz 或 *.tgz，也就是先用 tar 把多个文件打包成单个文件，再用 gzip 压缩的结果。</strong></p>
-<p><strong>zip 只是一种数据结构，跟 rar 同类型。zip 是适用于压缩多个文件的格式（相应的工具有 PkZip 和 WinZip 等），因此，zip 文件还要进一步包含文件目录结构的信息，比 gzip 的头信息更多。但需要注意，zip 格式可采用多种压缩算法，我们常见的 zip 文件大多不是用 zlib 的算法压缩的，其压缩数据的格式与 gzip 大不一样。</strong></p>
-<a id="more"></a>
-
-<h1 id="相关类与接口"><a href="#相关类与接口" class="headerlink" title="相关类与接口"></a>相关类与接口</h1><p><strong>Checksum</strong>：表示数据校验和的接口, 被类 Adler32 和 CRC32 实现<br><strong>Adler32</strong> ：使用 Alder32 算法来计算 Checksum 数目<br><strong>CRC32</strong>：使用 CRC32 算法来计算 Checksum 数目</p>
-<p><strong>CheckedInputStream</strong>：InputStream 派生类，可得到输入流的校验和 Checksum, 用于校验数据的完整性<br><strong>CheckedOutputStream</strong> ：OutputStream 派生类，可得到输出流的校验 Checksum， 用于校验数据的完整性</p>
-<p><strong>DeflaterOutputStream</strong> ：压缩类的基类<br><strong>ZipOutputStream</strong>：DeflaterOutputStream 的一个子类，把数据压缩成 Zip 文件格式<br><strong>GZIPOutputStream</strong> ：DeflaterOutputStream 的一个子类，把数据压缩成 GZip 文件格式</p>
-<p>I<strong>nflaterInputStream</strong>：解压缩类的基类<br><strong>ZipInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据<br><strong>GZIPInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据</p>
-<p><strong>ZipEntry</strong>：表示 ZIP 文件条目<br><strong>ZipFile</strong>：此类用于从 ZIP 文件读取条目</p>
-<h1 id="压缩文件"><a href="#压缩文件" class="headerlink" title="压缩文件"></a>压缩文件</h1><p>下面实例我们使用了 apache 的 zip 工具包（所在包为 ant.jar ），因为 java 类型自带的不支持中文路径，不过两者使用的方式是一样的，只是 apache 压缩工具多了设置编码方式的接口，其他基本上是一样的。另外，如果使用 org.apache.tools.zip.ZipOutputStream 来压缩的话，我们只能使用 org.apache.tools.zip.ZipEntry 来解压，而不能使用 java.util.zip.ZipInputStream 来解压读取了，当然 apache 并未提供 ZipInputStream 类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 压缩</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compress</span><span class="hljs-params">(String srcFilePath, String destFilePath)</span> </span>&#123;<br><br>    File src = <span class="hljs-keyword">new</span> File(srcFilePath);<br>    <span class="hljs-keyword">if</span> (!src.exists()) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(srcFilePath + <span class="hljs-string">&quot;不存在&quot;</span>);<br>    &#125;<br><br>    File zipFile = <span class="hljs-keyword">new</span> File(destFilePath);<br>    <span class="hljs-keyword">try</span> &#123;<br>        FileOutputStream fos = <span class="hljs-keyword">new</span> FileOutputStream(zipFile);<br>        CheckedOutputStream cos = <span class="hljs-keyword">new</span> CheckedOutputStream(fos, <span class="hljs-keyword">new</span> CRC32());<br>        ZipOutputStream zos = <span class="hljs-keyword">new</span> ZipOutputStream(cos);<br>        String baseDir = <span class="hljs-string">&quot;&quot;</span>;<br>        compressbyType(src, zos, baseDir);<br>        zos.close();<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 根据文件类型压缩</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compressbyType</span><span class="hljs-params">(File src, ZipOutputStream zos, String baseDir)</span> </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (!src.exists())<br>        <span class="hljs-keyword">return</span>;<br><br>    System.out.println(<span class="hljs-string">&quot;压缩&quot;</span> + baseDir + src.getName());<br>    <span class="hljs-keyword">if</span> (src.isFile()) &#123;<br>        compressFile(src, zos, baseDir);<br>    &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (src.isDirectory()) &#123;<br>        compressDir(src, zos, baseDir);<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 压缩文件</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compressFile</span><span class="hljs-params">(File file, ZipOutputStream zos, String baseDir)</span> </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (!file.exists())<br>        <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        BufferedInputStream bis = <span class="hljs-keyword">new</span> BufferedInputStream(<span class="hljs-keyword">new</span> FileInputStream(file));<br>        ZipEntry entry = <span class="hljs-keyword">new</span> ZipEntry(baseDir + file.getName());<br>        zos.putNextEntry(entry);<br><br>        <span class="hljs-keyword">int</span> count;<br>        <span class="hljs-keyword">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[BUFSIZE];<br>        <span class="hljs-keyword">while</span> ((count = bis.read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>            zos.write(buf, <span class="hljs-number">0</span>, count);<br>        &#125;<br><br>        bis.close();<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 压缩文件夹</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compressDir</span><span class="hljs-params">(File dir, ZipOutputStream zos, String baseDir)</span> </span>&#123;<br><br>    <span class="hljs-keyword">if</span> (!dir.exists())<br>        <span class="hljs-keyword">return</span>;<br><br>    File[] files = dir.listFiles();<br>    <span class="hljs-keyword">if</span>(files.length == <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            zos.putNextEntry(<span class="hljs-keyword">new</span> ZipEntry(baseDir + dir.getName() + File.separator));<br>        &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">for</span> (File file : files) &#123;<br>        compressbyType(file, zos, baseDir + dir.getName() + File.separator);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-<p>总结步骤：</p>
-<ol>
-<li><p>创建压缩到的文件 File zipFile = <strong>new</strong> File(destFilePath);</p>
-</li>
-<li><p>根据 zipFile 生成 ZipOutputStream 用于写入即将被压缩的文件</p>
-<p> <strong>FileOutputStream fos = new FileOutputStream(zipFile);</strong></p>
-<p> <strong>CheckedOutputStream cos = new CheckedOutputStream(fos, new CRC32());</strong></p>
-<p> <strong>ZipOutputStream zos = new ZipOutputStream(cos);</strong></p>
-</li>
-<li><p>循环遍历源文件，首先需要创建 ZipEntry 用于标记压缩文件中含有的条目</p>
-<p> <strong>ZipEntry entry = new ZipEntry(baseDir + file.getName());</strong></p>
-<p> 然后将条目增加到 ZipOutputStream 中，<strong>zos.putNextEntry(entry);</strong></p>
-<p> 最后再调用要写入条目对应文件的输入流读取文件内容写入到压缩文件中。</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java">BufferedInputStream bis = <span class="hljs-keyword">new</span> BufferedInputStream(<span class="hljs-keyword">new</span> FileInputStream(file));<br>ZipEntry entry = <span class="hljs-keyword">new</span> ZipEntry(baseDir + file.getName());<br>zos.putNextEntry(entry);<br><span class="hljs-keyword">int</span> count;<br><span class="hljs-keyword">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[_BUFSIZE_];<br><span class="hljs-keyword">while</span> ((count = bis.read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>    zos.write(buf, <span class="hljs-number">0</span>, count);<br>&#125;<br></code></pre></td></tr></table></figure>
-<p> <strong>注意：</strong>如果是空目录<strong>直接</strong> <strong>zos.putNextEntry(new ZipEntry(baseDir +     dir.getName()+ File.<em>separator</em>))</strong> 并不用写入文件内容，<strong>其中最主要的涉及到目录的压缩的，就是这一句话  out.putNextEntry(new ZipEntry(base + “/“)); // 放入一级目录 (防止空目录被丢弃)</strong></p>
-</li>
-</ol>
-<h1 id="解压-zip-文件"><a href="#解压-zip-文件" class="headerlink" title="解压 zip 文件"></a>解压 zip 文件</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 解压缩</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> srcPath 	压缩文件路径</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> dest		解压路径</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">decompress</span><span class="hljs-params">(String srcPath, String dest)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br><br>    File file = <span class="hljs-keyword">new</span> File(srcPath);<br>    <span class="hljs-keyword">if</span> (!file.exists()) &#123;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(srcPath + <span class="hljs-string">&quot; 所指文件不存在 &quot;</span>);<br>    &#125;<br><br>    ZipFile zf = <span class="hljs-keyword">new</span> ZipFile(file);<br>    Enumeration entries = zf.getEntries();<br>    ZipEntry entry;<br><br>    <span class="hljs-keyword">while</span> (entries.hasMoreElements()) &#123;<br>        entry = (ZipEntry) entries.nextElement();<br>        System._out_.println(<span class="hljs-string">&quot; 解压 &quot;</span> + entry.getName());<br><br>        <span class="hljs-keyword">if</span> (entry.isDirectory()) &#123;<br><br>            String dirPath = dest + File._separator_ + entry.getName();<br>            File dir = <span class="hljs-keyword">new</span> File(dirPath);<br>            dir.mkdirs();<br><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br><br>            <span class="hljs-comment">// 表示文件</span><br>            File f = <span class="hljs-keyword">new</span> File(dest + File._separator_ + entry.getName());<br>            <span class="hljs-keyword">if</span> (!f.exists()) &#123;<br>                String dirs = FileUtils._getParentPath_(f);<br>                File parentDir = <span class="hljs-keyword">new</span> File(dirs);<br>                parentDir.mkdirs();<br>            &#125;<br><br>            f.createNewFile();<br>            <span class="hljs-comment">// 将压缩文件内容写入到这个文件中</span><br>            InputStream is = zf.getInputStream(entry);<br>            FileOutputStream fos = <span class="hljs-keyword">new</span> FileOutputStream(f);<br>            <span class="hljs-keyword">int</span> count;<br>            <span class="hljs-keyword">byte</span>[] buf = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">8192</span>];<br>            <span class="hljs-keyword">while</span> ((count = is.read(buf)) != -<span class="hljs-number">1</span>) &#123;<br>                fos.write(buf, <span class="hljs-number">0</span>, count);<br>            &#125;<br>            is.close();<br>            fos.close();<br>        &#125;<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>原文地址 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljdblog/p/5844184.html">https://www.cnblogs.com/ljdblog/p/5844184.html</a></p>
-</blockquote>
-
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/zip/" rel="tag"># zip</a>
-              <a href="/tags/java/" rel="tag"># java</a>
-              <a href="/tags/%E5%8E%8B%E7%BC%A9/" rel="tag"># 压缩</a>
-              <a href="/tags/%E8%A7%A3%E5%8E%8B%E7%BC%A9/" rel="tag"># 解压缩</a>
-          </div>
-
         
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" rel="prev" title="mysqlpump使用说明">
-      <i class="fa fa-chevron-left"></i> mysqlpump使用说明
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
-    
-  </article>
   
-  
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
   <aside class="sidebar">
-    <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
         </li>
@@ -349,18 +186,19 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZIP-%E5%92%8C-GZIP-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">ZIP 和 GZIP 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">相关类与接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">压缩文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B-zip-%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">解压 zip 文件</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZIP-%E5%92%8C-GZIP-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.</span> <span class="nav-text">ZIP 和 GZIP 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E7%B1%BB%E4%B8%8E%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">相关类与接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">压缩文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%8E%8B-zip-%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">解压 zip 文件</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">JIAHE</p>
   <div class="site-description" itemprop="description">Collection & Reuse</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
@@ -377,78 +215,146 @@
       </div>
   </nav>
 </div>
-  <div class="cc-license motion-element" itemprop="license">
+  <div class="cc-license site-overview-item animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
 
+        </div>
       </div>
-
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
-      </div>
-    </main>
+    </header>
 
-    <footer class="footer">
-      <div class="footer-inner">
-        
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-        
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-<div class="copyright">
+
+    <div class="main-inner post posts-expand">
+
+
   
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java对Zip格式压缩和解压缩
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-01 11:12:12 / 修改时间：11:57:10" itemprop="dateCreated datePublished" datetime="2021-03-01T11:12:12+08:00">2021-03-01</time>
+    </span>
+
+  
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
-  </div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="ZIP-和-GZIP-的区别"><a href="#ZIP-和-GZIP-的区别" class="headerlink" title="ZIP 和 GZIP 的区别"></a>ZIP 和 GZIP 的区别</h1><p><strong>gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX/Linux 上经常看到的压缩包后缀都是 *.tar.gz 或 *.tgz，也就是先用 tar 把多个文件打包成单个文件，再用 gzip 压缩的结果。</strong></p>
+<p><strong>zip 只是一种数据结构，跟 rar 同类型。zip 是适用于压缩多个文件的格式（相应的工具有 PkZip 和 WinZip 等），因此，zip 文件还要进一步包含文件目录结构的信息，比 gzip 的头信息更多。但需要注意，zip 格式可采用多种压缩算法，我们常见的 zip 文件大多不是用 zlib 的算法压缩的，其压缩数据的格式与 gzip 大不一样。</strong></p>
+<span id="more"></span>
+
+<h1 id="相关类与接口"><a href="#相关类与接口" class="headerlink" title="相关类与接口"></a>相关类与接口</h1><p><strong>Checksum</strong>：表示数据校验和的接口, 被类 Adler32 和 CRC32 实现<br><strong>Adler32</strong> ：使用 Alder32 算法来计算 Checksum 数目<br><strong>CRC32</strong>：使用 CRC32 算法来计算 Checksum 数目</p>
+<p><strong>CheckedInputStream</strong>：InputStream 派生类，可得到输入流的校验和 Checksum, 用于校验数据的完整性<br><strong>CheckedOutputStream</strong> ：OutputStream 派生类，可得到输出流的校验 Checksum， 用于校验数据的完整性</p>
+<p><strong>DeflaterOutputStream</strong> ：压缩类的基类<br><strong>ZipOutputStream</strong>：DeflaterOutputStream 的一个子类，把数据压缩成 Zip 文件格式<br><strong>GZIPOutputStream</strong> ：DeflaterOutputStream 的一个子类，把数据压缩成 GZip 文件格式</p>
+<p>I<strong>nflaterInputStream</strong>：解压缩类的基类<br><strong>ZipInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据<br><strong>GZIPInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据</p>
+<p><strong>ZipEntry</strong>：表示 ZIP 文件条目<br><strong>ZipFile</strong>：此类用于从 ZIP 文件读取条目</p>
+<h1 id="压缩文件"><a href="#压缩文件" class="headerlink" title="压缩文件"></a>压缩文件</h1><p>下面实例我们使用了 apache 的 zip 工具包（所在包为 ant.jar ），因为 java 类型自带的不支持中文路径，不过两者使用的方式是一样的，只是 apache 压缩工具多了设置编码方式的接口，其他基本上是一样的。另外，如果使用 org.apache.tools.zip.ZipOutputStream 来压缩的话，我们只能使用 org.apache.tools.zip.ZipEntry 来解压，而不能使用 java.util.zip.ZipInputStream 来解压读取了，当然 apache 并未提供 ZipInputStream 类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compress</span><span class="params">(String srcFilePath, String destFilePath)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    File src = <span class="keyword">new</span> File(srcFilePath);</span><br><span class="line">    <span class="keyword">if</span> (!src.exists()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(srcFilePath + <span class="string">&quot;不存在&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    File zipFile = <span class="keyword">new</span> File(destFilePath);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(zipFile);</span><br><span class="line">        CheckedOutputStream cos = <span class="keyword">new</span> CheckedOutputStream(fos, <span class="keyword">new</span> CRC32());</span><br><span class="line">        ZipOutputStream zos = <span class="keyword">new</span> ZipOutputStream(cos);</span><br><span class="line">        String baseDir = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        compressbyType(src, zos, baseDir);</span><br><span class="line">        zos.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据文件类型压缩</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressbyType</span><span class="params">(File src, ZipOutputStream zos, String baseDir)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!src.exists())</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;压缩&quot;</span> + baseDir + src.getName());</span><br><span class="line">    <span class="keyword">if</span> (src.isFile()) &#123;</span><br><span class="line">        compressFile(src, zos, baseDir);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (src.isDirectory()) &#123;</span><br><span class="line">        compressDir(src, zos, baseDir);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩文件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressFile</span><span class="params">(File file, ZipOutputStream zos, String baseDir)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!file.exists())</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        ZipEntry entry = <span class="keyword">new</span> ZipEntry(baseDir + file.getName());</span><br><span class="line">        zos.putNextEntry(entry);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> count;</span><br><span class="line">        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFSIZE];</span><br><span class="line">        <span class="keyword">while</span> ((count = bis.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            zos.write(buf, <span class="number">0</span>, count);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bis.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩文件夹</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressDir</span><span class="params">(File dir, ZipOutputStream zos, String baseDir)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!dir.exists())</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    File[] files = dir.listFiles();</span><br><span class="line">    <span class="keyword">if</span>(files.length == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            zos.putNextEntry(<span class="keyword">new</span> ZipEntry(baseDir + dir.getName() + File.separator));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">        compressbyType(file, zos, baseDir + dir.getName() + File.separator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>总结步骤：</p>
+<ol>
+<li><p>创建压缩到的文件 File zipFile = <strong>new</strong> File(destFilePath);</p>
+</li>
+<li><p>根据 zipFile 生成 ZipOutputStream 用于写入即将被压缩的文件</p>
+<p> <strong>FileOutputStream fos = new FileOutputStream(zipFile);</strong></p>
+<p> <strong>CheckedOutputStream cos = new CheckedOutputStream(fos, new CRC32());</strong></p>
+<p> <strong>ZipOutputStream zos = new ZipOutputStream(cos);</strong></p>
+</li>
+<li><p>循环遍历源文件，首先需要创建 ZipEntry 用于标记压缩文件中含有的条目</p>
+<p> <strong>ZipEntry entry = new ZipEntry(baseDir + file.getName());</strong></p>
+<p> 然后将条目增加到 ZipOutputStream 中，<strong>zos.putNextEntry(entry);</strong></p>
+<p> 最后再调用要写入条目对应文件的输入流读取文件内容写入到压缩文件中。</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">ZipEntry entry = <span class="keyword">new</span> ZipEntry(baseDir + file.getName());</span><br><span class="line">zos.putNextEntry(entry);</span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line"><span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[_BUFSIZE_];</span><br><span class="line"><span class="keyword">while</span> ((count = bis.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">    zos.write(buf, <span class="number">0</span>, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> <strong>注意：</strong>如果是空目录<strong>直接</strong> <strong>zos.putNextEntry(new ZipEntry(baseDir +     dir.getName()+ File.<em>separator</em>))</strong> 并不用写入文件内容，<strong>其中最主要的涉及到目录的压缩的，就是这一句话  out.putNextEntry(new ZipEntry(base + “/“)); // 放入一级目录 (防止空目录被丢弃)</strong></p>
+</li>
+</ol>
+<h1 id="解压-zip-文件"><a href="#解压-zip-文件" class="headerlink" title="解压 zip 文件"></a>解压 zip 文件</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解压缩</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> srcPath 	压缩文件路径</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dest		解压路径</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">decompress</span><span class="params">(String srcPath, String dest)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    File file = <span class="keyword">new</span> File(srcPath);</span><br><span class="line">    <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(srcPath + <span class="string">&quot; 所指文件不存在 &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ZipFile zf = <span class="keyword">new</span> ZipFile(file);</span><br><span class="line">    Enumeration entries = zf.getEntries();</span><br><span class="line">    ZipEntry entry;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (entries.hasMoreElements()) &#123;</span><br><span class="line">        entry = (ZipEntry) entries.nextElement();</span><br><span class="line">        System._out_.println(<span class="string">&quot; 解压 &quot;</span> + entry.getName());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (entry.isDirectory()) &#123;</span><br><span class="line"></span><br><span class="line">            String dirPath = dest + File._separator_ + entry.getName();</span><br><span class="line">            File dir = <span class="keyword">new</span> File(dirPath);</span><br><span class="line">            dir.mkdirs();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 表示文件</span></span><br><span class="line">            File f = <span class="keyword">new</span> File(dest + File._separator_ + entry.getName());</span><br><span class="line">            <span class="keyword">if</span> (!f.exists()) &#123;</span><br><span class="line">                String dirs = FileUtils._getParentPath_(f);</span><br><span class="line">                File parentDir = <span class="keyword">new</span> File(dirs);</span><br><span class="line">                parentDir.mkdirs();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            f.createNewFile();</span><br><span class="line">            <span class="comment">// 将压缩文件内容写入到这个文件中</span></span><br><span class="line">            InputStream is = zf.getInputStream(entry);</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(f);</span><br><span class="line">            <span class="keyword">int</span> count;</span><br><span class="line">            <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>];</span><br><span class="line">            <span class="keyword">while</span> ((count = is.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                fos.write(buf, <span class="number">0</span>, count);</span><br><span class="line">            &#125;</span><br><span class="line">            is.close();</span><br><span class="line">            fos.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>原文地址 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/ljdblog/p/5844184.html">https://www.cnblogs.com/ljdblog/p/5844184.html</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/zip/" rel="tag"># zip</a>
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/%E5%8E%8B%E7%BC%A9/" rel="tag"># 压缩</a>
+              <a href="/tags/%E8%A7%A3%E5%8E%8B%E7%BC%A9/" rel="tag"># 解压缩</a>
+          </div>
 
         
 
-
-
-
-
-
-
-
-      </div>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" rel="prev" title="mysqlpump使用说明">
+                  <i class="fa fa-chevron-left"></i> mysqlpump使用说明
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
     </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
+  </article>
+</div>
 
 
 
@@ -457,36 +363,89 @@
 
 
 <script>
-document.querySelectorAll('.pdfobject-container').forEach(element => {
-  let url = element.dataset.target;
-  let pdfOpenParams = {
-    navpanes : 0,
-    toolbar  : 0,
-    statusbar: 0,
-    pagemode : 'thumbs',
-    view     : 'FitH'
-  };
-  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
-  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
-
-  if (NexT.utils.supportsPDFs()) {
-    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
-  } else {
-    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
-});
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+<script>
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
 </script>
 
 
 
-
   
 
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
   <script>
       window.addEventListener('load', () => {
-      quicklink({
+      quicklink.listen({
         timeout : 3000,
         priority: true,
         ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/',]
