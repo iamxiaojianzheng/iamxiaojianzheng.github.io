@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Git学习区</title>
+    <url>/2021/03/13/Git%E5%AD%A6%E4%B9%A0%E5%8C%BA/</url>
+    <content><![CDATA[<blockquote>
+<p>不做文章，仅用于收藏Git相关的优质文章，方便随时查看</p>
+</blockquote>
+<p><strong>Git基础教程 - 江南一点雨，基础的不能再基础了，想提高的无需阅览</strong><br><a href="http://www.javaboy.org/2019/0612/git-install.html">Git 概述</a><br><a href="http://www.javaboy.org/2019/0612/git-basic.html">Git 基本操作</a><br><a href="http://www.javaboy.org/2019/0612/git-delete.html">Git 中的各种后悔药</a><br><a href="http://www.javaboy.org/2019/0612/git-branch.html">Git 分支管理</a><br><a href="http://www.javaboy.org/2019/0612/git-remote.html">Git 关联远程仓库</a><br><a href="http://www.javaboy.org/2019/0612/git-stash.html">Git 工作区储藏</a><br><a href="http://www.javaboy.org/2019/0612/git-tag.html">Git 标签管理</a><br><a href="http://www.javaboy.org/2019/0612/git-resources.html">Git 学习资料</a></p>
+]]></content>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>IdeaVim插件使用技巧</title>
     <url>/2021/02/07/IdeaVim%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/</url>
     <content><![CDATA[<p>在 IDEA Intellij小技巧和插件 一文中简单介绍了一下IdeaVim插件。在这里详细总结一下这个插件在日常编程中的一些常用小技巧。</p>
@@ -789,6 +801,11 @@
 <p>转载：<a href="https://developer.ibm.com/zh/articles/j-lo-taskschedule/">https://developer.ibm.com/zh/articles/j-lo-taskschedule/</a></p>
 </blockquote>
 ]]></content>
+      <tags>
+        <tag>任务调度</tag>
+        <tag>Java</tag>
+        <tag>Quartz</tag>
+      </tags>
   </entry>
   <entry>
     <title>透彻的掌握Spring中@transactional的使用</title>
@@ -861,6 +878,10 @@
 <p>转载：<a href="https://developer.ibm.com/zh/languages/java/articles/j-master-spring-transactional-use/">https://developer.ibm.com/zh/languages/java/articles/j-master-spring-transactional-use/</a></p>
 </blockquote>
 ]]></content>
+      <tags>
+        <tag>Spring</tag>
+        <tag>事务</tag>
+      </tags>
   </entry>
   <entry>
     <title>反向代理和正向代理的区别</title>
