@@ -620,6 +620,128 @@
       </tags>
   </entry>
   <entry>
+    <title>几种任务调度的Java实现方法与比较</title>
+    <url>/2021/03/12/%E5%87%A0%E7%A7%8D%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9A%84Java%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E4%B8%8E%E6%AF%94%E8%BE%83/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>任务调度是指基于给定时间点，给定时间间隔或者给定执行次数自动执行任务。本文由浅入深介绍四种任务调度的 Java 实现：</p>
+<ul>
+<li>Timer</li>
+<li>ScheduledExecutor</li>
+<li>开源工具包 Quartz</li>
+<li>开源工具包 JCronTab</li>
+</ul>
+<p>此外，为结合实现复杂的任务调度，本文还将介绍 Calendar 的一些使用方法。</p>
+<span id="more"></span>
+
+<h1 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h1><p>相信大家都已经非常熟悉 java.util.Timer 了，它是最简单的一种实现任务调度的方法，下面给出一个具体的例子：</p>
+<h2 id="清单-1-使用-Timer-进行任务调度"><a href="#清单-1-使用-Timer-进行任务调度" class="headerlink" title="清单 1. 使用 Timer 进行任务调度"></a>清单 1. 使用 Timer 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimerTest</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String jobName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimerTest</span><span class="params">(String jobName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.jobName = jobName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;execute &quot;</span> + jobName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Timer timer = <span class="keyword">new</span> Timer();</span><br><span class="line">        <span class="keyword">long</span> delay1 = <span class="number">1</span> * <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">long</span> period1 = <span class="number">1000</span>;</span><br><span class="line">        <span class="comment">// 从现在开始 1 秒钟之后，每隔 1 秒钟执行一次 job1</span></span><br><span class="line">        timer.schedule(<span class="keyword">new</span> TimerTest(<span class="string">&quot;job1&quot;</span>), delay1, period1);</span><br><span class="line">        <span class="keyword">long</span> delay2 = <span class="number">2</span> * <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">long</span> period2 = <span class="number">2000</span>;</span><br><span class="line">        <span class="comment">// 从现在开始 2 秒钟之后，每隔 2 秒钟执行一次 job2</span></span><br><span class="line">        timer.schedule(<span class="keyword">new</span> TimerTest(<span class="string">&quot;job2&quot;</span>), delay2, period2);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> Output:</span><br><span class="line"> execute job1</span><br><span class="line"> execute job1</span><br><span class="line"> execute job2</span><br><span class="line"> execute job1</span><br><span class="line"> execute job1</span><br><span class="line"> execute job2</span><br></pre></td></tr></table></figure>
+
+<p>使用 Timer 实现任务调度的核心类是 Timer 和 TimerTask。其中 Timer 负责设定 TimerTask 的起始与间隔执行时间。使用者只需要创建一个 TimerTask 的继承类，实现自己的 run 方法，然后将其丢给 Timer 去执行即可。</p>
+<p>Timer 的设计核心是一个 TaskList 和一个 TaskThread。Timer 将接收到的任务丢到自己的 TaskList 中，TaskList 按照 Task 的最初执行时间进行排序。TimerThread 在创建 Timer 时会启动成为一个守护线程。</p>
+<p>这个线程会轮询所有任务，找到一个最近要执行的任务，然后休眠，当到达最近要执行任务的开始时间点，TimerThread 被唤醒并执行该任务。之后 TimerThread 更新最近一个要执行的任务，继续休眠。</p>
+<p>Timer 的优点在于简单易用，但由于所有任务都是由同一个线程来调度，因此所有任务都是串行执行的，同一时间只能有一个任务在执行，前一个任务的延迟或异常都将会影响到之后的任务。</p>
+<h1 id="ScheduledExecutor"><a href="#ScheduledExecutor" class="headerlink" title="ScheduledExecutor"></a>ScheduledExecutor</h1><p>鉴于 Timer 的上述缺陷，Java 5 推出了基于线程池设计的 ScheduledExecutor。其设计思想是，每一个被调度的任务都会由线程池中一个线程去执行，因此任务是并发执行的，相互之间不会受到干扰。需要注意的是，只有当任务的执行时间到来时，ScheduedExecutor 才会真正启动一个线程，其余时间 ScheduledExecutor 都是在轮询任务的状态。</p>
+<h2 id="清单-2-使用-ScheduledExecutor-进行任务调度"><a href="#清单-2-使用-ScheduledExecutor-进行任务调度" class="headerlink" title="清单 2. 使用 ScheduledExecutor 进行任务调度"></a>清单 2. 使用 ScheduledExecutor 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledExecutorTest</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String jobName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScheduledExecutorTest</span><span class="params">(String jobName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.jobName = jobName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;execute &quot;</span> + jobName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ScheduledExecutorService service = Executors.newScheduledThreadPool(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> initialDelay1 = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">long</span> period1 = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从现在开始1秒钟之后，每隔1秒钟执行一次job1</span></span><br><span class="line">        service.scheduleAtFixedRate(</span><br><span class="line">                <span class="keyword">new</span> ScheduledExecutorTest(<span class="string">&quot;job1&quot;</span>), initialDelay1,</span><br><span class="line">                period1, TimeUnit.SECONDS);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> initialDelay2 = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">long</span> delay2 = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从现在开始2秒钟之后，每隔2秒钟执行一次job2</span></span><br><span class="line">        service.scheduleWithFixedDelay(</span><br><span class="line">                <span class="keyword">new</span> ScheduledExecutorTest(<span class="string">&quot;job2&quot;</span>), initialDelay2,</span><br><span class="line">                delay2, TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output:</span><br><span class="line">execute job1</span><br><span class="line">execute job1</span><br><span class="line">execute job2</span><br><span class="line">execute job1</span><br><span class="line">execute job1</span><br><span class="line">execute job2</span><br></pre></td></tr></table></figure>
+
+<p>清单 2 展示了 ScheduledExecutorService 中两种最常用的调度方法 ScheduleAtFixedRate 和 ScheduleWithFixedDelay。ScheduleAtFixedRate 每次执行时间为上一次任务开始起向后推一个时间间隔，即每次执行时间为 :initialDelay, initialDelay+period, initialDelay+2<em>period,…；ScheduleWithFixedDelay 每次执行时间为上一次任务结束起向后推一个时间间隔，即每次执行时间为：initialDelay, initialDelay+executeTime+delay, initialDelay+2</em>executeTime+2*delay。</p>
+<p>由此可见，ScheduleAtFixedRate 是基于固定时间间隔进行任务调度，ScheduleWithFixedDelay 取决于每次任务执行的时间长短，是基于不固定时间间隔进行任务调度。</p>
+<h2 id="用-ScheduledExecutor-和-Calendar-实现复杂任务调度"><a href="#用-ScheduledExecutor-和-Calendar-实现复杂任务调度" class="headerlink" title="用 ScheduledExecutor 和 Calendar 实现复杂任务调度"></a>用 ScheduledExecutor 和 Calendar 实现复杂任务调度</h2><p>Timer 和 ScheduledExecutor 都仅能提供基于开始时间与重复间隔的任务调度，不能胜任更加复杂的调度需求。比如，设置每星期二的 16:38:10 执行任务。该功能使用 Timer 和 ScheduledExecutor 都不能直接实现，但我们可以借助 Calendar 间接实现该功能。</p>
+<h2 id="清单-3-使用-ScheduledExcetuor-和-Calendar-进行任务调度"><a href="#清单-3-使用-ScheduledExcetuor-和-Calendar-进行任务调度" class="headerlink" title="清单 3. 使用 ScheduledExcetuor 和 Calendar 进行任务调度"></a>清单 3. 使用 ScheduledExcetuor 和 Calendar 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledExceutorTest2</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String jobName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScheduledExceutorTest2</span><span class="params">(String jobName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.jobName = jobName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Date = &quot;</span>+<span class="keyword">new</span> Date()+<span class="string">&quot;, execute &quot;</span> + jobName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算从当前时间currentDate开始，满足条件dayOfWeek, hourOfDay,</span></span><br><span class="line"><span class="comment">     * minuteOfHour, secondOfMinite的最近时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Calendar <span class="title">getEarliestDate</span><span class="params">(Calendar currentDate, <span class="keyword">int</span> dayOfWeek,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> hourOfDay, <span class="keyword">int</span> minuteOfHour, <span class="keyword">int</span> secondOfMinite)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//计算当前时间的WEEK_OF_YEAR,DAY_OF_WEEK, HOUR_OF_DAY, MINUTE,SECOND等各个字段值</span></span><br><span class="line">        <span class="keyword">int</span> currentWeekOfYear = currentDate.get(Calendar.WEEK_OF_YEAR);</span><br><span class="line">        <span class="keyword">int</span> currentDayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK);</span><br><span class="line">        <span class="keyword">int</span> currentHour = currentDate.get(Calendar.HOUR_OF_DAY);</span><br><span class="line">        <span class="keyword">int</span> currentMinute = currentDate.get(Calendar.MINUTE);</span><br><span class="line">        <span class="keyword">int</span> currentSecond = currentDate.get(Calendar.SECOND);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果输入条件中的dayOfWeek小于当前日期的dayOfWeek,则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">        <span class="keyword">boolean</span> weekLater = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (dayOfWeek &lt; currentDayOfWeek) &#123;</span><br><span class="line">            weekLater = <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dayOfWeek == currentDayOfWeek) &#123;</span><br><span class="line">            <span class="comment">//当输入条件与当前日期的dayOfWeek相等时，如果输入条件中的</span></span><br><span class="line">            <span class="comment">//hourOfDay小于当前日期的</span></span><br><span class="line">            <span class="comment">//currentHour，则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">            <span class="keyword">if</span> (hourOfDay &lt; currentHour) &#123;</span><br><span class="line">                weekLater = <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (hourOfDay == currentHour) &#123;</span><br><span class="line">                 <span class="comment">//当输入条件与当前日期的dayOfWeek, hourOfDay相等时，</span></span><br><span class="line">                 <span class="comment">//如果输入条件中的minuteOfHour小于当前日期的</span></span><br><span class="line">                <span class="comment">//currentMinute，则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">                <span class="keyword">if</span> (minuteOfHour &lt; currentMinute) &#123;</span><br><span class="line">                    weekLater = <span class="keyword">true</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (minuteOfHour == currentSecond) &#123;</span><br><span class="line">                     <span class="comment">//当输入条件与当前日期的dayOfWeek, hourOfDay，</span></span><br><span class="line">                     <span class="comment">//minuteOfHour相等时，如果输入条件中的</span></span><br><span class="line">                    <span class="comment">//secondOfMinite小于当前日期的currentSecond，</span></span><br><span class="line">                    <span class="comment">//则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">                    <span class="keyword">if</span> (secondOfMinite &lt; currentSecond) &#123;</span><br><span class="line">                        weekLater = <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (weekLater) &#123;</span><br><span class="line">            <span class="comment">//设置当前日期中的WEEK_OF_YEAR为当前周推迟一周</span></span><br><span class="line">            currentDate.set(Calendar.WEEK_OF_YEAR, currentWeekOfYear + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 设置当前日期中的DAY_OF_WEEK,HOUR_OF_DAY,MINUTE,SECOND为输入条件中的值。</span></span><br><span class="line">        currentDate.set(Calendar.DAY_OF_WEEK, dayOfWeek);</span><br><span class="line">        currentDate.set(Calendar.HOUR_OF_DAY, hourOfDay);</span><br><span class="line">        currentDate.set(Calendar.MINUTE, minuteOfHour);</span><br><span class="line">        currentDate.set(Calendar.SECOND, secondOfMinite);</span><br><span class="line">        <span class="keyword">return</span> currentDate;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        ScheduledExceutorTest2 test = <span class="keyword">new</span> ScheduledExceutorTest2(<span class="string">&quot;job1&quot;</span>);</span><br><span class="line">        <span class="comment">//获取当前时间</span></span><br><span class="line">        Calendar currentDate = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">long</span> currentDateLong = currentDate.getTime().getTime();</span><br><span class="line">        System.out.println(<span class="string">&quot;Current Date = &quot;</span> + currentDate.getTime().toString());</span><br><span class="line">        <span class="comment">//计算满足条件的最近一次执行时间</span></span><br><span class="line">        Calendar earliestDate = test</span><br><span class="line">                .getEarliestDate(currentDate, <span class="number">3</span>, <span class="number">16</span>, <span class="number">38</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="keyword">long</span> earliestDateLong = earliestDate.getTime().getTime();</span><br><span class="line">        System.out.println(<span class="string">&quot;Earliest Date = &quot;</span></span><br><span class="line">                + earliestDate.getTime().toString());</span><br><span class="line">        <span class="comment">//计算从当前时间到最近一次执行时间的时间间隔</span></span><br><span class="line">        <span class="keyword">long</span> delay = earliestDateLong - currentDateLong;</span><br><span class="line">        <span class="comment">//计算执行周期为一星期</span></span><br><span class="line">        <span class="keyword">long</span> period = <span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>;</span><br><span class="line">        ScheduledExecutorService service = Executors.newScheduledThreadPool(<span class="number">10</span>);</span><br><span class="line">        <span class="comment">//从现在开始delay毫秒之后，每隔一星期执行一次job1</span></span><br><span class="line">        service.scheduleAtFixedRate(test, delay, period,</span><br><span class="line">                TimeUnit.MILLISECONDS);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output:</span><br><span class="line">Current Date = Wed Feb <span class="number">02</span> <span class="number">17</span>:<span class="number">32</span>:<span class="number">01</span> CST <span class="number">2011</span></span><br><span class="line">Earliest Date = Tue Feb <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">10</span> CST <span class="number">2011</span></span><br><span class="line">Date = Tue Feb <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">10</span> CST <span class="number">2011</span>, execute job1</span><br><span class="line">Date = Tue Feb <span class="number">15</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">10</span> CST <span class="number">2011</span>, execute job1</span><br></pre></td></tr></table></figure>
+
+<p>清单 3 实现了每星期二 16:38:10 调度任务的功能。其核心在于根据当前时间推算出最近一个星期二 16:38:10 的绝对时间，然后计算与当前时间的时间差，作为调用 ScheduledExceutor 函数的参数。</p>
+<p>计算最近时间要用到 java.util.calendar 的功能。首先需要解释 calendar 的一些设计思想。Calendar 有以下几种唯一标识一个日期的组合方式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">YEAR + MONTH + DAY_OF_MONTH</span><br><span class="line">YEAR + MONTH + WEEK_OF_MONTH + DAY_OF_WEEK</span><br><span class="line">YEAR + MONTH + DAY_OF_WEEK_IN_MONTH + DAY_OF_WEEK</span><br><span class="line">YEAR + DAY_OF_YEAR</span><br><span class="line">YEAR + DAY_OF_WEEK + WEEK_OF_YEAR</span><br></pre></td></tr></table></figure>
+
+<p>上述组合分别加上 HOUR_OF_DAY + MINUTE + SECOND 即为一个完整的时间标识。本例采用了最后一种组合方式。输入为 DAY_OF_WEEK, HOUR_OF_DAY, MINUTE, SECOND 以及当前日期 , 输出为一个满足 DAY_OF_WEEK, HOUR_OF_DAY, MINUTE, SECOND 并且距离当前日期最近的未来日期。计算的原则是从输入的 DAY_OF_WEEK 开始比较，如果小于当前日期的 DAY_OF_WEEK，则需要向 WEEK_OF_YEAR 进一， 即将当前日期中的 WEEK_OF_YEAR 加一并覆盖旧值；如果等于当前的 DAY_OF_WEEK, 则继续比较 HOUR_OF_DAY；如果大于当前的 DAY_OF_WEEK，则直接调用 java.util.calenda 的 calendar.set(field, value) 函数将当前日期的 DAY_OF_WEEK, HOUR_OF_DAY, MINUTE, SECOND 赋值为输入值，依次类推，直到比较至 SECOND。读者可以根据输入需求选择不同的组合方式来计算最近执行时间。</p>
+<p>可以看出，用上述方法实现该任务调度比较麻烦，这就需要一个更加完善的任务调度框架来解决这些复杂的调度问题。幸运的是，开源工具包 Quartz 与 JCronTab 提供了这方面强大的支持。</p>
+<h1 id="Quartz"><a href="#Quartz" class="headerlink" title="Quartz"></a>Quartz</h1><p>Quartz 可以满足更多更复杂的调度需求，首先让我们看看如何用 Quartz 实现每星期二 16:38 的调度安排：</p>
+<h2 id="清单-4-使用-Quartz-进行任务调度"><a href="#清单-4-使用-Quartz-进行任务调度" class="headerlink" title="清单 4. 使用 Quartz 进行任务调度"></a>清单 4. 使用 Quartz 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.quartz.Job;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobDetail;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionContext;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionException;</span><br><span class="line"><span class="keyword">import</span> org.quartz.Scheduler;</span><br><span class="line"><span class="keyword">import</span> org.quartz.SchedulerFactory;</span><br><span class="line"><span class="keyword">import</span> org.quartz.Trigger;</span><br><span class="line"><span class="keyword">import</span> org.quartz.helpers.TriggerUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuartzTest</span> <span class="keyword">implements</span> <span class="title">Job</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="comment">//该方法实现需要执行的任务</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext arg0)</span> <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Generating report - &quot;</span></span><br><span class="line">                + arg0.getJobDetail().getFullName() + <span class="string">&quot;, type =&quot;</span></span><br><span class="line">                + arg0.getJobDetail().getJobDataMap().get(<span class="string">&quot;type&quot;</span>));</span><br><span class="line">        System.out.println(<span class="keyword">new</span> Date().toString());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 创建一个Scheduler</span></span><br><span class="line">            SchedulerFactory schedFact =</span><br><span class="line">            <span class="keyword">new</span> org.quartz.impl.StdSchedulerFactory();</span><br><span class="line">            Scheduler sched = schedFact.getScheduler();</span><br><span class="line">            sched.start();</span><br><span class="line">            <span class="comment">// 创建一个JobDetail，指明name，groupname，以及具体的Job类名，</span></span><br><span class="line">            <span class="comment">//该Job负责定义需要执行任务</span></span><br><span class="line">            JobDetail jobDetail = <span class="keyword">new</span> JobDetail(<span class="string">&quot;myJob&quot;</span>, <span class="string">&quot;myJobGroup&quot;</span>,</span><br><span class="line">                    QuartzTest.class);</span><br><span class="line">            jobDetail.getJobDataMap().put(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;FULL&quot;</span>);</span><br><span class="line">            <span class="comment">// 创建一个每周触发的Trigger，指明星期几几点几分执行</span></span><br><span class="line">            Trigger trigger = TriggerUtils.makeWeeklyTrigger(<span class="number">3</span>, <span class="number">16</span>, <span class="number">38</span>);</span><br><span class="line">            trigger.setGroup(<span class="string">&quot;myTriggerGroup&quot;</span>);</span><br><span class="line">            <span class="comment">// 从当前时间的下一秒开始执行</span></span><br><span class="line">            trigger.setStartTime(TriggerUtils.getEvenSecondDate(<span class="keyword">new</span> Date()));</span><br><span class="line">            <span class="comment">// 指明trigger的name</span></span><br><span class="line">            trigger.setName(<span class="string">&quot;myTrigger&quot;</span>);</span><br><span class="line">            <span class="comment">// 用scheduler将JobDetail与Trigger关联在一起，开始调度任务</span></span><br><span class="line">            sched.scheduleJob(jobDetail, trigger);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output:</span><br><span class="line">Generating report - myJobGroup.myJob, type =FULL</span><br><span class="line">Tue Feb <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">00</span> CST <span class="number">2011</span></span><br><span class="line">Generating report - myJobGroup.myJob, type =FULL</span><br><span class="line">Tue Feb <span class="number">15</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">00</span> CST <span class="number">2011</span></span><br></pre></td></tr></table></figure>
+
+<p>清单 4 非常简洁地实现了一个上述复杂的任务调度。Quartz 设计的核心类包括 Scheduler, Job 以及 Trigger。其中，Job 负责定义需要执行的任务，Trigger 负责设置调度策略，Scheduler 将二者组装在一起，并触发任务开始执行。</p>
+<h1 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h1><p>使用者只需要创建一个 Job 的继承类，实现 execute 方法。JobDetail 负责封装 Job 以及 Job 的属性，并将其提供给 Scheduler 作为参数。每次 Scheduler 执行任务时，首先会创建一个 Job 的实例，然后再调用 execute 方法执行。Quartz 没有为 Job 设计带参数的构造函数，因此需要通过额外的 JobDataMap 来存储 Job 的属性。JobDataMap 可以存储任意数量的 Key，Value 对，例如：</p>
+<h2 id="清单-5-为-JobDataMap-赋值"><a href="#清单-5-为-JobDataMap-赋值" class="headerlink" title="清单 5. 为 JobDataMap 赋值"></a>清单 5. 为 JobDataMap 赋值</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">jobDetail.getJobDataMap().put(<span class="string">&quot;myDescription&quot;</span>, <span class="string">&quot;my job description&quot;</span>);</span><br><span class="line"> jobDetail.getJobDataMap().put(<span class="string">&quot;myValue&quot;</span>, <span class="number">1998</span>);</span><br><span class="line"> ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"> list.add(<span class="string">&quot;item1&quot;</span>);</span><br><span class="line"> jobDetail.getJobDataMap().put(<span class="string">&quot;myArray&quot;</span>, list);</span><br></pre></td></tr></table></figure>
+
+<p>JobDataMap 中的数据可以通过下面的方式获取：</p>
+<h2 id="清单-6-获取-JobDataMap-的值"><a href="#清单-6-获取-JobDataMap-的值" class="headerlink" title="清单 6. 获取 JobDataMap 的值"></a>清单 6. 获取 JobDataMap 的值</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JobDataMapTest</span> <span class="keyword">implements</span> <span class="title">Job</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext context)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        <span class="comment">//从context中获取instName，groupName以及dataMap</span></span><br><span class="line">        String instName = context.getJobDetail().getName();</span><br><span class="line">        String groupName = context.getJobDetail().getGroup();</span><br><span class="line">        JobDataMap dataMap = context.getJobDetail().getJobDataMap();</span><br><span class="line">        <span class="comment">//从dataMap中获取myDescription，myValue以及myArray</span></span><br><span class="line">        String myDescription = dataMap.getString(<span class="string">&quot;myDescription&quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> myValue = dataMap.getInt(<span class="string">&quot;myValue&quot;</span>);</span><br><span class="line">        ArrayList&lt;String&gt; myArray = (ArrayListlt;Strin&gt;) dataMap.get(<span class="string">&quot;myArray&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;</span></span><br><span class="line"><span class="string">                Instance =&quot;</span> + instName + <span class="string">&quot;, group = &quot;</span> + groupName</span><br><span class="line">                + <span class="string">&quot;, description = &quot;</span> + myDescription + <span class="string">&quot;, value =&quot;</span> + myValue</span><br><span class="line">                + <span class="string">&quot;, array item0 = &quot;</span> + myArray.get(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output：</span><br><span class="line">Instance = myJob, group = myJobGroup,</span><br><span class="line">description = my job description,</span><br><span class="line">value =<span class="number">1998</span>, array item0 = item1</span><br></pre></td></tr></table></figure>
+
+<h1 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h1><p>Trigger 的作用是设置调度策略。Quartz 设计了多种类型的 Trigger，其中最常用的是 SimpleTrigger 和 CronTrigger。</p>
+<p>SimpleTrigger 适用于在某一特定的时间执行一次，或者在某一特定的时间以某一特定时间间隔执行多次。</p>
+<p>上述功能决定了 SimpleTrigger 的参数包括 start-time, end-time, repeat count, 以及 repeat interval。</p>
+<p>Repeat count 取值为大于或等于零的整数，或者常量 SimpleTrigger.REPEAT_INDEFINITELY。</p>
+<p>Repeat interval 取值为大于或等于零的长整型。当 Repeat interval 取值为零并且 Repeat count 取值大于零时，将会触发任务的并发执行。</p>
+<p>Start-time 与 dnd-time 取值为 java.util.Date。当同时指定 end-time 与 repeat count 时，优先考虑 end-time。一般地，可以指定 end-time，并设定 repeat count 为 REPEAT_INDEFINITELY。</p>
+<p>以下是 SimpleTrigger 的构造方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SimpleTrigger</span><span class="params">(String name,</span></span></span><br><span class="line"><span class="function"><span class="params">                     String group,</span></span></span><br><span class="line"><span class="function"><span class="params">                     Date startTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                     Date endTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">int</span> repeatCount,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">long</span> repeatInterval)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>举例如下：创建一个立即执行且仅执行一次的 SimpleTrigger：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SimpleTrigger trigger = <span class="keyword">new</span> SimpleTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>, <span class="keyword">new</span> Date(), <span class="keyword">null</span>, <span class="number">0</span>, <span class="number">0L</span>);</span><br></pre></td></tr></table></figure>
+
+<p>创建一个半分钟后开始执行，且每隔一分钟重复执行一次的 SimpleTrigger：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SimpleTrigger trigger = <span class="keyword">new</span> SimpleTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>, </span><br><span class="line">                                          <span class="keyword">new</span> Date(System.currentTimeMillis()+<span class="number">30</span>*<span class="number">1000</span>), <span class="keyword">null</span>, <span class="number">0</span>, <span class="number">60</span>*<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>创建一个 2011 年 6 月 1 日 8:30 开始执行，每隔一小时执行一次，一共执行一百次，一天之后截止的 SimpleTrigger：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Calendar calendar = Calendar.getInstance();</span><br><span class="line">calendar.set(Calendar.YEAR, <span class="number">2011</span>);</span><br><span class="line">calendar.set(Calendar.MONTH, Calendar.JUNE);</span><br><span class="line">calendar.set(Calendar.DAY_OF_MONTH, <span class="number">1</span>);</span><br><span class="line">calendar.set(Calendar.HOUR, <span class="number">8</span>);</span><br><span class="line">calendar.set(Calendar.MINUTE, <span class="number">30</span>);</span><br><span class="line">calendar.set(Calendar.SECOND, <span class="number">0</span>);</span><br><span class="line">calendar.set(Calendar.MILLISECOND, <span class="number">0</span>);</span><br><span class="line">Date startTime = calendar.getTime();</span><br><span class="line">Date endTime = <span class="keyword">new</span> Date(calendar.getTimeInMillis() + <span class="number">24</span>*<span class="number">60</span>*<span class="number">60</span>*<span class="number">1000</span>);</span><br><span class="line">SimpleTrigger trigger=<span class="keyword">new</span> SimpleTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>, startTime, endTime, <span class="number">100</span>, <span class="number">60</span>*<span class="number">60</span>*<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p>上述最后一个例子中，同时设置了 end-time 与 repeat count，则优先考虑 end-time，总共可以执行二十四次。</p>
+<p>CronTrigger 的用途更广，相比基于特定时间间隔进行调度安排的 SimpleTrigger，CronTrigger 主要适用于基于日历的调度安排。例如：每星期二的 16:38:10 执行，每月一号执行，以及更复杂的调度安排等。</p>
+<p>CronTrigger 同样需要指定 start-time 和 end-time，其核心在于 Cron 表达式，由七个字段组成：</p>
+<figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line">Seconds</span><br><span class="line">Minutes</span><br><span class="line">Hours</span><br><span class="line"><span class="built_in">Day</span>-of-<span class="built_in">Month</span></span><br><span class="line"><span class="built_in">Month</span></span><br><span class="line"><span class="built_in">Day</span>-of-Week</span><br><span class="line"><span class="built_in">Year</span> (Optional field)</span><br></pre></td></tr></table></figure>
+
+<p>举例如下：</p>
+<p>创建一个每三小时执行的 CronTrigger，且从每小时的整点开始执行：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">0</span> <span class="number">0</span>/<span class="number">3</span>  * * ?</span><br></pre></td></tr></table></figure>
+
+<p>创建一个每十分钟执行的 CronTrigger，且从每小时的第三分钟开始执行：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">3</span>/<span class="number">10</span> * * * ?</span><br></pre></td></tr></table></figure>
+
+<p>创建一个每周一，周二，周三，周六的晚上 20:00 到 23:00，每半小时执行一次的 CronTrigger：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">0</span>/<span class="number">30</span> <span class="number">20</span>-<span class="number">23</span> ? * MON-WED,SAT</span><br></pre></td></tr></table></figure>
+
+<p>创建一个每月最后一个周四，中午 11:30-14:30，每小时执行一次的 trigger：</p>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">30</span> <span class="number">11</span>-<span class="number">14</span>/<span class="number">1</span> ? * <span class="number">5</span>L</span><br></pre></td></tr></table></figure>
+
+<p>解释一下上述例子中各符号的含义：</p>
+<p>首先所有字段都有自己特定的取值</p>
+<p>Seconds 和 Minutes 取值为 0 到 59</p>
+<p>Hours 取值为 0 到 23</p>
+<p>Day-of-Month 取值为 0-31</p>
+<p>Month 取值为 0-11，或者 JAN，FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC</p>
+<p>Days-of-Week 取值为 1-7 或者 SUN, MON, TUE, WED, THU, FRI, SAT</p>
+<p>每个字段可以取单个值，多个值，或一个范围，例如 Day-of-Week 可取值为”MON，TUE，SAT”,”MON-FRI”或者”TUE-THU，SUN”。</p>
+<p>通配符 <em>表示该字段可接受任何可能取值。例如 Month 字段赋值</em> 表示每个月，Day-of-Week 字段赋值 * 表示一周的每天。</p>
+<p><strong>/</strong> 表示开始时刻与间隔时段。例如 Minutes 字段赋值 2/10 表示在一个小时内每 20 分钟执行一次，从第 2 分钟开始。</p>
+<p><strong>?</strong> 仅适用于 Day-of-Month 和 Day-of-Week。? 表示对该字段不指定特定值。适用于需要对这两个字段中的其中一个指定值，而对另一个不指定值的情况。一般情况下，这两个字段只需对一个赋值。</p>
+<p><strong>L</strong> 仅适用于 Day-of-Month 和 Day-of-Week。L 用于 Day-of-Month 表示该月最后一天。L 单独用于 Day-of-Week 表示周六，否则表示一个月最后一个星期几，例如 5L 或者 THUL 表示该月最后一个星期四。</p>
+<p><strong>W</strong> 仅适用于 Day-of-Month，表示离指定日期最近的一个工作日，例如 Day-of-Month 赋值为 10W 表示该月离 10 号最近的一个工作日。</p>
+<p>仅适用于 Day-of-Week，表示该月第 XXX 个星期几。例如 Day-of-Week 赋值为 5#2 或者 THU#2，表示该月第二个星期四。</p>
+<p>CronTrigger 的使用如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CronTrigger cronTrigger = <span class="keyword">new</span> CronTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    cronTrigger.setCronExpression(<span class="string">&quot;0 0/30 20-13 ? * MON-WED,SAT&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Job 与 Trigger 的松耦合设计是 Quartz 的一大特点，其优点在于同一个 Job 可以绑定多个不同的 Trigger，同一个 Trigger 也可以调度多个 Job，灵活性很强。</p>
+<h1 id="Listener"><a href="#Listener" class="headerlink" title="Listener"></a>Listener</h1><p>除了上述基本的调度功能，Quartz 还提供了 listener 的功能。主要包含三种 listener：JobListener，TriggerListener 以及 SchedulerListener。当系统发生故障，相关人员需要被通知时，Listener 便能发挥它的作用。最常见的情况是，当任务被执行时，系统发生故障，Listener 监听到错误，立即发送邮件给管理员。下面给出 JobListener 的实例：</p>
+<h2 id="清单-7-JobListener-的实现"><a href="#清单-7-JobListener-的实现" class="headerlink" title="清单 7. JobListener 的实现"></a>清单 7. JobListener 的实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionContext;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionException;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobListener;</span><br><span class="line"><span class="keyword">import</span> org.quartz.SchedulerException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyListener</span> <span class="keyword">implements</span> <span class="title">JobListener</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;My Listener&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jobWasExecuted</span><span class="params">(JobExecutionContext context, JobExecutionException jobException)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(jobException != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 停止Scheduler</span></span><br><span class="line">                context.getScheduler().shutdown();</span><br><span class="line">                System.out.println(<span class="string">&quot;Error occurs when executing jobs, shut down the scheduler &quot;</span>);</span><br><span class="line">                <span class="comment">// 给管理员发送邮件...</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (SchedulerException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从清单 7 可以看出，使用者只需要创建一个 JobListener 的继承类，重载需要触发的方法即可。当然，需要将 listener 的实现类注册到 Scheduler 和 JobDetail 中：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sched.addJobListener(<span class="keyword">new</span> MyListener());</span><br><span class="line">jobDetail.addJobListener(<span class="string">&quot;My Listener&quot;</span>); <span class="comment">// listener 的名字</span></span><br></pre></td></tr></table></figure>
+
+<p>使用者也可以将 listener 注册为全局 listener，这样便可以监听 scheduler 中注册的所有任务 :</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sched.addGlobalJobListener(<span class="keyword">new</span> MyListener());</span><br></pre></td></tr></table></figure>
+
+<p>为了测试 listener 的功能，可以在 job 的 execute 方法中强制抛出异常。清单 7 中，listener 接收到异常，将 job 所在的 scheduler 停掉，阻止后续的 job 继续执行。scheduler、jobDetail 等信息都可以从 listener 的参数 context 中检索到。</p>
+<p>清单 7 的输出结果为：</p>
+<blockquote>
+<p>“` Generating report – myJob.myJob, type =FULL Tue Feb 15 18:</p>
+</blockquote>
+<blockquote>
+<p>转载：<a href="https://developer.ibm.com/zh/articles/j-lo-taskschedule/">https://developer.ibm.com/zh/articles/j-lo-taskschedule/</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>任务调度</tag>
+        <tag>Java</tag>
+        <tag>Quartz</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>mysqlpump使用说明</title>
     <url>/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
     <content><![CDATA[<p>下面介绍 MySQL5.7 之后新添加的备份工具 mysqlpump。</p>
@@ -778,125 +900,1663 @@
       </tags>
   </entry>
   <entry>
-    <title>几种任务调度的Java实现方法与比较</title>
-    <url>/2021/03/12/%E5%87%A0%E7%A7%8D%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9A%84Java%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E4%B8%8E%E6%AF%94%E8%BE%83/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>任务调度是指基于给定时间点，给定时间间隔或者给定执行次数自动执行任务。本文由浅入深介绍四种任务调度的 Java 实现：</p>
+    <title>MySQL基础语法</title>
+    <url>/2021/03/16/MySQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 命令行连接mysql</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Enter password: ******</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 退出</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">exit</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接MySQL后，创建</span></span><br><span class="line">CREATE database 数据库名;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 建议使用这种方式进行创建数据库</span></span><br><span class="line">CREATE database if not exists 数据库名 default charset utf8;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过mysqladmin命令直接创建</span></span><br><span class="line">mysqladmin -u root -p CREATE 数据库名;</span><br><span class="line">Enter password:******</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接MySQL后，删除</span></span><br><span class="line">drop database 数据库名;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过mysqladmin命令直接删除</span></span><br><span class="line">mysqladmin -u root -p drop 数据库名</span><br><span class="line">Enter password:******</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接MySQL后，选择后需要操作的数据库</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use 数据库名;</span></span><br><span class="line">Database changed</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>后续如果要对数据库做性能优化，了解清楚数据类型是前置条件。</p>
+<p>MySQL支持多种类型，大致可以分为三类：数值、日期/时间和字符串(字符)类型。</p>
+<h3 id="数值"><a href="#数值" class="headerlink" title="数值"></a>数值</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th align="left">大小</th>
+<th align="left">范围（有符号）</th>
+<th align="left">范围（无符号）</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TINYINT</td>
+<td align="left">1 byte</td>
+<td align="left">(-128，127)</td>
+<td align="left">(0，255)</td>
+<td align="left">小整数值</td>
+</tr>
+<tr>
+<td>SMALLINT</td>
+<td align="left">2 bytes</td>
+<td align="left">(-32 768，32 767)</td>
+<td align="left">(0，65 535)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td>MEDIUMINT</td>
+<td align="left">3 bytes</td>
+<td align="left">(-8 388 608，8 388 607)</td>
+<td align="left">(0，16 777 215)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td>INT或INTEGER</td>
+<td align="left">4 bytes</td>
+<td align="left">(-2 147 483 648，2 147 483 647)</td>
+<td align="left">(0，4 294 967 295)</td>
+<td align="left">大整数值</td>
+</tr>
+<tr>
+<td>BIGINT</td>
+<td align="left">8 bytes</td>
+<td align="left">(-9,223,372,036,854,775,808，<br />9 223 372 036 854 775 807)</td>
+<td align="left">(0，18 446 744 073 709 551 615)</td>
+<td align="left">极大整数值</td>
+</tr>
+<tr>
+<td>FLOAT</td>
+<td align="left">4 bytes</td>
+<td align="left">(-3.402 823 466 E+38，-1.175 494 351 E-38)，<br />0，<br />(1.175 494 351 E-38，3.402 823 466 351 E+38)</td>
+<td align="left">0，(1.175 494 351 E-38，3.402 823 466 E+38)</td>
+<td align="left">单精度 浮点数值</td>
+</tr>
+<tr>
+<td>DOUBLE</td>
+<td align="left">8 bytes</td>
+<td align="left">(-1.797 693 134 862 315 7 E+308，-2.225 073 858 507 201 4 E-308)，<br />0，<br />(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td align="left">0，(2.225 073 858 507 201 4 E-308，1.797 693 134 862 315 7 E+308)</td>
+<td align="left">双精度 浮点数值</td>
+</tr>
+<tr>
+<td>DECIMAL</td>
+<td align="left">对DECIMAL(M,D) ，如果M&gt;D，为M+2否则为D+2</td>
+<td align="left">依赖于M和D的值</td>
+<td align="left">依赖于M和D的值</td>
+<td align="left">小数值</td>
+</tr>
+</tbody></table>
+<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><p>每个时间类型有一个有效值范围和一个”零”值，当指定不合法的MySQL不能表示的值时使用”零”值。</p>
+<table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">大小</th>
+<th align="left">范围</th>
+<th align="left">格式</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DATE</td>
+<td align="left">3bytes</td>
+<td align="left">1000-01-01/9999-12-31</td>
+<td align="left">YYYY-MM-DD</td>
+<td align="left">日期值</td>
+</tr>
+<tr>
+<td align="left">TIME</td>
+<td align="left">3bytes</td>
+<td align="left">‘-838:59:59’/‘838:59:59’</td>
+<td align="left">HH:MM:SS</td>
+<td align="left">时间值或持续时间</td>
+</tr>
+<tr>
+<td align="left">YEAR</td>
+<td align="left">1bytes</td>
+<td align="left">1901/2155</td>
+<td align="left">YYYY</td>
+<td align="left">年份值</td>
+</tr>
+<tr>
+<td align="left">DATETIME</td>
+<td align="left">8bytes</td>
+<td align="left">1000-01-01 00:00:00/9999-12-31 23:59:59</td>
+<td align="left">YYYY-MM-DD HH:MM:SS</td>
+<td align="left">混合日期和时间值</td>
+</tr>
+<tr>
+<td align="left">TIMESTAMP</td>
+<td align="left">4bytes</td>
+<td align="left">1970-01-01 00:00:00/2038结束时间是第 <strong>2147483647</strong> 秒，北京时间 <strong>2038-1-19 11:14:07</strong>，格林尼治时间 2038年1月19日 凌晨 03:14:07</td>
+<td align="left">YYYYMMDD HHMMSS</td>
+<td align="left">混合日期和时间值，时间戳</td>
+</tr>
+</tbody></table>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">大小</th>
+<th align="left">用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">CHAR</td>
+<td align="left">0 - 255 bytes</td>
+<td align="left">定长字符串</td>
+</tr>
+<tr>
+<td align="left">VARCHAR</td>
+<td align="left">0 - 65535 bytes</td>
+<td align="left">变长字符串</td>
+</tr>
+<tr>
+<td align="left">TINYBLOB</td>
+<td align="left">0 - 255 bytes</td>
+<td align="left">不超过 255 个字符的二进制字符串</td>
+</tr>
+<tr>
+<td align="left">TINYTEXT</td>
+<td align="left">0 - 255 bytes</td>
+<td align="left">短文本字符串</td>
+</tr>
+<tr>
+<td align="left">BLOB</td>
+<td align="left">0 - 65 535 bytes</td>
+<td align="left">二进制形式的长文本数据</td>
+</tr>
+<tr>
+<td align="left">TEXT</td>
+<td align="left">0 - 65 535 bytes</td>
+<td align="left">长文本数据</td>
+</tr>
+<tr>
+<td align="left">MEDIUMBLOB</td>
+<td align="left">0 - 16 777 215 bytes</td>
+<td align="left">二进制形式的中等长度文本数据</td>
+</tr>
+<tr>
+<td align="left">MEDIUMTEXT</td>
+<td align="left">0 - 16 777 215 bytes</td>
+<td align="left">中等长度文本数据</td>
+</tr>
+<tr>
+<td align="left">LONGBLOB</td>
+<td align="left">0 - 4 294 967 295 bytes</td>
+<td align="left">二进制形式的极大文本数据</td>
+</tr>
+<tr>
+<td align="left">LONGTEXT</td>
+<td align="left">0 - 4 294 967 295 bytes</td>
+<td align="left">极大文本数据</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：char(n) 和 varchar(n) 中括号中 n 代表字符的个数，并不代表字节个数，比如 CHAR(30) 就可以存储 30 个字符。</p>
+</blockquote>
+<h2 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h2><h3 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP TABLE IF EXISTS &#96;t_user_info&#96;;</span><br><span class="line">CREATE TABLE &#96;t_user_info&#96;  (</span><br><span class="line">  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键&#39;,</span><br><span class="line">  &#96;gmt_CREATE&#96; datetime(0) NOT NULL COMMENT &#39;创建时间&#39;,</span><br><span class="line">  &#96;gmt_modified&#96; datetime(0) COMMENT &#39;修改时间&#39;,</span><br><span class="line">  &#96;creator&#96; varchar(32) COMMENT &#39;创建人&#39;,</span><br><span class="line">  &#96;modifier&#96; varchar(32) COMMENT &#39;修改人&#39;,</span><br><span class="line">  &#96;is_deleted&#96; varchar(1) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (&#96;id&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;source_case_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;case_summary_key&#96;(&#96;case_summary_key&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;is_deleted&#96;(&#96;is_deleted&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;creator&#96;(&#96;creator&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;gmt_CREATE&#96;(&#96;gmt_CREATE&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">) ENGINE &#x3D; InnoDB CHARSET &#x3D; utf8 COMMENT &#x3D; &#39;用户基础信息表&#39; ROW_FORMAT &#x3D; DYNAMIC;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>Timer</li>
-<li>ScheduledExecutor</li>
-<li>开源工具包 Quartz</li>
-<li>开源工具包 JCronTab</li>
+<li>如果你不想字段为 <strong>NULL</strong> 可以设置字段的属性为 <strong>NOT NULL</strong>， 在操作数据库时如果输入该字段的数据为<strong>NULL</strong> ，就会报错。</li>
+<li>AUTO_INCREMENT定义列为自增的属性，一般用于主键，数值会自动加1。</li>
+<li>PRIMARY KEY关键字用于定义列为主键。 您可以使用多列来定义主键，列间以逗号分隔。</li>
+<li>ENGINE 设置存储引擎，CHARSET 设置编码。</li>
 </ul>
-<p>此外，为结合实现复杂的任务调度，本文还将介绍 Calendar 的一些使用方法。</p>
-<span id="more"></span>
+<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除数据表，表结构和数据都删除，立刻释放磁盘空间</span></span><br><span class="line">drop table table_name;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 清空数据表，保留表结构，支持<span class="built_in">where</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 对于 MyISAM 会立刻释放磁盘空间，InnoDB 不会释放磁盘空间</span></span><br><span class="line">delete from table_name;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 带条件的删除，表结构不变，不管是 innodb 还是 MyISAM 都不会释放磁盘空间</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 optimize table table_name 会立刻释放磁盘空间，不管是 innodb 还是 myisam</span></span><br><span class="line">delete from table_name where xxx = xxx;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 清空数据表，保留表结构，立刻释放磁盘空间</span></span><br><span class="line">truncate table table_name;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h1 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h1><p>相信大家都已经非常熟悉 java.util.Timer 了，它是最简单的一种实现任务调度的方法，下面给出一个具体的例子：</p>
-<h2 id="清单-1-使用-Timer-进行任务调度"><a href="#清单-1-使用-Timer-进行任务调度" class="headerlink" title="清单 1. 使用 Timer 进行任务调度"></a>清单 1. 使用 Timer 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TimerTest</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String jobName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TimerTest</span><span class="params">(String jobName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.jobName = jobName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;execute &quot;</span> + jobName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Timer timer = <span class="keyword">new</span> Timer();</span><br><span class="line">        <span class="keyword">long</span> delay1 = <span class="number">1</span> * <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">long</span> period1 = <span class="number">1000</span>;</span><br><span class="line">        <span class="comment">// 从现在开始 1 秒钟之后，每隔 1 秒钟执行一次 job1</span></span><br><span class="line">        timer.schedule(<span class="keyword">new</span> TimerTest(<span class="string">&quot;job1&quot;</span>), delay1, period1);</span><br><span class="line">        <span class="keyword">long</span> delay2 = <span class="number">2</span> * <span class="number">1000</span>;</span><br><span class="line">        <span class="keyword">long</span> period2 = <span class="number">2000</span>;</span><br><span class="line">        <span class="comment">// 从现在开始 2 秒钟之后，每隔 2 秒钟执行一次 job2</span></span><br><span class="line">        timer.schedule(<span class="keyword">new</span> TimerTest(<span class="string">&quot;job2&quot;</span>), delay2, period2);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> Output:</span><br><span class="line"> execute job1</span><br><span class="line"> execute job1</span><br><span class="line"> execute job2</span><br><span class="line"> execute job1</span><br><span class="line"> execute job1</span><br><span class="line"> execute job2</span><br></pre></td></tr></table></figure>
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">INSERT INTO table_name ( field1, field2, ..., fieldN )</span><br><span class="line">                       values</span><br><span class="line">                       ( value1, value2, ..., valueN );</span><br></pre></td></tr></table></figure>
 
-<p>使用 Timer 实现任务调度的核心类是 Timer 和 TimerTask。其中 Timer 负责设定 TimerTask 的起始与间隔执行时间。使用者只需要创建一个 TimerTask 的继承类，实现自己的 run 方法，然后将其丢给 Timer 去执行即可。</p>
-<p>Timer 的设计核心是一个 TaskList 和一个 TaskThread。Timer 将接收到的任务丢到自己的 TaskList 中，TaskList 按照 Task 的最初执行时间进行排序。TimerThread 在创建 Timer 时会启动成为一个守护线程。</p>
-<p>这个线程会轮询所有任务，找到一个最近要执行的任务，然后休眠，当到达最近要执行任务的开始时间点，TimerThread 被唤醒并执行该任务。之后 TimerThread 更新最近一个要执行的任务，继续休眠。</p>
-<p>Timer 的优点在于简单易用，但由于所有任务都是由同一个线程来调度，因此所有任务都是串行执行的，同一时间只能有一个任务在执行，前一个任务的延迟或异常都将会影响到之后的任务。</p>
-<h1 id="ScheduledExecutor"><a href="#ScheduledExecutor" class="headerlink" title="ScheduledExecutor"></a>ScheduledExecutor</h1><p>鉴于 Timer 的上述缺陷，Java 5 推出了基于线程池设计的 ScheduledExecutor。其设计思想是，每一个被调度的任务都会由线程池中一个线程去执行，因此任务是并发执行的，相互之间不会受到干扰。需要注意的是，只有当任务的执行时间到来时，ScheduedExecutor 才会真正启动一个线程，其余时间 ScheduledExecutor 都是在轮询任务的状态。</p>
-<h2 id="清单-2-使用-ScheduledExecutor-进行任务调度"><a href="#清单-2-使用-ScheduledExecutor-进行任务调度" class="headerlink" title="清单 2. 使用 ScheduledExecutor 进行任务调度"></a>清单 2. 使用 ScheduledExecutor 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledExecutorTest</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String jobName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScheduledExecutorTest</span><span class="params">(String jobName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.jobName = jobName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;execute &quot;</span> + jobName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ScheduledExecutorService service = Executors.newScheduledThreadPool(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> initialDelay1 = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">long</span> period1 = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从现在开始1秒钟之后，每隔1秒钟执行一次job1</span></span><br><span class="line">        service.scheduleAtFixedRate(</span><br><span class="line">                <span class="keyword">new</span> ScheduledExecutorTest(<span class="string">&quot;job1&quot;</span>), initialDelay1,</span><br><span class="line">                period1, TimeUnit.SECONDS);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">long</span> initialDelay2 = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">long</span> delay2 = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 从现在开始2秒钟之后，每隔2秒钟执行一次job2</span></span><br><span class="line">        service.scheduleWithFixedDelay(</span><br><span class="line">                <span class="keyword">new</span> ScheduledExecutorTest(<span class="string">&quot;job2&quot;</span>), initialDelay2,</span><br><span class="line">                delay2, TimeUnit.SECONDS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output:</span><br><span class="line">execute job1</span><br><span class="line">execute job1</span><br><span class="line">execute job2</span><br><span class="line">execute job1</span><br><span class="line">execute job1</span><br><span class="line">execute job2</span><br></pre></td></tr></table></figure>
-
-<p>清单 2 展示了 ScheduledExecutorService 中两种最常用的调度方法 ScheduleAtFixedRate 和 ScheduleWithFixedDelay。ScheduleAtFixedRate 每次执行时间为上一次任务开始起向后推一个时间间隔，即每次执行时间为 :initialDelay, initialDelay+period, initialDelay+2<em>period,…；ScheduleWithFixedDelay 每次执行时间为上一次任务结束起向后推一个时间间隔，即每次执行时间为：initialDelay, initialDelay+executeTime+delay, initialDelay+2</em>executeTime+2*delay。</p>
-<p>由此可见，ScheduleAtFixedRate 是基于固定时间间隔进行任务调度，ScheduleWithFixedDelay 取决于每次任务执行的时间长短，是基于不固定时间间隔进行任务调度。</p>
-<h2 id="用-ScheduledExecutor-和-Calendar-实现复杂任务调度"><a href="#用-ScheduledExecutor-和-Calendar-实现复杂任务调度" class="headerlink" title="用 ScheduledExecutor 和 Calendar 实现复杂任务调度"></a>用 ScheduledExecutor 和 Calendar 实现复杂任务调度</h2><p>Timer 和 ScheduledExecutor 都仅能提供基于开始时间与重复间隔的任务调度，不能胜任更加复杂的调度需求。比如，设置每星期二的 16:38:10 执行任务。该功能使用 Timer 和 ScheduledExecutor 都不能直接实现，但我们可以借助 Calendar 间接实现该功能。</p>
-<h2 id="清单-3-使用-ScheduledExcetuor-和-Calendar-进行任务调度"><a href="#清单-3-使用-ScheduledExcetuor-和-Calendar-进行任务调度" class="headerlink" title="清单 3. 使用 ScheduledExcetuor 和 Calendar 进行任务调度"></a>清单 3. 使用 ScheduledExcetuor 和 Calendar 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Calendar;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ScheduledExceutorTest2</span> <span class="keyword">extends</span> <span class="title">TimerTask</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String jobName = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ScheduledExceutorTest2</span><span class="params">(String jobName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.jobName = jobName;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Date = &quot;</span>+<span class="keyword">new</span> Date()+<span class="string">&quot;, execute &quot;</span> + jobName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 计算从当前时间currentDate开始，满足条件dayOfWeek, hourOfDay,</span></span><br><span class="line"><span class="comment">     * minuteOfHour, secondOfMinite的最近时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Calendar <span class="title">getEarliestDate</span><span class="params">(Calendar currentDate, <span class="keyword">int</span> dayOfWeek,</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">int</span> hourOfDay, <span class="keyword">int</span> minuteOfHour, <span class="keyword">int</span> secondOfMinite)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//计算当前时间的WEEK_OF_YEAR,DAY_OF_WEEK, HOUR_OF_DAY, MINUTE,SECOND等各个字段值</span></span><br><span class="line">        <span class="keyword">int</span> currentWeekOfYear = currentDate.get(Calendar.WEEK_OF_YEAR);</span><br><span class="line">        <span class="keyword">int</span> currentDayOfWeek = currentDate.get(Calendar.DAY_OF_WEEK);</span><br><span class="line">        <span class="keyword">int</span> currentHour = currentDate.get(Calendar.HOUR_OF_DAY);</span><br><span class="line">        <span class="keyword">int</span> currentMinute = currentDate.get(Calendar.MINUTE);</span><br><span class="line">        <span class="keyword">int</span> currentSecond = currentDate.get(Calendar.SECOND);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//如果输入条件中的dayOfWeek小于当前日期的dayOfWeek,则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">        <span class="keyword">boolean</span> weekLater = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span> (dayOfWeek &lt; currentDayOfWeek) &#123;</span><br><span class="line">            weekLater = <span class="keyword">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dayOfWeek == currentDayOfWeek) &#123;</span><br><span class="line">            <span class="comment">//当输入条件与当前日期的dayOfWeek相等时，如果输入条件中的</span></span><br><span class="line">            <span class="comment">//hourOfDay小于当前日期的</span></span><br><span class="line">            <span class="comment">//currentHour，则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">            <span class="keyword">if</span> (hourOfDay &lt; currentHour) &#123;</span><br><span class="line">                weekLater = <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (hourOfDay == currentHour) &#123;</span><br><span class="line">                 <span class="comment">//当输入条件与当前日期的dayOfWeek, hourOfDay相等时，</span></span><br><span class="line">                 <span class="comment">//如果输入条件中的minuteOfHour小于当前日期的</span></span><br><span class="line">                <span class="comment">//currentMinute，则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">                <span class="keyword">if</span> (minuteOfHour &lt; currentMinute) &#123;</span><br><span class="line">                    weekLater = <span class="keyword">true</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (minuteOfHour == currentSecond) &#123;</span><br><span class="line">                     <span class="comment">//当输入条件与当前日期的dayOfWeek, hourOfDay，</span></span><br><span class="line">                     <span class="comment">//minuteOfHour相等时，如果输入条件中的</span></span><br><span class="line">                    <span class="comment">//secondOfMinite小于当前日期的currentSecond，</span></span><br><span class="line">                    <span class="comment">//则WEEK_OF_YEAR需要推迟一周</span></span><br><span class="line">                    <span class="keyword">if</span> (secondOfMinite &lt; currentSecond) &#123;</span><br><span class="line">                        weekLater = <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (weekLater) &#123;</span><br><span class="line">            <span class="comment">//设置当前日期中的WEEK_OF_YEAR为当前周推迟一周</span></span><br><span class="line">            currentDate.set(Calendar.WEEK_OF_YEAR, currentWeekOfYear + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 设置当前日期中的DAY_OF_WEEK,HOUR_OF_DAY,MINUTE,SECOND为输入条件中的值。</span></span><br><span class="line">        currentDate.set(Calendar.DAY_OF_WEEK, dayOfWeek);</span><br><span class="line">        currentDate.set(Calendar.HOUR_OF_DAY, hourOfDay);</span><br><span class="line">        currentDate.set(Calendar.MINUTE, minuteOfHour);</span><br><span class="line">        currentDate.set(Calendar.SECOND, secondOfMinite);</span><br><span class="line">        <span class="keyword">return</span> currentDate;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">        ScheduledExceutorTest2 test = <span class="keyword">new</span> ScheduledExceutorTest2(<span class="string">&quot;job1&quot;</span>);</span><br><span class="line">        <span class="comment">//获取当前时间</span></span><br><span class="line">        Calendar currentDate = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">long</span> currentDateLong = currentDate.getTime().getTime();</span><br><span class="line">        System.out.println(<span class="string">&quot;Current Date = &quot;</span> + currentDate.getTime().toString());</span><br><span class="line">        <span class="comment">//计算满足条件的最近一次执行时间</span></span><br><span class="line">        Calendar earliestDate = test</span><br><span class="line">                .getEarliestDate(currentDate, <span class="number">3</span>, <span class="number">16</span>, <span class="number">38</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="keyword">long</span> earliestDateLong = earliestDate.getTime().getTime();</span><br><span class="line">        System.out.println(<span class="string">&quot;Earliest Date = &quot;</span></span><br><span class="line">                + earliestDate.getTime().toString());</span><br><span class="line">        <span class="comment">//计算从当前时间到最近一次执行时间的时间间隔</span></span><br><span class="line">        <span class="keyword">long</span> delay = earliestDateLong - currentDateLong;</span><br><span class="line">        <span class="comment">//计算执行周期为一星期</span></span><br><span class="line">        <span class="keyword">long</span> period = <span class="number">7</span> * <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>;</span><br><span class="line">        ScheduledExecutorService service = Executors.newScheduledThreadPool(<span class="number">10</span>);</span><br><span class="line">        <span class="comment">//从现在开始delay毫秒之后，每隔一星期执行一次job1</span></span><br><span class="line">        service.scheduleAtFixedRate(test, delay, period,</span><br><span class="line">                TimeUnit.MILLISECONDS);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output:</span><br><span class="line">Current Date = Wed Feb <span class="number">02</span> <span class="number">17</span>:<span class="number">32</span>:<span class="number">01</span> CST <span class="number">2011</span></span><br><span class="line">Earliest Date = Tue Feb <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">10</span> CST <span class="number">2011</span></span><br><span class="line">Date = Tue Feb <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">10</span> CST <span class="number">2011</span>, execute job1</span><br><span class="line">Date = Tue Feb <span class="number">15</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">10</span> CST <span class="number">2011</span>, execute job1</span><br></pre></td></tr></table></figure>
-
-<p>清单 3 实现了每星期二 16:38:10 调度任务的功能。其核心在于根据当前时间推算出最近一个星期二 16:38:10 的绝对时间，然后计算与当前时间的时间差，作为调用 ScheduledExceutor 函数的参数。</p>
-<p>计算最近时间要用到 java.util.calendar 的功能。首先需要解释 calendar 的一些设计思想。Calendar 有以下几种唯一标识一个日期的组合方式：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">YEAR + MONTH + DAY_OF_MONTH</span><br><span class="line">YEAR + MONTH + WEEK_OF_MONTH + DAY_OF_WEEK</span><br><span class="line">YEAR + MONTH + DAY_OF_WEEK_IN_MONTH + DAY_OF_WEEK</span><br><span class="line">YEAR + DAY_OF_YEAR</span><br><span class="line">YEAR + DAY_OF_WEEK + WEEK_OF_YEAR</span><br></pre></td></tr></table></figure>
-
-<p>上述组合分别加上 HOUR_OF_DAY + MINUTE + SECOND 即为一个完整的时间标识。本例采用了最后一种组合方式。输入为 DAY_OF_WEEK, HOUR_OF_DAY, MINUTE, SECOND 以及当前日期 , 输出为一个满足 DAY_OF_WEEK, HOUR_OF_DAY, MINUTE, SECOND 并且距离当前日期最近的未来日期。计算的原则是从输入的 DAY_OF_WEEK 开始比较，如果小于当前日期的 DAY_OF_WEEK，则需要向 WEEK_OF_YEAR 进一， 即将当前日期中的 WEEK_OF_YEAR 加一并覆盖旧值；如果等于当前的 DAY_OF_WEEK, 则继续比较 HOUR_OF_DAY；如果大于当前的 DAY_OF_WEEK，则直接调用 java.util.calenda 的 calendar.set(field, value) 函数将当前日期的 DAY_OF_WEEK, HOUR_OF_DAY, MINUTE, SECOND 赋值为输入值，依次类推，直到比较至 SECOND。读者可以根据输入需求选择不同的组合方式来计算最近执行时间。</p>
-<p>可以看出，用上述方法实现该任务调度比较麻烦，这就需要一个更加完善的任务调度框架来解决这些复杂的调度问题。幸运的是，开源工具包 Quartz 与 JCronTab 提供了这方面强大的支持。</p>
-<h1 id="Quartz"><a href="#Quartz" class="headerlink" title="Quartz"></a>Quartz</h1><p>Quartz 可以满足更多更复杂的调度需求，首先让我们看看如何用 Quartz 实现每星期二 16:38 的调度安排：</p>
-<h2 id="清单-4-使用-Quartz-进行任务调度"><a href="#清单-4-使用-Quartz-进行任务调度" class="headerlink" title="清单 4. 使用 Quartz 进行任务调度"></a>清单 4. 使用 Quartz 进行任务调度</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ibm.scheduler;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.quartz.Job;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobDetail;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionContext;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionException;</span><br><span class="line"><span class="keyword">import</span> org.quartz.Scheduler;</span><br><span class="line"><span class="keyword">import</span> org.quartz.SchedulerFactory;</span><br><span class="line"><span class="keyword">import</span> org.quartz.Trigger;</span><br><span class="line"><span class="keyword">import</span> org.quartz.helpers.TriggerUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">QuartzTest</span> <span class="keyword">implements</span> <span class="title">Job</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="comment">//该方法实现需要执行的任务</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext arg0)</span> <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Generating report - &quot;</span></span><br><span class="line">                + arg0.getJobDetail().getFullName() + <span class="string">&quot;, type =&quot;</span></span><br><span class="line">                + arg0.getJobDetail().getJobDataMap().get(<span class="string">&quot;type&quot;</span>));</span><br><span class="line">        System.out.println(<span class="keyword">new</span> Date().toString());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 创建一个Scheduler</span></span><br><span class="line">            SchedulerFactory schedFact =</span><br><span class="line">            <span class="keyword">new</span> org.quartz.impl.StdSchedulerFactory();</span><br><span class="line">            Scheduler sched = schedFact.getScheduler();</span><br><span class="line">            sched.start();</span><br><span class="line">            <span class="comment">// 创建一个JobDetail，指明name，groupname，以及具体的Job类名，</span></span><br><span class="line">            <span class="comment">//该Job负责定义需要执行任务</span></span><br><span class="line">            JobDetail jobDetail = <span class="keyword">new</span> JobDetail(<span class="string">&quot;myJob&quot;</span>, <span class="string">&quot;myJobGroup&quot;</span>,</span><br><span class="line">                    QuartzTest.class);</span><br><span class="line">            jobDetail.getJobDataMap().put(<span class="string">&quot;type&quot;</span>, <span class="string">&quot;FULL&quot;</span>);</span><br><span class="line">            <span class="comment">// 创建一个每周触发的Trigger，指明星期几几点几分执行</span></span><br><span class="line">            Trigger trigger = TriggerUtils.makeWeeklyTrigger(<span class="number">3</span>, <span class="number">16</span>, <span class="number">38</span>);</span><br><span class="line">            trigger.setGroup(<span class="string">&quot;myTriggerGroup&quot;</span>);</span><br><span class="line">            <span class="comment">// 从当前时间的下一秒开始执行</span></span><br><span class="line">            trigger.setStartTime(TriggerUtils.getEvenSecondDate(<span class="keyword">new</span> Date()));</span><br><span class="line">            <span class="comment">// 指明trigger的name</span></span><br><span class="line">            trigger.setName(<span class="string">&quot;myTrigger&quot;</span>);</span><br><span class="line">            <span class="comment">// 用scheduler将JobDetail与Trigger关联在一起，开始调度任务</span></span><br><span class="line">            sched.scheduleJob(jobDetail, trigger);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output:</span><br><span class="line">Generating report - myJobGroup.myJob, type =FULL</span><br><span class="line">Tue Feb <span class="number">8</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">00</span> CST <span class="number">2011</span></span><br><span class="line">Generating report - myJobGroup.myJob, type =FULL</span><br><span class="line">Tue Feb <span class="number">15</span> <span class="number">16</span>:<span class="number">38</span>:<span class="number">00</span> CST <span class="number">2011</span></span><br></pre></td></tr></table></figure>
-
-<p>清单 4 非常简洁地实现了一个上述复杂的任务调度。Quartz 设计的核心类包括 Scheduler, Job 以及 Trigger。其中，Job 负责定义需要执行的任务，Trigger 负责设置调度策略，Scheduler 将二者组装在一起，并触发任务开始执行。</p>
-<h1 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h1><p>使用者只需要创建一个 Job 的继承类，实现 execute 方法。JobDetail 负责封装 Job 以及 Job 的属性，并将其提供给 Scheduler 作为参数。每次 Scheduler 执行任务时，首先会创建一个 Job 的实例，然后再调用 execute 方法执行。Quartz 没有为 Job 设计带参数的构造函数，因此需要通过额外的 JobDataMap 来存储 Job 的属性。JobDataMap 可以存储任意数量的 Key，Value 对，例如：</p>
-<h2 id="清单-5-为-JobDataMap-赋值"><a href="#清单-5-为-JobDataMap-赋值" class="headerlink" title="清单 5. 为 JobDataMap 赋值"></a>清单 5. 为 JobDataMap 赋值</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">jobDetail.getJobDataMap().put(<span class="string">&quot;myDescription&quot;</span>, <span class="string">&quot;my job description&quot;</span>);</span><br><span class="line"> jobDetail.getJobDataMap().put(<span class="string">&quot;myValue&quot;</span>, <span class="number">1998</span>);</span><br><span class="line"> ArrayList&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line"> list.add(<span class="string">&quot;item1&quot;</span>);</span><br><span class="line"> jobDetail.getJobDataMap().put(<span class="string">&quot;myArray&quot;</span>, list);</span><br></pre></td></tr></table></figure>
-
-<p>JobDataMap 中的数据可以通过下面的方式获取：</p>
-<h2 id="清单-6-获取-JobDataMap-的值"><a href="#清单-6-获取-JobDataMap-的值" class="headerlink" title="清单 6. 获取 JobDataMap 的值"></a>清单 6. 获取 JobDataMap 的值</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JobDataMapTest</span> <span class="keyword">implements</span> <span class="title">Job</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(JobExecutionContext context)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> JobExecutionException </span>&#123;</span><br><span class="line">        <span class="comment">//从context中获取instName，groupName以及dataMap</span></span><br><span class="line">        String instName = context.getJobDetail().getName();</span><br><span class="line">        String groupName = context.getJobDetail().getGroup();</span><br><span class="line">        JobDataMap dataMap = context.getJobDetail().getJobDataMap();</span><br><span class="line">        <span class="comment">//从dataMap中获取myDescription，myValue以及myArray</span></span><br><span class="line">        String myDescription = dataMap.getString(<span class="string">&quot;myDescription&quot;</span>);</span><br><span class="line">        <span class="keyword">int</span> myValue = dataMap.getInt(<span class="string">&quot;myValue&quot;</span>);</span><br><span class="line">        ArrayList&lt;String&gt; myArray = (ArrayListlt;Strin&gt;) dataMap.get(<span class="string">&quot;myArray&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;</span></span><br><span class="line"><span class="string">                Instance =&quot;</span> + instName + <span class="string">&quot;, group = &quot;</span> + groupName</span><br><span class="line">                + <span class="string">&quot;, description = &quot;</span> + myDescription + <span class="string">&quot;, value =&quot;</span> + myValue</span><br><span class="line">                + <span class="string">&quot;, array item0 = &quot;</span> + myArray.get(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Output：</span><br><span class="line">Instance = myJob, group = myJobGroup,</span><br><span class="line">description = my job description,</span><br><span class="line">value =<span class="number">1998</span>, array item0 = item1</span><br></pre></td></tr></table></figure>
-
-<h1 id="Trigger"><a href="#Trigger" class="headerlink" title="Trigger"></a>Trigger</h1><p>Trigger 的作用是设置调度策略。Quartz 设计了多种类型的 Trigger，其中最常用的是 SimpleTrigger 和 CronTrigger。</p>
-<p>SimpleTrigger 适用于在某一特定的时间执行一次，或者在某一特定的时间以某一特定时间间隔执行多次。</p>
-<p>上述功能决定了 SimpleTrigger 的参数包括 start-time, end-time, repeat count, 以及 repeat interval。</p>
-<p>Repeat count 取值为大于或等于零的整数，或者常量 SimpleTrigger.REPEAT_INDEFINITELY。</p>
-<p>Repeat interval 取值为大于或等于零的长整型。当 Repeat interval 取值为零并且 Repeat count 取值大于零时，将会触发任务的并发执行。</p>
-<p>Start-time 与 dnd-time 取值为 java.util.Date。当同时指定 end-time 与 repeat count 时，优先考虑 end-time。一般地，可以指定 end-time，并设定 repeat count 为 REPEAT_INDEFINITELY。</p>
-<p>以下是 SimpleTrigger 的构造方法：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">SimpleTrigger</span><span class="params">(String name,</span></span></span><br><span class="line"><span class="function"><span class="params">                     String group,</span></span></span><br><span class="line"><span class="function"><span class="params">                     Date startTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                     Date endTime,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">int</span> repeatCount,</span></span></span><br><span class="line"><span class="function"><span class="params">                     <span class="keyword">long</span> repeatInterval)</span></span></span><br></pre></td></tr></table></figure>
-
-<p>举例如下：创建一个立即执行且仅执行一次的 SimpleTrigger：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SimpleTrigger trigger = <span class="keyword">new</span> SimpleTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>, <span class="keyword">new</span> Date(), <span class="keyword">null</span>, <span class="number">0</span>, <span class="number">0L</span>);</span><br></pre></td></tr></table></figure>
-
-<p>创建一个半分钟后开始执行，且每隔一分钟重复执行一次的 SimpleTrigger：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">SimpleTrigger trigger = <span class="keyword">new</span> SimpleTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>, </span><br><span class="line">                                          <span class="keyword">new</span> Date(System.currentTimeMillis()+<span class="number">30</span>*<span class="number">1000</span>), <span class="keyword">null</span>, <span class="number">0</span>, <span class="number">60</span>*<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-
-<p>创建一个 2011 年 6 月 1 日 8:30 开始执行，每隔一小时执行一次，一共执行一百次，一天之后截止的 SimpleTrigger：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Calendar calendar = Calendar.getInstance();</span><br><span class="line">calendar.set(Calendar.YEAR, <span class="number">2011</span>);</span><br><span class="line">calendar.set(Calendar.MONTH, Calendar.JUNE);</span><br><span class="line">calendar.set(Calendar.DAY_OF_MONTH, <span class="number">1</span>);</span><br><span class="line">calendar.set(Calendar.HOUR, <span class="number">8</span>);</span><br><span class="line">calendar.set(Calendar.MINUTE, <span class="number">30</span>);</span><br><span class="line">calendar.set(Calendar.SECOND, <span class="number">0</span>);</span><br><span class="line">calendar.set(Calendar.MILLISECOND, <span class="number">0</span>);</span><br><span class="line">Date startTime = calendar.getTime();</span><br><span class="line">Date endTime = <span class="keyword">new</span> Date(calendar.getTimeInMillis() + <span class="number">24</span>*<span class="number">60</span>*<span class="number">60</span>*<span class="number">1000</span>);</span><br><span class="line">SimpleTrigger trigger=<span class="keyword">new</span> SimpleTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>, startTime, endTime, <span class="number">100</span>, <span class="number">60</span>*<span class="number">60</span>*<span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
-
-<p>上述最后一个例子中，同时设置了 end-time 与 repeat count，则优先考虑 end-time，总共可以执行二十四次。</p>
-<p>CronTrigger 的用途更广，相比基于特定时间间隔进行调度安排的 SimpleTrigger，CronTrigger 主要适用于基于日历的调度安排。例如：每星期二的 16:38:10 执行，每月一号执行，以及更复杂的调度安排等。</p>
-<p>CronTrigger 同样需要指定 start-time 和 end-time，其核心在于 Cron 表达式，由七个字段组成：</p>
-<figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line">Seconds</span><br><span class="line">Minutes</span><br><span class="line">Hours</span><br><span class="line"><span class="built_in">Day</span>-of-<span class="built_in">Month</span></span><br><span class="line"><span class="built_in">Month</span></span><br><span class="line"><span class="built_in">Day</span>-of-Week</span><br><span class="line"><span class="built_in">Year</span> (Optional field)</span><br></pre></td></tr></table></figure>
-
-<p>举例如下：</p>
-<p>创建一个每三小时执行的 CronTrigger，且从每小时的整点开始执行：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">0</span> <span class="number">0</span>/<span class="number">3</span>  * * ?</span><br></pre></td></tr></table></figure>
-
-<p>创建一个每十分钟执行的 CronTrigger，且从每小时的第三分钟开始执行：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">3</span>/<span class="number">10</span> * * * ?</span><br></pre></td></tr></table></figure>
-
-<p>创建一个每周一，周二，周三，周六的晚上 20:00 到 23:00，每半小时执行一次的 CronTrigger：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">0</span>/<span class="number">30</span> <span class="number">20</span>-<span class="number">23</span> ? * MON-WED,SAT</span><br></pre></td></tr></table></figure>
-
-<p>创建一个每月最后一个周四，中午 11:30-14:30，每小时执行一次的 trigger：</p>
-<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">0 </span><span class="number">30</span> <span class="number">11</span>-<span class="number">14</span>/<span class="number">1</span> ? * <span class="number">5</span>L</span><br></pre></td></tr></table></figure>
-
-<p>解释一下上述例子中各符号的含义：</p>
-<p>首先所有字段都有自己特定的取值</p>
-<p>Seconds 和 Minutes 取值为 0 到 59</p>
-<p>Hours 取值为 0 到 23</p>
-<p>Day-of-Month 取值为 0-31</p>
-<p>Month 取值为 0-11，或者 JAN，FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC</p>
-<p>Days-of-Week 取值为 1-7 或者 SUN, MON, TUE, WED, THU, FRI, SAT</p>
-<p>每个字段可以取单个值，多个值，或一个范围，例如 Day-of-Week 可取值为”MON，TUE，SAT”,”MON-FRI”或者”TUE-THU，SUN”。</p>
-<p>通配符 <em>表示该字段可接受任何可能取值。例如 Month 字段赋值</em> 表示每个月，Day-of-Week 字段赋值 * 表示一周的每天。</p>
-<p><strong>/</strong> 表示开始时刻与间隔时段。例如 Minutes 字段赋值 2/10 表示在一个小时内每 20 分钟执行一次，从第 2 分钟开始。</p>
-<p><strong>?</strong> 仅适用于 Day-of-Month 和 Day-of-Week。? 表示对该字段不指定特定值。适用于需要对这两个字段中的其中一个指定值，而对另一个不指定值的情况。一般情况下，这两个字段只需对一个赋值。</p>
-<p><strong>L</strong> 仅适用于 Day-of-Month 和 Day-of-Week。L 用于 Day-of-Month 表示该月最后一天。L 单独用于 Day-of-Week 表示周六，否则表示一个月最后一个星期几，例如 5L 或者 THUL 表示该月最后一个星期四。</p>
-<p><strong>W</strong> 仅适用于 Day-of-Month，表示离指定日期最近的一个工作日，例如 Day-of-Month 赋值为 10W 表示该月离 10 号最近的一个工作日。</p>
-<p>仅适用于 Day-of-Week，表示该月第 XXX 个星期几。例如 Day-of-Week 赋值为 5#2 或者 THU#2，表示该月第二个星期四。</p>
-<p>CronTrigger 的使用如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">CronTrigger cronTrigger = <span class="keyword">new</span> CronTrigger(<span class="string">&quot;myTrigger&quot;</span>, <span class="string">&quot;myGroup&quot;</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    cronTrigger.setCronExpression(<span class="string">&quot;0 0/30 20-13 ? * MON-WED,SAT&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Job 与 Trigger 的松耦合设计是 Quartz 的一大特点，其优点在于同一个 Job 可以绑定多个不同的 Trigger，同一个 Trigger 也可以调度多个 Job，灵活性很强。</p>
-<h1 id="Listener"><a href="#Listener" class="headerlink" title="Listener"></a>Listener</h1><p>除了上述基本的调度功能，Quartz 还提供了 listener 的功能。主要包含三种 listener：JobListener，TriggerListener 以及 SchedulerListener。当系统发生故障，相关人员需要被通知时，Listener 便能发挥它的作用。最常见的情况是，当任务被执行时，系统发生故障，Listener 监听到错误，立即发送邮件给管理员。下面给出 JobListener 的实例：</p>
-<h2 id="清单-7-JobListener-的实现"><a href="#清单-7-JobListener-的实现" class="headerlink" title="清单 7. JobListener 的实现"></a>清单 7. JobListener 的实现</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionContext;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobExecutionException;</span><br><span class="line"><span class="keyword">import</span> org.quartz.JobListener;</span><br><span class="line"><span class="keyword">import</span> org.quartz.SchedulerException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyListener</span> <span class="keyword">implements</span> <span class="title">JobListener</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;My Listener&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">jobWasExecuted</span><span class="params">(JobExecutionContext context, JobExecutionException jobException)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(jobException != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 停止Scheduler</span></span><br><span class="line">                context.getScheduler().shutdown();</span><br><span class="line">                System.out.println(<span class="string">&quot;Error occurs when executing jobs, shut down the scheduler &quot;</span>);</span><br><span class="line">                <span class="comment">// 给管理员发送邮件...</span></span><br><span class="line">            &#125; <span class="keyword">catch</span> (SchedulerException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>从清单 7 可以看出，使用者只需要创建一个 JobListener 的继承类，重载需要触发的方法即可。当然，需要将 listener 的实现类注册到 Scheduler 和 JobDetail 中：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sched.addJobListener(<span class="keyword">new</span> MyListener());</span><br><span class="line">jobDetail.addJobListener(<span class="string">&quot;My Listener&quot;</span>); <span class="comment">// listener 的名字</span></span><br></pre></td></tr></table></figure>
-
-<p>使用者也可以将 listener 注册为全局 listener，这样便可以监听 scheduler 中注册的所有任务 :</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">sched.addGlobalJobListener(<span class="keyword">new</span> MyListener());</span><br></pre></td></tr></table></figure>
-
-<p>为了测试 listener 的功能，可以在 job 的 execute 方法中强制抛出异常。清单 7 中，listener 接收到异常，将 job 所在的 scheduler 停掉，阻止后续的 job 继续执行。scheduler、jobDetail 等信息都可以从 listener 的参数 context 中检索到。</p>
-<p>清单 7 的输出结果为：</p>
 <blockquote>
-<p>“` Generating report – myJob.myJob, type =FULL Tue Feb 15 18:</p>
+<p>如果数据是字符型，必须使用单引号或者双引号，如：”value”。</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 字段和值要一一对应</span><br><span class="line">INSERT INTO &#96;t_user_info&#96;</span><br><span class="line">(&#96;id&#96;, &#96;gmt_CREATE&#96;, &#96;gmt_modified&#96;, &#96;creator&#96;, &#96;modifier&#96;, &#96;is_deleted&#96;, &#96;phone&#96;, &#96;name&#96;, &#96;role_id&#96;, &#96;role_name&#96;, &#96;company_id&#96;, &#96;company_name&#96;, &#96;dept_id&#96;, &#96;dept_name&#96;, &#96;user_type&#96;, &#96;status&#96;, &#96;is_frozen&#96;, &#96;is_test&#96;, &#96;is_invest_frozen&#96;, &#96;password&#96;, &#96;salt&#96;, &#96;court_id&#96;, &#96;court_name&#96;, &#96;legal_type&#96;) </span><br><span class="line">VALUES</span><br><span class="line">(525, &#39;2019-04-26 09:46:00&#39;, &#39;2020-06-11 14:06:49&#39;, &#39;system&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 13634184519, &#39;系统管理员&#39;, 0, &#39;管理员&#39;, NULL, NULL, NULL, NULL, &#39;operator&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;42f29eb14a981acdce097cef6a45150d&#39;, &#39;j78pqrq9p47kcqu1&#39;, &#39;&#39;, &#39;&#39;, &#39;company&#39;);</span><br><span class="line"></span><br><span class="line">-- 插入多条数据</span><br><span class="line">INSERT INTO &#96;t_user_info&#96;</span><br><span class="line">(&#96;gmt_CREATE&#96;, &#96;gmt_modified&#96;, &#96;creator&#96;, &#96;modifier&#96;, &#96;is_deleted&#96;, &#96;phone&#96;, &#96;name&#96;, &#96;role_id&#96;, &#96;role_name&#96;, &#96;company_id&#96;, &#96;company_name&#96;, &#96;dept_id&#96;, &#96;dept_name&#96;, &#96;user_type&#96;, &#96;status&#96;, &#96;is_frozen&#96;, &#96;is_test&#96;, &#96;is_invest_frozen&#96;, &#96;password&#96;, &#96;salt&#96;, &#96;court_id&#96;, &#96;court_name&#96;, &#96;legal_type&#96;) </span><br><span class="line">VALUES </span><br><span class="line">(&#39;2019-04-26 09:46:00&#39;, &#39;2020-06-11 14:06:49&#39;, &#39;system&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 13634184519, &#39;系统管理员&#39;, 0, &#39;管理员&#39;, NULL, NULL, NULL, NULL, &#39;operator&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;42f29eb14a981acdce097cef6a45150d&#39;, &#39;j78pqrq9p47kcqu1&#39;, NULL, &#39;&#39;, &#39;company&#39;), </span><br><span class="line">(533, &#39;2019-07-02 19:24:25&#39;, &#39;2020-11-16 17:15:54&#39;, &#39;管理员&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 15155555555, &#39;打工人-张三&#39;, 3, &#39;打工人&#39;, NULL, NULL, 1, &#39;测试部门&#39;, &#39;person&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;26d2014872f282ff7e682a5271ffbbed&#39;, &#39;9cpt983corj1n59d&#39;, 298, &#39;测试法院&#39;, &#39;court&#39;);</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p>转载：<a href="https://developer.ibm.com/zh/articles/j-lo-taskschedule/">https://developer.ibm.com/zh/articles/j-lo-taskschedule/</a></p>
+<p>如果没有提供<code>id</code>，则会自动递增</p>
 </blockquote>
+<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">&lt;SELECT clause&gt; </span><br><span class="line">[&lt;FROM clause&gt;] </span><br><span class="line">[&lt;WHERE clause&gt;] </span><br><span class="line">[&lt;GROUP BY clause&gt;] </span><br><span class="line">[&lt;HAVING clause&gt;] </span><br><span class="line">[&lt;ORDER BY clause&gt;] </span><br><span class="line">[&lt;LIMIT clause&gt;] </span><br><span class="line"></span><br><span class="line">-- 执行顺序</span><br><span class="line">1.  from </span><br><span class="line">2.  on</span><br><span class="line">3.  join</span><br><span class="line">4.  where </span><br><span class="line">5.  group by (开始使用select中的别名，后面的语句中都可以使用)</span><br><span class="line">6.  avg, sum等函数</span><br><span class="line">7.  having </span><br><span class="line">8.  select </span><br><span class="line">9.  distinct </span><br><span class="line">10. order by</span><br><span class="line">11. limit </span><br><span class="line"></span><br><span class="line">-- 子句执行顺序</span><br><span class="line">-&gt; 开始 </span><br><span class="line">-&gt; FROM 子句 </span><br><span class="line">-&gt; WHERE 子句 </span><br><span class="line">-&gt; GROUP BY 子句 </span><br><span class="line">-&gt; HAVING 子句 </span><br><span class="line">-&gt; ORDER BY 子句 </span><br><span class="line">-&gt; SELECT 子句 </span><br><span class="line">-&gt; LIMIT 子句</span><br><span class="line">-&gt; 最终结果 </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。</li>
+<li>SELECT 命令可以读取一条或者多条记录。</li>
+<li>你可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据</li>
+<li>你可以使用 WHERE 语句来包含任何条件。</li>
+<li>你可以使用 LIMIT 属性来设定返回的记录数。</li>
+<li>你可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。</li>
+</ul>
+<h3 id="where"><a href="#where" class="headerlink" title="where"></a>where</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">[WHERE condition1 [AND [OR]] condition2.....</span><br><span class="line"></span><br><span class="line"> -- 操作符</span><br><span class="line"> &#x3D; !&#x3D; &gt; &lt; &gt;&#x3D; &lt;&#x3D;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询语句中你可以使用一个或者多个表，表之间使用逗号**,** 分割，并使用WHERE语句来设定查询条件。</li>
+<li>你可以在 WHERE 子句中指定任何条件。</li>
+<li>你可以使用 AND 或者 OR 指定一个或多个条件。</li>
+<li>WHERE 子句也可以运用于 SQL 的 DELETE 或者 UPDATE 命令。</li>
+<li>WHERE 子句类似于程序语言中的 if 条件，根据 MySQL 表中的字段值来读取指定的数据。</li>
+</ul>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">UPDATE table_name SET field1&#x3D;expression1, field2&#x3D;expression2</span><br><span class="line">[WHERE Clause]</span><br><span class="line"></span><br><span class="line">-- expression</span><br><span class="line">a &#x3D; 1</span><br><span class="line">a &#x3D; a + 1</span><br><span class="line">a &#x3D; replace(a, &#39;1&#39;, &#39;2&#39;)</span><br><span class="line">a &#x3D; default 设置为默认的值</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>你可以同时更新一个或多个字段。</li>
+<li>你可以在 WHERE 子句中指定任何条件。</li>
+</ul>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">DELETE FROM table_name [WHERE Clause]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果没有指定 WHERE 子句，MySQL 表中的所有记录将被删除。</li>
+<li>你可以在 WHERE 子句中指定任何条件</li>
+</ul>
+<h3 id="like"><a href="#like" class="headerlink" title="like"></a>like</h3><blockquote>
+<p>模糊匹配字符串</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>你可以在 WHERE 子句中使用LIKE子句</li>
+<li>你可以使用LIKE子句代替等号 <strong>=</strong></li>
+<li>LIKE 通常与 <strong>%</strong> 一同使用，类似于一个元字符的搜索。</li>
+<li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE…LIKE 子句来指定条件。</li>
+</ul>
+<h3 id="like-与-结合使用"><a href="#like-与-结合使用" class="headerlink" title="like 与 % _ 结合使用"></a>like 与 % _ 结合使用</h3><figure class="highlight 1c"><table><tr><td class="code"><pre><span class="line">&#x27;%a&#x27;     <span class="comment">//以a结尾的数据</span></span><br><span class="line">&#x27;a%&#x27;     <span class="comment">//以a开头的数据</span></span><br><span class="line">&#x27;%a%&#x27;    <span class="comment">//含有a的数据</span></span><br><span class="line">&#x27;_a_&#x27;    <span class="comment">//三位且中间字母是a的</span></span><br><span class="line">&#x27;_a&#x27;     <span class="comment">//两位且结尾字母是a的_</span></span><br><span class="line">&#x27;a_&#x27;     <span class="comment">//两位且开头字母是a的</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>%</code>：表示任意 0 个或多个字符。可匹配任意类型和长度的字符，有些情况下若是中文，请使用两个百分号（%%）表示。</li>
+<li><code>_</code>：表示任意单个字符。匹配单个任意字符，它常用来限制表达式的字符长度语句。</li>
+<li><code>[]</code>：表示括号内所列字符中的一个（类似正则表达式）。指定一个字符、字符串或范围，要求所匹配对象为它们中的任一个。</li>
+<li><code>[^]</code> ：表示不在括号所列之内的单个字符。其取值和 [] 相同，但它要求所匹配对象为指定字符以外的任一个字符。</li>
+<li>查询内容包含通配符时,由于通配符的缘故，导致我们查询特殊字符 “%”、“_”、“[” 的语句无法正常实现，而把特殊字符用 “[ ]” 括起便可正常查询。</li>
+</ul>
+<h3 id="union"><a href="#union" class="headerlink" title="union"></a>union</h3><blockquote>
+<p>MySQL UNION 操作符用于连接两个以上的 SELECT 语句的结果组合到一个结果集合中。多个 SELECT 语句会删除重复的数据。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">SELECT expression1, expression2, ... expression_n</span><br><span class="line">FROM tables</span><br><span class="line">[WHERE conditions]</span><br><span class="line">UNION [ALL | DISTINCT]</span><br><span class="line">SELECT expression1, expression2, ... expression_n</span><br><span class="line">FROM tables</span><br><span class="line">[WHERE conditions];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>expression1, expression2, … expression_n</strong>: 要检索的列。</li>
+<li><strong>tables:</strong> 要检索的数据表。</li>
+<li><strong>WHERE conditions:</strong> 可选， 检索条件。</li>
+<li><strong>DISTINCT:</strong> 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
+<li><strong>ALL:</strong> 可选，返回所有结果集，包含重复数据。</li>
+</ul>
+<figure class="highlight gherkin"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT <span class="symbol">*</span> FROM Websites;</span><br><span class="line">+----+--------------+---------------------------+-------+---------+</span><br><span class="line">|<span class="string"> id </span>|<span class="string"> name         </span>|<span class="string"> url  </span>|<span class="string"> alexa </span>|<span class="string"> country </span>|</span><br><span class="line">+----+--------------+---------------------------+-------+---------+</span><br><span class="line">|<span class="string"> 1  </span>|<span class="string"> baidu       </span>|<span class="string"> https://www.baidu.cm/    </span>|<span class="string"> 1     </span>|<span class="string"> USA     </span>|</span><br><span class="line">|<span class="string"> 2  </span>|<span class="string"> 淘宝          </span>|<span class="string"> https://www.taobao.com/   </span>|<span class="string"> 13    </span>|<span class="string"> CN      </span>|</span><br><span class="line">|<span class="string"> 3  </span>|<span class="string"> 菜鸟教程      </span>|<span class="string"> http://www.meteor.com/    </span>|<span class="string"> 4689  </span>|<span class="string"> CN      </span>|</span><br><span class="line">|<span class="string"> 4  </span>|<span class="string"> 微博          </span>|<span class="string"> http://weibo.com/         </span>|<span class="string"> 20    </span>|<span class="string"> CN      </span>|</span><br><span class="line">|<span class="string"> 5  </span>|<span class="string"> Facebook     </span>|<span class="string"> https://www.facebook.com/ </span>|<span class="string"> 3     </span>|<span class="string"> USA     </span>|</span><br><span class="line">|<span class="string"> 7  </span>|<span class="string"> stackoverflow </span>|<span class="string"> http://stackoverflow.com/ </span>|<span class="string">   0 </span>|<span class="string"> IND     </span>|</span><br><span class="line">+----+---------------+---------------------------+-------+---------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM apps;</span><br><span class="line"><span class="code">+----+</span>------------<span class="code">+-------------------------+</span>---------+</span><br><span class="line">| id | app_name   | url| country |</span><br><span class="line"><span class="code">+----+</span>------------<span class="code">+-------------------------+</span>---------+</span><br><span class="line">|  1 | QQ APP     | http://im.qq.com/       | CN      |</span><br><span class="line">|  2 | 微博 APP    | http://weibo.com/       | CN      |</span><br><span class="line">|  3 | 淘宝 APP    | https://www.taobao.com/ | CN      |</span><br><span class="line"><span class="code">+----+</span>------------<span class="code">+-------------------------+</span>---------+</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT country FROM Websites</span><br><span class="line">UNION</span><br><span class="line">SELECT country FROM apps</span><br><span class="line">ORDER BY country;</span><br><span class="line"></span><br><span class="line">-- 输出结果如下</span><br><span class="line">+---------+</span><br><span class="line">| country |</span><br><span class="line">+---------+</span><br><span class="line">|	CN	  |</span><br><span class="line">|	IND   |</span><br><span class="line">|	USA   |</span><br><span class="line">+---------+</span><br><span class="line"></span><br><span class="line">SELECT country FROM Websites</span><br><span class="line">UNION ALL</span><br><span class="line">SELECT country FROM apps</span><br><span class="line">ORDER BY country;</span><br><span class="line"></span><br><span class="line">-- 输出结果如下</span><br><span class="line">+---------+</span><br><span class="line">| country |</span><br><span class="line">+---------+</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	IND   |</span><br><span class="line">|	USA   |</span><br><span class="line">|	USA   |</span><br><span class="line">|	USA   |</span><br><span class="line">+---------+</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注释：</strong>UNION 不能用于列出两个表中所有的country。如果一些网站和APP来自同一个国家，每个国家只会列出一次。UNION 只会选取不同的值。请使用 UNION ALL 来选取重复的值！</p>
+</blockquote>
+<h3 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">ORDER BY field1 [ASC [DESC][默认 ASC]], [field2...] [ASC [DESC][默认 ASC]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>你可以使用任何字段来作为排序的条件，从而返回排序后的查询结果。</li>
+<li>你可以设定多个字段来排序。</li>
+<li>你可以使用 ASC 或 DESC 关键字来设置查询结果是按升序或降序排列。 默认情况下，它是按升序排列。</li>
+</ul>
+<h3 id="group-by"><a href="#group-by" class="headerlink" title="group by"></a>group by</h3><blockquote>
+<p>GROUP BY 语句根据一个或多个列对结果集进行分组。</p>
+<p>在分组的列上我们可以使用 COUNT, SUM, AVG,等函数。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">GROUP BY column_name;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) </span><br><span class="line">FROM t_user_info </span><br><span class="line">WHERE trial_room_name IS NOT NULL</span><br><span class="line">GROUP BY trial_room_name;</span><br><span class="line"></span><br><span class="line">-- 输出结果</span><br><span class="line">+-----------------------------+</span><br><span class="line">|trial_room_name | court(id)  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">|	第1办公室	   |  296		|</span><br><span class="line">|	第2办公室	   |  138		|</span><br><span class="line">+------------------------------+</span><br><span class="line"></span><br><span class="line">SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) </span><br><span class="line">FROM t_user_info </span><br><span class="line">WHERE trial_room_name IS NOT NULL</span><br><span class="line">GROUP BY trial_room_name WITH ROLLUP;</span><br><span class="line"></span><br><span class="line">-- 输出结果 </span><br><span class="line">+-----------------------------+</span><br><span class="line">|trial_room_name | court(id)  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">|	第1办公室	   |  296		|</span><br><span class="line">|	第2办公室	   |  138		|</span><br><span class="line">|	总计          |  434		 |</span><br><span class="line">+------------------------------+</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>WITH ROLLUP 可以实现在分组统计数据基础上再进行相同的统计（SUM,AVG,COUNT…）。</p>
+</blockquote>
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><blockquote>
+<p>使用 MySQL 的 JOIN 在两个或多个表中查询数据。</p>
+<p>你可以在 SELECT, UPDATE 和 DELETE 语句中使用 Mysql 的 JOIN 来联合多表查询。</p>
+</blockquote>
+<p>JOIN 按照功能大致分为如下三类：</p>
+<ul>
+<li><strong>INNER JOIN（内连接,或等值连接）</strong>：获取两个表中字段匹配关系的记录，a inner join b 可以理解为 a &amp; b。</li>
+<li><strong>LEFT JOIN（左连接）：</strong>获取左表所有记录，即使右表没有对应匹配的记录，a left join b 可以理解为 a - b。</li>
+<li><strong>RIGHT JOIN（右连接）：</strong> 与 LEFT JOIN 相反，用于获取右表所有记录，即使左表没有对应匹配的记录，a right join b 可以理解为 b - a。</li>
+</ul>
+<blockquote>
+<p>可以通过 交集 、差集的概念来理解</p>
+</blockquote>
+<h3 id="null值判断"><a href="#null值判断" class="headerlink" title="null值判断"></a>null值判断</h3><ul>
+<li><strong>IS NULL:</strong> 当列的值是 NULL,此运算符返回 true。</li>
+<li><strong>IS NOT NULL:</strong> 当列的值不为 NULL, 运算符返回 true。</li>
+<li><strong>&lt;=&gt;:</strong> 比较操作符（不同于 = 运算符），当比较的的两个值相等或者都为 NULL 时返回 true。</li>
+</ul>
+<blockquote>
+<p>关于 NULL 的条件比较运算是比较特殊的。你不能使用 = NULL 或 != NULL 在列中查找 NULL 值 。</p>
+</blockquote>
+<h3 id="regexp"><a href="#regexp" class="headerlink" title="regexp"></a>regexp</h3><p>下表中的正则模式可应用于 REGEXP 操作符中。</p>
+<table>
+<thead>
+<tr>
+<th align="left">模式</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">^</td>
+<td align="left">匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 ‘\n’ 或 ‘\r’ 之后的位置。</td>
+</tr>
+<tr>
+<td align="left">$</td>
+<td align="left">匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 ‘\n’ 或 ‘\r’ 之前的位置。</td>
+</tr>
+<tr>
+<td align="left">.</td>
+<td align="left">匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用像 ‘[.\n]’ 的模式。</td>
+</tr>
+<tr>
+<td align="left">[…]</td>
+<td align="left">字符集合。匹配所包含的任意一个字符。例如， ‘[abc]’ 可以匹配 “plain” 中的 ‘a’。</td>
+</tr>
+<tr>
+<td align="left">[^…]</td>
+<td align="left">负值字符集合。匹配未包含的任意字符。例如， ‘[^abc]’ 可以匹配 “plain” 中的’p’。</td>
+</tr>
+<tr>
+<td align="left">p1|p2|p3</td>
+<td align="left">匹配 p1 或 p2 或 p3。例如，’z|food’ 能匹配 “z” 或 “food”。’(z|f)ood’ 则匹配 “zood” 或 “food”。</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="left">匹配前面的子表达式零次或多次。例如，zo* 能匹配 “z” 以及 “zoo”。* 等价于{0,}。</td>
+</tr>
+<tr>
+<td align="left">+</td>
+<td align="left">匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+</tr>
+<tr>
+<td align="left">{n}</td>
+<td align="left">n 是一个非负整数。匹配确定的 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td>
+</tr>
+<tr>
+<td align="left">{n,m}</td>
+<td align="left">m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。</td>
+</tr>
+</tbody></table>
+<p>查找name字段中以’st’为开头的所有数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WHERE name REGEXP &#39;^st&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>查找name字段中以’ok’为结尾的所有数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WHERE name REGEXP &#39;ok$&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>查找name字段中包含’mar’字符串的所有数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WHERE name REGEXP &#39;mar&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>查找name字段中以元音字符开头或以’ok’字符串结尾的所有数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">WHERE name REGEXP &#39;^[aeiou]|ok$&#39;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h3><blockquote>
+<p>当我们需要修改数据表名或者修改数据表字段时，就需要使用到MySQL ALTER命令。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 删除字段</span><br><span class="line">ALTER table table_name drop column_name ;</span><br><span class="line"></span><br><span class="line">-- 删除外键</span><br><span class="line">ALTER table table_name drop foregion key keyName;</span><br><span class="line"></span><br><span class="line">-- 新增字段</span><br><span class="line">-- 新增字段放至第一列</span><br><span class="line">ALTER table table_name add column_name column_type first;</span><br><span class="line">-- 新增字段放至name字段之后</span><br><span class="line">ALTER table table_name add column_name column_type after name;</span><br><span class="line"></span><br><span class="line">-- 修改字段</span><br><span class="line">ALTER table table_name modify column_name new_column_type;</span><br><span class="line">ALTER table table_name change old_column_name new_column_name new_column_type;</span><br><span class="line"></span><br><span class="line">-- 修改字段默认值</span><br><span class="line">ALTER table table_name ALTER column_name set default default_value;</span><br><span class="line"></span><br><span class="line">-- 删除字段默认值</span><br><span class="line">ALTER table table_name ALTER column_name drop default;</span><br><span class="line"></span><br><span class="line">-- 修改数据表配置</span><br><span class="line">ALTER table table_name engine &#x3D; MYISAM;</span><br><span class="line"></span><br><span class="line">-- 修改表名</span><br><span class="line">ALTER table table_name rename to new_table_name;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>MySQL索引的建立对于MySQL的高效运行是很重要的，索引可以大大提高MySQL的检索速度。</p>
+<p>打个比方，如果合理的设计且使用索引的MySQL是一辆兰博基尼的话，那么没有设计和使用索引的MySQL就是一个人力三轮车。</p>
+<p>拿汉语字典的目录页（索引）打比方，我们可以按拼音、笔画、偏旁部首等排序的目录（索引）快速查找到需要的字。</p>
+<p>索引分单列索引和组合索引。单列索引，即一个索引只包含单个列，一个表可以有多个单列索引，但这不是组合索引。组合索引，即一个索引包含多个列。</p>
+<p>创建索引时，你需要确保该索引是应用在 SQL 查询语句的条件(一般作为 WHERE 子句的条件)。</p>
+<p>实际上，索引也是一张表，该表保存了主键与索引字段，并指向实体表的记录。</p>
+<p>上面都在说使用索引的好处，但过多的使用索引将会造成滥用。因此索引也会有它的缺点：虽然索引大大提高了查询速度，同时却会降低更新表的速度，如对表进行INSERT、UPDATE和DELETE。因为更新表时，MySQL不仅要保存数据，还要保存一下索引文件。</p>
+<p>建立索引会占用磁盘空间的索引文件。</p>
+<h3 id="普通索引"><a href="#普通索引" class="headerlink" title="普通索引"></a>普通索引</h3><blockquote>
+<p>创建索引</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE INDEX indexName ON tableName (columnName)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>修改表结构，添加索引</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE tableName ADD INDEX indexName(columnName)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建表时指定索引</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">INDEX [indexName] (username(length)) [USING xxx]</span><br><span class="line"></span><br><span class="line">CREATE TABLE &#96;t_user_info&#96;  (</span><br><span class="line"></span><br><span class="line">  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键 caseId&#39;,</span><br><span class="line">  &#96;gmt_create&#96; datetime(0) NOT NULL COMMENT &#39;创建时间&#39;,</span><br><span class="line">  &#96;gmt_modified&#96; datetime(0) NULL DEFAULT NULL COMMENT &#39;修改时间&#39;,</span><br><span class="line">  &#96;creator&#96; varchar(32) NULL DEFAULT NULL COMMENT &#39;创建人&#39;,</span><br><span class="line">  &#96;modifier&#96; varchar(32) NULL DEFAULT NULL COMMENT &#39;修改人&#39;,</span><br><span class="line">  &#96;is_deleted&#96; varchar(1) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (&#96;id&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">  INDEX &#96;case_code&#96;(&#96;case_code&#96;(255)) USING BTREE,</span><br><span class="line"></span><br><span class="line">) ENGINE &#x3D; InnoDB AUTO_INCREMENT &#x3D; 5090 CHARACTER SET &#x3D; utf8mb4 COLLATE &#x3D; utf8mb4_general_ci COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39; ROW_FORMAT &#x3D; DYNAMIC;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>删除索引</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">DROP INDEX indexName ON tableName</span><br></pre></td></tr></table></figure>
+
+<h3 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h3><p>它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。</p>
+<blockquote>
+<p>创建索引</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">CREATE UNIQUE INDEX indexName ON tableName(columnName(length)) </span><br><span class="line"></span><br><span class="line">-- 栗子</span><br><span class="line">CREATE UNIQUE INDEX &#96;case_summary_key&#96; ON &#96;t_user_info&#96;(&#96;case_summary_key&#96;) </span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>修改表结构，添加索引</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">ALTER table tableName ADD UNIQUE [indexName] (columnName(length))</span><br><span class="line"></span><br><span class="line">-- 栗子</span><br><span class="line">ALTER table &#96;t_user_info&#96; ADD UNIQUE &#96;case_summary_key&#96; (&#96;case_summary_key&#96;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建表时指定</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CREATE TABLE &#96;t_user_info&#96;  (</span><br><span class="line"></span><br><span class="line">  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键 caseId&#39;,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (&#96;id&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">  UNIQUE INDEX &#96;source_case_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;case_summary_key&#96;(&#96;case_summary_key&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">) ENGINE &#x3D; InnoDB COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加或删除主键"><a href="#添加或删除主键" class="headerlink" title="添加或删除主键"></a>添加或删除主键</h3><blockquote>
+<p>添加主键</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE tableName ADD PRIMARY KEY (id);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>删除主键</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">ALTER TABLE tableName DROP PRIMARY KEY;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看索引信息"><a href="#查看索引信息" class="headerlink" title="查看索引信息"></a>查看索引信息</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">SHOW INDEX FROM tableName;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导出、导入"><a href="#导出、导入" class="headerlink" title="导出、导入"></a>导出、导入</h2><h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导出整个数据库</span></span><br><span class="line">mysqldump -u root -p databaseName &gt; databaseName.sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导出整个表</span></span><br><span class="line">mysqldump -u root -p databaseName tableName &gt; tableName.sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入mysql交互环境，通过SELECT ... INTO OUTFILE 命令导出</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM tableName</span></span><br><span class="line">    -&gt; INTO OUTFILE &#x27;/home/haigui/tableName.sql&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>SELECT … INTO OUTFILE 语句有以下属性：</p>
+<ul>
+<li>LOAD DATA INFILE是SELECT … INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT … INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。</li>
+<li>SELECT…INTO OUTFILE ‘file_name’形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。</li>
+<li>输出不能是一个已存在的文件。防止文件数据被篡改。</li>
+<li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT … INTO OUTFILE 不会起任何作用。</li>
+<li>在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。</li>
+</ul>
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导入整个数据库</span></span><br><span class="line">mysql -u root -p password &lt; meteor.sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导入数据表</span></span><br><span class="line">mysqlimport -u root -p --local tableName dump.txt</span><br><span class="line">Enter password: ******</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入mysql交互环境，通过<span class="built_in">source</span>命令导入</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> create database <span class="built_in">test</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use <span class="built_in">test</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> names utf8;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">source</span> /home/haigui/meteor.sql;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 插入数据到表</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> LOAD DATA LOCAL INFILE <span class="string">&#x27;dump.txt&#x27;</span> INTO TABLE tableName;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>msyqlimport常用参数</p>
+<table>
+<thead>
+<tr>
+<th align="left">选项</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">-d or –delete</td>
+<td align="left">新数据导入数据表中之前删除数据数据表中的所有信息</td>
+</tr>
+<tr>
+<td align="left">-f or –force</td>
+<td align="left">不管是否遇到错误，mysqlimport将强制继续插入数据</td>
+</tr>
+<tr>
+<td align="left">-i or –ignore</td>
+<td align="left">mysqlimport跳过或者忽略那些有相同唯一 关键字的行， 导入文件中的数据将被忽略。</td>
+</tr>
+<tr>
+<td align="left">-l or -lock-tables</td>
+<td align="left">数据被插入之前锁住表，这样就防止了， 你在更新数据库时，用户的查询和更新受到影响。</td>
+</tr>
+<tr>
+<td align="left">-r or -replace</td>
+<td align="left">这个选项与－i选项的作用相反；此选项将替代 表中有相同唯一关键字的记录。</td>
+</tr>
+<tr>
+<td align="left">–fields-enclosed- by= char</td>
+<td align="left">指定文本文件中数据的记录时以什么括起的， 很多情况下 数据以双引号括起。 默认的情况下数据是没有被字符括起的。</td>
+</tr>
+<tr>
+<td align="left">–fields-terminated- by=char</td>
+<td align="left">指定各个数据的值之间的分隔符，在句号分隔的文件中， 分隔符是句号。您可以用此选项指定数据之间的分隔符。 默认的分隔符是跳格符（Tab）</td>
+</tr>
+<tr>
+<td align="left">–lines-terminated- by=str</td>
+<td align="left">此选项指定文本文件中行与行之间数据的分隔字符串 或者字符。 默认的情况下mysqlimport以newline为行分隔符。 您可以选择用一个字符串来替代一个单个的字符： 一个新行或者一个回车。</td>
+</tr>
+</tbody></table>
+<h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM t_user_info WHERE case_code &#x3D; &#39;1111&#39; or id &#x3D; 2020</span><br><span class="line"></span><br><span class="line">-- 输出结果如下表</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+<th>type</th>
+<th>possible_keys</th>
+<th>key</th>
+<th>key_len</th>
+<th>ref</th>
+<th>rows</th>
+<th>filtered</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>SIMPLE</td>
+<td>t_user_info</td>
+<td>index_merge</td>
+<td>PRIMARY,case_code</td>
+<td>case_code,PRIMARY</td>
+<td>768,8</td>
+<td></td>
+<td>2</td>
+<td>100.00</td>
+<td>Using sort_union(case_code,PRIMARY); Using where</td>
+</tr>
+</tbody></table>
+<h3 id="字段含义"><a href="#字段含义" class="headerlink" title="字段含义"></a>字段含义</h3><blockquote>
+<p>官方文档<br><a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-output-columns">https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#explain-output-columns</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>id</strong></td>
+<td>SELECT识别符。这是SELECT的查询序列号</td>
+</tr>
+<tr>
+<td><strong>select_type</strong></td>
+<td>SELECT类型，可以为以下任何一种：<br /><strong>SIMPLE</strong>：简单SELECT(不使用UNION或子查询)<br /><strong>PRIMARY</strong>：最外面的SELECT<br /><strong>UNION</strong>：UNION中的第二个或后面的SELECT语句<br /><strong>DEPENDENT UNION</strong>：UNION中的第二个或后面的SELECT语句，取决于外面的查询<br /><strong>UNION RESULT</strong>：UNION 的结果<br /><strong>SUBQUERY</strong>：子查询中的第一个SELECT<br /><strong>DEPENDENT SUBQUERY</strong>：子查询中的第一个SELECT，取决于外面的查询<br /><strong>DERIVED</strong>：导出表的SELECT(FROM子句的子查询)</td>
+</tr>
+<tr>
+<td><strong>table</strong></td>
+<td>输出的行所引用的表</td>
+</tr>
+<tr>
+<td><strong>type</strong></td>
+<td>联接类型。下面给出各种联接类型，按照从最佳类型到最坏类型进行排序：<br /><strong>system</strong>：表仅有一行(=系统表)。这是const联接类型的一个特例。<br /><strong>const</strong>：表最多有一个匹配行，它将在查询开始时被读取。因为仅有一行，在这行的列值可被优化器剩余部分认为是常数。const表很快，因为它们只读取一次!<br /><strong>eq_ref</strong>：对于每个来自于前面的表的行组合，从该表中读取一行。这可能是最好的联接类型，除了const类型。<br /><strong>ref</strong>：对于每个来自于前面的表的行组合，所有有匹配索引值的行将从这张表中读取。<br /><strong>ref_or_null</strong>：该联接类型如同ref，但是添加了MySQL可以专门搜索包含NULL值的行。<br /><strong>index_merge</strong>：该联接类型表示使用了索引合并优化方法。<br /><strong>unique_subquery</strong>：该类型替换了下面形式的IN子查询的ref： value IN (SELECT primary_key FROM single_table WHERE some_expr) unique_subquery是一个索引查找函数，可以完全替换子查询，效率更高。<br /><strong>index_subquery</strong>：该联接类型类似于unique_subquery。可以替换IN子查询，但只适合下列形式的子查询中的非唯一索引：value IN (SELECT key_column FROM single_table WHERE some_expr)<br /><strong>range</strong>：只检索给定范围的行，使用一个索引来选择行。<br /><strong>index</strong>：该联接类型与ALL相同，除了只有索引树被扫描。这通常比ALL快，因为索引文件通常比数据文件小。<br /><strong>ALL</strong>：对于每个来自于先前的表的行组合，进行完整的表扫描。</td>
+</tr>
+<tr>
+<td><strong>possible_keys</strong></td>
+<td>指出MySQL能使用哪个索引在该表中找到行</td>
+</tr>
+<tr>
+<td><strong>key</strong></td>
+<td>显示MySQL实际决定使用的键(索引)。如果没有选择索引，键是NULL。</td>
+</tr>
+<tr>
+<td><strong>key_len</strong></td>
+<td>显示MySQL决定使用的键长度。如果键是NULL，则长度为NULL。</td>
+</tr>
+<tr>
+<td><strong>ref</strong></td>
+<td>显示使用哪个列或常数与key一起从表中选择行。</td>
+</tr>
+<tr>
+<td><strong>rows</strong></td>
+<td>显示MySQL认为它执行查询时必须检查的行数。多行之间的数据相乘可以估算要处理的行数。</td>
+</tr>
+<tr>
+<td><strong>filtered</strong></td>
+<td>显示了通过条件过滤出的行数的百分比估计值。</td>
+</tr>
+<tr>
+<td><strong>Extra</strong></td>
+<td>该列包含MySQL解决查询的详细信息<br /><strong>Distinct</strong>：MySQL发现第1个匹配行后，停止为当前的行组合搜索更多的行。<br /><strong>Not exists</strong>：MySQL能够对查询进行LEFT JOIN优化，发现1个匹配LEFT JOIN标准的行后，不再为前面的的行组合在该表内检查更多的行。<br />**range checked for each record (index map： #)**：MySQL没有发现好的可以使用的索引，但发现如果来自前面的表的列值已知，可能部分索引可以使用。<br /><strong>Using filesort</strong>：MySQL需要额外的一次传递，以找出如何按排序顺序检索行。<br /><strong>Using index</strong>：从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。<br /><strong>Using temporary</strong>：为了解决查询，MySQL需要创建一个临时表来容纳结果。<br /><strong>Using where</strong>：WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。<br />**Using sort_union(…)， Using union(…)， Using intersect(…)**：这些函数说明如何为index_merge联接类型合并索引扫描。<br /><strong>Using index for group-by</strong>：类似于访问表的Using index方式，Using index for group-by表示MySQL发现了一个索引，可以用来查 询GROUP BY或DISTINCT查询的所有列，而不要额外搜索硬盘访问实际的表。</td>
+</tr>
+</tbody></table>
+<h3 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h3><h4 id="union-1"><a href="#union-1" class="headerlink" title="union"></a>union</h4><blockquote>
+<p>当通过union来连接多个查询结果时，第二个之后的select其select_type为UNION</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM t_user_info WHERE id &#x3D; 1161 </span><br><span class="line">UNION</span><br><span class="line">SELECT * FROM t_user_info WHERE id &#x3D; 1166</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+<th>type</th>
+<th>possible_keys</th>
+<th>key</th>
+<th>key_len</th>
+<th>ref</th>
+<th>rows</th>
+<th>filtered</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>PRIMARY</td>
+<td>t_user_info</td>
+<td>const</td>
+<td>PRIMARY</td>
+<td>PRIMARY</td>
+<td>8</td>
+<td>const</td>
+<td>1</td>
+<td>100.00</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>2</td>
+<td>UNION</td>
+<td>t_user_info</td>
+<td>const</td>
+<td>PRIMARY</td>
+<td>PRIMARY</td>
+<td>8</td>
+<td>const</td>
+<td>1</td>
+<td>100.00</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>UNION RESULT</td>
+<td>&lt;union1,2&gt;</td>
+<td>ALL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>NULL</td>
+<td>Using temporary</td>
+</tr>
+</tbody></table>
+<h4 id="DEPENDENT-UNION-与-DEPENDENT-SUBQUERY"><a href="#DEPENDENT-UNION-与-DEPENDENT-SUBQUERY" class="headerlink" title="DEPENDENT UNION 与 DEPENDENT SUBQUERY"></a>DEPENDENT UNION 与 DEPENDENT SUBQUERY</h4><blockquote>
+<p>当union作为子查询时，其中第一个子查询的select_type则是DEPENDENT SUBQUERY，第二个union的select_type就是DEPENDENT UNION。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM t_user_info WHERE id IN (</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1161</span><br><span class="line">	UNION</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1166</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+<th>type</th>
+<th>possible_keys</th>
+<th>key</th>
+<th>key_len</th>
+<th>ref</th>
+<th>rows</th>
+<th>filtered</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>PRIMARY</td>
+<td>t_user_info</td>
+<td>ALL</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>616</td>
+<td>100.00</td>
+<td>Using where</td>
+</tr>
+<tr>
+<td>2</td>
+<td>DEPENDENT SUBQUERY</td>
+<td>t_user_info</td>
+<td>const</td>
+<td>PRIMARY</td>
+<td>PRIMARY</td>
+<td>8</td>
+<td>const</td>
+<td>1</td>
+<td>100.00</td>
+<td>Using index</td>
+</tr>
+<tr>
+<td>3</td>
+<td>DEPENDENT UNION</td>
+<td>t_user_info</td>
+<td>const</td>
+<td>PRIMARY</td>
+<td>PRIMARY</td>
+<td>8</td>
+<td>const</td>
+<td>1</td>
+<td>100.00</td>
+<td>Using index</td>
+</tr>
+<tr>
+<td></td>
+<td>UNION RESULT</td>
+<td>&lt;union2,3&gt;</td>
+<td>ALL</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Using temporary</td>
+</tr>
+</tbody></table>
+<h4 id="SUBQUERY"><a href="#SUBQUERY" class="headerlink" title="SUBQUERY"></a>SUBQUERY</h4><blockquote>
+<p>子查询中的第一个select其select_type为SUBQUERY</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM t_user_info WHERE id &#x3D; (</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1161</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>select_type</th>
+<th>table</th>
+<th>partitions</th>
+<th>type</th>
+<th>possible_keys</th>
+<th>key</th>
+<th>key_len</th>
+<th>ref</th>
+<th>rows</th>
+<th>filtered</th>
+<th>Extra</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>PRIMARY</td>
+<td>t_user_info</td>
+<td></td>
+<td>const</td>
+<td>PRIMARY</td>
+<td>PRIMARY</td>
+<td>8</td>
+<td>const</td>
+<td>1</td>
+<td>100.00</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>SUBQUERY</td>
+<td>t_user_info</td>
+<td></td>
+<td>const</td>
+<td>PRIMARY</td>
+<td>PRIMARY</td>
+<td>8</td>
+<td>const</td>
+<td>1</td>
+<td>100.00</td>
+<td>Using index</td>
+</tr>
+</tbody></table>
+<h4 id="DERIVED"><a href="#DERIVED" class="headerlink" title="DERIVED"></a>DERIVED</h4><blockquote>
+<p>当子查询是from子句时，其select_type为DERIVED。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM (</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1161</span><br><span class="line">) AS aliasName</span><br></pre></td></tr></table></figure>
+
+<h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><blockquote>
+<p>注意:一般保证查询至少达到range级别，最好能达到ref。</p>
+</blockquote>
+<h4 id="system"><a href="#system" class="headerlink" title="system"></a>system</h4><blockquote>
+<p>该表只有一行（=系统表）。这是<a href="https://dev.mysql.com/doc/refman/5.7/en/explain-output.html#jointype_const"><code>const</code></a>联接类型的特例 。</p>
+</blockquote>
+<h4 id="const"><a href="#const" class="headerlink" title="const"></a>const</h4><blockquote>
+<p>通过索引一次就找到</p>
+</blockquote>
+<h4 id="eq-ref"><a href="#eq-ref" class="headerlink" title="eq_ref"></a>eq_ref</h4><blockquote>
+<p>唯一性索引扫描</p>
+</blockquote>
+<h4 id="ref"><a href="#ref" class="headerlink" title="ref"></a>ref</h4><blockquote>
+<p>非唯一性索引扫描</p>
+</blockquote>
+<h4 id="unique-subquery"><a href="#unique-subquery" class="headerlink" title="unique_subquery"></a>unique_subquery</h4><blockquote>
+<p>该联接类型用于替换value IN (SELECT primary_key FROM single_table WHERE some_expr)这样的子查询的ref。注意ref列，其中第二行显示的是func，表明unique_subquery是一个函数，而不是一个普通的ref。</p>
+</blockquote>
+<h4 id="index-subquery"><a href="#index-subquery" class="headerlink" title="index_subquery"></a>index_subquery</h4><blockquote>
+<p>该联接类型与上面的太像了，唯一的差别就是子查询查的不是主键而是非唯一索引。</p>
+</blockquote>
+<h4 id="range-只检索给定范围的行"><a href="#range-只检索给定范围的行" class="headerlink" title="range 只检索给定范围的行"></a>range 只检索给定范围的行</h4><blockquote>
+<p>按指定的范围进行检索，很常见。</p>
+</blockquote>
+<h4 id="index-只遍历索引树"><a href="#index-只遍历索引树" class="headerlink" title="index 只遍历索引树"></a>index 只遍历索引树</h4><blockquote>
+<p>在进行统计时非常常见，此联接类型实际上会扫描索引树，仅比ALL快些。</p>
+</blockquote>
+<h4 id="all-遍历全表"><a href="#all-遍历全表" class="headerlink" title="all 遍历全表"></a>all 遍历全表</h4><blockquote>
+<p>完整的扫描全表，最慢的联接类型，尽可能的避免。</p>
+</blockquote>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="字符串-1"><a href="#字符串-1" class="headerlink" title="字符串"></a>字符串</h3><table>
+<thead>
+<tr>
+<th align="left">函数</th>
+<th align="left">描述</th>
+<th align="left">实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ASCII(s)</td>
+<td align="left">返回字符串 s 的第一个字符的 ASCII 码。</td>
+<td align="left">返回 CustomerName 字段第一个字母的 ASCII 码：<br /><code>SELECT ASCII(CustomerName) AS NumCodeOfFirstChar FROM Customers;</code></td>
+</tr>
+<tr>
+<td align="left">CHAR_LENGTH(s)</td>
+<td align="left">返回字符串 s 的字符数</td>
+<td align="left">返回字符串 meteor 的字符数<br /><code>SELECT CHAR_LENGTH(&quot;meteor&quot;) AS LengthOfString;</code></td>
+</tr>
+<tr>
+<td align="left">CHARACTER_LENGTH(s)</td>
+<td align="left">返回字符串 s 的字符数</td>
+<td align="left">返回字符串 meteor 的字符数<br /><code>SELECT CHARACTER_LENGTH(&quot;meteor&quot;) AS LengthOfString;</code></td>
+</tr>
+<tr>
+<td align="left">CONCAT(s1,s2…sn)</td>
+<td align="left">字符串 s1,s2 等多个字符串合并为一个字符串</td>
+<td align="left">合并多个字符串<br /><code>SELECT CONCAT(&quot;SQL &quot;, &quot;meteor &quot;, &quot;Gooogle &quot;, &quot;Facebook&quot;) AS ConcatenatedString;</code></td>
+</tr>
+<tr>
+<td align="left">CONCAT_WS(x, s1,s2…sn)</td>
+<td align="left">同 CONCAT(s1,s2,…) 函数，但是每个字符串之间要加上 x，x 可以是分隔符</td>
+<td align="left">合并多个字符串，并添加分隔符：<br /><code>SELECT CONCAT_WS(&quot;-&quot;, &quot;SQL&quot;, &quot;Tutorial&quot;, &quot;is&quot;, &quot;fun!&quot;)AS ConcatenatedString;</code></td>
+</tr>
+<tr>
+<td align="left">FIELD(s,s1,s2…)</td>
+<td align="left">返回第一个字符串 s 在字符串列表(s1,s2…)中的位置</td>
+<td align="left">返回字符串 c 在列表值中的位置：<br /><code>SELECT FIELD(&quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;);</code></td>
+</tr>
+<tr>
+<td align="left">FIND_IN_SET(s1,s2)</td>
+<td align="left">返回在字符串s2中与s1匹配的字符串的位置</td>
+<td align="left">返回字符串 c 在指定字符串中的位置：<br /><code>SELECT FIND_IN_SET(&quot;c&quot;, &quot;a,b,c,d,e&quot;);</code></td>
+</tr>
+<tr>
+<td align="left">FORMAT(x,n)</td>
+<td align="left">函数可以将数字 x 进行格式化 “#,###.##”, 将 x 保留到小数点后 n 位，最后一位四舍五入。</td>
+<td align="left">格式化数字 “#,###.##” 形式：<br /><code>SELECT FORMAT(250500.5634, 2);     -- 输出 250,500.56</code></td>
+</tr>
+<tr>
+<td align="left">INSERT(s1,x,len,s2)</td>
+<td align="left">字符串 s2 替换 s1 的 x 位置开始长度为 len 的字符串</td>
+<td align="left">从字符串第一个位置开始的 6 个字符替换为 meteor：<br /><code>SELECT INSERT(&quot;baidu.com&quot;, 1, 6, &quot;meteor&quot;);  -- 输出：meteor.com</code></td>
+</tr>
+<tr>
+<td align="left">LOCATE(s1,s)</td>
+<td align="left">从字符串 s 中获取 s1 的开始位置</td>
+<td align="left">获取 b 在字符串 abc 中的位置：<br /><code>SELECT LOCATE(&#39;st&#39;,&#39;myteststring&#39;);  -- 5</code>返回字符串 abc 中 b 的位置：<code>SELECT LOCATE(&#39;b&#39;, &#39;abc&#39;) -- 2</code></td>
+</tr>
+<tr>
+<td align="left">LCASE(s)</td>
+<td align="left">将字符串 s 的所有字母变成小写字母</td>
+<td align="left">字符串 meteor 转换为小写：<br /><code>SELECT LCASE(&#39;meteor&#39;) -- meteor</code></td>
+</tr>
+<tr>
+<td align="left">LEFT(s,n)</td>
+<td align="left">返回字符串 s 的前 n 个字符</td>
+<td align="left">返回字符串 meteor 中的前两个字符：<br /><code>SELECT LEFT(&#39;meteor&#39;,2) -- ru</code></td>
+</tr>
+<tr>
+<td align="left">LOWER(s)</td>
+<td align="left">将字符串 s 的所有字母变成小写字母</td>
+<td align="left">字符串 meteor 转换为小写：<br /><code>SELECT LOWER(&#39;meteor&#39;) -- meteor</code></td>
+</tr>
+<tr>
+<td align="left">LPAD(s1,len,s2)</td>
+<td align="left">在字符串 s1 的开始处填充字符串 s2，使字符串长度达到 len</td>
+<td align="left">将字符串 xx 填充到 abc 字符串的开始处：<br /><code>SELECT LPAD(&#39;abc&#39;,5,&#39;xx&#39;) -- xxabc</code></td>
+</tr>
+<tr>
+<td align="left">LTRIM(s)</td>
+<td align="left">去掉字符串 s 开始处的空格</td>
+<td align="left">去掉字符串 meteor开始处的空格：<br /><code>SELECT LTRIM(&quot;    meteor&quot;) AS LeftTrimmedString;-- meteor</code></td>
+</tr>
+<tr>
+<td align="left">MID(s,n,len)</td>
+<td align="left">从字符串 s 的 n 位置截取长度为 len 的子字符串，同 SUBSTRING(s,n,len)</td>
+<td align="left">从字符串 meteor 中的第 2 个位置截取 3个 字符：<br /><code>SELECT MID(&quot;meteor&quot;, 2, 3) AS ExtractString; -- UNO</code></td>
+</tr>
+<tr>
+<td align="left">POSITION(s1 IN s)</td>
+<td align="left">从字符串 s 中获取 s1 的开始位置</td>
+<td align="left">返回字符串 abc 中 b 的位置：<br /><code>SELECT POSITION(&#39;b&#39; in &#39;abc&#39;) -- 2</code></td>
+</tr>
+<tr>
+<td align="left">REPEAT(s,n)</td>
+<td align="left">将字符串 s 重复 n 次</td>
+<td align="left">将字符串 meteor 重复三次：<br /><code>SELECT REPEAT(&#39;meteor&#39;,3) -- meteormeteormeteor</code></td>
+</tr>
+<tr>
+<td align="left">REPLACE(s,s1,s2)</td>
+<td align="left">将字符串 s2 替代字符串 s 中的字符串 s1</td>
+<td align="left">将字符串 abc 中的字符 a 替换为字符 x：<br /><code>SELECT REPLACE(&#39;abc&#39;,&#39;a&#39;,&#39;x&#39;) --xbc</code></td>
+</tr>
+<tr>
+<td align="left">REVERSE(s)</td>
+<td align="left">将字符串s的顺序反过来</td>
+<td align="left">将字符串 abc 的顺序反过来：<br /><code>SELECT REVERSE(&#39;abc&#39;) -- cba</code></td>
+</tr>
+<tr>
+<td align="left">RIGHT(s,n)</td>
+<td align="left">返回字符串 s 的后 n 个字符</td>
+<td align="left">返回字符串 meteor 的后两个字符：<br /><code>SELECT RIGHT(&#39;meteor&#39;,2) -- ob</code></td>
+</tr>
+<tr>
+<td align="left">RPAD(s1,len,s2)</td>
+<td align="left">在字符串 s1 的结尾处添加字符串 s2，使字符串的长度达到 len</td>
+<td align="left">将字符串 xx 填充到 abc 字符串的结尾处：<br /><code>SELECT RPAD(&#39;abc&#39;,5,&#39;xx&#39;) -- abcxx</code></td>
+</tr>
+<tr>
+<td align="left">RTRIM(s)</td>
+<td align="left">去掉字符串 s 结尾处的空格</td>
+<td align="left">去掉字符串 meteor 的末尾空格：<br /><code>SELECT RTRIM(&quot;meteor     &quot;) AS RightTrimmedString;   -- meteor</code></td>
+</tr>
+<tr>
+<td align="left">SPACE(n)</td>
+<td align="left">返回 n 个空格</td>
+<td align="left">返回 10 个空格：<br /><code>SELECT SPACE(10);</code></td>
+</tr>
+<tr>
+<td align="left">STRCMP(s1,s2)</td>
+<td align="left">比较字符串 s1 和 s2，如果 s1 与 s2 相等返回 0 ，如果 s1&gt;s2 返回 1，如果 s1&lt;s2 返回 -1</td>
+<td align="left">比较字符串：<br /><code>SELECT STRCMP(&quot;meteor&quot;, &quot;meteor&quot;);  -- 0</code></td>
+</tr>
+<tr>
+<td align="left">SUBSTR(s, start, length)</td>
+<td align="left">从字符串 s 的 start 位置截取长度为 length 的子字符串</td>
+<td align="left">从字符串 meteor 中的第 2 个位置截取 3个 字符：<br /><code>SELECT SUBSTR(&quot;meteor&quot;, 2, 3) AS ExtractString; -- UNO</code></td>
+</tr>
+<tr>
+<td align="left">SUBSTRING(s, start, length)</td>
+<td align="left">从字符串 s 的 start 位置截取长度为 length 的子字符串</td>
+<td align="left">从字符串 meteor 中的第 2 个位置截取 3个 字符：<br /><code>SELECT SUBSTRING(&quot;meteor&quot;, 2, 3) AS ExtractString; -- UNO</code></td>
+</tr>
+<tr>
+<td align="left">SUBSTRING_INDEX(s, delimiter, number)</td>
+<td align="left">返回从字符串 s 的第 number 个出现的分隔符 delimiter 之后的子串。 如果 number 是正数，返回第 number 个字符左边的字符串。 如果 number 是负数，返回第(number 的绝对值(从右边数))个字符右边的字符串。</td>
+<td align="left"><code>SELECT SUBSTRING_INDEX(&#39;a*b&#39;,&#39;*&#39;,1) -- a</code> <br /><code>SELECT SUBSTRING_INDEX(&#39;a*b&#39;,&#39;*&#39;,-1)  -- b</code> <br /><code>SELECT SUBSTRING_INDEX(SUBSTRING_INDEX(&#39;a*b*c*d*e&#39;,&#39;*&#39;,3),&#39;*&#39;,-1)  -- c</code></td>
+</tr>
+<tr>
+<td align="left">TRIM(s)</td>
+<td align="left">去掉字符串 s 开始和结尾处的空格</td>
+<td align="left">去掉字符串 meteor 的首尾空格：<br /><code>SELECT TRIM(&#39;    meteor    &#39;) AS TrimmedString;</code></td>
+</tr>
+<tr>
+<td align="left">UCASE(s)</td>
+<td align="left">将字符串转换为大写</td>
+<td align="left">将字符串 meteor 转换为大写：<br /><code>SELECT UCASE(&quot;meteor&quot;); -- METEOR</code></td>
+</tr>
+<tr>
+<td align="left">UPPER(s)</td>
+<td align="left">将字符串转换为大写</td>
+<td align="left">将字符串 meteor 转换为大写：<br /><code>SELECT UPPER(&quot;meteor&quot;); -- METEOR</code></td>
+</tr>
+</tbody></table>
+<h3 id="数值-1"><a href="#数值-1" class="headerlink" title="数值"></a>数值</h3><table>
+<thead>
+<tr>
+<th align="left">函数名</th>
+<th align="left">描述</th>
+<th align="left">实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ABS(x)</td>
+<td align="left">返回 x 的绝对值</td>
+<td align="left">返回 -1 的绝对值：SELECT ABS(-1) – 返回1</td>
+</tr>
+<tr>
+<td align="left">ACOS(x)</td>
+<td align="left">求 x 的反余弦值(参数是弧度)</td>
+<td align="left">SELECT ACOS(0.25);</td>
+</tr>
+<tr>
+<td align="left">ASIN(x)</td>
+<td align="left">求反正弦值(参数是弧度)</td>
+<td align="left">SELECT ASIN(0.25);</td>
+</tr>
+<tr>
+<td align="left">ATAN(x)</td>
+<td align="left">求反正切值(参数是弧度)</td>
+<td align="left">SELECT ATAN(2.5);</td>
+</tr>
+<tr>
+<td align="left">ATAN2(n, m)</td>
+<td align="left">求反正切值(参数是弧度)</td>
+<td align="left">SELECT ATAN2(-0.8, 2);</td>
+</tr>
+<tr>
+<td align="left">AVG(expression)</td>
+<td align="left">返回一个表达式的平均值，expression 是一个字段</td>
+<td align="left">返回 Products 表中Price 字段的平均值：SELECT AVG(Price) AS AveragePrice FROM Products;</td>
+</tr>
+<tr>
+<td align="left">CEIL(x)</td>
+<td align="left">返回大于或等于 x 的最小整数</td>
+<td align="left">SELECT CEIL(1.5) – 返回2</td>
+</tr>
+<tr>
+<td align="left">CEILING(x)</td>
+<td align="left">返回大于或等于 x 的最小整数</td>
+<td align="left">SELECT CEILING(1.5); – 返回2</td>
+</tr>
+<tr>
+<td align="left">COS(x)</td>
+<td align="left">求余弦值(参数是弧度)</td>
+<td align="left">SELECT COS(2);</td>
+</tr>
+<tr>
+<td align="left">COT(x)</td>
+<td align="left">求余切值(参数是弧度)</td>
+<td align="left">SELECT COT(6);</td>
+</tr>
+<tr>
+<td align="left">COUNT(expression)</td>
+<td align="left">返回查询的记录总数，expression 参数是一个字段或者 * 号</td>
+<td align="left">返回 Products 表中 products 字段总共有多少条记录：SELECT COUNT(ProductID) AS NumberOfProducts FROM Products;</td>
+</tr>
+<tr>
+<td align="left">DEGREES(x)</td>
+<td align="left">将弧度转换为角度</td>
+<td align="left">SELECT DEGREES(3.1415926535898) – 180</td>
+</tr>
+<tr>
+<td align="left">n DIV m</td>
+<td align="left">整除，n 为被除数，m 为除数</td>
+<td align="left">计算 10 除于 5：SELECT 10 DIV 5;  – 2</td>
+</tr>
+<tr>
+<td align="left">EXP(x)</td>
+<td align="left">返回 e 的 x 次方</td>
+<td align="left">计算 e 的三次方：SELECT EXP(3) – 20.085536923188</td>
+</tr>
+<tr>
+<td align="left">FLOOR(x)</td>
+<td align="left">返回小于或等于 x 的最大整数</td>
+<td align="left">小于或等于 1.5 的整数：SELECT FLOOR(1.5) – 返回1</td>
+</tr>
+<tr>
+<td align="left">GREATEST(expr1, expr2, expr3, …)</td>
+<td align="left">返回列表中的最大值</td>
+<td align="left">返回以下数字列表中的最大值：SELECT GREATEST(3, 12, 34, 8, 25); – 34返回以下字符串列表中的最大值：SELECT GREATEST(“Google”, “Runoob”, “Apple”);   – Runoob</td>
+</tr>
+<tr>
+<td align="left">LEAST(expr1, expr2, expr3, …)</td>
+<td align="left">返回列表中的最小值</td>
+<td align="left">返回以下数字列表中的最小值：SELECT LEAST(3, 12, 34, 8, 25); – 3返回以下字符串列表中的最小值：SELECT LEAST(“Google”, “Runoob”, “Apple”);   – Apple</td>
+</tr>
+<tr>
+<td align="left">LN</td>
+<td align="left">返回数字的自然对数，以 e 为底。</td>
+<td align="left">返回 2 的自然对数：SELECT LN(2);  – 0.6931471805599453</td>
+</tr>
+<tr>
+<td align="left">LOG(x) 或 LOG(base, x)</td>
+<td align="left">返回自然对数(以 e 为底的对数)，如果带有 base 参数，则 base 为指定带底数。</td>
+<td align="left">SELECT LOG(20.085536923188) – 3 SELECT LOG(2, 4); – 2</td>
+</tr>
+<tr>
+<td align="left">LOG10(x)</td>
+<td align="left">返回以 10 为底的对数</td>
+<td align="left">SELECT LOG10(100) – 2</td>
+</tr>
+<tr>
+<td align="left">LOG2(x)</td>
+<td align="left">返回以 2 为底的对数</td>
+<td align="left">返回以 2 为底 6 的对数：SELECT LOG2(6);  – 2.584962500721156</td>
+</tr>
+<tr>
+<td align="left">MAX(expression)</td>
+<td align="left">返回字段 expression 中的最大值</td>
+<td align="left">返回数据表 Products 中字段 Price 的最大值：SELECT MAX(Price) AS LargestPrice FROM Products;</td>
+</tr>
+<tr>
+<td align="left">MIN(expression)</td>
+<td align="left">返回字段 expression 中的最小值</td>
+<td align="left">返回数据表 Products 中字段 Price 的最小值：SELECT MIN(Price) AS MinPrice FROM Products;</td>
+</tr>
+<tr>
+<td align="left">MOD(x,y)</td>
+<td align="left">返回 x 除以 y 以后的余数</td>
+<td align="left">5 除于 2 的余数：SELECT MOD(5,2) – 1</td>
+</tr>
+<tr>
+<td align="left">PI()</td>
+<td align="left">返回圆周率(3.141593）</td>
+<td align="left">SELECT PI() –3.141593</td>
+</tr>
+<tr>
+<td align="left">POW(x,y)</td>
+<td align="left">返回 x 的 y 次方</td>
+<td align="left">2 的 3 次方：SELECT POW(2,3) – 8</td>
+</tr>
+<tr>
+<td align="left">POWER(x,y)</td>
+<td align="left">返回 x 的 y 次方</td>
+<td align="left">2 的 3 次方：SELECT POWER(2,3) – 8</td>
+</tr>
+<tr>
+<td align="left">RADIANS(x)</td>
+<td align="left">将角度转换为弧度</td>
+<td align="left">180 度转换为弧度：SELECT RADIANS(180) – 3.1415926535898</td>
+</tr>
+<tr>
+<td align="left">RAND()</td>
+<td align="left">返回 0 到 1 的随机数</td>
+<td align="left">SELECT RAND() –0.93099315644334</td>
+</tr>
+<tr>
+<td align="left">ROUND(x)</td>
+<td align="left">返回离 x 最近的整数</td>
+<td align="left">SELECT ROUND(1.23456) –1</td>
+</tr>
+<tr>
+<td align="left">SIGN(x)</td>
+<td align="left">返回 x 的符号，x 是负数、0、正数分别返回 -1、0 和 1</td>
+<td align="left">SELECT SIGN(-10) – (-1)</td>
+</tr>
+<tr>
+<td align="left">SIN(x)</td>
+<td align="left">求正弦值(参数是弧度)</td>
+<td align="left">SELECT SIN(RADIANS(30)) – 0.5</td>
+</tr>
+<tr>
+<td align="left">SQRT(x)</td>
+<td align="left">返回x的平方根</td>
+<td align="left">25 的平方根：SELECT SQRT(25) – 5</td>
+</tr>
+<tr>
+<td align="left">SUM(expression)</td>
+<td align="left">返回指定字段的总和</td>
+<td align="left">计算 OrderDetails 表中字段 Quantity 的总和：SELECT SUM(Quantity) AS TotalItemsOrdered FROM OrderDetails;</td>
+</tr>
+<tr>
+<td align="left">TAN(x)</td>
+<td align="left">求正切值(参数是弧度)</td>
+<td align="left">SELECT TAN(1.75);  – -5.52037992250933</td>
+</tr>
+<tr>
+<td align="left">TRUNCATE(x,y)</td>
+<td align="left">返回数值 x 保留到小数点后 y 位的值（与 ROUND 最大的区别是不会进行四舍五入）</td>
+<td align="left">SELECT TRUNCATE(1.23456,3) – 1.234</td>
+</tr>
+</tbody></table>
+<h3 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h3><table>
+<thead>
+<tr>
+<th align="left">函数名</th>
+<th align="left">描述</th>
+<th align="left">实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ADDDATE(d,n)</td>
+<td align="left">计算起始日期 d 加上 n 天的日期</td>
+<td align="left">SELECT ADDDATE(“2017-06-15”, INTERVAL 10 DAY); -&gt;2017-06-25</td>
+</tr>
+<tr>
+<td align="left">ADDTIME(t,n)</td>
+<td align="left">n 是一个时间表达式，时间 t 加上时间表达式 n</td>
+<td align="left">加 5 秒：<br />SELECT ADDTIME(‘2011-11-11 11:11:11’, 5); -&gt;2011-11-11 11:11:16 (秒)<br />添加 2 小时, 10 分钟, 5 秒: <br />SELECT ADDTIME(“2020-06-15 09:34:21”, “2:10:5”);  -&gt; 2020-06-15 11:44:26</td>
+</tr>
+<tr>
+<td align="left">CURDATE()</td>
+<td align="left">返回当前日期</td>
+<td align="left">SELECT CURDATE(); -&gt; 2020-12-23</td>
+</tr>
+<tr>
+<td align="left">CURRENT_DATE()</td>
+<td align="left">返回当前日期</td>
+<td align="left">SELECT CURRENT_DATE(); -&gt; 2020-12-23</td>
+</tr>
+<tr>
+<td align="left">CURRENT_TIME</td>
+<td align="left">返回当前时间</td>
+<td align="left">SELECT CURRENT_TIME(); -&gt; 19:59:02</td>
+</tr>
+<tr>
+<td align="left">CURRENT_TIMESTAMP()</td>
+<td align="left">返回当前日期和时间</td>
+<td align="left">SELECT CURRENT_TIMESTAMP() -&gt; 2018-12-23 20:57:43</td>
+</tr>
+<tr>
+<td align="left">CURTIME()</td>
+<td align="left">返回当前时间</td>
+<td align="left">SELECT CURTIME(); -&gt; 19:59:02</td>
+</tr>
+<tr>
+<td align="left">DATE()</td>
+<td align="left">从日期或日期时间表达式中提取日期值</td>
+<td align="left">SELECT DATE(“2017-06-15”);     -&gt; 2017-06-15</td>
+</tr>
+<tr>
+<td align="left">DATEDIFF(d1,d2)</td>
+<td align="left">计算日期 d1-&gt;d2 之间相隔的天数</td>
+<td align="left">SELECT DATEDIFF(‘2001-01-01’,’2001-02-02’) -&gt; -32</td>
+</tr>
+<tr>
+<td align="left">DATE_ADD(d，INTERVAL expr type)</td>
+<td align="left">计算起始日期 d 加上一个时间段后的日期</td>
+<td align="left">SELECT ADDDATE(‘2011-11-11 11:11:11’,1) -&gt; 2011-11-12 11:11:11  (默认是天) SELECT ADDDATE(‘2011-11-11 11:11:11’, INTERVAL 5 MINUTE) -&gt; 2011-11-11 11:16:11 (TYPE的取值与上面那个列出来的函数类似)</td>
+</tr>
+<tr>
+<td align="left">DATE_FORMAT(d,f)</td>
+<td align="left">按表达式 f的要求显示日期 d</td>
+<td align="left">SELECT DATE_FORMAT(‘2011-11-11 11:11:11’,’%Y-%m-%d %r’) -&gt; 2011-11-11 11:11:11 AM</td>
+</tr>
+<tr>
+<td align="left">DATE_SUB(date,INTERVAL expr type)</td>
+<td align="left">函数从日期减去指定的时间间隔。</td>
+<td align="left">Orders 表中 OrderDate 字段减去 2 天：<br />SELECT OrderId,DATE_SUB(OrderDate,INTERVAL 2 DAY) AS OrderPayDate FROM Orders</td>
+</tr>
+<tr>
+<td align="left">DAY(d)</td>
+<td align="left">返回日期值 d 的日期部分</td>
+<td align="left">SELECT DAY(“2017-06-15”);   -&gt; 15</td>
+</tr>
+<tr>
+<td align="left">DAYNAME(d)</td>
+<td align="left">返回日期 d 是星期几，如 Monday,Tuesday</td>
+<td align="left">SELECT DAYNAME(‘2011-11-11 11:11:11’) -&gt;Friday</td>
+</tr>
+<tr>
+<td align="left">DAYOFMONTH(d)</td>
+<td align="left">计算日期 d 是本月的第几天</td>
+<td align="left">SELECT DAYOFMONTH(‘2011-11-11 11:11:11’) -&gt;11</td>
+</tr>
+<tr>
+<td align="left">DAYOFWEEK(d)</td>
+<td align="left">日期 d 今天是星期几，1 星期日，2 星期一，以此类推</td>
+<td align="left">SELECT DAYOFWEEK(‘2011-11-11 11:11:11’) -&gt;6</td>
+</tr>
+<tr>
+<td align="left">DAYOFYEAR(d)</td>
+<td align="left">计算日期 d 是本年的第几天</td>
+<td align="left">SELECT DAYOFYEAR(‘2011-11-11 11:11:11’) -&gt;315</td>
+</tr>
+<tr>
+<td align="left">EXTRACT(type FROM d)</td>
+<td align="left">从日期 d 中获取指定的值，type 指定返回的值。<br />type可取值为：<br /> - MICROSECOND<br/>- SECOND<br/>- MINUTE<br/>- HOUR<br/>- DAY<br/>- WEEK<br/>- MONTH<br/>- QUARTER<br/>- YEAR<br/>- SECOND_MICROSECOND<br/>- MINUTE_MICROSECOND<br/>- MINUTE_SECOND<br/>- HOUR_MICROSECOND<br/>- HOUR_SECOND<br/>- HOUR_MINUTE<br/>- DAY_MICROSECOND<br/>- DAY_SECOND<br/>- DAY_MINUTE<br/>- DAY_HOUR<br/>- YEAR_MONTH</td>
+<td align="left">SELECT EXTRACT(MINUTE FROM ‘2011-11-11 11:11:11’)  -&gt; 11</td>
+</tr>
+<tr>
+<td align="left">FROM_DAYS(n)</td>
+<td align="left">计算从 0000 年 1 月 1 日开始 n 天后的日期</td>
+<td align="left">SELECT FROM_DAYS(1111) -&gt; 0003-01-16</td>
+</tr>
+<tr>
+<td align="left">HOUR(t)</td>
+<td align="left">返回 t 中的小时值</td>
+<td align="left">SELECT HOUR(‘1:2:3’) -&gt; 1</td>
+</tr>
+<tr>
+<td align="left">LAST_DAY(d)</td>
+<td align="left">返回给给定日期的那一月份的最后一天</td>
+<td align="left">SELECT LAST_DAY(“2017-06-20”); -&gt; 2017-06-30</td>
+</tr>
+<tr>
+<td align="left">LOCALTIME()</td>
+<td align="left">返回当前日期和时间</td>
+<td align="left">SELECT LOCALTIME() -&gt; 2018-12-23 20:57:43</td>
+</tr>
+<tr>
+<td align="left">LOCALTIMESTAMP()</td>
+<td align="left">返回当前日期和时间</td>
+<td align="left">SELECT LOCALTIMESTAMP() -&gt; 2018-12-23 20:57:43</td>
+</tr>
+<tr>
+<td align="left">MAKEDATE(year, day-of-year)</td>
+<td align="left">基于给定参数年份 year 和所在年中的天数序号 day-of-year 返回一个日期</td>
+<td align="left">SELECT MAKEDATE(2017, 3); -&gt; 2017-01-03</td>
+</tr>
+<tr>
+<td align="left">MAKETIME(hour, minute, second)</td>
+<td align="left">组合时间，参数分别为小时、分钟、秒</td>
+<td align="left">SELECT MAKETIME(11, 35, 4); -&gt; 11:35:04</td>
+</tr>
+<tr>
+<td align="left">MICROSECOND(date)</td>
+<td align="left">返回日期参数所对应的微秒数</td>
+<td align="left">SELECT MICROSECOND(“2017-06-20 09:34:00.000023”); -&gt; 23</td>
+</tr>
+<tr>
+<td align="left">MINUTE(t)</td>
+<td align="left">返回 t 中的分钟值</td>
+<td align="left">SELECT MINUTE(‘1:2:3’) -&gt; 2</td>
+</tr>
+<tr>
+<td align="left">MONTHNAME(d)</td>
+<td align="left">返回日期当中的月份名称，如 November</td>
+<td align="left">SELECT MONTHNAME(‘2011-11-11 11:11:11’) -&gt; November</td>
+</tr>
+<tr>
+<td align="left">MONTH(d)</td>
+<td align="left">返回日期d中的月份值，1 到 12</td>
+<td align="left">SELECT MONTH(‘2011-11-11 11:11:11’) -&gt;11</td>
+</tr>
+<tr>
+<td align="left">NOW()</td>
+<td align="left">返回当前日期和时间</td>
+<td align="left">SELECT NOW() -&gt; 2018-12-23 20:57:43</td>
+</tr>
+<tr>
+<td align="left">PERIOD_ADD(period, number)</td>
+<td align="left">为 年-月 组合日期添加一个时段</td>
+<td align="left">SELECT PERIOD_ADD(201703, 5);    -&gt; 201708</td>
+</tr>
+<tr>
+<td align="left">PERIOD_DIFF(period1, period2)</td>
+<td align="left">返回两个时段之间的月份差值</td>
+<td align="left">SELECT PERIOD_DIFF(201710, 201703); -&gt; 7</td>
+</tr>
+<tr>
+<td align="left">QUARTER(d)</td>
+<td align="left">返回日期d是第几季节，返回 1 到 4</td>
+<td align="left">SELECT QUARTER(‘2011-11-11 11:11:11’) -&gt; 4</td>
+</tr>
+<tr>
+<td align="left">SECOND(t)</td>
+<td align="left">返回 t 中的秒钟值</td>
+<td align="left">SELECT SECOND(‘1:2:3’) -&gt; 3</td>
+</tr>
+<tr>
+<td align="left">SEC_TO_TIME(s)</td>
+<td align="left">将以秒为单位的时间 s 转换为时分秒的格式</td>
+<td align="left">SELECT SEC_TO_TIME(4320) -&gt; 01:12:00</td>
+</tr>
+<tr>
+<td align="left">STR_TO_DATE(string, format_mask)</td>
+<td align="left">将字符串转变为日期</td>
+<td align="left">SELECT STR_TO_DATE(“August 10 2017”, “%M %d %Y”); -&gt; 2017-08-10</td>
+</tr>
+<tr>
+<td align="left">SUBDATE(d,n)</td>
+<td align="left">日期 d 减去 n 天后的日期</td>
+<td align="left">SELECT SUBDATE(‘2011-11-11 11:11:11’, 1) -&gt;2011-11-10 11:11:11 (默认是天)</td>
+</tr>
+<tr>
+<td align="left">SUBTIME(t,n)</td>
+<td align="left">时间 t 减去 n 秒的时间</td>
+<td align="left">SELECT SUBTIME(‘2011-11-11 11:11:11’, 5) -&gt;2011-11-11 11:11:06 (秒)</td>
+</tr>
+<tr>
+<td align="left">SYSDATE()</td>
+<td align="left">返回当前日期和时间</td>
+<td align="left">SELECT SYSDATE() -&gt; 2018-12-23 20:57:43</td>
+</tr>
+<tr>
+<td align="left">TIME(expression)</td>
+<td align="left">提取传入表达式的时间部分</td>
+<td align="left">SELECT TIME(“19:30:10”); -&gt; 19:30:10</td>
+</tr>
+<tr>
+<td align="left">TIME_FORMAT(t,f)</td>
+<td align="left">按表达式 f 的要求显示时间 t</td>
+<td align="left">SELECT TIME_FORMAT(‘11:11:11’,’%r’) 11:11:11 AM</td>
+</tr>
+<tr>
+<td align="left">TIME_TO_SEC(t)</td>
+<td align="left">将时间 t 转换为秒</td>
+<td align="left">SELECT TIME_TO_SEC(‘1:12:00’) -&gt; 4320</td>
+</tr>
+<tr>
+<td align="left">TIMEDIFF(time1, time2)</td>
+<td align="left">计算时间差值</td>
+<td align="left">SELECT TIMEDIFF(“13:10:11”, “13:10:10”); -&gt; 00:00:01</td>
+</tr>
+<tr>
+<td align="left">TIMESTAMP(expression, interval)</td>
+<td align="left">单个参数时，函数返回日期或日期时间表达式；有2个参数时，将参数加和</td>
+<td align="left">SELECT TIMESTAMP(“2017-07-23”,  “13:10:11”); -&gt; 2017-07-23 13:10:11</td>
+</tr>
+<tr>
+<td align="left">TO_DAYS(d)</td>
+<td align="left">计算日期 d 距离 0000 年 1 月 1 日的天数</td>
+<td align="left">SELECT TO_DAYS(‘0001-01-01 01:01:01’) -&gt; 366</td>
+</tr>
+<tr>
+<td align="left">WEEK(d)</td>
+<td align="left">计算日期 d 是本年的第几个星期，范围是 0 到 53</td>
+<td align="left">SELECT WEEK(‘2011-11-11 11:11:11’) -&gt; 45</td>
+</tr>
+<tr>
+<td align="left">WEEKDAY(d)</td>
+<td align="left">日期 d 是星期几，0 表示星期一，1 表示星期二</td>
+<td align="left">SELECT WEEKDAY(“2017-06-15”); -&gt; 3</td>
+</tr>
+<tr>
+<td align="left">WEEKOFYEAR(d)</td>
+<td align="left">计算日期 d 是本年的第几个星期，范围是 0 到 53</td>
+<td align="left">SELECT WEEKOFYEAR(‘2011-11-11 11:11:11’) -&gt; 45</td>
+</tr>
+<tr>
+<td align="left">YEAR(d)</td>
+<td align="left">返回年份</td>
+<td align="left">SELECT YEAR(“2017-06-15”); -&gt; 2017</td>
+</tr>
+<tr>
+<td align="left">YEARWEEK(date, mode)</td>
+<td align="left">返回年份及第几周（0到53），mode 中 0 表示周天，1表示周一，以此类推</td>
+<td align="left">SELECT YEARWEEK(“2017-06-15”); -&gt; 201724</td>
+</tr>
+</tbody></table>
+<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h3 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h3><table>
+<thead>
+<tr>
+<th align="left">运算符</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">+</td>
+<td align="left">加法</td>
+</tr>
+<tr>
+<td align="left">-</td>
+<td align="left">减法</td>
+</tr>
+<tr>
+<td align="left">*</td>
+<td align="left">乘法</td>
+</tr>
+<tr>
+<td align="left">/ 或 DIV</td>
+<td align="left">除法</td>
+</tr>
+<tr>
+<td align="left">% 或 MOD</td>
+<td align="left">取余</td>
+</tr>
+</tbody></table>
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">符号</td>
+<td align="left">描述</td>
+<td align="left">备注</td>
+</tr>
+<tr>
+<td align="left">=</td>
+<td align="left">等于</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&lt;&gt;, !=</td>
+<td align="left">不等于</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&gt;</td>
+<td align="left">大于</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&lt;</td>
+<td align="left">小于</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&lt;=</td>
+<td align="left">小于等于</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&gt;=</td>
+<td align="left">大于等于</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">BETWEEN</td>
+<td align="left">在两值之间</td>
+<td align="left">&gt;=min&amp;&amp;&lt;=max</td>
+</tr>
+<tr>
+<td align="left">NOT BETWEEN</td>
+<td align="left">不在两值之间</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">IN</td>
+<td align="left">在集合中</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">NOT IN</td>
+<td align="left">不在集合中</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">&lt;=&gt;</td>
+<td align="left">严格比较两个NULL值是否相等</td>
+<td align="left">两个操作码均为NULL时，其所得值为1；<br />而当一个操作码为NULL时，其所得值为0</td>
+</tr>
+<tr>
+<td align="left">LIKE</td>
+<td align="left">模糊匹配</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">REGEXP 或 RLIKE</td>
+<td align="left">正则式匹配</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">IS NULL</td>
+<td align="left">为空</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">IS NOT NULL</td>
+<td align="left">不为空</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><table>
+<thead>
+<tr>
+<th align="left">运算符号</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">NOT 或 !</td>
+<td align="left">逻辑非</td>
+</tr>
+<tr>
+<td align="left">AND</td>
+<td align="left">逻辑与</td>
+</tr>
+<tr>
+<td align="left">OR</td>
+<td align="left">逻辑或</td>
+</tr>
+<tr>
+<td align="left">XOR</td>
+<td align="left">逻辑异或</td>
+</tr>
+</tbody></table>
+<h3 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h3><table>
+<thead>
+<tr>
+<th align="left">运算符号</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">&amp;</td>
+<td align="left">按位与</td>
+</tr>
+<tr>
+<td align="left">|</td>
+<td align="left">按位或</td>
+</tr>
+<tr>
+<td align="left">^</td>
+<td align="left">按位异或</td>
+</tr>
+<tr>
+<td align="left">!</td>
+<td align="left">取反</td>
+</tr>
+<tr>
+<td align="left">&lt;&lt;</td>
+<td align="left">左移</td>
+</tr>
+<tr>
+<td align="left">&gt;&gt;</td>
+<td align="left">右移</td>
+</tr>
+</tbody></table>
+<h3 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h3><p>最低优先级为： **:=**。</p>
+<p>最高优先级为： <strong>!<strong>、</strong>BINARY</strong>、 <strong>COLLATE</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>优先级顺序</th>
+<th>运算符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>:=</td>
+</tr>
+<tr>
+<td>2</td>
+<td>|| , OR , XOR</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&amp;&amp; , AND</td>
+</tr>
+<tr>
+<td>4</td>
+<td>NOT</td>
+</tr>
+<tr>
+<td>5</td>
+<td>BETWEEN , CASE , WHEN , THEN , ELSE</td>
+</tr>
+<tr>
+<td>6</td>
+<td>= , &lt;=&gt; , &gt;= , &gt; , &lt;= , &lt; , &lt;&gt; , != , IS , LIKE, REGEXP , IN</td>
+</tr>
+<tr>
+<td>7</td>
+<td>|</td>
+</tr>
+<tr>
+<td>8</td>
+<td>&amp;</td>
+</tr>
+<tr>
+<td>9</td>
+<td>&lt;&lt; , &gt;&gt;</td>
+</tr>
+<tr>
+<td>10</td>
+<td>- , +</td>
+</tr>
+<tr>
+<td>11</td>
+<td>*, / , DIV , % , MOD</td>
+</tr>
+<tr>
+<td>12</td>
+<td>^</td>
+</tr>
+<tr>
+<td>13</td>
+<td>-（一元减号） , ~（一元比特反转）</td>
+</tr>
+<tr>
+<td>14</td>
+<td>!</td>
+</tr>
+</tbody></table>
 ]]></content>
       <tags>
-        <tag>任务调度</tag>
-        <tag>Java</tag>
-        <tag>Quartz</tag>
+        <tag>MySQL</tag>
+        <tag>基础语法</tag>
       </tags>
   </entry>
   <entry>
