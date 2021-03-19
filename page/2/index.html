@@ -197,14 +197,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">27</span>
+        <span class="site-state-item-count">29</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -245,6 +245,165 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/" class="post-title-link" itemprop="url">Java对Zip格式压缩和解压缩</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-01 11:12:12" itemprop="dateCreated datePublished" datetime="2021-03-01T11:12:12+08:00">2021-03-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="ZIP-和-GZIP-的区别"><a href="#ZIP-和-GZIP-的区别" class="headerlink" title="ZIP 和 GZIP 的区别"></a>ZIP 和 GZIP 的区别</h1><p><strong>gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX/Linux 上经常看到的压缩包后缀都是 *.tar.gz 或 *.tgz，也就是先用 tar 把多个文件打包成单个文件，再用 gzip 压缩的结果。</strong></p>
+<p><strong>zip 只是一种数据结构，跟 rar 同类型。zip 是适用于压缩多个文件的格式（相应的工具有 PkZip 和 WinZip 等），因此，zip 文件还要进一步包含文件目录结构的信息，比 gzip 的头信息更多。但需要注意，zip 格式可采用多种压缩算法，我们常见的 zip 文件大多不是用 zlib 的算法压缩的，其压缩数据的格式与 gzip 大不一样。</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="post-title-link" itemprop="url">mysqlpump使用说明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-27 20:07:23" itemprop="dateCreated datePublished" datetime="2021-02-27T20:07:23+08:00">2021-02-27</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
+      </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>下面介绍 MySQL5.7 之后新添加的备份工具 mysqlpump。</p>
+<p>mysqlpump 是 mysqldump 的一个衍生，mysqldump 备份功能这里就不多说了，现在看看 mysqlpump 到底有了哪些提升，详细可以查看<a href="https%EF%BC%9A//dev.mysql.com/doc/refman/5.7/en/mysqlpump.html">官网文档</a>。</p>
+<p>mysqlpump 和 mysqldump 一样，属于逻辑备份，备份以 SQL 形式的文本保存。逻辑备份相对物理备份好处是不关心 log 的大小，直接备份数据即可。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/02/26/redis%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -276,7 +435,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 14:32:39" itemprop="dateModified" datetime="2021-03-19T14:32:39+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
       </span>
 
   
@@ -354,7 +513,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 14:32:39" itemprop="dateModified" datetime="2021-03-19T14:32:39+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
       </span>
 
   
@@ -435,7 +594,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 14:32:39" itemprop="dateModified" datetime="2021-03-19T14:32:39+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
       </span>
 
   
@@ -506,7 +665,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 14:32:39" itemprop="dateModified" datetime="2021-03-19T14:32:39+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
       </span>
 
   
@@ -584,7 +743,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 14:32:39" itemprop="dateModified" datetime="2021-03-19T14:32:39+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
       </span>
 
   
@@ -655,7 +814,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-19 14:32:39" itemprop="dateModified" datetime="2021-03-19T14:32:39+08:00">2021-03-19</time>
+        <time title="修改时间：2021-03-19 14:49:24" itemprop="dateModified" datetime="2021-03-19T14:49:24+08:00">2021-03-19</time>
       </span>
 
   

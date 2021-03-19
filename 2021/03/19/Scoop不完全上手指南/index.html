@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+  </script>
+<meta name="description" content="Scoop 是什么借用 Mike Zick 对 Cygwin 和 MSYS 的描述，他对 Scoop 作了一个类比描述：  Scoop is an installer The goal of Scoop is to let you use Unix-y programs in a normal Windows environment  并且他也称，Scoop 并不是一个包管理器，而是通过读取 JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scoop不完全上手指南">
+<meta property="og:url" content="https://xiaojianzheng.cn/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="JIAHE">
+<meta property="og:description" content="Scoop 是什么借用 Mike Zick 对 Cygwin 和 MSYS 的描述，他对 Scoop 作了一个类比描述：  Scoop is an installer The goal of Scoop is to let you use Unix-y programs in a normal Windows environment  并且他也称，Scoop 并不是一个包管理器，而是通过读取 JS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-03-19T06:43:55.000Z">
+<meta property="article:modified_time" content="2021-03-19T06:49:24.286Z">
+<meta property="article:author" content="JIAHE">
+<meta property="article:tag" content="scoop">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xiaojianzheng.cn/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Scoop不完全上手指南 | JIAHE</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">JIAHE</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
+        <li class="menu-item menu-item-ebook"><a href="/ebook/" rel="section"><i class="fa fa-book fa-fw"></i>电子书</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scoop-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">Scoop 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Scoop"><span class="nav-number">2.</span> <span class="nav-text">安装 Scoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BD-Scoop"><span class="nav-number">3.</span> <span class="nav-text">卸载 Scoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Scoop"><span class="nav-number">4.</span> <span class="nav-text">使用 Scoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-search"><span class="nav-number">4.1.</span> <span class="nav-text">scoop search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-install"><span class="nav-number">4.2.</span> <span class="nav-text">scoop install</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-uninstall"><span class="nav-number">4.3.</span> <span class="nav-text">scoop uninstall</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-update"><span class="nav-number">4.4.</span> <span class="nav-text">scoop update</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-list"><span class="nav-number">4.5.</span> <span class="nav-text">scoop list</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-status"><span class="nav-number">4.6.</span> <span class="nav-text">scoop status</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-config"><span class="nav-number">4.7.</span> <span class="nav-text">scoop config</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-home"><span class="nav-number">4.8.</span> <span class="nav-text">scoop home</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-reset"><span class="nav-number">4.9.</span> <span class="nav-text">scoop reset</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-cleanup"><span class="nav-number">4.10.</span> <span class="nav-text">scoop cleanup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-cache"><span class="nav-number">4.11.</span> <span class="nav-text">scoop cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scoop-bucket"><span class="nav-number">4.12.</span> <span class="nav-text">scoop bucket</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scoop-%E8%BF%9B%E9%98%B6"><span class="nav-number">5.</span> <span class="nav-text">Scoop 进阶</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIAHE</p>
+  <div class="site-description" itemprop="description">Collection & Reuse</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Scoop不完全上手指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-03-19 14:43:55 / 修改时间：14:49:24" itemprop="dateCreated datePublished" datetime="2021-03-19T14:43:55+08:00">2021-03-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="Scoop-是什么"><a href="#Scoop-是什么" class="headerlink" title="Scoop 是什么"></a>Scoop 是什么</h3><p>借用 Mike Zick 对 Cygwin 和 MSYS 的<a target="_blank" rel="noopener" href="http://sourceforge.net/mailarchive/forum.php?thread_name=200506130821.11185.mszick@morethan.org&forum_name=mingw-msys">描述</a>，他对 Scoop 作了一个类比描述：</p>
+<blockquote>
+<p>Scoop is an installer</p>
+<p>The goal of Scoop is to let you use Unix-y programs in a normal Windows environment</p>
+</blockquote>
+<p>并且他也称，Scoop 并不是一个包管理器，而是通过读取 JSON 描述文件来安装程序及其依赖。Scoop 专注于开源和命令行开发工具，不符合其标准的不可能进入 main bucket（Scoop 安装后便自带的），因而虽然通过 <code>scoop install skype</code> 也能安装 Skype，但是只能放在 extra bucket 中。</p>
+<span id="more"></span>
+
+<p>在与 <a target="_blank" rel="noopener" href="https://chocolatey.org/">Chocolatey</a> 对比时，他提到了 Scoop 的一些特性，其中不乏吸引我选择使用它而非前者的因素。</p>
+<ol>
+<li>Scoop 默认安装在用户文件夹下（<code>~/scoop/</code>），那么在权限方面就很友好，安装程序时不会跳出 UAC 提醒，不需要管理员权限。</li>
+<li>不会对路径造成污染。像是平常手动安装以及通过 Chocolatey 安装程序时，安装目录散落各地，有在 <code>C:/Program Files</code> 和 <code>C:/Program Files (x86)</code> 的，也有在 <code>C:/Users/&lt;username&gt;/AppData</code> 的，还有在 <code>C:/ProgramData</code> 的。其实这些安装位置都是跟 “install for all users” 和 “install only for me” 的区别有关的，背后对应的是不同的权限（我瞎说的），但是看上去非常乱也不好管理。Scoop 则是将程序的 shims（我理解为指向所安装软件当前版本的快捷方式，非科班的我面对这些术语流下了眼泪）集中放在一个文件夹中统一管理，并将其添加至环境变量。</li>
+<li>相比包管理器和应用仓库更简单（simpler）。使用 Scoop 最简单的形式只需 Git + JSON 就够了，通过 Git 读取同步 repo 中描述如何安装某个程序的文件（里面写明了程序的版本、下载地址、解压目录、bin 及安装前后的工作等），然后 <code>scoop install &lt;app&gt;</code> 完事。</li>
+<li>可安装程序的某个特定版本并可以在版本间切换。如 <code>scoop install python27</code> 便可以安装 Python 2.7 版本（当然得先通过 <code>scoop bucket add versions</code> 添加 versions bucket），同时 <code>scoop install python</code> 安装的则是 Python 的最新版本。</li>
+</ol>
+<h3 id="安装-Scoop"><a href="#安装-Scoop" class="headerlink" title="安装 Scoop"></a>安装 Scoop</h3><p>其实安装之前，应该先将 Scoop 中的几个重要概念讲清楚的，比如上面多次提到的 bucket。但是，既然是上手指南，实用为先，概念可以暂先这样理解：所谓 app 就是要安装的一个应用程序，app manifest 则是含有某个应用程序安装信息（如上所述，程序版本、下载地址等）的 JSON 文件，bucket 则是存放这些 manifest 的 repo（如托管在 GitHub 上的 <a target="_blank" rel="noopener" href="https://github.com/ScoopInstaller/Main/tree/master/bucket">main bucket</a>）。</p>
+<p>首先，唤出 PowerShell（Windows 10 下都可以），<code>set-executionpolicy remotesigned -scope currentuser</code>，然后选择允许（Y）执行本地脚本。</p>
+<ul>
+<li>如果是想安装在默认位置，即 <code>C:/Users/&lt;username&gt;/scoop</code> 的话，直接运行</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Invoke-Expression</span> (<span class="built_in">New-Object</span> System.Net.WebClient).DownloadString(<span class="string">&#x27;https://get.scoop.sh&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或者 <code>iwr -useb get.scoop.sh | iex</code> 即可。</p>
+<ul>
+<li>如果是想自定义安装位置，如 <code>D:/Scoop</code>，那么逐条运行下面命令</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">&#x27;D:\Scoop&#x27;</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">&#x27;SCOOP&#x27;</span>,<span class="variable">$env:SCOOP</span>,<span class="string">&#x27;User&#x27;</span>)</span><br><span class="line"><span class="built_in">iwr</span> <span class="literal">-useb</span> get.scoop.sh | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<p>至于如何安装全局应用到自定义目录就先不说了。至此，如无报错信息，Scoop 安装完成。</p>
+<h3 id="卸载-Scoop"><a href="#卸载-Scoop" class="headerlink" title="卸载 Scoop"></a>卸载 Scoop</h3><p>卸载非常简单，只需运行 <code>scoop uninstall scoop</code> 即可。</p>
+<h3 id="使用-Scoop"><a href="#使用-Scoop" class="headerlink" title="使用 Scoop"></a>使用 Scoop</h3><p>记得随时使用 <code>scoop help</code> 查看帮助信息</p>
+<h4 id="scoop-search"><a href="#scoop-search" class="headerlink" title="scoop search"></a>scoop search</h4><p>查找软件，通常是想看看某个程序是否可以通过 Scoop 安装</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop search &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop search python</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-install"><a href="#scoop-install" class="headerlink" title="scoop install"></a>scoop install</h4><p>安装应用程序，分两种情况：</p>
+<ul>
+<li>只为当前用户安装，安装在 Scoop 目录下的 apps 文件夹</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install python</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>为所有用户安装，默认安装在 <code>C:/ProgramData/scoop</code> 或者是上文提到的自定义的全局应用安装目录，并且需要以管理员身份运行</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install &lt;app&gt; <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install python <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要安装特定版本的应用，比如说 <code>curl 7.56.1</code>，则应该这样</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install <span class="built_in">curl</span>@<span class="number">7.56</span>.<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-uninstall"><a href="#scoop-uninstall" class="headerlink" title="scoop uninstall"></a>scoop uninstall</h4><p>卸载某一程序</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop uninstall &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop uninstall python</span><br></pre></td></tr></table></figure>
+
+<p>卸载程序并移除所有配置文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop uninstall &lt;app&gt; <span class="literal">-p</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop uninstall python <span class="literal">-p</span></span><br></pre></td></tr></table></figure>
+
+<p>卸载全局安装的应用程序，需以管理员身份运行</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop uninstall &lt;app&gt; <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop uninstall python <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-update"><a href="#scoop-update" class="headerlink" title="scoop update"></a>scoop update</h4><p>更新 Scoop 及所有 bucket 但不更新 app</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop update</span><br></pre></td></tr></table></figure>
+
+<p>更新某一特定程序</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop update &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop update python</span><br></pre></td></tr></table></figure>
+
+<p>更新 Scoop、bucket 及所有程序</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop update *</span><br></pre></td></tr></table></figure>
+
+<p>更新全局安装的程序，需要以管理员身份运行</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop update &lt;app&gt; <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop update python <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-list"><a href="#scoop-list" class="headerlink" title="scoop list"></a>scoop list</h4><p>查看已安装的程序</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop list</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-status"><a href="#scoop-status" class="headerlink" title="scoop status"></a>scoop status</h4><p>查看哪些程序可以升级</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop status</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-config"><a href="#scoop-config" class="headerlink" title="scoop config"></a>scoop config</h4><p>需要设置的一般也就是两个，aria2 开关以及 proxy 设置</p>
+<p>开闭 aria2 <code>scoop config aria2-enabled true</code> or <code>scoop config aria2-enabled false</code>，但不建议开启，经常有各种奇奇怪怪的问题。同时，启用 aria2 前需要先安装 <code>scoop install aria2</code></p>
+<p>proxy 设置，如 <code>scoop config proxy 127.0.0.1:1080</code></p>
+<h4 id="scoop-home"><a href="#scoop-home" class="headerlink" title="scoop home"></a>scoop home</h4><p>查看某一程序的主页</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop home &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop home python</span><br></pre></td></tr></table></figure>
+
+<p>便唤起浏览器，打开 Python <a target="_blank" rel="noopener" href="https://www.python.org/">官网</a></p>
+<h4 id="scoop-reset"><a href="#scoop-reset" class="headerlink" title="scoop reset"></a>scoop reset</h4><p>借用 Wiki <a target="_blank" rel="noopener" href="https://github.com/lukesampson/scoop/wiki/Switching-Ruby-And-Python-Versions">例子</a></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先添加 versions bucket</span></span><br><span class="line">scoop bucket add versions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时安装 Python 2.7 和最新版本</span></span><br><span class="line">scoop install python27 python</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到 Python 2.7.x</span></span><br><span class="line">scoop reset python27</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到 Python 3.x</span></span><br><span class="line">scoop reset python</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-cleanup"><a href="#scoop-cleanup" class="headerlink" title="scoop cleanup"></a>scoop cleanup</h4><p>删除已安装软件的旧版本，如删除所有软件旧版本</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop cleanup *</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-cache"><a href="#scoop-cache" class="headerlink" title="scoop cache"></a>scoop cache</h4><p>清理软件缓存，通常是下载的软件安装包。以下命令清除所有缓存，即清空 Scoop 目录下的 cache 文件夹</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop cache <span class="built_in">rm</span> *</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-bucket"><a href="#scoop-bucket" class="headerlink" title="scoop bucket"></a>scoop bucket</h4><p>查看「已知库」</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket known</span><br></pre></td></tr></table></figure>
+
+<p>查看已经添加的库</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket list</span><br></pre></td></tr></table></figure>
+
+<p>删除已经添加的库</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket <span class="built_in">rm</span> &lt;bucket&gt;</span><br></pre></td></tr></table></figure>
+
+<p>添加库，分两种情况：</p>
+<ul>
+<li>添加「已知库」</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket add &lt;bucket&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如添加上文提到的 versions 库</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket add versions</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加第三方库</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如添加 Ash258、chawyehsu 和我的库</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">scoop bucket add Ash258 https://github.com/Ash258/Scoop<span class="literal">-Ash258</span>.git</span><br><span class="line">scoop bucket add dorado https://github.com/chawyehsu/dorado.git</span><br><span class="line">scoop bucket add spoon https://github.com/FDUZS/spoon.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="Scoop-进阶"><a href="#Scoop-进阶" class="headerlink" title="Scoop 进阶"></a>Scoop 进阶</h3><p>看完以上内容，入门足够。我也刚使用不到半年，认为进阶需要搞懂以下几点：</p>
+<ol>
+<li>App Manifest 创建并可以实现「自动更新」</li>
+<li>“Current” 文件夹及背后设计思路</li>
+<li>找出其设计缺陷之处，即让你不爽的点</li>
+</ol>
+<blockquote>
+<p>转载说明：<br>本文作者： Zheng Shuai<br>本文链接： <a target="_blank" rel="noopener" href="https://www.iamzs.top/archives/scoop-guidebook.html">https://www.iamzs.top/archives/scoop-guidebook.html</a></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/scoop/" rel="tag"># scoop</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/17/git-merge%E8%AF%A6%E8%A7%A3/" rel="prev" title="git-merge详解">
+                  <i class="fa fa-chevron-left"></i> git-merge详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/19/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/" rel="next" title="记一次重装系统">
+                  记一次重装系统 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+<script>
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/',]
+      });
+      });
+  </script>
+
+</body>
+</html>

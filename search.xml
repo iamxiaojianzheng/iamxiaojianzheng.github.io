@@ -145,6 +145,167 @@
       </tags>
   </entry>
   <entry>
+    <title>Scoop不完全上手指南</title>
+    <url>/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</url>
+    <content><![CDATA[<h3 id="Scoop-是什么"><a href="#Scoop-是什么" class="headerlink" title="Scoop 是什么"></a>Scoop 是什么</h3><p>借用 Mike Zick 对 Cygwin 和 MSYS 的<a href="http://sourceforge.net/mailarchive/forum.php?thread_name=200506130821.11185.mszick@morethan.org&forum_name=mingw-msys">描述</a>，他对 Scoop 作了一个类比描述：</p>
+<blockquote>
+<p>Scoop is an installer</p>
+<p>The goal of Scoop is to let you use Unix-y programs in a normal Windows environment</p>
+</blockquote>
+<p>并且他也称，Scoop 并不是一个包管理器，而是通过读取 JSON 描述文件来安装程序及其依赖。Scoop 专注于开源和命令行开发工具，不符合其标准的不可能进入 main bucket（Scoop 安装后便自带的），因而虽然通过 <code>scoop install skype</code> 也能安装 Skype，但是只能放在 extra bucket 中。</p>
+<span id="more"></span>
+
+<p>在与 <a href="https://chocolatey.org/">Chocolatey</a> 对比时，他提到了 Scoop 的一些特性，其中不乏吸引我选择使用它而非前者的因素。</p>
+<ol>
+<li>Scoop 默认安装在用户文件夹下（<code>~/scoop/</code>），那么在权限方面就很友好，安装程序时不会跳出 UAC 提醒，不需要管理员权限。</li>
+<li>不会对路径造成污染。像是平常手动安装以及通过 Chocolatey 安装程序时，安装目录散落各地，有在 <code>C:/Program Files</code> 和 <code>C:/Program Files (x86)</code> 的，也有在 <code>C:/Users/&lt;username&gt;/AppData</code> 的，还有在 <code>C:/ProgramData</code> 的。其实这些安装位置都是跟 “install for all users” 和 “install only for me” 的区别有关的，背后对应的是不同的权限（我瞎说的），但是看上去非常乱也不好管理。Scoop 则是将程序的 shims（我理解为指向所安装软件当前版本的快捷方式，非科班的我面对这些术语流下了眼泪）集中放在一个文件夹中统一管理，并将其添加至环境变量。</li>
+<li>相比包管理器和应用仓库更简单（simpler）。使用 Scoop 最简单的形式只需 Git + JSON 就够了，通过 Git 读取同步 repo 中描述如何安装某个程序的文件（里面写明了程序的版本、下载地址、解压目录、bin 及安装前后的工作等），然后 <code>scoop install &lt;app&gt;</code> 完事。</li>
+<li>可安装程序的某个特定版本并可以在版本间切换。如 <code>scoop install python27</code> 便可以安装 Python 2.7 版本（当然得先通过 <code>scoop bucket add versions</code> 添加 versions bucket），同时 <code>scoop install python</code> 安装的则是 Python 的最新版本。</li>
+</ol>
+<h3 id="安装-Scoop"><a href="#安装-Scoop" class="headerlink" title="安装 Scoop"></a>安装 Scoop</h3><p>其实安装之前，应该先将 Scoop 中的几个重要概念讲清楚的，比如上面多次提到的 bucket。但是，既然是上手指南，实用为先，概念可以暂先这样理解：所谓 app 就是要安装的一个应用程序，app manifest 则是含有某个应用程序安装信息（如上所述，程序版本、下载地址等）的 JSON 文件，bucket 则是存放这些 manifest 的 repo（如托管在 GitHub 上的 <a href="https://github.com/ScoopInstaller/Main/tree/master/bucket">main bucket</a>）。</p>
+<p>首先，唤出 PowerShell（Windows 10 下都可以），<code>set-executionpolicy remotesigned -scope currentuser</code>，然后选择允许（Y）执行本地脚本。</p>
+<ul>
+<li>如果是想安装在默认位置，即 <code>C:/Users/&lt;username&gt;/scoop</code> 的话，直接运行</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Invoke-Expression</span> (<span class="built_in">New-Object</span> System.Net.WebClient).DownloadString(<span class="string">&#x27;https://get.scoop.sh&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>或者 <code>iwr -useb get.scoop.sh | iex</code> 即可。</p>
+<ul>
+<li>如果是想自定义安装位置，如 <code>D:/Scoop</code>，那么逐条运行下面命令</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$env:SCOOP</span>=<span class="string">&#x27;D:\Scoop&#x27;</span></span><br><span class="line">[<span class="type">environment</span>]::setEnvironmentVariable(<span class="string">&#x27;SCOOP&#x27;</span>,<span class="variable">$env:SCOOP</span>,<span class="string">&#x27;User&#x27;</span>)</span><br><span class="line"><span class="built_in">iwr</span> <span class="literal">-useb</span> get.scoop.sh | <span class="built_in">iex</span></span><br></pre></td></tr></table></figure>
+
+<p>至于如何安装全局应用到自定义目录就先不说了。至此，如无报错信息，Scoop 安装完成。</p>
+<h3 id="卸载-Scoop"><a href="#卸载-Scoop" class="headerlink" title="卸载 Scoop"></a>卸载 Scoop</h3><p>卸载非常简单，只需运行 <code>scoop uninstall scoop</code> 即可。</p>
+<h3 id="使用-Scoop"><a href="#使用-Scoop" class="headerlink" title="使用 Scoop"></a>使用 Scoop</h3><p>记得随时使用 <code>scoop help</code> 查看帮助信息</p>
+<h4 id="scoop-search"><a href="#scoop-search" class="headerlink" title="scoop search"></a>scoop search</h4><p>查找软件，通常是想看看某个程序是否可以通过 Scoop 安装</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop search &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop search python</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-install"><a href="#scoop-install" class="headerlink" title="scoop install"></a>scoop install</h4><p>安装应用程序，分两种情况：</p>
+<ul>
+<li>只为当前用户安装，安装在 Scoop 目录下的 apps 文件夹</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop install &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop install python</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>为所有用户安装，默认安装在 <code>C:/ProgramData/scoop</code> 或者是上文提到的自定义的全局应用安装目录，并且需要以管理员身份运行</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop install &lt;app&gt; <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop install python <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如果要安装特定版本的应用，比如说 <code>curl 7.56.1</code>，则应该这样</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop install <span class="built_in">curl</span>@<span class="number">7.56</span>.<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-uninstall"><a href="#scoop-uninstall" class="headerlink" title="scoop uninstall"></a>scoop uninstall</h4><p>卸载某一程序</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop uninstall &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop uninstall python</span><br></pre></td></tr></table></figure>
+
+<p>卸载程序并移除所有配置文件</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop uninstall &lt;app&gt; <span class="literal">-p</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop uninstall python <span class="literal">-p</span></span><br></pre></td></tr></table></figure>
+
+<p>卸载全局安装的应用程序，需以管理员身份运行</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop uninstall &lt;app&gt; <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop uninstall python <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-update"><a href="#scoop-update" class="headerlink" title="scoop update"></a>scoop update</h4><p>更新 Scoop 及所有 bucket 但不更新 app</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update</span><br></pre></td></tr></table></figure>
+
+<p>更新某一特定程序</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update python</span><br></pre></td></tr></table></figure>
+
+<p>更新 Scoop、bucket 及所有程序</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update *</span><br></pre></td></tr></table></figure>
+
+<p>更新全局安装的程序，需要以管理员身份运行</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update &lt;app&gt; <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop update python <span class="literal">-g</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-list"><a href="#scoop-list" class="headerlink" title="scoop list"></a>scoop list</h4><p>查看已安装的程序</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop list</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-status"><a href="#scoop-status" class="headerlink" title="scoop status"></a>scoop status</h4><p>查看哪些程序可以升级</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop status</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-config"><a href="#scoop-config" class="headerlink" title="scoop config"></a>scoop config</h4><p>需要设置的一般也就是两个，aria2 开关以及 proxy 设置</p>
+<p>开闭 aria2 <code>scoop config aria2-enabled true</code> or <code>scoop config aria2-enabled false</code>，但不建议开启，经常有各种奇奇怪怪的问题。同时，启用 aria2 前需要先安装 <code>scoop install aria2</code></p>
+<p>proxy 设置，如 <code>scoop config proxy 127.0.0.1:1080</code></p>
+<h4 id="scoop-home"><a href="#scoop-home" class="headerlink" title="scoop home"></a>scoop home</h4><p>查看某一程序的主页</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop home &lt;app&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop home python</span><br></pre></td></tr></table></figure>
+
+<p>便唤起浏览器，打开 Python <a href="https://www.python.org/">官网</a></p>
+<h4 id="scoop-reset"><a href="#scoop-reset" class="headerlink" title="scoop reset"></a>scoop reset</h4><p>借用 Wiki <a href="https://github.com/lukesampson/scoop/wiki/Switching-Ruby-And-Python-Versions">例子</a></p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先添加 versions bucket</span></span><br><span class="line">scoop bucket add versions</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同时安装 Python 2.7 和最新版本</span></span><br><span class="line">scoop install python27 python</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到 Python 2.7.x</span></span><br><span class="line">scoop reset python27</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到 Python 3.x</span></span><br><span class="line">scoop reset python</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-cleanup"><a href="#scoop-cleanup" class="headerlink" title="scoop cleanup"></a>scoop cleanup</h4><p>删除已安装软件的旧版本，如删除所有软件旧版本</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop cleanup *</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-cache"><a href="#scoop-cache" class="headerlink" title="scoop cache"></a>scoop cache</h4><p>清理软件缓存，通常是下载的软件安装包。以下命令清除所有缓存，即清空 Scoop 目录下的 cache 文件夹</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop cache <span class="built_in">rm</span> *</span><br></pre></td></tr></table></figure>
+
+<h4 id="scoop-bucket"><a href="#scoop-bucket" class="headerlink" title="scoop bucket"></a>scoop bucket</h4><p>查看「已知库」</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket known</span><br></pre></td></tr></table></figure>
+
+<p>查看已经添加的库</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket list</span><br></pre></td></tr></table></figure>
+
+<p>删除已经添加的库</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket <span class="built_in">rm</span> &lt;bucket&gt;</span><br></pre></td></tr></table></figure>
+
+<p>添加库，分两种情况：</p>
+<ul>
+<li>添加「已知库」</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket add &lt;bucket&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如添加上文提到的 versions 库</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket add versions</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加第三方库</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket add &lt;bucket&gt; &lt;bucket_url&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如添加 Ash258、chawyehsu 和我的库</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">scoop bucket add Ash258 https://github.com/Ash258/Scoop<span class="literal">-Ash258</span>.git</span><br><span class="line">scoop bucket add dorado https://github.com/chawyehsu/dorado.git</span><br><span class="line">scoop bucket add spoon https://github.com/FDUZS/spoon.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="Scoop-进阶"><a href="#Scoop-进阶" class="headerlink" title="Scoop 进阶"></a>Scoop 进阶</h3><p>看完以上内容，入门足够。我也刚使用不到半年，认为进阶需要搞懂以下几点：</p>
+<ol>
+<li>App Manifest 创建并可以实现「自动更新」</li>
+<li>“Current” 文件夹及背后设计思路</li>
+<li>找出其设计缺陷之处，即让你不爽的点</li>
+</ol>
+<blockquote>
+<p>转载说明：<br>本文作者： Zheng Shuai<br>本文链接： <a href="https://www.iamzs.top/archives/scoop-guidebook.html">https://www.iamzs.top/archives/scoop-guidebook.html</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>scoop</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Framework 5.3.4 参考指南（官方文档翻译）</title>
     <url>/2021/03/13/Spring-Framework-5-3-4-%E5%8F%82%E8%80%83%E6%8C%87%E5%8D%97%EF%BC%88%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
@@ -615,6 +776,95 @@
 ]]></content>
       <tags>
         <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次重装系统</title>
+    <url>/2021/03/19/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<p>这次重装系统（为何要重装有兴趣的可翻看上上篇）我是一万个不愿意的，因为我知道系统重装的成本有多大。就单纯装个系统来说可能只需要十几分钟，但是装系统前的准备工作（主要是备份和制作安装启动 U 盘）以及系统装完后的恢复备份、软件安装调试、系统设置等，要想完全恢复之前的使用环境，差不多得需要一天的时间。现在是晚上的 10:42，先记录下该做的一些工作，按步骤来就不会出错。</p>
+<span id="more"></span>
+
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="安装-U-盘"><a href="#安装-U-盘" class="headerlink" title="安装 U 盘"></a>安装 U 盘</h4><p>使用 <a href="https://www.microsoft.com/zh-cn/software-download/windows10">Windows Media Creation Tool</a> 制作安装 U 盘 —&gt; 完成</p>
+<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p>备份<code>桌面</code>文件。右键选中<code>桌面</code>文件夹，在属性中将文件移动到其他盘 —&gt; 未完成</p>
+<p>备份<code>文档</code>文件，参照上述方法 —&gt; 未完成</p>
+<p>用户目录下的一些 dotfile 如 ssh 密钥、gpg 密钥和配置文件等 —&gt; 未完成</p>
+<h4 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h4><p>从官网下载驱动 —&gt; 完成</p>
+<h4 id="统计安装软件"><a href="#统计安装软件" class="headerlink" title="统计安装软件"></a>统计安装软件</h4><p>按上次重装系统后软件安装顺序排序如下：</p>
+<p>✅ 已安装 - 谷歌浏览器 —&gt; 下载万物，当然得先用 IE/Edge 下载它</p>
+<p>✅ 已安装 - 微信</p>
+<p>✅ 已安装 - 坚果云 —&gt; 论文同步</p>
+<p>❌ 未安装 - Zoommy —&gt; 貌似万年没打开过了</p>
+<p>✅ 已安装 - TIM</p>
+<p>✅ 已安装 - EndNote X8 —&gt; 文献管理，白嫖的中科大授权，严格意义上的盗版</p>
+<p>✅ 已安装 - Tableau —&gt; 向官方申请的教育授权，本地反激活完成</p>
+<p>✅ 已安装 - 火狐浏览器</p>
+<p>✅ 已安装 - JetBrains Toolbox —&gt; 向官方申请的教育授权，无需反激活</p>
+<p>✅ 已安装 - 1Password —&gt; 别忘记主密码</p>
+<p>✅ 已安装 - R</p>
+<p>✅ 已安装 - RStudio</p>
+<p>❌ 未安装 - Fences —&gt; 购买的正版密钥，本地反激活完成</p>
+<p>✅ 已安装 - Listary —&gt; 购买的正版密钥，无法 / 不需反激活</p>
+<p>✅ 已安装 - Internet Download Manager —&gt; 购买的正版密钥，无法 / 不需反激活</p>
+<p>✅ 已安装 - Notion —&gt; 通过 Scoop 安装</p>
+<p>✅ 已安装 - MATLAB —&gt; 学校购买授权，帐号登录</p>
+<p>✅ 已安装 - Navicat —&gt; 学校邮箱申请密钥，反激活完成</p>
+<p>✅ 已安装 - Axure —&gt; 教育授权，本地反激活完成</p>
+<p>✅ 已安装 - MS Office 家庭和学生版 2016 —&gt; 购买机器附送的，绑定账号</p>
+<p>✅ 已安装 - 幕布 —&gt; 通过 Scoop 安装</p>
+<p>✅ 已安装 - 印象笔记 —&gt; 登录国内和国际版两个账号</p>
+<p>✅ 已安装 - MindManager</p>
+<p>✅ 已安装 - PicGo —&gt; 通过 Scoop 安装</p>
+<p>✅ 已安装 - MS Visio 专业版 2019 —&gt; 购买，绑定账号</p>
+<p>✅ 已安装 - WinRAR</p>
+<p>✅ 已安装 - Python 3.7 —&gt; 不要装 3.8，无法正常运行 Jupyter Notebook</p>
+<p>❌ 未安装 - XMeters —&gt; 购买的正版密钥，无法 / 不需反激活 —&gt; 先不装了</p>
+<p>✅ 已安装 - PotPlayer —&gt; 竟然被 Scoop extras bucket 收录了</p>
+<p>✅ 已安装 - ManicTime —&gt; 购买的正版密钥，本地反激活完成</p>
+<p>✅ 已安装 - Rtools</p>
+<p>✅ 已安装 - Spotify</p>
+<p>✅ 已安装 - TeX Live —&gt; 配置文件还原</p>
+<h3 id="安装系统"><a href="#安装系统" class="headerlink" title="安装系统"></a>安装系统</h3><p>最简单，略过，选项该关闭该保留全凭个人喜好</p>
+<p>不过有一点要记住，安装时先创建一个本地账户而不要登录微软账号，否则用户文件夹名会恶心你</p>
+<h3 id="恢复工作"><a href="#恢复工作" class="headerlink" title="恢复工作"></a>恢复工作</h3><ul>
+<li>驱动安装 —&gt; 可选，看看官网有没有适配最新系统的驱动发布</li>
+<li>备份文件恢复 —&gt; 移动文件</li>
+<li>安装软件 —&gt; 无尽的下载…… 下载…… 载…… 想到 MATLAB 和 TeX Live 就头疼</li>
+<li>环境变量设置 —&gt; 绝大部分交由 Scoop 完成，剩余的软件安装过程中就可做到</li>
+<li>自定义 DNS —&gt; 可选</li>
+<li>一些软件设置，如语言工具设置国内镜像源</li>
+</ul>
+<p>现在已经凌晨 12:18 了，明天继续。</p>
+<h3 id="实际安装步骤及观察"><a href="#实际安装步骤及观察" class="headerlink" title="实际安装步骤及观察"></a>实际安装步骤及观察</h3><ol>
+<li>安装完系统后，联网，等待一段时间，自动安装驱动及补丁</li>
+<li>修改设备名称后，重启</li>
+<li>通过蓝牙连接鼠标和键盘</li>
+<li>解决英文操作系统下中文乱码问题：<code>Control Panel - Clock and Region - Region - Administrative - Language for non-Unicode programs</code>，将其改为简体中文即可</li>
+<li>登录微软账号同步设置和 OneDrive 文件，先进行简单设置和覆盖原有设置，如去掉固定在任务栏的快捷图标，将默认输入语言设置为中文、默认应用语言和系统显示语言设置为英文</li>
+<li>安装 Scoop，参考的是之前写的 <a href="https://www.iamzs.top/archives/scoop-guidebook.html">Scoop 不完全上手指南</a>。安装完后，用户文件夹下多了一个 <code>.config</code> 文件夹，里面有 Scoop 的配置文件</li>
+<li>先通过 Scoop 安装 shadowsocksr-csharp，前提是添加 extras bucket，而添加 extras bucket 的前提是安装 git 和 7zip。这一过程是异常痛苦的，网络环境并不太好，只能看着下载进度条慢慢地走……</li>
+<li>垃圾小米笔记本，安装 git 时自动休眠睡死了，转向处理这一问题的 bug 分支。</li>
+<li><del>初步判断是集成显卡驱动问题</del>并不是，可能跟主板芯片和电池管理驱动有关，所以老老实实把所有驱动打了一遍。为了加快驱动下载速度，安装 Internet Download Manager，而密钥存储在 1Password 中，先下载安装 1P 。</li>
+<li>安装 git 后，将原来的 <code>.gitconfig</code> 文件复制到用户目录下覆盖新生成的配置文件</li>
+<li>安装完谷歌浏览器后，登录账号同步设置及插件，复制机场的订阅地址到小飞机，开启飞行模式</li>
+<li>之前通过 Scoop 安装的一些软件虽然可以<a href="https://www.iamzs.top/archives/windows-open-with.html#Scoop-%E8%BF%81%E7%A7%BB%E5%8F%8A%E9%87%8D%E8%A3%85%E5%90%8E%E6%81%A2%E5%A4%8D%E4%BD%BF%E7%94%A8">无损迁移恢复使用</a>，但最终还是决定全部重装一遍，完整记录下来。</li>
+<li>Scoop install：adb | android-sdk | anki | annie | aria2 | autohotkey | blender | bluescreenview | captura | chromedriver | concfg | curl | dark | dropit | everything | ffmpeg | figlet | fork | geckodriver | geekuninstaller | gimp | gpg | graphviz | honeyview | hugo | inkscape | joplin | lessmsi | motrix | msys2 | neovim | nodejs-lts | nvm | openjdk13 | openshot | pandoc | pandownload | php | proxifier-portable | pshazz | racket | screentogif | sharex | sqlite | sudo | sumatrapdf | telegram | time | touch | v2ray | v2rayn | vnote | vscode | which | winscp | yarn | youtube-dl | zotero</li>
+<li>go 改为手动安装</li>
+<li>将之前备份的文件还原回去</li>
+<li>之后就剩一些「大块头」的软件以及收尾工作</li>
+<li>最后就是系统设置</li>
+<li>done</li>
+</ol>
+<blockquote>
+<p>转载说明：</p>
+<ul>
+<li><strong>本文作者：</strong> Zheng Shuai</li>
+<li><strong>本文链接：</strong> <a href="https://www.iamzs.top/archives/the-price-of-windows-reinstallation.html">https://www.iamzs.top/archives/the-price-of-windows-reinstallation.html</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+        <tag>重装系统</tag>
       </tags>
   </entry>
   <entry>
