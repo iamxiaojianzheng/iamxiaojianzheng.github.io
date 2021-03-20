@@ -20,7 +20,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
 <meta name="description" content="下面介绍 MySQL5.7 之后新添加的备份工具 mysqlpump。 mysqlpump 是 mysqldump 的一个衍生，mysqldump 备份功能这里就不多说了，现在看看 mysqlpump 到底有了哪些提升，详细可以查看官网文档。 mysqlpump 和 mysqldump 一样，属于逻辑备份，备份以 SQL 形式的文本保存。逻辑备份相对物理备份好处是不关心 log 的大小，直接备份数">
 <meta property="og:type" content="article">
@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img2018.cnblogs.com/blog/907596/201901/907596-20190115162636956-1342333863.png">
 <meta property="article:published_time" content="2021-02-27T12:07:23.000Z">
-<meta property="article:modified_time" content="2021-03-20T06:29:22.085Z">
+<meta property="article:modified_time" content="2021-03-20T09:51:52.826Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="mysql">
 <meta property="article:tag" content="备份">
@@ -285,7 +285,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 14:29:22" itemprop="dateModified" datetime="2021-03-20T14:29:22+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-20 17:51:52" itemprop="dateModified" datetime="2021-03-20T17:51:52+08:00">2021-03-20</time>
       </span>
 
   
@@ -307,20 +307,22 @@
 <h2 id="mysqlpump-缺点"><a href="#mysqlpump-缺点" class="headerlink" title="mysqlpump 缺点"></a>mysqlpump 缺点</h2><p><a target="_blank" rel="noopener" href="https://theme-next.js.org/highlight/">https://theme-next.js.org/highlight/</a><br>-  只能并行到表级别, 如果表特别大, 开多线程和单线程是一样的, 并行度不如 mydumper；<br>-  无法获取当前备份对应的 binlog 位置；<br>-  MySQL5.7.11 之前的版本不要使用, 并行导出和 single-transaction 是互斥的；</p>
 <h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><p>mysqlpump 绝大部分参数使用和 Mysqldump 一致，下面顺便重温一下。注意对于 mysqlpump 专有参数会用<strong>加粗</strong>标记出来。</p>
 <p>1) –add-drop-database： 在建立库之前先执行删库操作</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> DATABASE IF <span class="keyword">EXISTS</span> `...`;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP DATABASE IF EXISTS &#96;...&#96;;</code></pre>
 
 <ol start="2">
 <li>–add-drop-table：在建表之前先执行删表操作</li>
 </ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> `...`.`...`;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP TABLE IF EXISTS &#96;...&#96;.&#96;...&#96;;</code></pre>
 
 <p><strong>3) –add-drop-user：在 CREATE USER 语句之前增加 DROP USER。 注意：这个参数需要和 –users 一起使用，否者不生效。</strong></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">USER</span> <span class="string">&#x27;backup&#x27;</span>@<span class="string">&#x27;172.16.60.%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP USER &#39;backup&#39;@&#39;172.16.60.%&#39;;</code></pre>
 
 <ol start="4">
 <li>–add-locks：备份表时，使用 LOCK TABLES 和 UNLOCK TABLES。注意：这个参数不支持并行备份，需要关闭并行备份功能：–default-parallelism=0</li>
 </ol>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LOCK TABLES `...`.`...` WRITE;</span><br><span class="line">...</span><br><span class="line">UNLOCK TABLES;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">LOCK TABLES &#96;...&#96;.&#96;...&#96; WRITE;
+...
+UNLOCK TABLES;</code></pre>
 
 <ol start="5">
 <li><p>–all-databases：备份所有库，即 -A。</p>
@@ -334,7 +336,11 @@
 <li><p><strong>–compress-output</strong>：<strong>默认不压缩输出，目前可以使用的压缩算法有 LZ4 和 ZLIB</strong></p>
 </li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mysqlpump --compress-output=LZ4 &gt; dump.lz4</span><br><span class="line">[root@localhost ~]# lz4_decompress dump.lz4 dump.txt</span><br><span class="line"> </span><br><span class="line">[root@localhost ~]# mysqlpump --compress-output=ZLIB &gt; dump.zlib</span><br><span class="line">[root@localhost ~]# zlib_decompress dump.zlib dump.txt</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@localhost ~]# mysqlpump --compress-output&#x3D;LZ4 &gt; dump.lz4
+[root@localhost ~]# lz4_decompress dump.lz4 dump.txt
+ 
+[root@localhost ~]# mysqlpump --compress-output&#x3D;ZLIB &gt; dump.zlib
+[root@localhost ~]# zlib_decompress dump.zlib dump.txt</code></pre>
 
 <ol start="10">
 <li><p>–databases：手动指定要备份的库，支持多个数据库，用空格分隔，即 - B。</p>
@@ -348,10 +354,14 @@
 <li>–events：备份数据库的事件，默认开启，关闭使用 –skip-events 参数。</li>
 </ol>
 <p><strong>15) –exclude-databases：备份排除该参数指定的数据库，多个用逗号分隔。类似的还有 –exclude-events、–exclude-routines、–exclude-tables、–exclude-triggers、–exclude-users</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# mysqlpump --exclude-databases=mysql,sys -p123456 --set-gtid-purged=off &gt;/root/db.sql   #备份过滤mysql和sys数据库</span><br><span class="line">[root@localhost ~]# mysqlpump --exclude-tables=rr,tt -p123456 --set-gtid-purged=off &gt; /root/db.sql      #备份过滤所有数据库中rr、tt表</span><br><span class="line">[root@localhost ~]# mysqlpump -B test --exclude-tables=tmp_ifulltext,tt -p123456 --set-gtid-purged=off &gt;/root/db.sql   #备份过滤test库中的rr、tt表</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@localhost ~]# mysqlpump --exclude-databases&#x3D;mysql,sys -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql   #备份过滤mysql和sys数据库
+[root@localhost ~]# mysqlpump --exclude-tables&#x3D;rr,tt -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql      #备份过滤所有数据库中rr、tt表
+[root@localhost ~]# mysqlpump -B test --exclude-tables&#x3D;tmp_ifulltext,tt -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql   #备份过滤test库中的rr、tt表
+...</code></pre>
 
 <p><strong>注意：</strong>要是只备份数据库的账号，需要添加参数 <a href="https%EF%BC%9A//dev.mysql.com/doc/refman/5.7/en/mysqlpump.html#option_mysqlpump_users">–users</a>，并且需要过滤掉所有的数据库，如</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">备份除dba和backup的所有账号。</span></span><br><span class="line">[root@localhost ~]# mysqlpump --users --exclude-databases=sys,mysql,db1,db2 --exclude-users=dba,backup -p123456 --set-gtid-purged=off &gt;/root/db.sql</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#备份除dba和backup的所有账号。
+[root@localhost ~]# mysqlpump --users --exclude-databases&#x3D;sys,mysql,db1,db2 --exclude-users&#x3D;dba,backup -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql</code></pre>
 
 <p><strong>16) –include-databases：指定备份数据库，多个用逗号分隔，类似的还有 –include-events、–include-routines、–include-tables、–include-triggers、–include-users，大致方法使用同 15。</strong></p>
 <ol start="17">
@@ -373,7 +383,13 @@
 </li>
 </ol>
 <p><strong>25) –parallel-schemas=[N：]db_list：指定并行备份的库，多个库用逗号分隔，如果指定了 N，将使用 N 个线程的地队列，如果 N 不指定，将由 –default-parallelism 才确认 N 的值，可以设置多个 –parallel-schemas</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">4个线程备份vs和aa，3个线程备份pt。通过show processlist 可以看到有7个线程。</span></span><br><span class="line">[root@localhost ~]# mysqlpump --parallel-schemas=4：vs,aa --parallel-schemas=3：pt  -p123456 --set-gtid-purged=off &gt; /root/db.sql  </span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash">默认2个线程，即2个线程备份vs和abc，2个线程备份pt</span></span><br><span class="line">[root@localhost ~]# mysqlpump --parallel-schemas=vs,abc --parallel-schemas=pt  -p123456 --set-gtid-purged=off &gt; /root/db.sql  </span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash">当然要是硬盘IO不允许的话，可以少开几个线程和数据库进行并行备份</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#4个线程备份vs和aa，3个线程备份pt。通过show processlist 可以看到有7个线程。
+[root@localhost ~]# mysqlpump --parallel-schemas&#x3D;4：vs,aa --parallel-schemas&#x3D;3：pt  -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql  
+ 
+#默认2个线程，即2个线程备份vs和abc，2个线程备份pt
+[root@localhost ~]# mysqlpump --parallel-schemas&#x3D;vs,abc --parallel-schemas&#x3D;pt  -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql  
+ 
+#当然要是硬盘IO不允许的话，可以少开几个线程和数据库进行并行备份</code></pre>
 
 <ol start="26">
 <li><p>–password<strong>：</strong>备份需要的密码。</p>
@@ -407,7 +423,8 @@
 <li><p>–users：备份数据库用户，备份的形式是 CREATE USER…，GRANT…，只备份数据库账号可以通过如下命令**</p>
 </li>
 </ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">过滤掉所有数据库</span></span><br><span class="line">[root@localhost ~]# mysqlpump --exclude-databases=% --users  -p123456 --set-gtid-purged=off &gt;/root/db.sql</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#过滤掉所有数据库
+[root@localhost ~]# mysqlpump --exclude-databases&#x3D;% --users  -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql</code></pre>
 
 <ol start="40">
 <li><strong>–watch-progress</strong>：<strong>定期显示进度的完成，包括总数表、行和其他对象。该参数默认开启，用 –skip-watch-progress 来关闭。</strong> </li>
@@ -416,7 +433,19 @@
 <p><img data-src="https://img2018.cnblogs.com/blog/907596/201901/907596-20190115162636956-1342333863.png"></p>
 <p>-  mysqlpump 是 MySQL5.7 的官方工具, 用于取代 mysqldump, 其参数与 mysqldump 基本一样；<br>-  mysqlpump 是多线程备份, 但只能到表级别, 单表备份还是单线程；<br>-  mysqldump 备份时, 有个默认队列（default）, 队列下开 N 个线程去备份数据库 / 数据库中的表；<br>-  支持开多个队列 (对应不同库 / 表), 然后每个队列设置不同线程, 进行备份；</p>
 <p><strong>mysqlpump 支持基于库和表的并行导出</strong>，mysqlpump 的并行导出功能的架构为：队列 + 线程，允许有多个队列（**–parallel-schemas<strong>），每个队列下有多个线程（N），而一个队列可以绑定 1 个或者多个数据库（逗号分隔）。</strong>mysqlpump 的备份是基于表并行的，对于每张表的导出只能是单个线程的**，这里会有个限制是如果某个数据库有一张表非常大，可能大部分的时间都是消耗在这个表的备份上面，并行备份的效果可能就不明显。这里可以利用 <strong>Mydumper</strong> 其是以 chunk 的方式批量导出，即 <strong>Mydumper 支持一张表多个线程以 chunk 的方式批量导出</strong>。但相对于 Mysqldump 有很大提升。</p>
-<h2 id="对比测试如下"><a href="#对比测试如下" class="headerlink" title="对比测试如下"></a><strong>对比测试如下</strong></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysqlpump压缩备份kevin数据库 三个并发线程备份，消耗时间：222s</span><br><span class="line">[root@localhost ~]# mysqlpump -uroot -p123456 -h172.16.60.211 --single-transaction --default-character-set=utf8 --compress-output=LZ4 --default-parallelism=3 -B kevin &gt; /data/db_backup/kevin_db.sql.lz4</span><br><span class="line"> </span><br><span class="line">mysqldump备份压缩kevin数据库 单个线程备份，消耗时间：900s，gzip的压缩率比LZ4的高</span><br><span class="line">[root@localhost ~]# mysqldump -uroot -p123456 -h172.16.60.211 --default-character-set=utf8 -P3306 --skip-opt --add-drop-table --create-options  --quick --extended-insert --single-transaction -B kevin | gzip &gt; /data/db_backup/kevin.sql.gz</span><br><span class="line"> </span><br><span class="line">mydumper备份kevin数据库 三个并发线程备份，消耗时间：300s，gzip的压缩率比LZ4的高</span><br><span class="line">[root@localhost ~]# mydumper -u root -p123456  -h 172.16.60.211 -P 3306 -t 3 -c -l 3600 -s 10000000 -B kevin -o /data/db_backup/kevin/</span><br><span class="line"> </span><br><span class="line">mydumper备份kevin数据库，五个并发线程备份，并且开启对一张表多个线程以chunk的方式批量导出，-r。消耗时间：180s</span><br><span class="line">[root@localhost ~]# mydumper -u root -p123456  -h 172.16.60.211 -P 3306 -t 5 -c -r 300000 -l 3600 -s 10000000 -B kevin -o /data/db_backup/kevin/</span><br><span class="line"> </span><br><span class="line">注意： 如果是开启了GTID功能的数据库，备份时还需要添加&quot;--set-gtid-purged=off&quot;参数，否则可能会报错！</span><br></pre></td></tr></table></figure>
+<h2 id="对比测试如下"><a href="#对比测试如下" class="headerlink" title="对比测试如下"></a><strong>对比测试如下</strong></h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">mysqlpump压缩备份kevin数据库 三个并发线程备份，消耗时间：222s
+[root@localhost ~]# mysqlpump -uroot -p123456 -h172.16.60.211 --single-transaction --default-character-set&#x3D;utf8 --compress-output&#x3D;LZ4 --default-parallelism&#x3D;3 -B kevin &gt; &#x2F;data&#x2F;db_backup&#x2F;kevin_db.sql.lz4
+ 
+mysqldump备份压缩kevin数据库 单个线程备份，消耗时间：900s，gzip的压缩率比LZ4的高
+[root@localhost ~]# mysqldump -uroot -p123456 -h172.16.60.211 --default-character-set&#x3D;utf8 -P3306 --skip-opt --add-drop-table --create-options  --quick --extended-insert --single-transaction -B kevin | gzip &gt; &#x2F;data&#x2F;db_backup&#x2F;kevin.sql.gz
+ 
+mydumper备份kevin数据库 三个并发线程备份，消耗时间：300s，gzip的压缩率比LZ4的高
+[root@localhost ~]# mydumper -u root -p123456  -h 172.16.60.211 -P 3306 -t 3 -c -l 3600 -s 10000000 -B kevin -o &#x2F;data&#x2F;db_backup&#x2F;kevin&#x2F;
+ 
+mydumper备份kevin数据库，五个并发线程备份，并且开启对一张表多个线程以chunk的方式批量导出，-r。消耗时间：180s
+[root@localhost ~]# mydumper -u root -p123456  -h 172.16.60.211 -P 3306 -t 5 -c -r 300000 -l 3600 -s 10000000 -B kevin -o &#x2F;data&#x2F;db_backup&#x2F;kevin&#x2F;
+ 
+注意： 如果是开启了GTID功能的数据库，备份时还需要添加&quot;--set-gtid-purged&#x3D;off&quot;参数，否则可能会报错！</code></pre>
 
 <p>从上面看出，mysqlpump 的备份效率是最快的，mydumper 次之，mysqldump 最差。所以在 IO 允许的情况下，能用多线程就别用单线程备份。并且 mysqlpump 还支持多数据库的并行备份，而 mydumper 要么备份一个库，要么就备份所有库。可以看出，在 mysql 数据库备份方面，mysqlpump 比 mysqldump 的测试结果要好。由于实际情况不同，测试给出的速度提升只是参考。到底开启多少个并行备份的线程，这个看磁盘 IO 的承受能力，若该服务器只进行备份任务，可以最大限制的来利用磁盘。</p>
 <p>测试中发现 mysqlpump 和 mysqldump 对比：  </p>
@@ -427,20 +456,110 @@
 <li>mysqlpump 可以指定多线程并发备份，默认是 2 个；备份时会有进度指示，虽然只是估计值，但不会再想 mysqldump 备份时那么枯燥，看不到过程.</li>
 </ul>
 <p>注意：mysqlpump 备份的几个重要参数</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--default-parallelism   指定线程数,默认开2个线程进行并发备份</span></span><br><span class="line"><span class="comment">--parallel-schemas      指定哪些数据库进行并发备份</span></span><br><span class="line"><span class="comment">--set-gtid-purged=OFF   这个是5.7.18版本后加入的参数,</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">--set-gtid-purged=OFF这个参数很重要，如果备份命令里不加上，则备份可能会报错：</span></span><br><span class="line">Warning： A partial dump <span class="keyword">from</span> a server <span class="keyword">that</span> has GTIDs will <span class="keyword">by</span> default include <span class="keyword">the</span> GTIDs <span class="keyword">of</span> all transactions, even those <span class="keyword">that</span> changed </span><br><span class="line">suppressed parts <span class="keyword">of</span> <span class="keyword">the</span> database. If you don&#x27;t want <span class="keyword">to</span> restore GTIDs, pass <span class="comment">--set-gtid-purged=OFF. To make a complete dump, pass </span></span><br><span class="line"><span class="comment">--all-databases --triggers --routines --events.</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">--default-parallelism   指定线程数,默认开2个线程进行并发备份
+--parallel-schemas      指定哪些数据库进行并发备份
+--set-gtid-purged&#x3D;OFF   这个是5.7.18版本后加入的参数,
+ 
+--set-gtid-purged&#x3D;OFF这个参数很重要，如果备份命令里不加上，则备份可能会报错：
+Warning： A partial dump from a server that has GTIDs will by default include the GTIDs of all transactions, even those that changed 
+suppressed parts of the database. If you don&#39;t want to restore GTIDs, pass --set-gtid-purged&#x3D;OFF. To make a complete dump, pass 
+--all-databases --triggers --routines --events.</code></pre>
 
-<h2 id="备份演示"><a href="#备份演示" class="headerlink" title="备份演示"></a>备份演示</h2><h3 id="备份命令"><a href="#备份命令" class="headerlink" title="备份命令"></a>备份命令</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="meta">@localhost</span> ~]<span class="comment"># mysqlpump --single-transaction --set-gtid-purged=OFF --parallel-schemas=2：kevin --parallel-schemas=4：dbt3 -B kevin dbt3 -p123456 &gt; /tmp/backup.sql</span></span><br><span class="line">mysqlpump： [Warning] Using a password on the command line interface can be insecure.</span><br><span class="line">Dump progress： 1/5 tables, 0/7559817 rows</span><br><span class="line">Dump progress： 3/15 tables, 286750/12022332 rows</span><br><span class="line">Dump progress： 3/15 tables, 686750/12022332 rows</span><br><span class="line">Dump progress： 3/15 tables, 1042250/12022332 rows</span><br><span class="line">...</span><br><span class="line">Dump completed in 43732 milliseconds</span><br><span class="line"> </span><br><span class="line">接着另外打开一个终端会话，登录mysql看下情况</span><br><span class="line">(root<span class="meta">@172.16.0.10)</span> [(none)]&gt; show processlist;</span><br><span class="line">+--------+------+------------------+------+---------+------+-------------------+------------------------------------------------------------------------------------------------------+</span><br><span class="line">|<span class="string"> Id     </span>|<span class="string"> User </span>|<span class="string"> Host             </span>|<span class="string"> db   </span>|<span class="string"> Command </span>|<span class="string"> Time </span>|<span class="string"> State             </span>|<span class="string"> Info                                                                                                 </span>|</span><br><span class="line">+--------+------+------------------+------+---------+------+-------------------+------------------------------------------------------------------------------------------------------+</span><br><span class="line">|<span class="string"> 138199 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39238 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    0 </span>|<span class="string"> starting          </span>|<span class="string"> show processlist                                                                                     </span>|</span><br><span class="line">|<span class="string"> 138267 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39776 </span>|<span class="string"> NULL </span>|<span class="string"> Sleep   </span>|<span class="string">    2 </span>|<span class="string">                   </span>|<span class="string"> NULL                                                                                                 </span>|</span><br><span class="line">|<span class="string"> 138268 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39778 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    2 </span>|<span class="string"> Sending to client </span>|<span class="string"> SELECT SQL_NO_CACHE `emp_no`,`dept_no`,`from_date`,`to_date`  FROM `kevin`.`dept_emp`            </span>|</span><br><span class="line">|<span class="string"> 138269 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39780 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    2 </span>|<span class="string"> Sending to client </span>|<span class="string"> SELECT SQL_NO_CACHE `emp_no`,`birth_date`,`first_name`,`last_name`,`gender`,`hire_date`  FROM `emplo </span>|</span><br><span class="line">|<span class="string"> 138270 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39782 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    2 </span>|<span class="string"> Sending to client </span>|<span class="string"> SELECT SQL_NO_CACHE `o_orderkey`,`o_custkey`,`o_orderstatus`,`o_totalprice`,`o_orderDATE`,`o_orderpr </span>|</span><br><span class="line">|<span class="string"> 138271 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39784 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    2 </span>|<span class="string"> Sending to client </span>|<span class="string"> SELECT SQL_NO_CACHE `p_partkey`,`p_name`,`p_mfgr`,`p_brand`,`p_type`,`p_size`,`p_container`,`p_retai </span>|</span><br><span class="line">|<span class="string"> 138272 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39786 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    2 </span>|<span class="string"> Sending data      </span>|<span class="string"> SELECT SQL_NO_CACHE `l_orderkey`,`l_partkey`,`l_suppkey`,`l_linenumber`,`l_quantity`,`l_extendedpric </span>|</span><br><span class="line">|<span class="string"> 138273 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39788 </span>|<span class="string"> NULL </span>|<span class="string"> Query   </span>|<span class="string">    2 </span>|<span class="string"> Sending to client </span>|<span class="string"> SELECT SQL_NO_CACHE `c_custkey`,`c_name`,`c_address`,`c_nationkey`,`c_phone`,`c_acctbal`,`c_mktsegme </span>|</span><br><span class="line">|<span class="string"> 138274 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39790 </span>|<span class="string"> NULL </span>|<span class="string"> Sleep   </span>|<span class="string">    2 </span>|<span class="string">                   </span>|<span class="string"> NULL                                                                                                 </span>|</span><br><span class="line">|<span class="string"> 138275 </span>|<span class="string"> root </span>|<span class="string"> 172.16.60.50：39792 </span>|<span class="string"> NULL </span>|<span class="string"> Sleep   </span>|<span class="string">    1 </span>|<span class="string">                   </span>|<span class="string"> NULL                                                                                                 </span>|</span><br><span class="line">+--------+------+------------------+------+---------+------+-------------------+------------------------------------------------------------------------------------------------------+</span><br><span class="line">10 rows in set (0.00 sec)</span><br><span class="line"> </span><br><span class="line">可以看到138268和138269在备份kevin库,138270,138271,138272,138273在备份dbt3,这里没打印全。</span><br></pre></td></tr></table></figure>
+<h2 id="备份演示"><a href="#备份演示" class="headerlink" title="备份演示"></a>备份演示</h2><h3 id="备份命令"><a href="#备份命令" class="headerlink" title="备份命令"></a>备份命令</h3><pre class="line-numbers language-none"><code class="language-none">[root@localhost ~]# mysqlpump --single-transaction --set-gtid-purged&#x3D;OFF --parallel-schemas&#x3D;2：kevin --parallel-schemas&#x3D;4：dbt3 -B kevin dbt3 -p123456 &gt; &#x2F;tmp&#x2F;backup.sql
+mysqlpump： [Warning] Using a password on the command line interface can be insecure.
+Dump progress： 1&#x2F;5 tables, 0&#x2F;7559817 rows
+Dump progress： 3&#x2F;15 tables, 286750&#x2F;12022332 rows
+Dump progress： 3&#x2F;15 tables, 686750&#x2F;12022332 rows
+Dump progress： 3&#x2F;15 tables, 1042250&#x2F;12022332 rows
+...
+Dump completed in 43732 milliseconds
+ 
+接着另外打开一个终端会话，登录mysql看下情况
+(root@172.16.0.10) [(none)]&gt; show processlist;
++--------+------+------------------+------+---------+------+-------------------+------------------------------------------------------------------------------------------------------+
+| Id     | User | Host             | db   | Command | Time | State             | Info                                                                                                 |
++--------+------+------------------+------+---------+------+-------------------+------------------------------------------------------------------------------------------------------+
+| 138199 | root | 172.16.60.50：39238 | NULL | Query   |    0 | starting          | show processlist                                                                                     |
+| 138267 | root | 172.16.60.50：39776 | NULL | Sleep   |    2 |                   | NULL                                                                                                 |
+| 138268 | root | 172.16.60.50：39778 | NULL | Query   |    2 | Sending to client | SELECT SQL_NO_CACHE &#96;emp_no&#96;,&#96;dept_no&#96;,&#96;from_date&#96;,&#96;to_date&#96;  FROM &#96;kevin&#96;.&#96;dept_emp&#96;            |
+| 138269 | root | 172.16.60.50：39780 | NULL | Query   |    2 | Sending to client | SELECT SQL_NO_CACHE &#96;emp_no&#96;,&#96;birth_date&#96;,&#96;first_name&#96;,&#96;last_name&#96;,&#96;gender&#96;,&#96;hire_date&#96;  FROM &#96;emplo |
+| 138270 | root | 172.16.60.50：39782 | NULL | Query   |    2 | Sending to client | SELECT SQL_NO_CACHE &#96;o_orderkey&#96;,&#96;o_custkey&#96;,&#96;o_orderstatus&#96;,&#96;o_totalprice&#96;,&#96;o_orderDATE&#96;,&#96;o_orderpr |
+| 138271 | root | 172.16.60.50：39784 | NULL | Query   |    2 | Sending to client | SELECT SQL_NO_CACHE &#96;p_partkey&#96;,&#96;p_name&#96;,&#96;p_mfgr&#96;,&#96;p_brand&#96;,&#96;p_type&#96;,&#96;p_size&#96;,&#96;p_container&#96;,&#96;p_retai |
+| 138272 | root | 172.16.60.50：39786 | NULL | Query   |    2 | Sending data      | SELECT SQL_NO_CACHE &#96;l_orderkey&#96;,&#96;l_partkey&#96;,&#96;l_suppkey&#96;,&#96;l_linenumber&#96;,&#96;l_quantity&#96;,&#96;l_extendedpric |
+| 138273 | root | 172.16.60.50：39788 | NULL | Query   |    2 | Sending to client | SELECT SQL_NO_CACHE &#96;c_custkey&#96;,&#96;c_name&#96;,&#96;c_address&#96;,&#96;c_nationkey&#96;,&#96;c_phone&#96;,&#96;c_acctbal&#96;,&#96;c_mktsegme |
+| 138274 | root | 172.16.60.50：39790 | NULL | Sleep   |    2 |                   | NULL                                                                                                 |
+| 138275 | root | 172.16.60.50：39792 | NULL | Sleep   |    1 |                   | NULL                                                                                                 |
++--------+------+------------------+------+---------+------+-------------------+------------------------------------------------------------------------------------------------------+
+10 rows in set (0.00 sec)
+ 
+可以看到138268和138269在备份kevin库,138270,138271,138272,138273在备份dbt3,这里没打印全。</code></pre>
 
-<h3 id="备份过程如下"><a href="#备份过程如下" class="headerlink" title="备份过程如下"></a>备份过程如下</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">终端会话<span class="number">1</span>：</span><br><span class="line">(root<span class="variable">@localhost</span>) [(<span class="keyword">none</span>)]<span class="operator">&gt;</span> <span class="keyword">truncate</span> mysql.general_log;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.10</span> sec)</span><br><span class="line"> </span><br><span class="line">(root<span class="variable">@localhost</span>) [(<span class="keyword">none</span>)]<span class="operator">&gt;</span> <span class="keyword">set</span> <span class="keyword">global</span> log_output <span class="operator">=</span> <span class="string">&#x27;table&#x27;</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.00</span> sec)</span><br><span class="line"> </span><br><span class="line">(root<span class="variable">@localhost</span>) [(<span class="keyword">none</span>)]<span class="operator">&gt;</span> <span class="keyword">set</span> <span class="keyword">global</span> general_log <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">Query OK, <span class="number">0</span> <span class="keyword">rows</span> affected (<span class="number">0.03</span> sec)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">终端会话<span class="number">2</span>：</span><br><span class="line">[root<span class="variable">@VM</span>_0_5_centos <span class="operator">~</span>]# mysqlpump <span class="comment">--single-transaction kevin --set-gtid-purged=OFF -p123456&gt; /tmp/backup.sql</span></span><br><span class="line">Dump completed <span class="keyword">in</span> <span class="number">592</span> milliseconds</span><br><span class="line"> </span><br><span class="line">(root<span class="variable">@localhost</span>) [(<span class="keyword">none</span>)]<span class="operator">&gt;</span> <span class="keyword">select</span> thread_id,<span class="keyword">left</span>(argument, <span class="number">64</span>) <span class="keyword">from</span> mysql.general_log <span class="keyword">order</span> <span class="keyword">by</span> event_time;</span><br><span class="line">................</span><br><span class="line">................</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------+------------------------------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> root<span class="variable">@localhost</span> <span class="keyword">on</span>  <span class="keyword">using</span> Socket                                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> FLUSH TABLES <span class="keyword">WITH</span> READ LOCK                                      <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> <span class="keyword">SET</span> SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ          <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> <span class="keyword">START</span> TRANSACTION <span class="keyword">WITH</span> CONSISTENT SNAPSHOT                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> root<span class="variable">@localhost</span> <span class="keyword">on</span>  <span class="keyword">using</span> Socket                                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">SET</span> SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ          <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">START</span> TRANSACTION <span class="keyword">WITH</span> CONSISTENT SNAPSHOT                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> root<span class="variable">@localhost</span> <span class="keyword">on</span>  <span class="keyword">using</span> Socket                                  <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">SET</span> SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ          <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">START</span> TRANSACTION <span class="keyword">WITH</span> CONSISTENT SNAPSHOT                       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> UNLOCK TABLES                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">7</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">SET</span> SQL_QUOTE_SHOW_CREATE<span class="operator">=</span> <span class="number">1</span>                                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">9</span> <span class="operator">|</span> <span class="keyword">SET</span> TIME_ZONE<span class="operator">=</span><span class="string">&#x27;+00：00&#x27;</span>                                           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">SET</span> SQL_QUOTE_SHOW_CREATE<span class="operator">=</span> <span class="number">1</span>                                     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">SHOW</span> WARNINGS                                                    <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">8</span> <span class="operator">|</span> <span class="keyword">SET</span> TIME_ZONE<span class="operator">=</span><span class="string">&#x27;+00：00&#x27;</span>                                           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span>         <span class="number">3</span> <span class="operator">|</span> <span class="keyword">set</span> <span class="keyword">global</span> general_log <span class="operator">=</span> <span class="number">0</span>                                       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------+------------------------------------------------------------------+</span></span><br><span class="line"> </span><br><span class="line">根据上面信息，可以看出：</span><br><span class="line"><span class="operator">-</span>  线程<span class="number">7</span> 进行 FLUSH TABLES <span class="keyword">WITH</span> READ LOCK 。对表加一个读锁</span><br><span class="line"><span class="operator">-</span>  线程<span class="number">7</span>、<span class="number">8</span>、<span class="number">9</span>分别开启一个事务（RR隔离级别）去备份数据,由于之前锁表了,所以这三个线程备份出的数据是具有一致性的</span><br><span class="line"><span class="operator">-</span>  线程<span class="number">7</span> 解锁 UNLOCK <span class="keyword">TABLE</span></span><br><span class="line"><span class="operator">-</span>  整个过程都没有获取二进制位置点</span><br></pre></td></tr></table></figure>
+<h3 id="备份过程如下"><a href="#备份过程如下" class="headerlink" title="备份过程如下"></a>备份过程如下</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">终端会话1：
+(root@localhost) [(none)]&gt; truncate mysql.general_log;
+Query OK, 0 rows affected (0.10 sec)
+ 
+(root@localhost) [(none)]&gt; set global log_output &#x3D; &#39;table&#39;;
+Query OK, 0 rows affected (0.00 sec)
+ 
+(root@localhost) [(none)]&gt; set global general_log &#x3D; 1;
+Query OK, 0 rows affected (0.03 sec)
+ 
+ 
+终端会话2：
+[root@VM_0_5_centos ~]# mysqlpump --single-transaction kevin --set-gtid-purged&#x3D;OFF -p123456&gt; &#x2F;tmp&#x2F;backup.sql
+Dump completed in 592 milliseconds
+ 
+(root@localhost) [(none)]&gt; select thread_id,left(argument, 64) from mysql.general_log order by event_time;
+................
+................
++-----------+------------------------------------------------------------------+
+|         7 | root@localhost on  using Socket                                  |
+|         7 | FLUSH TABLES WITH READ LOCK                                      |
+|         7 | SHOW WARNINGS                                                    |
+|         7 | SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ          |
+|         7 | SHOW WARNINGS                                                    |
+|         7 | START TRANSACTION WITH CONSISTENT SNAPSHOT                       |
+|         7 | SHOW WARNINGS                                                    |
+|         8 | root@localhost on  using Socket                                  |
+|         8 | SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ          |
+|         8 | SHOW WARNINGS                                                    |
+|         8 | START TRANSACTION WITH CONSISTENT SNAPSHOT                       |
+|         8 | SHOW WARNINGS                                                    |
+|         9 | root@localhost on  using Socket                                  |
+|         9 | SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ          |
+|         9 | SHOW WARNINGS                                                    |
+|         9 | START TRANSACTION WITH CONSISTENT SNAPSHOT                       |
+|         9 | SHOW WARNINGS                                                    |
+|         7 | UNLOCK TABLES                                                    |
+|         7 | SHOW WARNINGS                                                    |
+|         9 | SET SQL_QUOTE_SHOW_CREATE&#x3D; 1                                     |
+|         9 | SHOW WARNINGS                                                    |
+|         9 | SET TIME_ZONE&#x3D;&#39;+00：00&#39;                                           |
+|         8 | SET SQL_QUOTE_SHOW_CREATE&#x3D; 1                                     |
+|         8 | SHOW WARNINGS                                                    |
+|         8 | SET TIME_ZONE&#x3D;&#39;+00：00&#39;                                           |
+|         3 | set global general_log &#x3D; 0                                       |
++-----------+------------------------------------------------------------------+
+ 
+根据上面信息，可以看出：
+-  线程7 进行 FLUSH TABLES WITH READ LOCK 。对表加一个读锁
+-  线程7、8、9分别开启一个事务（RR隔离级别）去备份数据,由于之前锁表了,所以这三个线程备份出的数据是具有一致性的
+-  线程7 解锁 UNLOCK TABLE
+-  整个过程都没有获取二进制位置点</code></pre>
 
 <h3 id="compress-output"><a href="#compress-output" class="headerlink" title="compress-output"></a>compress-output</h3><p>mysqlpump 支持压缩输出, 支持 LZ4 和 ZLIB（ZLIB 压缩比相对较高, 但是速度较慢）</p>
-<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost tmp]# mysqlpump --single-transaction --compress-output=lz4 kevin --<span class="keyword">set</span>-gtid-purged=OFF <span class="comment">-p123456 &gt;</span> /tmp/<span class="comment">backup_kevin.sql</span></span><br><span class="line">Dump <span class="comment">completed in 511 milliseconds</span></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">[root@localhost tmp]# mysqlpump --single-transaction --compress-output&#x3D;lz4 kevin --set-gtid-purged&#x3D;OFF -p123456 &gt; &#x2F;tmp&#x2F;backup_kevin.sql
+Dump completed in 511 milliseconds</code></pre>
 
 <h3 id="备份恢复"><a href="#备份恢复" class="headerlink" title="备份恢复"></a>备份恢复</h3><p>未压缩的备份</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql <span class="operator">&lt;</span> source <span class="operator">/</span>tmp<span class="operator">/</span>backup.sql;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql &lt; source &#x2F;tmp&#x2F;backup.sql;</code></pre>
 
 <p>压缩过的备份</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">先解压</span><br><span class="line">[root@localhost ~]# lz4_decompress /tmp/backup_kevin.sql /tmp/kevin.sql</span><br><span class="line"></span><br><span class="line">再导入</span><br><span class="line">mysql &lt; source /tmp/kevin.sql;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">先解压
+[root@localhost ~]# lz4_decompress &#x2F;tmp&#x2F;backup_kevin.sql &#x2F;tmp&#x2F;kevin.sql
+
+再导入
+mysql &lt; source &#x2F;tmp&#x2F;kevin.sql;</code></pre>
 
 <p>可以看出来, 这个导入是单线程。<strong>mysqlpump 备份的数据恢复时会先插入数据, 再建索引, 而 mysqldump 备份的数据恢复是在建立表的时候就把索引加上了, 所以前者备份的数据恢复时速度要快一点！</strong></p>
 <p>总体来说 mysqlpump 还是很好用的，尤其是多数据库表的备份。不过如果有一张表格外大，那么备份的大部分时间还是要消耗在这张表上，因为 mysqlpump 的备份是基于表并行的，对于每张表的导出只能是单个线程的。另外<strong>注意 mysqlpump 备份时并发线程的数量还是要看自身服务器的 IO 负载能力，并不是说一味的增加并发线程数量就可以加快速度。</strong>mysqldump 和 mysqlpump 的使用方法绝大部分一致，mysqlpump 新的参数文章上已经标明，到底用那种工具备份数据库这个要在具体的环境下才能做出选择，有些时候可能用物理备份更好（xtrabackup），总之根据需要进行测试，最后再决定使用哪种备份工具进行备份。</p>
@@ -528,6 +647,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>

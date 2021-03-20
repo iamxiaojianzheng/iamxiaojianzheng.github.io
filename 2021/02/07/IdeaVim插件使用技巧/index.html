@@ -20,7 +20,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
 <meta name="description" content="在 IDEA Intellij小技巧和插件 一文中简单介绍了一下IdeaVim插件。在这里详细总结一下这个插件在日常编程中的一些常用小技巧。 供有兴趣使用这个插件，但对Vim还不十分熟悉的朋友参考。当然基本的hjkl移动光标和几种常见模式等等基本概念就略过不提了。 为了确保只包含常用操作，这里提到的技巧都没有从现成文档里抄，而是凭记忆列出（不常用自然就不记得了）。 估计会有所遗漏，慢慢再补充。">
 <meta property="og:type" content="article">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="在 IDEA Intellij小技巧和插件 一文中简单介绍了一下IdeaVim插件。在这里详细总结一下这个插件在日常编程中的一些常用小技巧。 供有兴趣使用这个插件，但对Vim还不十分熟悉的朋友参考。当然基本的hjkl移动光标和几种常见模式等等基本概念就略过不提了。 为了确保只包含常用操作，这里提到的技巧都没有从现成文档里抄，而是凭记忆列出（不常用自然就不记得了）。 估计会有所遗漏，慢慢再补充。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-02-07T02:46:02.000Z">
-<meta property="article:modified_time" content="2021-03-20T06:29:22.085Z">
+<meta property="article:modified_time" content="2021-03-20T09:51:52.826Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="Vim">
 <meta property="article:tag" content="Idea">
@@ -283,7 +283,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 14:29:22" itemprop="dateModified" datetime="2021-03-20T14:29:22+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-20 17:51:52" itemprop="dateModified" datetime="2021-03-20T17:51:52+08:00">2021-03-20</time>
       </span>
 
   
@@ -345,7 +345,21 @@
 <p>当然也可以用第1点自定义的Ctrl+;快捷键，但这不是标准vim按键，会养成不良习惯，不建议使用。</p>
 <h1 id="10-重复操作"><a href="#10-重复操作" class="headerlink" title="10. 重复操作"></a>10. 重复操作</h1><p>普通模式下按. （小数点）可重复上一次的修改操作</p>
 <p>&amp; - 重复上一次的:s替换命令<br>@@ - 重复上一次执行的宏</p>
-<h1 id="11-跳转"><a href="#11-跳转" class="headerlink" title="11. 跳转"></a>11. 跳转</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Ctrl+] 跳转到当前标识符的定义位置 （相当于在当前光标位置的单词上按住ctrl用鼠标点击）</span><br><span class="line">Ctrl+o 回退一步 (go back)</span><br><span class="line">Ctrl+i 前进一步 (go forward)</span><br><span class="line">\`. 跳转到之前修改位置</span><br><span class="line">\<span class="code">`\`</span> 在前一次跳转位置与当前位置间切换</span><br><span class="line">行号G 或 :行号&lt;回车&gt;  跳转到某一行</span><br><span class="line">gg 跳转到文件开头</span><br><span class="line">G  跳转到文件末尾</span><br><span class="line">H  跳转到屏幕顶端（如果设置了set so=n，则跳转到第n行）</span><br><span class="line">L  跳转到屏幕底端（如果设置了set so=n，则跳转到倒数第n行）</span><br><span class="line">M  跳转到屏幕中间</span><br><span class="line">f 或 F 跳转到本行某个字符，小写f向右查找，大写F向左查找。用;或,在匹配间切换</span><br><span class="line">t 或 T 跳转到本行某个字符之前，小写t向右查找，大写T向左查找。用;或,在匹配间切换</span><br><span class="line">/正则表达式  跳转到下一个匹配。用n或N在匹配间切换。</span><br><span class="line">?正则表达式  跳转到上一个匹配。用n或N在匹配间切换。</span><br></pre></td></tr></table></figure>
+<h1 id="11-跳转"><a href="#11-跳转" class="headerlink" title="11. 跳转"></a>11. 跳转</h1><pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">Ctrl+] 跳转到当前标识符的定义位置 （相当于在当前光标位置的单词上按住ctrl用鼠标点击）
+Ctrl+o 回退一步 (go back)
+Ctrl+i 前进一步 (go forward)
+\&#96;. 跳转到之前修改位置
+\&#96;\&#96; 在前一次跳转位置与当前位置间切换
+行号G 或 :行号&lt;回车&gt;  跳转到某一行
+gg 跳转到文件开头
+G  跳转到文件末尾
+H  跳转到屏幕顶端（如果设置了set so&#x3D;n，则跳转到第n行）
+L  跳转到屏幕底端（如果设置了set so&#x3D;n，则跳转到倒数第n行）
+M  跳转到屏幕中间
+f 或 F 跳转到本行某个字符，小写f向右查找，大写F向左查找。用;或,在匹配间切换
+t 或 T 跳转到本行某个字符之前，小写t向右查找，大写T向左查找。用;或,在匹配间切换
+&#x2F;正则表达式  跳转到下一个匹配。用n或N在匹配间切换。
+?正则表达式  跳转到上一个匹配。用n或N在匹配间切换。</code></pre>
 <p>（结合前面第5点，你也许注意到了，在指定范围时，使用跳转命令将指定一个从光标位置到跳转目标的区域）</p>
 <h1 id="12-书签"><a href="#12-书签" class="headerlink" title="12. 书签"></a>12. 书签</h1><p>在普通模式下按 m&lt;小写字母&gt; 即可定义书签，按 &lt;字母&gt; 则可跳转到某个书签的精确位置，按 &lt;字母&gt;可跳转到某个书签所在行的行首（用来录制宏时比较有用）。</p>
 <p>最常用的自然是mm, mn, mj, mk, ml这几个顺手的键位。</p>
@@ -366,7 +380,15 @@
 <p>录制一些长期有效的宏时，开始录制后，最好先用0，^，T, F, $等命令把光标对齐到行首行末或某个特定起始位置（比如说用 F” 跳转到字符串的左边引号），再用一个f或/指令跳转到操作位置，这样的宏就不用必须把光标放在某个特定字符才能使用了。</p>
 <h1 id="15-一些常用组合技"><a href="#15-一些常用组合技" class="headerlink" title="15. 一些常用组合技"></a>15. 一些常用组合技</h1><p>全选：ggvG<br>调换两个字符位置：xp<br>复制一行：yyp<br>调换两行位置：ddp<br>插入模式下到行尾继续输入（相当于End键）：Ctrl+o A 或 Ctrl+[ A<br>插入模式下到行首继续输入（相当于Home键）：Ctrl+o I 或 Ctrl+[ I<br>到类定义位置（适用于正确缩进的public，protected类） ：?^p回车</p>
 <h1 id="16-一些在目前版本已知没有实现的一些常用Vim功能"><a href="#16-一些在目前版本已知没有实现的一些常用Vim功能" class="headerlink" title="16. 一些在目前版本已知没有实现的一些常用Vim功能"></a>16. 一些在目前版本已知没有实现的一些常用Vim功能</h1><p>（如果对Vim不熟悉可以跳过这节）</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">a）let命令 （没有let命令就无法导出/导入寄存器内容，也就是无法导入宏）</span><br><span class="line">b）:g命令 （在文本处理中很有用的一个命令，在编程中倒是不那么常用）</span><br><span class="line">c）!命令 （执行shell命令）</span><br><span class="line">d）大部分正则表达式标记 （例如 \%V， \v 等等）</span><br><span class="line">e) 某些多键命令双击最后一个字符表示作用于当前行。例如在Vim中gUU可以把当前行转换为大写，在IdeaVim中无效，实现同样功能可以先用V命令选中当前行，再用gU转换为大写。</span><br><span class="line">f）关于窗口操作的大部分命令 （Ctrl+w系列命令, :split等）</span><br><span class="line">g）所有Vim脚本插件 （不过大部分可以用Idea自身的功能和插件来补偿）</span><br><span class="line">zo - 打开折叠</span><br><span class="line">zc - 关闭折叠</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">a）let命令 （没有let命令就无法导出&#x2F;导入寄存器内容，也就是无法导入宏）
+b）:g命令 （在文本处理中很有用的一个命令，在编程中倒是不那么常用）
+c）!命令 （执行shell命令）
+d）大部分正则表达式标记 （例如 \%V， \v 等等）
+e) 某些多键命令双击最后一个字符表示作用于当前行。例如在Vim中gUU可以把当前行转换为大写，在IdeaVim中无效，实现同样功能可以先用V命令选中当前行，再用gU转换为大写。
+f）关于窗口操作的大部分命令 （Ctrl+w系列命令, :split等）
+g）所有Vim脚本插件 （不过大部分可以用Idea自身的功能和插件来补偿）
+zo - 打开折叠
+zc - 关闭折叠</code></pre>
 
 <p>嗯，差点忘了，在普通模式下按u撤销上一个修改（相当于其他IDE的Ctrl+z），按Ctrl+r重做被撤销的修改。</p>
 <blockquote>
@@ -453,6 +475,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>

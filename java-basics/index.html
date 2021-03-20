@@ -20,7 +20,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
 <meta name="description" content="数据类型基本类型 格式： 原始数据类型 &#x2F; 大小(bit) &#x2F; 默认值 &#x2F; 取值范围   byte &#x2F; 8 &#x2F; 0 &#x2F; -128(-2^7) ~ 127(2^7-1) short &#x2F; 16 &#x2F; 0 &#x2F; -32,768(-2^15) ~ 32767(2^15-1) int &#x2F; 32 &#x2F; 0 &#x2F; -2^31 ~ 2^31-1 long &#x2F; 64 &#x2F; 0L &#x2F; -2^63 ~ 2^63-1 float">
 <meta property="og:type" content="website">
@@ -29,11 +29,13 @@
 <meta property="og:site_name" content="JIAHE">
 <meta property="og:description" content="数据类型基本类型 格式： 原始数据类型 &#x2F; 大小(bit) &#x2F; 默认值 &#x2F; 取值范围   byte &#x2F; 8 &#x2F; 0 &#x2F; -128(-2^7) ~ 127(2^7-1) short &#x2F; 16 &#x2F; 0 &#x2F; -32,768(-2^15) ~ 32767(2^15-1) int &#x2F; 32 &#x2F; 0 &#x2F; -2^31 ~ 2^31-1 long &#x2F; 64 &#x2F; 0L &#x2F; -2^63 ~ 2^63-1 float">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-20T06:29:22.089Z">
-<meta property="article:modified_time" content="2021-03-20T06:29:22.089Z">
+<meta property="og:image" content="https://static.coderbridge.com/img/tzutzu858/fd639d0f8e4940aa914faa068eb2b909.png">
+<meta property="article:published_time" content="2021-03-20T09:51:52.830Z">
+<meta property="article:modified_time" content="2021-03-20T09:51:52.830Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="JIAHE">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.coderbridge.com/img/tzutzu858/fd639d0f8e4940aa914faa068eb2b909.png">
 
 
 <link rel="canonical" href="https://xiaojianzheng.cn/java-basics/">
@@ -189,7 +191,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">包装类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E6%B1%A0"><span class="nav-number">1.3.</span> <span class="nav-text">缓存池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">2.</span> <span class="nav-text">String</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">Object通用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">6.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">7.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8"><span class="nav-number">8.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3"><span class="nav-number">10.</span> <span class="nav-text">注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">11.</span> <span class="nav-text">特性</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">包装类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E6%B1%A0"><span class="nav-number">1.3.</span> <span class="nav-text">缓存池</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">2.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">2.1.</span> <span class="nav-text">不可变的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-StringBuffer-and-StringBuilder"><span class="nav-number">2.2.</span> <span class="nav-text">String, StringBuffer and StringBuilder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-Pool"><span class="nav-number">2.3.</span> <span class="nav-text">String Pool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#new-String-%E2%80%9Cabc%E2%80%9D"><span class="nav-number">2.4.</span> <span class="nav-text">new String(“abc”)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97"><span class="nav-number">3.</span> <span class="nav-text">运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">4.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Object%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">Object通用方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">6.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84"><span class="nav-number">7.</span> <span class="nav-text">反射</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%B8%B8"><span class="nav-number">8.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3"><span class="nav-number">10.</span> <span class="nav-text">注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E6%80%A7"><span class="nav-number">11.</span> <span class="nav-text">特性</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -277,7 +279,222 @@
 </ul>
 <p>虽然编译器会替未初始化的<strong>字段</strong>设置一个合理的默认值，但不建议依赖编译器的初始化功能。</p>
 <p>局部变量略有不同，编译器不会为其初始化，请尽可能地保证在使用之前为其分配一个值。</p>
-<h2 id="包装类型"><a href="#包装类型" class="headerlink" title="包装类型"></a>包装类型</h2><h2 id="缓存池"><a href="#缓存池" class="headerlink" title="缓存池"></a>缓存池</h2><h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><h1 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h1><h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><h1 id="Object通用方法"><a href="#Object通用方法" class="headerlink" title="Object通用方法"></a>Object通用方法</h1><h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h1 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h1>
+<h2 id="包装类型"><a href="#包装类型" class="headerlink" title="包装类型"></a>包装类型</h2><p>基本类型都有对应的包装类型，基本类型与其对应的包装类型之间的赋值使⽤⾃动装箱与拆箱完成。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Integer x &#x3D; 2;  &#x2F;&#x2F; 装箱 调⽤了 Integer.valueOf(2)
+int y &#x3D; x;      &#x2F;&#x2F; 拆箱 调⽤了 x.intValue()</code></pre>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/tutorial/java/data/autoboxing.html">Autoboxing and Unboxing</a></p>
+<h2 id="缓存池"><a href="#缓存池" class="headerlink" title="缓存池"></a>缓存池</h2><p>new Integer(123) 与 Integer.valueOf(123) 的区别在于：</p>
+<ul>
+<li>new Integer(123) 每次都会新建一个对象</li>
+<li>Integer.valueOf(123) 会使用缓存池中的对象，多次调用会取得同一个对象的引用</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Integer x &#x3D; new Integer(123);
+Integer y &#x3D; new Integer(123);
+System.out.println(x &#x3D;&#x3D; y); &#x2F;&#x2F; false
+Integer z &#x3D; Integer.valueOf(123);
+Integer k &#x3D; Integer.valueOf(123);
+System.out.println(z &#x3D;&#x3D; k); &#x2F;&#x2F; true</code></pre>
+
+<p>valueOf() ⽅法的实现⽐较简单，就是先判断值是否在缓存池中，如果在的话就直接返回缓存池的内容。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public static Integer valueOf(int i) &#123;
+    if (i &gt;&#x3D; IntegerCache.low &amp;&amp; i &lt;&#x3D; IntegerCache.high)
+        return IntegerCache.cache[i + (-IntegerCache.low)];
+   return new Integer(i);
+&#125;</code></pre>
+
+<p>在Java8中，Integer缓存池的大小默认为 -128 ~ 127</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">static final int low &#x3D; -128;
+static final int high;
+static final Integer cache[];
+
+static &#123;
+    &#x2F;&#x2F; high value may be configured by property
+    int h &#x3D; 127;
+    String integerCacheHighPropValue &#x3D; sun.misc.VM.getSavedProperty(&quot;java.lang.Integer.IntegerCache.high&quot;);
+    if (integerCacheHighPropValue !&#x3D; null) &#123;
+        try &#123;
+            int i &#x3D; parseInt(integerCacheHighPropValue);
+            i &#x3D; Math.max(i, 127);
+            &#x2F;&#x2F; Maximum array size is Integer.MAX_VALUE
+            h &#x3D; Math.min(i, Integer.MAX_VALUE - (-low) -1);
+        &#125; catch( NumberFormatException nfe) &#123;
+            &#x2F;&#x2F; If the property cannot be parsed into an int, ignore it.
+        &#125;
+    &#125;
+    high &#x3D; h;
+
+    cache &#x3D; new Integer[(high - low) + 1];
+    int j &#x3D; low;
+    for(int k &#x3D; 0; k &lt; cache.length; k++)
+        cache[k] &#x3D; new Integer(j++);
+
+    &#x2F;&#x2F; range [-128, 127] must be interned (JLS7 5.1.7)
+    assert IntegerCache.high &gt;&#x3D; 127;
+&#125;</code></pre>
+
+<p>编译器会在⾃动装箱过程调⽤ valueOf() ⽅法，因此多个值相同且值在缓存池范围内的 Integer 实例使⽤⾃动装箱来创建，那么就会引⽤相同的对象。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Integer m &#x3D; 123;
+Integer n &#x3D; 123;
+System.out.println(m &#x3D;&#x3D; n); &#x2F;&#x2F; true</code></pre>
+
+<p>基本类型对应的缓冲池如下：</p>
+<ul>
+<li>boolean values true and false</li>
+<li>all byte values</li>
+<li>short values between -128 ~ 127</li>
+<li>int values between -128 ~ 127</li>
+<li>char in the range \u0000 to \u007F</li>
+</ul>
+<p>在使⽤这些基本类型对应的包装类型时，如果该数值范围在缓冲池范围内，就可以直接使⽤缓冲池中的对象。</p>
+<p>在 jdk 1.8 所有的数值类缓冲池中，Integer 的缓冲池 IntegerCache 很特殊，这个缓冲池的下界是 -128，上界默认是 127，但是这个上界是可调的，在启动 jvm 的时候，通过 -XX:AutoBoxCacheMax=<size> 来指定这个缓冲池的⼤⼩，该选项在 JVM 初始化的时候会设定⼀个名为java.lang.IntegerCache.high 系统属性，然后 IntegerCache 初始化的时候就会读取该系统属性来决定上界。</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9030817/differences-between-new-integer123-integer-valueof123-and-just-123">StackOverflow : Differences between new Integer(123), Integer.valueOf(123) and just 123</a></p>
+<h1 id="String"><a href="#String" class="headerlink" title="String"></a>String</h1><p>String被声明为final，因此它不可被继承。（Integer等包装类也不能被继承）</p>
+<p>在Java8中，Stirng内部使用char数组存储数据。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public final class String
+    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence &#123;
+
+    &#x2F;* The value is used for character storage. *&#x2F;
+    private final char value[];
+&#125;</code></pre>
+
+<p>在Java9之后，String类的实现改用byte数组存储字符串，同时使用coder来标识使用哪种编码。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public final class String
+    implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence &#123;
+
+    &#x2F;* The value is used for character storage. *&#x2F;
+    private final byte[] value;
+
+    &#x2F;* The identifier of the encoding used to encode the bytes in &#123;@codevalue&#125;. *&#x2F;
+    private final byte coder;
+&#125;</code></pre>
+
+<p>value 数组被声明为 final，这意味着 value 数组初始化之后就不能再引⽤其它数组。并且 String 内部没有改变 value 数组的⽅法，因此可以保证 String 不可变。</p>
+<h2 id="不可变的好处"><a href="#不可变的好处" class="headerlink" title="不可变的好处"></a>不可变的好处</h2><ol>
+<li><p><strong>可以缓存hash值</strong><br>因为String的hash值经常被使用，例如String用作HashMap的key。不可变的特性可以使得hash值也不可变，因此只需要进行一次计算。</p>
+</li>
+<li><p><strong>String Pool的需要</strong><br>如果一个String对象已经被创建过了，那么就会从String Pool中取得引用。只有String是不可变的，才可能使用String Pool。</p>
+</li>
+</ol>
+<p><img data-src="https://static.coderbridge.com/img/tzutzu858/fd639d0f8e4940aa914faa068eb2b909.png" alt="字符串的引用"></p>
+<ol start="3">
+<li><p><strong>安全性</strong><br>String经常作为参数，String不可变性可以保证参数不可变。例如在作为网络连接参数的情况下如果String是可变的，那么在网络连接过程中，String如果被改变了，改变String的那一方以为现在连接的是其他主机，而实际情况却不一定是这样。</p>
+</li>
+<li><p><strong>线程安全</strong><br>String不可变性天生具备线程安全，可以在多个线程中安全的使用。</p>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.programcreek.com/2013/04/why-string-is-immutable-in-java/">Program Creek : Why String is immutable in Java?</a></p>
+<h2 id="String-StringBuffer-and-StringBuilder"><a href="#String-StringBuffer-and-StringBuilder" class="headerlink" title="String, StringBuffer and StringBuilder"></a>String, StringBuffer and StringBuilder</h2><ol>
+<li><strong>可变性</strong></li>
+</ol>
+<ul>
+<li>String不可变</li>
+<li>StringBuffer和StringBuilder可变</li>
+</ul>
+<ol start="2">
+<li><strong>线程安全</strong></li>
+</ol>
+<ul>
+<li>String不可变，因此是线程安全的</li>
+<li>StringBuilder不是线程安全的</li>
+<li>StringBuffer是线程安全的，内部使用synchronized进行同步</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2971315/string-stringbuffer-and-stringbuilder">StackOverflow : String, StringBuffer, and StringBuilder</a></p>
+<h2 id="String-Pool"><a href="#String-Pool" class="headerlink" title="String Pool"></a>String Pool</h2><p>字符串常量池（String Pool）保存着所有字符串字面量（literal strings），这些字面量在编译时期就确认。不仅如此，还可以使用String的intern()方法在运行过程将字符串添加到String Pool中。</p>
+<p>当⼀个字符串调⽤ intern() ⽅法时，如果 String Pool 中已经存在⼀个字符串和该字符串值相等（使⽤equals() ⽅法进⾏确定），那么就会返回 String Pool 中字符串的引⽤；否则，就会在 String Pool 中添加⼀个新的字符串，并返回这个新字符串的引⽤。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">String s1 &#x3D; new String(&quot;aaa&quot;);
+String s2 &#x3D; new String(&quot;aaa&quot;);
+System.out.println(s1 &#x3D;&#x3D; s2); &#x2F;&#x2F; false
+String s3 &#x3D; s1.intern();
+String s4 &#x3D; s2.intern();
+System.out.println(s3 &#x3D;&#x3D; s4); &#x2F;&#x2F; true</code></pre>
+
+<p>如果是采⽤ “bbb” 这种字⾯量的形式创建字符串，会⾃动地将字符串放⼊ String Pool 中。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">String s5 &#x3D; &quot;bbb&quot;;
+String s6 &#x3D; &quot;bbb&quot;;
+System.out.println(s5 &#x3D;&#x3D; s6); &#x2F;&#x2F; true</code></pre>
+
+<p>在 Java 7 之前，String Pool 被放在运⾏时常量池中，它属于永久代。⽽在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在⼤量使⽤字符串的场景下会导致 <code>OutOfMemoryError</code> 错误。</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/10578984/what-is-string-interning">StackOverflow : What is String interning?</a><br><a target="_blank" rel="noopener" href="https://tech.meituan.com/2014/03/06/in-depth-understanding-string-intern.html">深⼊解析 String#intern</a></p>
+<h2 id="new-String-“abc”"><a href="#new-String-“abc”" class="headerlink" title="new String(“abc”)"></a>new String(“abc”)</h2><p>使用这种方式一共会创建两个字符串对象（前提是String Pool中还没有“abc”字符串对象）。</p>
+<ul>
+<li>“abc”属于字符串字面量，因此编译时期会在String Pool中创建一个字符串对象，指向这个“abc”字符串字面量</li>
+<li>而使用new的方式会在堆中创建一个字符串对象</li>
+</ul>
+<p>创建一个测试类，其中main方法中使用这种方式来创建字符串对象。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class NewStringTest &#123;
+    public static void main(String[] args) &#123;
+        String s &#x3D; new String(&quot;abc&quot;);
+    &#125;
+&#125;</code></pre>
+
+<p>使用javap -verbose进行反编译，得到以下内容：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">Classfile &#x2F;C:&#x2F;Users&#x2F;JIAHE&#x2F;Desktop&#x2F;NewStringTest.class
+  Last modified 2021-3-20; size 350 bytes
+  MD5 checksum e0958d08c4958f1ac19fd080b7d44205
+  Compiled from &quot;NewStringTest.java&quot;
+public class NewStringTest
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 &#x3D; Methodref          #6.#15         &#x2F;&#x2F; java&#x2F;lang&#x2F;Object.&quot;&lt;init&gt;&quot;:()V
+   #2 &#x3D; Class              #16            &#x2F;&#x2F; java&#x2F;lang&#x2F;String
+   #3 &#x3D; String             #17            &#x2F;&#x2F; abc
+   #4 &#x3D; Methodref          #2.#18         &#x2F;&#x2F; java&#x2F;lang&#x2F;String.&quot;&lt;init&gt;&quot;:(Ljava&#x2F;lang&#x2F;String;)V
+   #5 &#x3D; Class              #19            &#x2F;&#x2F; NewStringTest
+   #6 &#x3D; Class              #20            &#x2F;&#x2F; java&#x2F;lang&#x2F;Object
+   #7 &#x3D; Utf8               &lt;init&gt;
+   #8 &#x3D; Utf8               ()V
+   #9 &#x3D; Utf8               Code
+  #10 &#x3D; Utf8               LineNumberTable
+  #11 &#x3D; Utf8               main
+  #12 &#x3D; Utf8               ([Ljava&#x2F;lang&#x2F;String;)V
+  #13 &#x3D; Utf8               SourceFile
+  #14 &#x3D; Utf8               NewStringTest.java
+  #15 &#x3D; NameAndType        #7:#8          &#x2F;&#x2F; &quot;&lt;init&gt;&quot;:()V
+  #16 &#x3D; Utf8               java&#x2F;lang&#x2F;String
+  #17 &#x3D; Utf8               abc
+  #18 &#x3D; NameAndType        #7:#21         &#x2F;&#x2F; &quot;&lt;init&gt;&quot;:(Ljava&#x2F;lang&#x2F;String;)V
+  #19 &#x3D; Utf8               NewStringTest
+  #20 &#x3D; Utf8               java&#x2F;lang&#x2F;Object
+  #21 &#x3D; Utf8               (Ljava&#x2F;lang&#x2F;String;)V
+&#123;
+  public NewStringTest();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack&#x3D;1, locals&#x3D;1, args_size&#x3D;1
+         0: aload_0
+         1: invokespecial #1                  &#x2F;&#x2F; Method java&#x2F;lang&#x2F;Object.&quot;&lt;init&gt;&quot;:()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava&#x2F;lang&#x2F;String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack&#x3D;3, locals&#x3D;2, args_size&#x3D;1
+         0: new           #2                  &#x2F;&#x2F; class java&#x2F;lang&#x2F;String
+         3: dup
+         4: ldc           #3                  &#x2F;&#x2F; String abc
+         6: invokespecial #4                  &#x2F;&#x2F; Method java&#x2F;lang&#x2F;String.&quot;&lt;init&gt;&quot;:(Ljava&#x2F;lang&#x2F;String;)V
+         9: astore_1
+        10: return
+      LineNumberTable:
+        line 3: 0
+        line 4: 10
+&#125;
+SourceFile: &quot;NewStringTest.java&quot;</code></pre>
+
+<p>在Constant Pool中，#17存储了字符串字面量“abc”，#3是String Pool的字符串对象，它指向#17这个字符串字面量。在main方法中，0: ⾏使⽤ new #2 在堆中创建⼀个字符串对象，并且使⽤ ldc #3将 String Pool 中的字符串对象作为 String 构造函数的参数。</p>
+<p>以下是String构造函数的源码，可以看到，再将一个字符串对象作为另一个字符串对象的构造函数参数时，并不是复制参数的内容，而是直接指向参数的引用。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public String(String original) &#123;
+    this.value &#x3D; original.value; &#x2F;&#x2F; value是一个char数组
+    this.hash &#x3D; original.hash;
+&#125;</code></pre>
+
+<h1 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h1><h1 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h1><h1 id="Object通用方法"><a href="#Object通用方法" class="headerlink" title="Object通用方法"></a>Object通用方法</h1><h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h1 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h1>
       </div>
       
       
@@ -333,6 +550,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>

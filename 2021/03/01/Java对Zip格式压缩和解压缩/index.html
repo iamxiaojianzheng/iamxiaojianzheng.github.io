@@ -20,7 +20,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
 <meta name="description" content="ZIP 和 GZIP 的区别gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX&#x2F;Linux 上经常看到的压缩包后缀都是 *.tar.">
 <meta property="og:type" content="article">
@@ -30,7 +30,7 @@
 <meta property="og:description" content="ZIP 和 GZIP 的区别gzip 是一种文件压缩工具（或该压缩工具产生的压缩文件格式），它的设计目标是处理单个的文件。gzip 在压缩文件中的数据时使用的就是 zlib。为了保存与文件属性有关的信息，gzip 需要在压缩文件（*.gz）中保存更多的头信息内容，而 zlib 不用考虑这一点。但 gzip 只适用于单个文件，所以我们在 UNIX&#x2F;Linux 上经常看到的压缩包后缀都是 *.tar.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-01T03:12:12.000Z">
-<meta property="article:modified_time" content="2021-03-20T06:29:22.085Z">
+<meta property="article:modified_time" content="2021-03-20T09:51:52.826Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="zip">
 <meta property="article:tag" content="java">
@@ -285,7 +285,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 14:29:22" itemprop="dateModified" datetime="2021-03-20T14:29:22+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-20 17:51:52" itemprop="dateModified" datetime="2021-03-20T17:51:52+08:00">2021-03-20</time>
       </span>
 
   
@@ -308,7 +308,95 @@
 <p>I<strong>nflaterInputStream</strong>：解压缩类的基类<br><strong>ZipInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据<br><strong>GZIPInputStream</strong>：InflaterInputStream 的一个子类，能解压缩 Zip 格式的数据</p>
 <p><strong>ZipEntry</strong>：表示 ZIP 文件条目<br><strong>ZipFile</strong>：此类用于从 ZIP 文件读取条目</p>
 <h1 id="压缩文件"><a href="#压缩文件" class="headerlink" title="压缩文件"></a>压缩文件</h1><p>下面实例我们使用了 apache 的 zip 工具包（所在包为 ant.jar ），因为 java 类型自带的不支持中文路径，不过两者使用的方式是一样的，只是 apache 压缩工具多了设置编码方式的接口，其他基本上是一样的。另外，如果使用 org.apache.tools.zip.ZipOutputStream 来压缩的话，我们只能使用 org.apache.tools.zip.ZipEntry 来解压，而不能使用 java.util.zip.ZipInputStream 来解压读取了，当然 apache 并未提供 ZipInputStream 类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compress</span><span class="params">(String srcFilePath, String destFilePath)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    File src = <span class="keyword">new</span> File(srcFilePath);</span><br><span class="line">    <span class="keyword">if</span> (!src.exists()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(srcFilePath + <span class="string">&quot;不存在&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    File zipFile = <span class="keyword">new</span> File(destFilePath);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(zipFile);</span><br><span class="line">        CheckedOutputStream cos = <span class="keyword">new</span> CheckedOutputStream(fos, <span class="keyword">new</span> CRC32());</span><br><span class="line">        ZipOutputStream zos = <span class="keyword">new</span> ZipOutputStream(cos);</span><br><span class="line">        String baseDir = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        compressbyType(src, zos, baseDir);</span><br><span class="line">        zos.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 根据文件类型压缩</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressbyType</span><span class="params">(File src, ZipOutputStream zos, String baseDir)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!src.exists())</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    System.out.println(<span class="string">&quot;压缩&quot;</span> + baseDir + src.getName());</span><br><span class="line">    <span class="keyword">if</span> (src.isFile()) &#123;</span><br><span class="line">        compressFile(src, zos, baseDir);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (src.isDirectory()) &#123;</span><br><span class="line">        compressDir(src, zos, baseDir);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩文件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressFile</span><span class="params">(File file, ZipOutputStream zos, String baseDir)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!file.exists())</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">        ZipEntry entry = <span class="keyword">new</span> ZipEntry(baseDir + file.getName());</span><br><span class="line">        zos.putNextEntry(entry);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> count;</span><br><span class="line">        <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[BUFSIZE];</span><br><span class="line">        <span class="keyword">while</span> ((count = bis.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">            zos.write(buf, <span class="number">0</span>, count);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bis.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 压缩文件夹</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">compressDir</span><span class="params">(File dir, ZipOutputStream zos, String baseDir)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!dir.exists())</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    File[] files = dir.listFiles();</span><br><span class="line">    <span class="keyword">if</span>(files.length == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            zos.putNextEntry(<span class="keyword">new</span> ZipEntry(baseDir + dir.getName() + File.separator));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">        compressbyType(file, zos, baseDir + dir.getName() + File.separator);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
+ * 压缩
+ *&#x2F;
+public static void compress(String srcFilePath, String destFilePath) &#123;
+
+    File src &#x3D; new File(srcFilePath);
+    if (!src.exists()) &#123;
+        throw new RuntimeException(srcFilePath + &quot;不存在&quot;);
+    &#125;
+
+    File zipFile &#x3D; new File(destFilePath);
+    try &#123;
+        FileOutputStream fos &#x3D; new FileOutputStream(zipFile);
+        CheckedOutputStream cos &#x3D; new CheckedOutputStream(fos, new CRC32());
+        ZipOutputStream zos &#x3D; new ZipOutputStream(cos);
+        String baseDir &#x3D; &quot;&quot;;
+        compressbyType(src, zos, baseDir);
+        zos.close();
+    &#125; catch (Exception e) &#123;
+        e.printStackTrace();
+    &#125;
+
+&#125;
+
+&#x2F;**
+ * 根据文件类型压缩
+ *&#x2F;
+private static void compressbyType(File src, ZipOutputStream zos, String baseDir) &#123;
+
+    if (!src.exists())
+        return;
+
+    System.out.println(&quot;压缩&quot; + baseDir + src.getName());
+    if (src.isFile()) &#123;
+        compressFile(src, zos, baseDir);
+    &#125; else if (src.isDirectory()) &#123;
+        compressDir(src, zos, baseDir);
+    &#125;
+
+&#125;
+
+&#x2F;**
+ * 压缩文件
+ *&#x2F;
+private static void compressFile(File file, ZipOutputStream zos, String baseDir) &#123;
+
+    if (!file.exists())
+        return;
+
+    try &#123;
+        BufferedInputStream bis &#x3D; new BufferedInputStream(new FileInputStream(file));
+        ZipEntry entry &#x3D; new ZipEntry(baseDir + file.getName());
+        zos.putNextEntry(entry);
+
+        int count;
+        byte[] buf &#x3D; new byte[BUFSIZE];
+        while ((count &#x3D; bis.read(buf)) !&#x3D; -1) &#123;
+            zos.write(buf, 0, count);
+        &#125;
+
+        bis.close();
+    &#125; catch (Exception e) &#123;
+        e.printStackTrace();
+    &#125;
+
+&#125;
+
+&#x2F;**
+ * 压缩文件夹
+ *&#x2F;
+private static void compressDir(File dir, ZipOutputStream zos, String baseDir) &#123;
+
+    if (!dir.exists())
+        return;
+
+    File[] files &#x3D; dir.listFiles();
+    if(files.length &#x3D;&#x3D; 0)&#123;
+        try &#123;
+            zos.putNextEntry(new ZipEntry(baseDir + dir.getName() + File.separator));
+        &#125; catch (IOException e) &#123;
+            e.printStackTrace();
+        &#125;
+    &#125;
+
+    for (File file : files) &#123;
+        compressbyType(file, zos, baseDir + dir.getName() + File.separator);
+    &#125;
+
+&#125;</code></pre>
 
 <p>总结步骤：</p>
 <ol>
@@ -323,12 +411,69 @@
 <p> <strong>ZipEntry entry = new ZipEntry(baseDir + file.getName());</strong></p>
 <p> 然后将条目增加到 ZipOutputStream 中，<strong>zos.putNextEntry(entry);</strong></p>
 <p> 最后再调用要写入条目对应文件的输入流读取文件内容写入到压缩文件中。</p>
- <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(<span class="keyword">new</span> FileInputStream(file));</span><br><span class="line">ZipEntry entry = <span class="keyword">new</span> ZipEntry(baseDir + file.getName());</span><br><span class="line">zos.putNextEntry(entry);</span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line"><span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[_BUFSIZE_];</span><br><span class="line"><span class="keyword">while</span> ((count = bis.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">    zos.write(buf, <span class="number">0</span>, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <pre class="line-numbers language-java" data-language="java"><code class="language-java">BufferedInputStream bis &#x3D; new BufferedInputStream(new FileInputStream(file));
+ZipEntry entry &#x3D; new ZipEntry(baseDir + file.getName());
+zos.putNextEntry(entry);
+int count;
+byte[] buf &#x3D; new byte[_BUFSIZE_];
+while ((count &#x3D; bis.read(buf)) !&#x3D; -1) &#123;
+    zos.write(buf, 0, count);
+&#125;</code></pre>
 
 <p> <strong>注意：</strong>如果是空目录<strong>直接</strong> <strong>zos.putNextEntry(new ZipEntry(baseDir +     dir.getName()+ File.<em>separator</em>))</strong> 并不用写入文件内容，<strong>其中最主要的涉及到目录的压缩的，就是这一句话  out.putNextEntry(new ZipEntry(base + “/“)); // 放入一级目录 (防止空目录被丢弃)</strong></p>
 </li>
 </ol>
-<h1 id="解压-zip-文件"><a href="#解压-zip-文件" class="headerlink" title="解压 zip 文件"></a>解压 zip 文件</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解压缩</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> srcPath 	压缩文件路径</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dest		解压路径</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">decompress</span><span class="params">(String srcPath, String dest)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line"></span><br><span class="line">    File file = <span class="keyword">new</span> File(srcPath);</span><br><span class="line">    <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(srcPath + <span class="string">&quot; 所指文件不存在 &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ZipFile zf = <span class="keyword">new</span> ZipFile(file);</span><br><span class="line">    Enumeration entries = zf.getEntries();</span><br><span class="line">    ZipEntry entry;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (entries.hasMoreElements()) &#123;</span><br><span class="line">        entry = (ZipEntry) entries.nextElement();</span><br><span class="line">        System._out_.println(<span class="string">&quot; 解压 &quot;</span> + entry.getName());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (entry.isDirectory()) &#123;</span><br><span class="line"></span><br><span class="line">            String dirPath = dest + File._separator_ + entry.getName();</span><br><span class="line">            File dir = <span class="keyword">new</span> File(dirPath);</span><br><span class="line">            dir.mkdirs();</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 表示文件</span></span><br><span class="line">            File f = <span class="keyword">new</span> File(dest + File._separator_ + entry.getName());</span><br><span class="line">            <span class="keyword">if</span> (!f.exists()) &#123;</span><br><span class="line">                String dirs = FileUtils._getParentPath_(f);</span><br><span class="line">                File parentDir = <span class="keyword">new</span> File(dirs);</span><br><span class="line">                parentDir.mkdirs();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            f.createNewFile();</span><br><span class="line">            <span class="comment">// 将压缩文件内容写入到这个文件中</span></span><br><span class="line">            InputStream is = zf.getInputStream(entry);</span><br><span class="line">            FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(f);</span><br><span class="line">            <span class="keyword">int</span> count;</span><br><span class="line">            <span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>];</span><br><span class="line">            <span class="keyword">while</span> ((count = is.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">                fos.write(buf, <span class="number">0</span>, count);</span><br><span class="line">            &#125;</span><br><span class="line">            is.close();</span><br><span class="line">            fos.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="解压-zip-文件"><a href="#解压-zip-文件" class="headerlink" title="解压 zip 文件"></a>解压 zip 文件</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
+ * 解压缩
+ * @param srcPath 	压缩文件路径
+ * @param dest		解压路径
+ *&#x2F;
+public static void decompress(String srcPath, String dest) throws Exception &#123;
+
+    File file &#x3D; new File(srcPath);
+    if (!file.exists()) &#123;
+        throw new RuntimeException(srcPath + &quot; 所指文件不存在 &quot;);
+    &#125;
+
+    ZipFile zf &#x3D; new ZipFile(file);
+    Enumeration entries &#x3D; zf.getEntries();
+    ZipEntry entry;
+
+    while (entries.hasMoreElements()) &#123;
+        entry &#x3D; (ZipEntry) entries.nextElement();
+        System._out_.println(&quot; 解压 &quot; + entry.getName());
+
+        if (entry.isDirectory()) &#123;
+
+            String dirPath &#x3D; dest + File._separator_ + entry.getName();
+            File dir &#x3D; new File(dirPath);
+            dir.mkdirs();
+
+        &#125; else &#123;
+
+            &#x2F;&#x2F; 表示文件
+            File f &#x3D; new File(dest + File._separator_ + entry.getName());
+            if (!f.exists()) &#123;
+                String dirs &#x3D; FileUtils._getParentPath_(f);
+                File parentDir &#x3D; new File(dirs);
+                parentDir.mkdirs();
+            &#125;
+
+            f.createNewFile();
+            &#x2F;&#x2F; 将压缩文件内容写入到这个文件中
+            InputStream is &#x3D; zf.getInputStream(entry);
+            FileOutputStream fos &#x3D; new FileOutputStream(f);
+            int count;
+            byte[] buf &#x3D; new byte[8192];
+            while ((count &#x3D; is.read(buf)) !&#x3D; -1) &#123;
+                fos.write(buf, 0, count);
+            &#125;
+            is.close();
+            fos.close();
+        &#125;
+    &#125;
+
+&#125;</code></pre>
 
 
 <blockquote>
@@ -417,6 +562,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>

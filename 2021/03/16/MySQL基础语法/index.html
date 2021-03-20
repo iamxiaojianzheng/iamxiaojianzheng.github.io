@@ -20,17 +20,17 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="连接1234567# 命令行连接mysqlmysql -u root -p&gt; Enter password: ******# 退出mysql&gt; exit">
+<meta name="description" content="连接# 命令行连接mysql mysql -u root -p &gt; Enter password: ******  # 退出 mysql&gt; exit">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL基础语法">
 <meta property="og:url" content="https://xiaojianzheng.cn/2021/03/16/MySQL%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/index.html">
 <meta property="og:site_name" content="JIAHE">
-<meta property="og:description" content="连接1234567# 命令行连接mysqlmysql -u root -p&gt; Enter password: ******# 退出mysql&gt; exit">
+<meta property="og:description" content="连接# 命令行连接mysql mysql -u root -p &gt; Enter password: ******  # 退出 mysql&gt; exit">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-16T02:02:57.000Z">
-<meta property="article:modified_time" content="2021-03-20T06:29:22.085Z">
+<meta property="article:modified_time" content="2021-03-20T09:51:52.826Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="基础语法">
@@ -283,7 +283,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 14:29:22" itemprop="dateModified" datetime="2021-03-20T14:29:22+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-20 17:51:52" itemprop="dateModified" datetime="2021-03-20T17:51:52+08:00">2021-03-20</time>
       </span>
 
   
@@ -296,14 +296,38 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 命令行连接mysql</span></span><br><span class="line">mysql -u root -p</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> Enter password: ******</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 退出</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">exit</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 命令行连接mysql
+mysql -u root -p
+&gt; Enter password: ******
+
+# 退出
+mysql&gt; exit
+</code></pre>
 <span id="more"></span>
 
-<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接MySQL后，创建</span></span><br><span class="line">CREATE database 数据库名;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 建议使用这种方式进行创建数据库</span></span><br><span class="line">CREATE database if not exists 数据库名 default charset utf8;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过mysqladmin命令直接创建</span></span><br><span class="line">mysqladmin -u root -p CREATE 数据库名;</span><br><span class="line">Enter password:******</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 连接MySQL后，创建
+CREATE database 数据库名;
 
-<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接MySQL后，删除</span></span><br><span class="line">drop database 数据库名;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 通过mysqladmin命令直接删除</span></span><br><span class="line">mysqladmin -u root -p drop 数据库名</span><br><span class="line">Enter password:******</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+# 建议使用这种方式进行创建数据库
+CREATE database if not exists 数据库名 default charset utf8;
 
-<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 连接MySQL后，选择后需要操作的数据库</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use 数据库名;</span></span><br><span class="line">Database changed</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+# 通过mysqladmin命令直接创建
+mysqladmin -u root -p CREATE 数据库名;
+Enter password:******
+</code></pre>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 连接MySQL后，删除
+drop database 数据库名;
+
+# 通过mysqladmin命令直接删除
+mysqladmin -u root -p drop 数据库名
+Enter password:******
+</code></pre>
+
+<h3 id="选择"><a href="#选择" class="headerlink" title="选择"></a>选择</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 连接MySQL后，选择后需要操作的数据库
+mysql&gt; use 数据库名;
+Database changed
+</code></pre>
 
 <h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>后续如果要对数据库做性能优化，了解清楚数据类型是前置条件。</p>
 <p>MySQL支持多种类型，大致可以分为三类：数值、日期/时间和字符串(字符)类型。</p>
@@ -483,7 +507,23 @@
 <blockquote>
 <p><strong>注意</strong>：char(n) 和 varchar(n) 中括号中 n 代表字符的个数，并不代表字节个数，比如 CHAR(30) 就可以存储 30 个字符。</p>
 </blockquote>
-<h2 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h2><h3 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS &#96;t_user_info&#96;;</span><br><span class="line">CREATE TABLE &#96;t_user_info&#96;  (</span><br><span class="line">  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键&#39;,</span><br><span class="line">  &#96;gmt_CREATE&#96; datetime(0) NOT NULL COMMENT &#39;创建时间&#39;,</span><br><span class="line">  &#96;gmt_modified&#96; datetime(0) COMMENT &#39;修改时间&#39;,</span><br><span class="line">  &#96;creator&#96; varchar(32) COMMENT &#39;创建人&#39;,</span><br><span class="line">  &#96;modifier&#96; varchar(32) COMMENT &#39;修改人&#39;,</span><br><span class="line">  &#96;is_deleted&#96; varchar(1) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (&#96;id&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;source_case_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;case_summary_key&#96;(&#96;case_summary_key&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;is_deleted&#96;(&#96;is_deleted&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;creator&#96;(&#96;creator&#96;) USING BTREE,</span><br><span class="line">  INDEX &#96;gmt_CREATE&#96;(&#96;gmt_CREATE&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">) ENGINE &#x3D; InnoDB CHARSET &#x3D; utf8 COMMENT &#x3D; &#39;用户基础信息表&#39; ROW_FORMAT &#x3D; DYNAMIC;</span><br></pre></td></tr></table></figure>
+<h2 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h2><h3 id="创建-1"><a href="#创建-1" class="headerlink" title="创建"></a>创建</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP TABLE IF EXISTS &#96;t_user_info&#96;;
+CREATE TABLE &#96;t_user_info&#96;  (
+  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键&#39;,
+  &#96;gmt_CREATE&#96; datetime(0) NOT NULL COMMENT &#39;创建时间&#39;,
+  &#96;gmt_modified&#96; datetime(0) COMMENT &#39;修改时间&#39;,
+  &#96;creator&#96; varchar(32) COMMENT &#39;创建人&#39;,
+  &#96;modifier&#96; varchar(32) COMMENT &#39;修改人&#39;,
+  &#96;is_deleted&#96; varchar(1) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,
+
+  PRIMARY KEY (&#96;id&#96;) USING BTREE,
+  UNIQUE INDEX &#96;source_case_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,
+  UNIQUE INDEX &#96;case_summary_key&#96;(&#96;case_summary_key&#96;) USING BTREE,
+  INDEX &#96;is_deleted&#96;(&#96;is_deleted&#96;) USING BTREE,
+  INDEX &#96;creator&#96;(&#96;creator&#96;) USING BTREE,
+  INDEX &#96;gmt_CREATE&#96;(&#96;gmt_CREATE&#96;) USING BTREE,
+
+) ENGINE &#x3D; InnoDB CHARSET &#x3D; utf8 COMMENT &#x3D; &#39;用户基础信息表&#39; ROW_FORMAT &#x3D; DYNAMIC;</code></pre>
 
 <ul>
 <li>如果你不想字段为 <strong>NULL</strong> 可以设置字段的属性为 <strong>NOT NULL</strong>， 在操作数据库时如果输入该字段的数据为<strong>NULL</strong> ，就会报错。</li>
@@ -491,19 +531,77 @@
 <li>PRIMARY KEY关键字用于定义列为主键。 您可以使用多列来定义主键，列间以逗号分隔。</li>
 <li>ENGINE 设置存储引擎，CHARSET 设置编码。</li>
 </ul>
-<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除数据表，表结构和数据都删除，立刻释放磁盘空间</span></span><br><span class="line">drop table table_name;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 清空数据表，保留表结构，支持<span class="built_in">where</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 对于 MyISAM 会立刻释放磁盘空间，InnoDB 不会释放磁盘空间</span></span><br><span class="line">delete from table_name;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 带条件的删除，表结构不变，不管是 innodb 还是 MyISAM 都不会释放磁盘空间</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 optimize table table_name 会立刻释放磁盘空间，不管是 innodb 还是 myisam</span></span><br><span class="line">delete from table_name where xxx = xxx;</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 清空数据表，保留表结构，立刻释放磁盘空间</span></span><br><span class="line">truncate table table_name;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="删除-1"><a href="#删除-1" class="headerlink" title="删除"></a>删除</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 删除数据表，表结构和数据都删除，立刻释放磁盘空间
+drop table table_name;
 
-<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">INSERT INTO table_name ( field1, field2, ..., fieldN )</span><br><span class="line">                       values</span><br><span class="line">                       ( value1, value2, ..., valueN );</span><br></pre></td></tr></table></figure>
+# 清空数据表，保留表结构，支持where
+# 对于 MyISAM 会立刻释放磁盘空间，InnoDB 不会释放磁盘空间
+delete from table_name;
+
+# 带条件的删除，表结构不变，不管是 innodb 还是 MyISAM 都不会释放磁盘空间
+# 使用 optimize table table_name 会立刻释放磁盘空间，不管是 innodb 还是 myisam
+delete from table_name where xxx &#x3D; xxx;
+
+# 清空数据表，保留表结构，立刻释放磁盘空间
+truncate table table_name;
+</code></pre>
+
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+INSERT INTO table_name ( field1, field2, ..., fieldN )
+                       values
+                       ( value1, value2, ..., valueN );</code></pre>
 
 <blockquote>
 <p>如果数据是字符型，必须使用单引号或者双引号，如：”value”。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-- 字段和值要一一对应</span><br><span class="line">INSERT INTO &#96;t_user_info&#96;</span><br><span class="line">(&#96;id&#96;, &#96;gmt_CREATE&#96;, &#96;gmt_modified&#96;, &#96;creator&#96;, &#96;modifier&#96;, &#96;is_deleted&#96;, &#96;phone&#96;, &#96;name&#96;, &#96;role_id&#96;, &#96;role_name&#96;, &#96;company_id&#96;, &#96;company_name&#96;, &#96;dept_id&#96;, &#96;dept_name&#96;, &#96;user_type&#96;, &#96;status&#96;, &#96;is_frozen&#96;, &#96;is_test&#96;, &#96;is_invest_frozen&#96;, &#96;password&#96;, &#96;salt&#96;, &#96;court_id&#96;, &#96;court_name&#96;, &#96;legal_type&#96;) </span><br><span class="line">VALUES</span><br><span class="line">(525, &#39;2019-04-26 09:46:00&#39;, &#39;2020-06-11 14:06:49&#39;, &#39;system&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 13634184519, &#39;系统管理员&#39;, 0, &#39;管理员&#39;, NULL, NULL, NULL, NULL, &#39;operator&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;42f29eb14a981acdce097cef6a45150d&#39;, &#39;j78pqrq9p47kcqu1&#39;, &#39;&#39;, &#39;&#39;, &#39;company&#39;);</span><br><span class="line"></span><br><span class="line">-- 插入多条数据</span><br><span class="line">INSERT INTO &#96;t_user_info&#96;</span><br><span class="line">(&#96;gmt_CREATE&#96;, &#96;gmt_modified&#96;, &#96;creator&#96;, &#96;modifier&#96;, &#96;is_deleted&#96;, &#96;phone&#96;, &#96;name&#96;, &#96;role_id&#96;, &#96;role_name&#96;, &#96;company_id&#96;, &#96;company_name&#96;, &#96;dept_id&#96;, &#96;dept_name&#96;, &#96;user_type&#96;, &#96;status&#96;, &#96;is_frozen&#96;, &#96;is_test&#96;, &#96;is_invest_frozen&#96;, &#96;password&#96;, &#96;salt&#96;, &#96;court_id&#96;, &#96;court_name&#96;, &#96;legal_type&#96;) </span><br><span class="line">VALUES </span><br><span class="line">(&#39;2019-04-26 09:46:00&#39;, &#39;2020-06-11 14:06:49&#39;, &#39;system&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 13634184519, &#39;系统管理员&#39;, 0, &#39;管理员&#39;, NULL, NULL, NULL, NULL, &#39;operator&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;42f29eb14a981acdce097cef6a45150d&#39;, &#39;j78pqrq9p47kcqu1&#39;, NULL, &#39;&#39;, &#39;company&#39;), </span><br><span class="line">(533, &#39;2019-07-02 19:24:25&#39;, &#39;2020-11-16 17:15:54&#39;, &#39;管理员&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 15155555555, &#39;打工人-张三&#39;, 3, &#39;打工人&#39;, NULL, NULL, 1, &#39;测试部门&#39;, &#39;person&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;26d2014872f282ff7e682a5271ffbbed&#39;, &#39;9cpt983corj1n59d&#39;, 298, &#39;测试法院&#39;, &#39;court&#39;);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 字段和值要一一对应
+INSERT INTO &#96;t_user_info&#96;
+(&#96;id&#96;, &#96;gmt_CREATE&#96;, &#96;gmt_modified&#96;, &#96;creator&#96;, &#96;modifier&#96;, &#96;is_deleted&#96;, &#96;phone&#96;, &#96;name&#96;, &#96;role_id&#96;, &#96;role_name&#96;, &#96;company_id&#96;, &#96;company_name&#96;, &#96;dept_id&#96;, &#96;dept_name&#96;, &#96;user_type&#96;, &#96;status&#96;, &#96;is_frozen&#96;, &#96;is_test&#96;, &#96;is_invest_frozen&#96;, &#96;password&#96;, &#96;salt&#96;, &#96;court_id&#96;, &#96;court_name&#96;, &#96;legal_type&#96;) 
+VALUES
+(525, &#39;2019-04-26 09:46:00&#39;, &#39;2020-06-11 14:06:49&#39;, &#39;system&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 13634184519, &#39;系统管理员&#39;, 0, &#39;管理员&#39;, NULL, NULL, NULL, NULL, &#39;operator&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;42f29eb14a981acdce097cef6a45150d&#39;, &#39;j78pqrq9p47kcqu1&#39;, &#39;&#39;, &#39;&#39;, &#39;company&#39;);
+
+-- 插入多条数据
+INSERT INTO &#96;t_user_info&#96;
+(&#96;gmt_CREATE&#96;, &#96;gmt_modified&#96;, &#96;creator&#96;, &#96;modifier&#96;, &#96;is_deleted&#96;, &#96;phone&#96;, &#96;name&#96;, &#96;role_id&#96;, &#96;role_name&#96;, &#96;company_id&#96;, &#96;company_name&#96;, &#96;dept_id&#96;, &#96;dept_name&#96;, &#96;user_type&#96;, &#96;status&#96;, &#96;is_frozen&#96;, &#96;is_test&#96;, &#96;is_invest_frozen&#96;, &#96;password&#96;, &#96;salt&#96;, &#96;court_id&#96;, &#96;court_name&#96;, &#96;legal_type&#96;) 
+VALUES 
+(&#39;2019-04-26 09:46:00&#39;, &#39;2020-06-11 14:06:49&#39;, &#39;system&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 13634184519, &#39;系统管理员&#39;, 0, &#39;管理员&#39;, NULL, NULL, NULL, NULL, &#39;operator&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;42f29eb14a981acdce097cef6a45150d&#39;, &#39;j78pqrq9p47kcqu1&#39;, NULL, &#39;&#39;, &#39;company&#39;), 
+(533, &#39;2019-07-02 19:24:25&#39;, &#39;2020-11-16 17:15:54&#39;, &#39;管理员&#39;, &#39;系统管理员&#39;, &#39;n&#39;, 15155555555, &#39;打工人-张三&#39;, 3, &#39;打工人&#39;, NULL, NULL, 1, &#39;测试部门&#39;, &#39;person&#39;, &#39;normal&#39;, &#39;n&#39;, &#39;n&#39;, &#39;n&#39;, &#39;26d2014872f282ff7e682a5271ffbbed&#39;, &#39;9cpt983corj1n59d&#39;, 298, &#39;测试法院&#39;, &#39;court&#39;);</code></pre>
 
 <blockquote>
 <p>如果没有提供<code>id</code>，则会自动递增</p>
 </blockquote>
-<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">&lt;SELECT clause&gt; </span><br><span class="line">[&lt;FROM clause&gt;] </span><br><span class="line">[&lt;WHERE clause&gt;] </span><br><span class="line">[&lt;GROUP BY clause&gt;] </span><br><span class="line">[&lt;HAVING clause&gt;] </span><br><span class="line">[&lt;ORDER BY clause&gt;] </span><br><span class="line">[&lt;LIMIT clause&gt;] </span><br><span class="line"></span><br><span class="line">-- 执行顺序</span><br><span class="line">1.  from </span><br><span class="line">2.  on</span><br><span class="line">3.  join</span><br><span class="line">4.  where </span><br><span class="line">5.  group by (开始使用select中的别名，后面的语句中都可以使用)</span><br><span class="line">6.  avg, sum等函数</span><br><span class="line">7.  having </span><br><span class="line">8.  select </span><br><span class="line">9.  distinct </span><br><span class="line">10. order by</span><br><span class="line">11. limit </span><br><span class="line"></span><br><span class="line">-- 子句执行顺序</span><br><span class="line">-&gt; 开始 </span><br><span class="line">-&gt; FROM 子句 </span><br><span class="line">-&gt; WHERE 子句 </span><br><span class="line">-&gt; GROUP BY 子句 </span><br><span class="line">-&gt; HAVING 子句 </span><br><span class="line">-&gt; ORDER BY 子句 </span><br><span class="line">-&gt; SELECT 子句 </span><br><span class="line">-&gt; LIMIT 子句</span><br><span class="line">-&gt; 最终结果 </span><br></pre></td></tr></table></figure>
+<h2 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h2><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+&lt;SELECT clause&gt; 
+[&lt;FROM clause&gt;] 
+[&lt;WHERE clause&gt;] 
+[&lt;GROUP BY clause&gt;] 
+[&lt;HAVING clause&gt;] 
+[&lt;ORDER BY clause&gt;] 
+[&lt;LIMIT clause&gt;] 
+
+-- 执行顺序
+1.  from 
+2.  on
+3.  join
+4.  where 
+5.  group by (开始使用select中的别名，后面的语句中都可以使用)
+6.  avg, sum等函数
+7.  having 
+8.  select 
+9.  distinct 
+10. order by
+11. limit 
+
+-- 子句执行顺序
+-&gt; 开始 
+-&gt; FROM 子句 
+-&gt; WHERE 子句 
+-&gt; GROUP BY 子句 
+-&gt; HAVING 子句 
+-&gt; ORDER BY 子句 
+-&gt; SELECT 子句 
+-&gt; LIMIT 子句
+-&gt; 最终结果 </code></pre>
 
 <ul>
 <li>查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。</li>
@@ -513,7 +611,11 @@
 <li>你可以使用 LIMIT 属性来设定返回的记录数。</li>
 <li>你可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。</li>
 </ul>
-<h3 id="where"><a href="#where" class="headerlink" title="where"></a>where</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">[WHERE condition1 [AND [OR]] condition2.....</span><br><span class="line"></span><br><span class="line"> -- 操作符</span><br><span class="line"> &#x3D; !&#x3D; &gt; &lt; &gt;&#x3D; &lt;&#x3D;</span><br></pre></td></tr></table></figure>
+<h3 id="where"><a href="#where" class="headerlink" title="where"></a>where</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+[WHERE condition1 [AND [OR]] condition2.....
+
+ -- 操作符
+ &#x3D; !&#x3D; &gt; &lt; &gt;&#x3D; &lt;&#x3D;</code></pre>
 
 <ul>
 <li>查询语句中你可以使用一个或者多个表，表之间使用逗号**,** 分割，并使用WHERE语句来设定查询条件。</li>
@@ -522,13 +624,23 @@
 <li>WHERE 子句也可以运用于 SQL 的 DELETE 或者 UPDATE 命令。</li>
 <li>WHERE 子句类似于程序语言中的 if 条件，根据 MySQL 表中的字段值来读取指定的数据。</li>
 </ul>
-<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">UPDATE table_name SET field1&#x3D;expression1, field2&#x3D;expression2</span><br><span class="line">[WHERE Clause]</span><br><span class="line"></span><br><span class="line">-- expression</span><br><span class="line">a &#x3D; 1</span><br><span class="line">a &#x3D; a + 1</span><br><span class="line">a &#x3D; replace(a, &#39;1&#39;, &#39;2&#39;)</span><br><span class="line">a &#x3D; default 设置为默认的值</span><br></pre></td></tr></table></figure>
+<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+UPDATE table_name SET field1&#x3D;expression1, field2&#x3D;expression2
+[WHERE Clause]
+
+-- expression
+a &#x3D; 1
+a &#x3D; a + 1
+a &#x3D; replace(a, &#39;1&#39;, &#39;2&#39;)
+a &#x3D; default 设置为默认的值</code></pre>
 
 <ul>
 <li>你可以同时更新一个或多个字段。</li>
 <li>你可以在 WHERE 子句中指定任何条件。</li>
 </ul>
-<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">DELETE FROM table_name [WHERE Clause]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+DELETE FROM table_name [WHERE Clause]
+</code></pre>
 
 <ul>
 <li>如果没有指定 WHERE 子句，MySQL 表中的所有记录将被删除。</li>
@@ -537,7 +649,9 @@
 <h3 id="like"><a href="#like" class="headerlink" title="like"></a>like</h3><blockquote>
 <p>模糊匹配字符串</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;
+</code></pre>
 
 <ul>
 <li>你可以在 WHERE 子句中使用LIKE子句</li>
@@ -545,7 +659,12 @@
 <li>LIKE 通常与 <strong>%</strong> 一同使用，类似于一个元字符的搜索。</li>
 <li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE…LIKE 子句来指定条件。</li>
 </ul>
-<h3 id="like-与-结合使用"><a href="#like-与-结合使用" class="headerlink" title="like 与 % _ 结合使用"></a>like 与 % _ 结合使用</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x27;%a&#x27;     <span class="comment">//以a结尾的数据</span></span><br><span class="line">&#x27;a%&#x27;     <span class="comment">//以a开头的数据</span></span><br><span class="line">&#x27;%a%&#x27;    <span class="comment">//含有a的数据</span></span><br><span class="line">&#x27;_a_&#x27;    <span class="comment">//三位且中间字母是a的</span></span><br><span class="line">&#x27;_a&#x27;     <span class="comment">//两位且结尾字母是a的_</span></span><br><span class="line">&#x27;a_&#x27;     <span class="comment">//两位且开头字母是a的</span></span><br></pre></td></tr></table></figure>
+<h3 id="like-与-结合使用"><a href="#like-与-结合使用" class="headerlink" title="like 与 % _ 结合使用"></a>like 与 % _ 结合使用</h3><pre class="line-numbers language-none"><code class="language-none">&#39;%a&#39;     &#x2F;&#x2F;以a结尾的数据
+&#39;a%&#39;     &#x2F;&#x2F;以a开头的数据
+&#39;%a%&#39;    &#x2F;&#x2F;含有a的数据
+&#39;_a_&#39;    &#x2F;&#x2F;三位且中间字母是a的
+&#39;_a&#39;     &#x2F;&#x2F;两位且结尾字母是a的_
+&#39;a_&#39;     &#x2F;&#x2F;两位且开头字母是a的</code></pre>
 
 <ul>
 <li><code>%</code>：表示任意 0 个或多个字符。可匹配任意类型和长度的字符，有些情况下若是中文，请使用两个百分号（%%）表示。</li>
@@ -557,7 +676,14 @@
 <h3 id="union"><a href="#union" class="headerlink" title="union"></a>union</h3><blockquote>
 <p>MySQL UNION 操作符用于连接两个以上的 SELECT 语句的结果组合到一个结果集合中。多个 SELECT 语句会删除重复的数据。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">SELECT expression1, expression2, ... expression_n</span><br><span class="line">FROM tables</span><br><span class="line">[WHERE conditions]</span><br><span class="line">UNION [ALL | DISTINCT]</span><br><span class="line">SELECT expression1, expression2, ... expression_n</span><br><span class="line">FROM tables</span><br><span class="line">[WHERE conditions];</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+SELECT expression1, expression2, ... expression_n
+FROM tables
+[WHERE conditions]
+UNION [ALL | DISTINCT]
+SELECT expression1, expression2, ... expression_n
+FROM tables
+[WHERE conditions];</code></pre>
 
 <ul>
 <li><strong>expression1, expression2, … expression_n</strong>: 要检索的列。</li>
@@ -566,16 +692,67 @@
 <li><strong>DISTINCT:</strong> 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
 <li><strong>ALL:</strong> 可选，返回所有结果集，包含重复数据。</li>
 </ul>
-<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT <span class="symbol">*</span> FROM Websites;</span><br><span class="line">+----+--------------+---------------------------+-------+---------+</span><br><span class="line">|<span class="string"> id </span>|<span class="string"> name         </span>|<span class="string"> url  </span>|<span class="string"> alexa </span>|<span class="string"> country </span>|</span><br><span class="line">+----+--------------+---------------------------+-------+---------+</span><br><span class="line">|<span class="string"> 1  </span>|<span class="string"> baidu       </span>|<span class="string"> https://www.baidu.cm/    </span>|<span class="string"> 1     </span>|<span class="string"> USA     </span>|</span><br><span class="line">|<span class="string"> 2  </span>|<span class="string"> 淘宝          </span>|<span class="string"> https://www.taobao.com/   </span>|<span class="string"> 13    </span>|<span class="string"> CN      </span>|</span><br><span class="line">|<span class="string"> 3  </span>|<span class="string"> 菜鸟教程      </span>|<span class="string"> http://www.meteor.com/    </span>|<span class="string"> 4689  </span>|<span class="string"> CN      </span>|</span><br><span class="line">|<span class="string"> 4  </span>|<span class="string"> 微博          </span>|<span class="string"> http://weibo.com/         </span>|<span class="string"> 20    </span>|<span class="string"> CN      </span>|</span><br><span class="line">|<span class="string"> 5  </span>|<span class="string"> Facebook     </span>|<span class="string"> https://www.facebook.com/ </span>|<span class="string"> 3     </span>|<span class="string"> USA     </span>|</span><br><span class="line">|<span class="string"> 7  </span>|<span class="string"> stackoverflow </span>|<span class="string"> http://stackoverflow.com/ </span>|<span class="string">   0 </span>|<span class="string"> IND     </span>|</span><br><span class="line">+----+---------------+---------------------------+-------+---------+</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">mysql&gt; SELECT * FROM Websites;
++----+--------------+---------------------------+-------+---------+
+| id | name         | url  | alexa | country |
++----+--------------+---------------------------+-------+---------+
+| 1  | baidu       | https:&#x2F;&#x2F;www.baidu.cm&#x2F;    | 1     | USA     |
+| 2  | 淘宝          | https:&#x2F;&#x2F;www.taobao.com&#x2F;   | 13    | CN      |
+| 3  | 菜鸟教程      | http:&#x2F;&#x2F;www.meteor.com&#x2F;    | 4689  | CN      |
+| 4  | 微博          | http:&#x2F;&#x2F;weibo.com&#x2F;         | 20    | CN      |
+| 5  | Facebook     | https:&#x2F;&#x2F;www.facebook.com&#x2F; | 3     | USA     |
+| 7  | stackoverflow | http:&#x2F;&#x2F;stackoverflow.com&#x2F; |   0 | IND     |
++----+---------------+---------------------------+-------+---------+</code></pre>
 
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT * FROM apps;</span><br><span class="line"><span class="code">+----+</span>------------<span class="code">+-------------------------+</span>---------+</span><br><span class="line">| id | app_name   | url| country |</span><br><span class="line"><span class="code">+----+</span>------------<span class="code">+-------------------------+</span>---------+</span><br><span class="line">|  1 | QQ APP     | http://im.qq.com/       | CN      |</span><br><span class="line">|  2 | 微博 APP    | http://weibo.com/       | CN      |</span><br><span class="line">|  3 | 淘宝 APP    | https://www.taobao.com/ | CN      |</span><br><span class="line"><span class="code">+----+</span>------------<span class="code">+-------------------------+</span>---------+</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-none"><code class="language-none">mysql&gt; SELECT * FROM apps;
++----+------------+-------------------------+---------+
+| id | app_name   | url| country |
++----+------------+-------------------------+---------+
+|  1 | QQ APP     | http:&#x2F;&#x2F;im.qq.com&#x2F;       | CN      |
+|  2 | 微博 APP    | http:&#x2F;&#x2F;weibo.com&#x2F;       | CN      |
+|  3 | 淘宝 APP    | https:&#x2F;&#x2F;www.taobao.com&#x2F; | CN      |
++----+------------+-------------------------+---------+</code></pre>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">SELECT country FROM Websites</span><br><span class="line">UNION</span><br><span class="line">SELECT country FROM apps</span><br><span class="line">ORDER BY country;</span><br><span class="line"></span><br><span class="line">-- 输出结果如下</span><br><span class="line">+---------+</span><br><span class="line">| country |</span><br><span class="line">+---------+</span><br><span class="line">|	CN	  |</span><br><span class="line">|	IND   |</span><br><span class="line">|	USA   |</span><br><span class="line">+---------+</span><br><span class="line"></span><br><span class="line">SELECT country FROM Websites</span><br><span class="line">UNION ALL</span><br><span class="line">SELECT country FROM apps</span><br><span class="line">ORDER BY country;</span><br><span class="line"></span><br><span class="line">-- 输出结果如下</span><br><span class="line">+---------+</span><br><span class="line">| country |</span><br><span class="line">+---------+</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	CN	  |</span><br><span class="line">|	IND   |</span><br><span class="line">|	USA   |</span><br><span class="line">|	USA   |</span><br><span class="line">|	USA   |</span><br><span class="line">+---------+</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT country FROM Websites
+UNION
+SELECT country FROM apps
+ORDER BY country;
+
+-- 输出结果如下
++---------+
+| country |
++---------+
+|	CN	  |
+|	IND   |
+|	USA   |
++---------+
+
+SELECT country FROM Websites
+UNION ALL
+SELECT country FROM apps
+ORDER BY country;
+
+-- 输出结果如下
++---------+
+| country |
++---------+
+|	CN	  |
+|	CN	  |
+|	CN	  |
+|	CN	  |
+|	CN	  |
+|	IND   |
+|	USA   |
+|	USA   |
+|	USA   |
++---------+</code></pre>
 
 <blockquote>
 <p><strong>注释：</strong>UNION 不能用于列出两个表中所有的country。如果一些网站和APP来自同一个国家，每个国家只会列出一次。UNION 只会选取不同的值。请使用 UNION ALL 来选取重复的值！</p>
 </blockquote>
-<h3 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">ORDER BY field1 [ASC [DESC][默认 ASC]], [field2...] [ASC [DESC][默认 ASC]]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+ORDER BY field1 [ASC [DESC][默认 ASC]], [field2...] [ASC [DESC][默认 ASC]]
+</code></pre>
 
 <ul>
 <li>你可以使用任何字段来作为排序的条件，从而返回排序后的查询结果。</li>
@@ -586,9 +763,36 @@
 <p>GROUP BY 语句根据一个或多个列对结果集进行分组。</p>
 <p>在分组的列上我们可以使用 COUNT, SUM, AVG,等函数。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">GROUP BY column_name;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+GROUP BY column_name;
+</code></pre>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) </span><br><span class="line">FROM t_user_info </span><br><span class="line">WHERE trial_room_name IS NOT NULL</span><br><span class="line">GROUP BY trial_room_name;</span><br><span class="line"></span><br><span class="line">-- 输出结果</span><br><span class="line">+-----------------------------+</span><br><span class="line">|trial_room_name | court(id)  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">|	第1办公室	   |  296		|</span><br><span class="line">|	第2办公室	   |  138		|</span><br><span class="line">+------------------------------+</span><br><span class="line"></span><br><span class="line">SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) </span><br><span class="line">FROM t_user_info </span><br><span class="line">WHERE trial_room_name IS NOT NULL</span><br><span class="line">GROUP BY trial_room_name WITH ROLLUP;</span><br><span class="line"></span><br><span class="line">-- 输出结果 </span><br><span class="line">+-----------------------------+</span><br><span class="line">|trial_room_name | court(id)  |</span><br><span class="line">+-----------------------------+</span><br><span class="line">|	第1办公室	   |  296		|</span><br><span class="line">|	第2办公室	   |  138		|</span><br><span class="line">|	总计          |  434		 |</span><br><span class="line">+------------------------------+</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) 
+FROM t_user_info 
+WHERE trial_room_name IS NOT NULL
+GROUP BY trial_room_name;
+
+-- 输出结果
++-----------------------------+
+|trial_room_name | court(id)  |
++-----------------------------+
+|	第1办公室	   |  296		|
+|	第2办公室	   |  138		|
++------------------------------+
+
+SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) 
+FROM t_user_info 
+WHERE trial_room_name IS NOT NULL
+GROUP BY trial_room_name WITH ROLLUP;
+
+-- 输出结果 
++-----------------------------+
+|trial_room_name | court(id)  |
++-----------------------------+
+|	第1办公室	   |  296		|
+|	第2办公室	   |  138		|
+|	总计          |  434		 |
++------------------------------+</code></pre>
 
 <blockquote>
 <p>WITH ROLLUP 可以实现在分组统计数据基础上再进行相同的统计（SUM,AVG,COUNT…）。</p>
@@ -664,21 +868,48 @@
 </tr>
 </tbody></table>
 <p>查找name字段中以’st’为开头的所有数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE name REGEXP &#39;^st&#39;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;^st&#39;;</code></pre>
 
 <p>查找name字段中以’ok’为结尾的所有数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE name REGEXP &#39;ok$&#39;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;ok$&#39;;</code></pre>
 
 <p>查找name字段中包含’mar’字符串的所有数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE name REGEXP &#39;mar&#39;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;mar&#39;;</code></pre>
 
 <p>查找name字段中以元音字符开头或以’ok’字符串结尾的所有数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WHERE name REGEXP &#39;^[aeiou]|ok$&#39;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;^[aeiou]|ok$&#39;;</code></pre>
 
 <h3 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h3><blockquote>
 <p>当我们需要修改数据表名或者修改数据表字段时，就需要使用到MySQL ALTER命令。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">-- 删除字段</span><br><span class="line">ALTER table table_name drop column_name ;</span><br><span class="line"></span><br><span class="line">-- 删除外键</span><br><span class="line">ALTER table table_name drop foregion key keyName;</span><br><span class="line"></span><br><span class="line">-- 新增字段</span><br><span class="line">-- 新增字段放至第一列</span><br><span class="line">ALTER table table_name add column_name column_type first;</span><br><span class="line">-- 新增字段放至name字段之后</span><br><span class="line">ALTER table table_name add column_name column_type after name;</span><br><span class="line"></span><br><span class="line">-- 修改字段</span><br><span class="line">ALTER table table_name modify column_name new_column_type;</span><br><span class="line">ALTER table table_name change old_column_name new_column_name new_column_type;</span><br><span class="line"></span><br><span class="line">-- 修改字段默认值</span><br><span class="line">ALTER table table_name ALTER column_name set default default_value;</span><br><span class="line"></span><br><span class="line">-- 删除字段默认值</span><br><span class="line">ALTER table table_name ALTER column_name drop default;</span><br><span class="line"></span><br><span class="line">-- 修改数据表配置</span><br><span class="line">ALTER table table_name engine &#x3D; MYISAM;</span><br><span class="line"></span><br><span class="line">-- 修改表名</span><br><span class="line">ALTER table table_name rename to new_table_name;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 删除字段
+ALTER table table_name drop column_name ;
+
+-- 删除外键
+ALTER table table_name drop foregion key keyName;
+
+-- 新增字段
+-- 新增字段放至第一列
+ALTER table table_name add column_name column_type first;
+-- 新增字段放至name字段之后
+ALTER table table_name add column_name column_type after name;
+
+-- 修改字段
+ALTER table table_name modify column_name new_column_type;
+ALTER table table_name change old_column_name new_column_name new_column_type;
+
+-- 修改字段默认值
+ALTER table table_name ALTER column_name set default default_value;
+
+-- 删除字段默认值
+ALTER table table_name ALTER column_name drop default;
+
+-- 修改数据表配置
+ALTER table table_name engine &#x3D; MYISAM;
+
+-- 修改表名
+ALTER table table_name rename to new_table_name;
+</code></pre>
 
 <h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><p>MySQL索引的建立对于MySQL的高效运行是很重要的，索引可以大大提高MySQL的检索速度。</p>
 <p>打个比方，如果合理的设计且使用索引的MySQL是一辆兰博基尼的话，那么没有设计和使用索引的MySQL就是一个人力三轮车。</p>
@@ -691,52 +922,94 @@
 <h3 id="普通索引"><a href="#普通索引" class="headerlink" title="普通索引"></a>普通索引</h3><blockquote>
 <p>创建索引</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX indexName ON tableName (columnName)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE INDEX indexName ON tableName (columnName)</code></pre>
 
 <blockquote>
 <p>修改表结构，添加索引</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tableName ADD INDEX indexName(columnName)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE tableName ADD INDEX indexName(columnName)</code></pre>
 
 <blockquote>
 <p>创建表时指定索引</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">INDEX [indexName] (username(length)) [USING xxx]</span><br><span class="line"></span><br><span class="line">CREATE TABLE &#96;t_user_info&#96;  (</span><br><span class="line"></span><br><span class="line">  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键 caseId&#39;,</span><br><span class="line">  &#96;gmt_create&#96; datetime(0) NOT NULL COMMENT &#39;创建时间&#39;,</span><br><span class="line">  &#96;gmt_modified&#96; datetime(0) NULL DEFAULT NULL COMMENT &#39;修改时间&#39;,</span><br><span class="line">  &#96;creator&#96; varchar(32) NULL DEFAULT NULL COMMENT &#39;创建人&#39;,</span><br><span class="line">  &#96;modifier&#96; varchar(32) NULL DEFAULT NULL COMMENT &#39;修改人&#39;,</span><br><span class="line">  &#96;is_deleted&#96; varchar(1) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (&#96;id&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">  INDEX &#96;case_code&#96;(&#96;case_code&#96;(255)) USING BTREE,</span><br><span class="line"></span><br><span class="line">) ENGINE &#x3D; InnoDB AUTO_INCREMENT &#x3D; 5090 CHARACTER SET &#x3D; utf8mb4 COLLATE &#x3D; utf8mb4_general_ci COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39; ROW_FORMAT &#x3D; DYNAMIC;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+INDEX [indexName] (username(length)) [USING xxx]
+
+CREATE TABLE &#96;t_user_info&#96;  (
+
+  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键 caseId&#39;,
+  &#96;gmt_create&#96; datetime(0) NOT NULL COMMENT &#39;创建时间&#39;,
+  &#96;gmt_modified&#96; datetime(0) NULL DEFAULT NULL COMMENT &#39;修改时间&#39;,
+  &#96;creator&#96; varchar(32) NULL DEFAULT NULL COMMENT &#39;创建人&#39;,
+  &#96;modifier&#96; varchar(32) NULL DEFAULT NULL COMMENT &#39;修改人&#39;,
+  &#96;is_deleted&#96; varchar(1) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,
+
+  PRIMARY KEY (&#96;id&#96;) USING BTREE,
+
+  INDEX &#96;case_code&#96;(&#96;case_code&#96;(255)) USING BTREE,
+
+) ENGINE &#x3D; InnoDB AUTO_INCREMENT &#x3D; 5090 CHARACTER SET &#x3D; utf8mb4 COLLATE &#x3D; utf8mb4_general_ci COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39; ROW_FORMAT &#x3D; DYNAMIC;</code></pre>
 
 <blockquote>
 <p>删除索引</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP INDEX indexName ON tableName</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">DROP INDEX indexName ON tableName</code></pre>
 
 <h3 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h3><p>它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。</p>
 <blockquote>
 <p>创建索引</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">CREATE UNIQUE INDEX indexName ON tableName(columnName(length)) </span><br><span class="line"></span><br><span class="line">-- 栗子</span><br><span class="line">CREATE UNIQUE INDEX &#96;case_summary_key&#96; ON &#96;t_user_info&#96;(&#96;case_summary_key&#96;) </span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+CREATE UNIQUE INDEX indexName ON tableName(columnName(length)) 
+
+-- 栗子
+CREATE UNIQUE INDEX &#96;case_summary_key&#96; ON &#96;t_user_info&#96;(&#96;case_summary_key&#96;) </code></pre>
 
 <blockquote>
 <p>修改表结构，添加索引</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 基本语法</span><br><span class="line">ALTER table tableName ADD UNIQUE [indexName] (columnName(length))</span><br><span class="line"></span><br><span class="line">-- 栗子</span><br><span class="line">ALTER table &#96;t_user_info&#96; ADD UNIQUE &#96;case_summary_key&#96; (&#96;case_summary_key&#96;)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 基本语法
+ALTER table tableName ADD UNIQUE [indexName] (columnName(length))
+
+-- 栗子
+ALTER table &#96;t_user_info&#96; ADD UNIQUE &#96;case_summary_key&#96; (&#96;case_summary_key&#96;)</code></pre>
 
 <blockquote>
 <p>创建表时指定</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE &#96;t_user_info&#96;  (</span><br><span class="line"></span><br><span class="line">  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键 caseId&#39;,</span><br><span class="line"></span><br><span class="line">  PRIMARY KEY (&#96;id&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">  UNIQUE INDEX &#96;source_case_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,</span><br><span class="line">  UNIQUE INDEX &#96;case_summary_key&#96;(&#96;case_summary_key&#96;) USING BTREE,</span><br><span class="line"></span><br><span class="line">) ENGINE &#x3D; InnoDB COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39;;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">CREATE TABLE &#96;t_user_info&#96;  (
+
+  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键 caseId&#39;,
+
+  PRIMARY KEY (&#96;id&#96;) USING BTREE,
+
+  UNIQUE INDEX &#96;source_case_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,
+  UNIQUE INDEX &#96;case_summary_key&#96;(&#96;case_summary_key&#96;) USING BTREE,
+
+) ENGINE &#x3D; InnoDB COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39;;</code></pre>
 
 <h3 id="添加或删除主键"><a href="#添加或删除主键" class="headerlink" title="添加或删除主键"></a>添加或删除主键</h3><blockquote>
 <p>添加主键</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tableName ADD PRIMARY KEY (id);</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE tableName ADD PRIMARY KEY (id);</code></pre>
 
 <blockquote>
 <p>删除主键</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tableName DROP PRIMARY KEY;</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">ALTER TABLE tableName DROP PRIMARY KEY;</code></pre>
 
-<h3 id="查看索引信息"><a href="#查看索引信息" class="headerlink" title="查看索引信息"></a>查看索引信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW INDEX FROM tableName;</span><br></pre></td></tr></table></figure>
+<h3 id="查看索引信息"><a href="#查看索引信息" class="headerlink" title="查看索引信息"></a>查看索引信息</h3><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">SHOW INDEX FROM tableName;</code></pre>
 
-<h2 id="导出、导入"><a href="#导出、导入" class="headerlink" title="导出、导入"></a>导出、导入</h2><h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导出整个数据库</span></span><br><span class="line">mysqldump -u root -p databaseName &gt; databaseName.sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导出整个表</span></span><br><span class="line">mysqldump -u root -p databaseName tableName &gt; tableName.sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入mysql交互环境，通过SELECT ... INTO OUTFILE 命令导出</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> SELECT * FROM tableName</span></span><br><span class="line">    -&gt; INTO OUTFILE &#x27;/home/haigui/tableName.sql&#x27;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="导出、导入"><a href="#导出、导入" class="headerlink" title="导出、导入"></a>导出、导入</h2><h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 导出整个数据库
+mysqldump -u root -p databaseName &gt; databaseName.sql
+
+# 导出整个表
+mysqldump -u root -p databaseName tableName &gt; tableName.sql
+
+# 进入mysql交互环境，通过SELECT ... INTO OUTFILE 命令导出
+mysql&gt; SELECT * FROM tableName
+    -&gt; INTO OUTFILE &#39;&#x2F;home&#x2F;haigui&#x2F;tableName.sql&#39;;
+</code></pre>
 
 <p>SELECT … INTO OUTFILE 语句有以下属性：</p>
 <ul>
@@ -746,7 +1019,22 @@
 <li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT … INTO OUTFILE 不会起任何作用。</li>
 <li>在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。</li>
 </ul>
-<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 导入整个数据库</span></span><br><span class="line">mysql -u root -p password &lt; meteor.sql</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 导入数据表</span></span><br><span class="line">mysqlimport -u root -p --local tableName dump.txt</span><br><span class="line">Enter password: ******</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 进入mysql交互环境，通过<span class="built_in">source</span>命令导入</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> create database <span class="built_in">test</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> use <span class="built_in">test</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">set</span> names utf8;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> <span class="built_in">source</span> /home/haigui/meteor.sql;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 插入数据到表</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> LOAD DATA LOCAL INFILE <span class="string">&#x27;dump.txt&#x27;</span> INTO TABLE tableName;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 导入整个数据库
+mysql -u root -p password &lt; meteor.sql
+
+# 导入数据表
+mysqlimport -u root -p --local tableName dump.txt
+Enter password: ******
+
+# 进入mysql交互环境，通过source命令导入
+mysql&gt; create database test;
+mysql&gt; use test;
+mysql&gt; set names utf8;
+mysql&gt; source &#x2F;home&#x2F;haigui&#x2F;meteor.sql;
+
+# 插入数据到表
+mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
+</code></pre>
 
 <p>msyqlimport常用参数</p>
 <table>
@@ -789,7 +1077,9 @@
 <td align="left">此选项指定文本文件中行与行之间数据的分隔字符串 或者字符。 默认的情况下mysqlimport以newline为行分隔符。 您可以选择用一个字符串来替代一个单个的字符： 一个新行或者一个回车。</td>
 </tr>
 </tbody></table>
-<h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN SELECT * FROM t_user_info WHERE case_code &#x3D; &#39;1111&#39; or id &#x3D; 2020</span><br><span class="line"></span><br><span class="line">-- 输出结果如下表</span><br></pre></td></tr></table></figure>
+<h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">EXPLAIN SELECT * FROM t_user_info WHERE case_code &#x3D; &#39;1111&#39; or id &#x3D; 2020
+
+-- 输出结果如下表</code></pre>
 
 <table>
 <thead>
@@ -879,7 +1169,11 @@
 <h3 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h3><h4 id="union-1"><a href="#union-1" class="headerlink" title="union"></a>union</h4><blockquote>
 <p>当通过union来连接多个查询结果时，第二个之后的select其select_type为UNION</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM t_user_info WHERE id &#x3D; 1161 </span><br><span class="line">UNION</span><br><span class="line">SELECT * FROM t_user_info WHERE id &#x3D; 1166</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">EXPLAIN 
+
+SELECT * FROM t_user_info WHERE id &#x3D; 1161 
+UNION
+SELECT * FROM t_user_info WHERE id &#x3D; 1166</code></pre>
 
 <table>
 <thead>
@@ -940,7 +1234,13 @@
 <h4 id="DEPENDENT-UNION-与-DEPENDENT-SUBQUERY"><a href="#DEPENDENT-UNION-与-DEPENDENT-SUBQUERY" class="headerlink" title="DEPENDENT UNION 与 DEPENDENT SUBQUERY"></a>DEPENDENT UNION 与 DEPENDENT SUBQUERY</h4><blockquote>
 <p>当union作为子查询时，其中第一个子查询的select_type则是DEPENDENT SUBQUERY，第二个union的select_type就是DEPENDENT UNION。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM t_user_info WHERE id IN (</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1161</span><br><span class="line">	UNION</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1166</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">EXPLAIN 
+
+SELECT * FROM t_user_info WHERE id IN (
+	SELECT id FROM t_user_info WHERE id &#x3D; 1161
+	UNION
+	SELECT id FROM t_user_info WHERE id &#x3D; 1166
+)</code></pre>
 
 <table>
 <thead>
@@ -1014,7 +1314,11 @@
 <h4 id="SUBQUERY"><a href="#SUBQUERY" class="headerlink" title="SUBQUERY"></a>SUBQUERY</h4><blockquote>
 <p>子查询中的第一个select其select_type为SUBQUERY</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM t_user_info WHERE id &#x3D; (</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1161</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">EXPLAIN 
+
+SELECT * FROM t_user_info WHERE id &#x3D; (
+	SELECT id FROM t_user_info WHERE id &#x3D; 1161
+)</code></pre>
 
 <table>
 <thead>
@@ -1065,7 +1369,11 @@
 <h4 id="DERIVED"><a href="#DERIVED" class="headerlink" title="DERIVED"></a>DERIVED</h4><blockquote>
 <p>当子查询是from子句时，其select_type为DERIVED。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN </span><br><span class="line"></span><br><span class="line">SELECT * FROM (</span><br><span class="line">	SELECT id FROM t_user_info WHERE id &#x3D; 1161</span><br><span class="line">) AS aliasName</span><br></pre></td></tr></table></figure>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">EXPLAIN 
+
+SELECT * FROM (
+	SELECT id FROM t_user_info WHERE id &#x3D; 1161
+) AS aliasName</code></pre>
 
 <h3 id="type"><a href="#type" class="headerlink" title="type"></a>type</h3><blockquote>
 <p>注意:一般保证查询至少达到range级别，最好能达到ref。</p>
@@ -2029,6 +2337,9 @@
 
   
   <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 <script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
