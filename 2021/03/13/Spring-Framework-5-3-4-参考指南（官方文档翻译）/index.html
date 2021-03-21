@@ -30,7 +30,7 @@
 <meta property="og:description" content="https:&#x2F;&#x2F;docs.spring.io&#x2F;spring-framework&#x2F;docs&#x2F;current&#x2F;reference&#x2F;html&#x2F;index.html  Spring Framework 5.3.4 参考指南 （官方文档翻译）   主要模块 包含内容    Overview history, design philosophy, feedback, getting started.   C">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-13T13:29:54.000Z">
-<meta property="article:modified_time" content="2021-03-20T11:49:45.137Z">
+<meta property="article:modified_time" content="2021-03-21T11:50:13.613Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="Spring">
 <meta property="article:tag" content="翻译">
@@ -130,8 +130,9 @@
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
         <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
-        <li class="menu-item menu-item-ebook"><a href="/ebook/" rel="section"><i class="fa fa-book fa-fw"></i>电子书</a></li>
+        <li class="menu-item menu-item-ebook"><a href="/ebook" rel="section"><i class="fa fa-book fa-fw"></i>ebook</a></li>
         <li class="menu-item menu-item-java基础"><a href="/java-basics/" rel="section"><i class="fa fa-code fa-fw"></i>Java基础</a></li>
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
         <li class="menu-item menu-item-experience"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
@@ -283,7 +284,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 19:49:45" itemprop="dateModified" datetime="2021-03-20T19:49:45+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-21 19:50:13" itemprop="dateModified" datetime="2021-03-21T19:50:13+08:00">2021-03-21</time>
       </span>
 
   
@@ -350,7 +351,7 @@
 <p>Spring 作为开源应用，其拥有一个大型且活跃的社区，由于这个社区能够经常提供基于各种实际情况的案例，所以 Spring 的茁壮成长也得益于该社区。</p>
 <h3 id="1-为何称其为“Spring”"><a href="#1-为何称其为“Spring”" class="headerlink" title="1. 为何称其为“Spring”"></a>1. 为何称其为“Spring”</h3><p>“Spring”这个术语在不同的环境下有着不同的含义。它常常被用来指代 Spring Framework 这个项目本身，同时这个项目也是 Spring 的开始。随着时间的推移，其他新的 Spring 项目都是基于 Spring Framework 构建的。大多数时候，人们称呼“Spring”时，更多的是表达 Spring 整个项目家族。本参考文档重点想介绍的也是 Spring Framework 这个基础应用。</p>
 <p>Spring Framework 分为多个模块。构建应用时，可以根据情况自由选择。<code>core container</code> 模块是所有模块中最重要的，它包含了<strong>配置模型</strong>和<strong>依赖注入机制</strong>。除此之外，Spring Framework 为不同的应用程序架构都提供了基础支持，包括消息队列、事务数据、持久化和web服务。也包含了基于 Servlet 的 SpringMVC，以及 Spring WebFlux 响应式web框架。</p>
-<p>A note about modules: Spring’s framework jars allow for deployment to JDK 9’s module path (“Jigsaw”). For use in Jigsaw-enabled applications, the Spring Framework 5 jars come with “Automatic-Module-Name” manifest entries which define stable language-level module names (“spring.core”, “spring.context” etc) independent from jar artifact names (the jars follow the same naming pattern with “-“ instead of “.”, e.g. “spring-core” and “spring-context”). Of course, Spring’s framework jars keep working fine on the classpath on both JDK 8 and 9+.</p>
+<p>A note about modules: Spring’s framework jars allow for deployment to JDK 9’s module path (&quot;Jigsaw&quot;). For use in Jigsaw-enabled applications, the Spring Framework 5 jars come with &quot;Automatic-Module-Name&quot; manifest entries which define stable language-level module names (&quot;spring.core&quot;, &quot;spring.context&quot; etc) independent from jar artifact names (the jars follow the same naming pattern with &quot;-&quot; instead of &quot;.&quot;, e.g. &quot;spring-core&quot; and &quot;spring-context&quot;). Of course, Spring’s framework jars keep working fine on the classpath on both JDK 8 and 9+.</p>
 <h3 id="2-Spring-和-Spring-Framework-的发家史"><a href="#2-Spring-和-Spring-Framework-的发家史" class="headerlink" title="2. Spring 和 Spring Framework 的发家史"></a>2. Spring 和 Spring Framework 的发家史</h3><p>Spring于2003年为了解决 J2EE 规范的复杂性而诞生，尽管当时人们认为 Spring 是想与 JavaEE 进行竞争才出现的，但实际上 Spring 一直将自己视为 Java EE 的补充。Spring 编程模型并没有选择整个 JavaEE 平台规范，而是取其精华。例如：</p>
 <ul>
 <li>Servlet API (<a target="_blank" rel="noopener" href="https://jcp.org/en/jsr/detail?id=340">JSR 340</a>)</li>
@@ -378,7 +379,7 @@
 <p>如果你有一个解决方案或修复建议，你可以提交一个pull请求在Github上。但请记住，对于一些琐碎的问题外，我们希望能够将 issue 中留下你的问题记录，以便于进行讨论或在未来当作参考。</p>
 <p>有关更多详细信息，请参考<a target="_blank" rel="noopener" href="https://github.com/spring-projects/spring-framework/blob/master/CONTRIBUTING.md">CONTRIBUTING</a>。</p>
 <h3 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h3><p>如果你刚刚开始上手 Spring，你可能想开始通过创建一个基于 <a target="_blank" rel="noopener" href="https://projects.spring.io/spring-boot/">Spring Boot</a> 的应用程序来使用 Spring Framework。Spring Boot 提供了一种快速的方式来创建一个基于 Spring 可用于生产环境的应用程序。它基于 Spring 框架，采用约定优于配置的方式，旨在使您尽快启动并运行。</p>
-<p>您可以使用 <a target="_blank" rel="noopener" href="https://start.spring.io/">start.spring.io</a> 生成一个基础项目，或者遵循 <a target="_blank" rel="noopener" href="https://spring.io/guides">“Getting Started” guides</a> 中的 <a target="_blank" rel="noopener" href="https://spring.io/guides/gs/rest-service/">Getting Started Building a RESTful Web Service</a>。这些指南不仅易于理解，而且非常注重任务，并且大多数都是基于 Spring Boot 的。它们还涵盖了 Spring 家族中的其他项目，您在解决特定问题时可能要考虑这些项目。</p>
+<p>您可以使用 <a target="_blank" rel="noopener" href="https://start.spring.io/">start.spring.io</a> 生成一个基础项目，或者遵循 <a target="_blank" rel="noopener" href="https://spring.io/guides">&quot;Getting Started&quot; guides</a> 中的 <a target="_blank" rel="noopener" href="https://spring.io/guides/gs/rest-service/">Getting Started Building a RESTful Web Service</a>。这些指南不仅易于理解，而且非常注重任务，并且大多数都是基于 Spring Boot 的。它们还涵盖了 Spring 家族中的其他项目，您在解决特定问题时可能要考虑这些项目。</p>
 <h2 id="核心内容"><a href="#核心内容" class="headerlink" title="核心内容"></a>核心内容</h2><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h2><h2 id="Web-Servlet"><a href="#Web-Servlet" class="headerlink" title="Web Servlet"></a>Web Servlet</h2><h2 id="Web-Reactive"><a href="#Web-Reactive" class="headerlink" title="Web Reactive"></a>Web Reactive</h2><h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><h2 id="其他语言"><a href="#其他语言" class="headerlink" title="其他语言"></a>其他语言</h2>
     </div>
 

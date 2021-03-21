@@ -33,13 +33,13 @@
 <p>区别在于前者在输入行号时屏幕上没有任何提示，后者则在Vim命令输入框中可以看到输入过程。</p>
 <p>（题外话：Sublime Text 2也是用 :行号 来快速定位到某行，应该是沿用了Vim的习惯）</p>
 <h1 id="4-进入修改"><a href="#4-进入修改" class="headerlink" title="4. 进入修改"></a>4. 进入修改</h1><p>进入插入模式的方式有很多，直接选用合适的方式进入插入模式比进入后再用箭头键移动光标要好。常用的有：</p>
-<p>o - 在当前行下方插入新行并自动缩进<br>O - 在当前行上方插入新行并自动缩进 （普通模式下的大写字母命令用 shift+字母键 输入，下同）<br>i - 在当前字符左方开始插入字符<br>a - 在当前字符右方开始插入字符<br>I - 光标移动到行首并进入插入模式<br>A - 光标移动到行尾并进入插入模式<br>s - 删除光标所在字符并进入插入模式<br>S - 删除光标所在行并进入插入模式<br>c&lt;范围&gt; - 删除光标所在位置周围某个范围的文本并进入插入模式。关于范围请看第5点，常用的组合有：caw - 删除一个单词包括它后面的空格并开始插入；ciw - 删除一个单词并开始插入；ci” - 删除一个字符串内部文本并开始插入；c$ - 从光标位置删除到行尾并开始插入；ct字符 - 从光标位置删除本行某个字符之前（保留该字符）并开始插入。等等。<br>C - 删除光标位置到行尾的内容并进入插入模式 (相当于c$)<br>r - 修改光标所在字符，然后返回普通模式<br>R - 进入覆盖模式</p>
+<p>o - 在当前行下方插入新行并自动缩进<br>O - 在当前行上方插入新行并自动缩进 （普通模式下的大写字母命令用 shift+字母键 输入，下同）<br>i - 在当前字符左方开始插入字符<br>a - 在当前字符右方开始插入字符<br>I - 光标移动到行首并进入插入模式<br>A - 光标移动到行尾并进入插入模式<br>s - 删除光标所在字符并进入插入模式<br>S - 删除光标所在行并进入插入模式<br>c&lt;范围&gt; - 删除光标所在位置周围某个范围的文本并进入插入模式。关于范围请看第5点，常用的组合有：caw - 删除一个单词包括它后面的空格并开始插入；ciw - 删除一个单词并开始插入；ci&quot; - 删除一个字符串内部文本并开始插入；c$ - 从光标位置删除到行尾并开始插入；ct字符 - 从光标位置删除本行某个字符之前（保留该字符）并开始插入。等等。<br>C - 删除光标位置到行尾的内容并进入插入模式 (相当于c$)<br>r - 修改光标所在字符，然后返回普通模式<br>R - 进入覆盖模式</p>
 <h1 id="5-范围操作"><a href="#5-范围操作" class="headerlink" title="5. 范围操作"></a>5. 范围操作</h1><p>某些普通模式的动作命令后面可以追加一些表示范围的指令，表示该动作将作用在整个范围上。这类命令常用的有：</p>
-<p>d&lt;范围&gt; - 删除一定范围内的文本<br>c&lt;范围&gt; - 删除一定范围内的文本并进入插入模式<br>y&lt;范围&gt; - 将范围内的文本放入0号和”号注册栏<br>v&lt;范围&gt; - 选择范围内的文本<br>=&lt;范围&gt; - 自动缩进范围内的文本<br>gU&lt;范围&gt; - 将范围内的字符转换为大写<br>gu&lt;范围&gt; - 将范围内的字符转换为小写</p>
+<p>d&lt;范围&gt; - 删除一定范围内的文本<br>c&lt;范围&gt; - 删除一定范围内的文本并进入插入模式<br>y&lt;范围&gt; - 将范围内的文本放入0号和&quot;号注册栏<br>v&lt;范围&gt; - 选择范围内的文本<br>=&lt;范围&gt; - 自动缩进范围内的文本<br>gU&lt;范围&gt; - 将范围内的字符转换为大写<br>gu&lt;范围&gt; - 将范围内的字符转换为小写</p>
 <blockquote>
 <p>&lt;范围&gt; - 将范围中的内容缩进一格<br>&lt;&lt;范围&gt; - 将范围中的内容取消缩进一格<br>常用的范围指令有：</p>
 </blockquote>
-<p>空格 - 光标所在位置字符。（例如 gU空格 - 将光标位置字符转为大写）<br>重复某些动作命令 - 光标所在行。 （例如dd删除一行，yy复制一行，cc删除一行文本并开始插入，&gt;&gt; 当前行缩进一格，==自动缩进当前行）<br>$ - 从光标位置到行尾<br>^ - 从光标位置到行首，不包含缩进空白<br>0 - 从光标位置到行首，包含缩进空白<br>gg - 从光标位置到文件开头<br>G - 从光标位置到文件结尾<br>% - 从光标位置到另一边匹配的括号<br>f&lt;字符&gt; - 从光标位置到光标右边某个字符首次出现的位置，包括该字符<br>F&lt;字符&gt; - 从光标位置到光标左边某个字符首次出现的位置，包括该字符<br>t&lt;字符&gt; - 从光标位置到光标右边某个字符首次出现的位置，包括该字符<br>F&lt;字符&gt; - 从光标位置到光标左边某个字符首次出现的位置，包括该字符<br>/正则表达式 - 从光标位置到下一个匹配正则表达式的位置（跨行）<br>?正则表达式 - 从光标位置到上一个匹配正则表达式的位置（跨行）<br>aw - 一个单词加一个空格 （a可理解为“一个”，下同）<br>iw - 一个单词 （i可理解为in，下同）<br>a” - 一个字符串包括双引号<br>i” - 一个字符串内部文本<br>a&lt; - 一组&lt; &gt;包含的文本，包括&lt; &gt;号本身<br>同理类推：i&lt;, a[, i[, a(, i(<br>注意：真正vim中的it范围（一对xml标签内部）在ideaVim中不生效。<br>用/或?命令查找时，正则表达式默认大小写敏感，如果需要不敏感，可以在正则表达式开始处加上\c标志。</p>
+<p>空格 - 光标所在位置字符。（例如 gU空格 - 将光标位置字符转为大写）<br>重复某些动作命令 - 光标所在行。 （例如dd删除一行，yy复制一行，cc删除一行文本并开始插入，&gt;&gt; 当前行缩进一格，==自动缩进当前行）<br>$ - 从光标位置到行尾<br>^ - 从光标位置到行首，不包含缩进空白<br>0 - 从光标位置到行首，包含缩进空白<br>gg - 从光标位置到文件开头<br>G - 从光标位置到文件结尾<br>% - 从光标位置到另一边匹配的括号<br>f&lt;字符&gt; - 从光标位置到光标右边某个字符首次出现的位置，包括该字符<br>F&lt;字符&gt; - 从光标位置到光标左边某个字符首次出现的位置，包括该字符<br>t&lt;字符&gt; - 从光标位置到光标右边某个字符首次出现的位置，包括该字符<br>F&lt;字符&gt; - 从光标位置到光标左边某个字符首次出现的位置，包括该字符<br>/正则表达式 - 从光标位置到下一个匹配正则表达式的位置（跨行）<br>?正则表达式 - 从光标位置到上一个匹配正则表达式的位置（跨行）<br>aw - 一个单词加一个空格 （a可理解为“一个”，下同）<br>iw - 一个单词 （i可理解为in，下同）<br>a&quot; - 一个字符串包括双引号<br>i&quot; - 一个字符串内部文本<br>a&lt; - 一组&lt; &gt;包含的文本，包括&lt; &gt;号本身<br>同理类推：i&lt;, a[, i[, a(, i(<br>注意：真正vim中的it范围（一对xml标签内部）在ideaVim中不生效。<br>用/或?命令查找时，正则表达式默认大小写敏感，如果需要不敏感，可以在正则表达式开始处加上\c标志。</p>
 <p>例如 /\cabc 可以匹配到 ABC。下面提到的:s命令同样适用。</p>
 <h1 id="6-选择文本"><a href="#6-选择文本" class="headerlink" title="6. 选择文本"></a>6. 选择文本</h1><p>在Vim中，选择文本需要进入“可视模式”（Visual Mode），这个名称比较奇怪，它的来由据说是因为在Vim的前身Vi中，选择区域是不可见的。</p>
 <p>在Vim中选择区域会高亮显示，因此称为“可视模式”。</p>
@@ -244,7 +244,7 @@ while ((count &#x3D; bis.read(buf)) !&#x3D; -1) &#123;
     zos.write(buf, 0, count);
 &#125;</code></pre>
 
-<p> <strong>注意：</strong>如果是空目录<strong>直接</strong> <strong>zos.putNextEntry(new ZipEntry(baseDir +     dir.getName()+ File.<em>separator</em>))</strong> 并不用写入文件内容，<strong>其中最主要的涉及到目录的压缩的，就是这一句话  out.putNextEntry(new ZipEntry(base + “/“)); // 放入一级目录 (防止空目录被丢弃)</strong></p>
+<p> <strong>注意：</strong>如果是空目录<strong>直接</strong> <strong>zos.putNextEntry(new ZipEntry(baseDir +     dir.getName()+ File.<em>separator</em>))</strong> 并不用写入文件内容，<strong>其中最主要的涉及到目录的压缩的，就是这一句话  out.putNextEntry(new ZipEntry(base + &quot;/&quot;)); // 放入一级目录 (防止空目录被丢弃)</strong></p>
 </li>
 </ol>
 <h1 id="解压-zip-文件"><a href="#解压-zip-文件" class="headerlink" title="解压 zip 文件"></a>解压 zip 文件</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;**
@@ -543,7 +543,7 @@ scoop bucket add spoon https:&#x2F;&#x2F;github.com&#x2F;FDUZS&#x2F;spoon.git</c
 <p>Spring 作为开源应用，其拥有一个大型且活跃的社区，由于这个社区能够经常提供基于各种实际情况的案例，所以 Spring 的茁壮成长也得益于该社区。</p>
 <h3 id="1-为何称其为“Spring”"><a href="#1-为何称其为“Spring”" class="headerlink" title="1. 为何称其为“Spring”"></a>1. 为何称其为“Spring”</h3><p>“Spring”这个术语在不同的环境下有着不同的含义。它常常被用来指代 Spring Framework 这个项目本身，同时这个项目也是 Spring 的开始。随着时间的推移，其他新的 Spring 项目都是基于 Spring Framework 构建的。大多数时候，人们称呼“Spring”时，更多的是表达 Spring 整个项目家族。本参考文档重点想介绍的也是 Spring Framework 这个基础应用。</p>
 <p>Spring Framework 分为多个模块。构建应用时，可以根据情况自由选择。<code>core container</code> 模块是所有模块中最重要的，它包含了<strong>配置模型</strong>和<strong>依赖注入机制</strong>。除此之外，Spring Framework 为不同的应用程序架构都提供了基础支持，包括消息队列、事务数据、持久化和web服务。也包含了基于 Servlet 的 SpringMVC，以及 Spring WebFlux 响应式web框架。</p>
-<p>A note about modules: Spring’s framework jars allow for deployment to JDK 9’s module path (“Jigsaw”). For use in Jigsaw-enabled applications, the Spring Framework 5 jars come with “Automatic-Module-Name” manifest entries which define stable language-level module names (“spring.core”, “spring.context” etc) independent from jar artifact names (the jars follow the same naming pattern with “-“ instead of “.”, e.g. “spring-core” and “spring-context”). Of course, Spring’s framework jars keep working fine on the classpath on both JDK 8 and 9+.</p>
+<p>A note about modules: Spring’s framework jars allow for deployment to JDK 9’s module path (&quot;Jigsaw&quot;). For use in Jigsaw-enabled applications, the Spring Framework 5 jars come with &quot;Automatic-Module-Name&quot; manifest entries which define stable language-level module names (&quot;spring.core&quot;, &quot;spring.context&quot; etc) independent from jar artifact names (the jars follow the same naming pattern with &quot;-&quot; instead of &quot;.&quot;, e.g. &quot;spring-core&quot; and &quot;spring-context&quot;). Of course, Spring’s framework jars keep working fine on the classpath on both JDK 8 and 9+.</p>
 <h3 id="2-Spring-和-Spring-Framework-的发家史"><a href="#2-Spring-和-Spring-Framework-的发家史" class="headerlink" title="2. Spring 和 Spring Framework 的发家史"></a>2. Spring 和 Spring Framework 的发家史</h3><p>Spring于2003年为了解决 J2EE 规范的复杂性而诞生，尽管当时人们认为 Spring 是想与 JavaEE 进行竞争才出现的，但实际上 Spring 一直将自己视为 Java EE 的补充。Spring 编程模型并没有选择整个 JavaEE 平台规范，而是取其精华。例如：</p>
 <ul>
 <li>Servlet API (<a href="https://jcp.org/en/jsr/detail?id=340">JSR 340</a>)</li>
@@ -571,7 +571,7 @@ scoop bucket add spoon https:&#x2F;&#x2F;github.com&#x2F;FDUZS&#x2F;spoon.git</c
 <p>如果你有一个解决方案或修复建议，你可以提交一个pull请求在Github上。但请记住，对于一些琐碎的问题外，我们希望能够将 issue 中留下你的问题记录，以便于进行讨论或在未来当作参考。</p>
 <p>有关更多详细信息，请参考<a href="https://github.com/spring-projects/spring-framework/blob/master/CONTRIBUTING.md">CONTRIBUTING</a>。</p>
 <h3 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h3><p>如果你刚刚开始上手 Spring，你可能想开始通过创建一个基于 <a href="https://projects.spring.io/spring-boot/">Spring Boot</a> 的应用程序来使用 Spring Framework。Spring Boot 提供了一种快速的方式来创建一个基于 Spring 可用于生产环境的应用程序。它基于 Spring 框架，采用约定优于配置的方式，旨在使您尽快启动并运行。</p>
-<p>您可以使用 <a href="https://start.spring.io/">start.spring.io</a> 生成一个基础项目，或者遵循 <a href="https://spring.io/guides">“Getting Started” guides</a> 中的 <a href="https://spring.io/guides/gs/rest-service/">Getting Started Building a RESTful Web Service</a>。这些指南不仅易于理解，而且非常注重任务，并且大多数都是基于 Spring Boot 的。它们还涵盖了 Spring 家族中的其他项目，您在解决特定问题时可能要考虑这些项目。</p>
+<p>您可以使用 <a href="https://start.spring.io/">start.spring.io</a> 生成一个基础项目，或者遵循 <a href="https://spring.io/guides">&quot;Getting Started&quot; guides</a> 中的 <a href="https://spring.io/guides/gs/rest-service/">Getting Started Building a RESTful Web Service</a>。这些指南不仅易于理解，而且非常注重任务，并且大多数都是基于 Spring Boot 的。它们还涵盖了 Spring 家族中的其他项目，您在解决特定问题时可能要考虑这些项目。</p>
 <h2 id="核心内容"><a href="#核心内容" class="headerlink" title="核心内容"></a>核心内容</h2><h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h2 id="数据访问"><a href="#数据访问" class="headerlink" title="数据访问"></a>数据访问</h2><h2 id="Web-Servlet"><a href="#Web-Servlet" class="headerlink" title="Web Servlet"></a>Web Servlet</h2><h2 id="Web-Reactive"><a href="#Web-Reactive" class="headerlink" title="Web Reactive"></a>Web Reactive</h2><h2 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h2><h2 id="其他语言"><a href="#其他语言" class="headerlink" title="其他语言"></a>其他语言</h2>]]></content>
       <tags>
         <tag>Spring</tag>
@@ -749,14 +749,14 @@ PONG</code></pre>
 
 <p>获取键总数时不会遍历所有的键，直接获取内部变量，时间复杂度 O(1)。</p>
 <h2 id="查询键是否存在"><a href="#查询键是否存在" class="headerlink" title="查询键是否存在"></a>查询键是否存在</h2><blockquote>
-<p>语法：exists key [key …]  </p>
+<p>语法：exists key [key ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; exists javastack java
 (integer) 2</code></pre>
 
 <p>查询查询多个，返回存在的个数。</p>
 <h2 id="删除键"><a href="#删除键" class="headerlink" title="删除键"></a>删除键</h2><blockquote>
-<p>语法：del key [key …]  </p>
+<p>语法：del key [key ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; del java javastack
 (integer) 1</code></pre>
@@ -830,13 +830,13 @@ OK</code></pre>
 <p>一次想递增 N 用 incrby 命令，如果是浮点型数据可以用 incrbyfloat 命令递增。</p>
 <p>同样，递减使用 decr、decrby 命令。</p>
 <h2 id="批量存放键值"><a href="#批量存放键值" class="headerlink" title="批量存放键值"></a>批量存放键值</h2><blockquote>
-<p>语法：mset key value [key value …]  </p>
+<p>语法：mset key value [key value ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379[2]&gt; mset java1 1 java2 2 java3 3
 OK</code></pre>
 
 <h2 id="获取获取键值"><a href="#获取获取键值" class="headerlink" title="获取获取键值"></a>获取获取键值</h2><blockquote>
-<p>语法：mget key [key …]  </p>
+<p>语法：mget key [key ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379[2]&gt; mget java1 java2
 1) &quot;1&quot;
@@ -862,7 +862,7 @@ OK</code></pre>
 <h1 id="集合操作命令"><a href="#集合操作命令" class="headerlink" title="集合操作命令"></a>集合操作命令</h1><p>集合类型和列表类型相似，只不过是集合是无序且不可重复的。</p>
 <p>集合</p>
 <h2 id="存储值"><a href="#存储值" class="headerlink" title="存储值"></a>存储值</h2><blockquote>
-<p>语法：sadd key member [member …]  </p>
+<p>语法：sadd key member [member ...]  </p>
 </blockquote>
 <pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; 这里有8个值（2个java），只存了7个
 127.0.0.1:6379&gt; sadd langs java php c++ go ruby python kotlin java
@@ -901,7 +901,7 @@ OK</code></pre>
 (integer) 7</code></pre>
 
 <h2 id="删除集合元素"><a href="#删除集合元素" class="headerlink" title="删除集合元素"></a>删除集合元素</h2><blockquote>
-<p>语法：srem key member [member …]  </p>
+<p>语法：srem key member [member ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; srem langs ruby kotlin
 (integer) 2</code></pre>
@@ -920,7 +920,7 @@ OK</code></pre>
 <p>3、有序集合比列表更占内存。</p>
 </blockquote>
 <h2 id="存储值-1"><a href="#存储值-1" class="headerlink" title="存储值"></a>存储值</h2><blockquote>
-<p>语法：zadd key [NX|XX] [CH] [INCR] score member [score member …]  </p>
+<p>语法：zadd key [NX|XX] [CH] [INCR] score member [score member ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; zadd footCounts 16011 tid 20082 huny 2893 nosy
 (integer) 3</code></pre>
@@ -975,7 +975,7 @@ OK</code></pre>
 (integer) 2</code></pre>
 
 <h2 id="删除指定元素"><a href="#删除指定元素" class="headerlink" title="删除指定元素"></a>删除指定元素</h2><blockquote>
-<p>语法：zrem key member [member …]  </p>
+<p>语法：zrem key member [member ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; zrem footCounts huny
 (integer) 1</code></pre>
@@ -989,13 +989,13 @@ OK</code></pre>
 <h1 id="列表操作命令"><a href="#列表操作命令" class="headerlink" title="列表操作命令"></a>列表操作命令</h1><p>列表类型是一个有序的字段串列表，内部是使用双向链表实现，所有可以向两端操作元素，获取两端的数据速度快，通过索引到具体的行数比较慢。</p>
 <p>列表类型的元素是有序且可以重复的。</p>
 <h2 id="存储值-2"><a href="#存储值-2" class="headerlink" title="存储值"></a>存储值</h2><blockquote>
-<p>左端存值语法：lpush key value [value …]  </p>
+<p>左端存值语法：lpush key value [value ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; lpush list lily sandy
 (integer) 2</code></pre>
 
 <blockquote>
-<p>右端存值语法：rpush key value [value …]  </p>
+<p>右端存值语法：rpush key value [value ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; rpush list tom kitty
 (integer) 4</code></pre>
@@ -1094,7 +1094,7 @@ OK</code></pre>
 (integer) 1</code></pre>
 
 <blockquote>
-<p>多个语法：hmset key field value [field value …]  </p>
+<p>多个语法：hmset key field value [field value ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; hmset user name javastack age 20 address china
 OK</code></pre>
@@ -1112,7 +1112,7 @@ OK</code></pre>
 &quot;20&quot;</code></pre>
 
 <blockquote>
-<p>多个语法：hmget key field [field …]  </p>
+<p>多个语法：hmget key field [field ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; hmget user name age address
 1) &quot;javastack&quot;
@@ -1167,7 +1167,7 @@ OK</code></pre>
 (integer) 170</code></pre>
 
 <h2 id="删除字段"><a href="#删除字段" class="headerlink" title="删除字段"></a>删除字段</h2><blockquote>
-<p>语法：hdel key field [field …]  </p>
+<p>语法：hdel key field [field ...]  </p>
 </blockquote>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">127.0.0.1:6379&gt; hdel user age
 (integer) 1</code></pre>
@@ -1324,34 +1324,34 @@ ssh centos # 这里的centos, 对应config文件中Host配置的内容</code></p
 <h2 id="mysqlpump-主要特点"><a href="#mysqlpump-主要特点" class="headerlink" title="mysqlpump 主要特点"></a>mysqlpump 主要特点</h2><p>-  并行备份数据库和数据库中的对象的，加快备份过程。<br>-  更好的控制数据库和数据库对象（表，存储过程，用户帐户）的备份。<br>-  备份用户账号作为帐户管理语句（CREATE USER，GRANT），而不是直接插入到 MySQL 的系统数据库。<br>-  备份出来直接生成压缩后的备份文件。<br>-  备份进度指示（估计值）。<br>-  重新加载（还原）备份文件，先建表后插入数据最后建立索引，减少了索引维护开销，加快了还原速度。<br>-  备份可以排除或则指定数据库。</p>
 <h2 id="mysqlpump-缺点"><a href="#mysqlpump-缺点" class="headerlink" title="mysqlpump 缺点"></a>mysqlpump 缺点</h2><p><a href="https://theme-next.js.org/highlight/">https://theme-next.js.org/highlight/</a><br>-  只能并行到表级别, 如果表特别大, 开多线程和单线程是一样的, 并行度不如 mydumper；<br>-  无法获取当前备份对应的 binlog 位置；<br>-  MySQL5.7.11 之前的版本不要使用, 并行导出和 single-transaction 是互斥的；</p>
 <h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><p>mysqlpump 绝大部分参数使用和 Mysqldump 一致，下面顺便重温一下。注意对于 mysqlpump 专有参数会用<strong>加粗</strong>标记出来。</p>
-<p>1) –add-drop-database： 在建立库之前先执行删库操作</p>
+<p>1) --add-drop-database： 在建立库之前先执行删库操作</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP DATABASE IF EXISTS &#96;...&#96;;</code></pre>
 
 <ol start="2">
-<li>–add-drop-table：在建表之前先执行删表操作</li>
+<li>--add-drop-table：在建表之前先执行删表操作</li>
 </ol>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP TABLE IF EXISTS &#96;...&#96;.&#96;...&#96;;</code></pre>
 
-<p><strong>3) –add-drop-user：在 CREATE USER 语句之前增加 DROP USER。 注意：这个参数需要和 –users 一起使用，否者不生效。</strong></p>
+<p><strong>3) --add-drop-user：在 CREATE USER 语句之前增加 DROP USER。 注意：这个参数需要和 --users 一起使用，否者不生效。</strong></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP USER &#39;backup&#39;@&#39;172.16.60.%&#39;;</code></pre>
 
 <ol start="4">
-<li>–add-locks：备份表时，使用 LOCK TABLES 和 UNLOCK TABLES。注意：这个参数不支持并行备份，需要关闭并行备份功能：–default-parallelism=0</li>
+<li>--add-locks：备份表时，使用 LOCK TABLES 和 UNLOCK TABLES。注意：这个参数不支持并行备份，需要关闭并行备份功能：--default-parallelism=0</li>
 </ol>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">LOCK TABLES &#96;...&#96;.&#96;...&#96; WRITE;
 ...
 UNLOCK TABLES;</code></pre>
 
 <ol start="5">
-<li><p>–all-databases：备份所有库，即 -A。</p>
+<li><p>--all-databases：备份所有库，即 -A。</p>
 </li>
-<li><p>–bind-address：指定通过哪个网络接口来连接 Mysql 服务器（一台服务器可能有多个 IP），防止同一个网卡出去影响业务。</p>
+<li><p>--bind-address：指定通过哪个网络接口来连接 Mysql 服务器（一台服务器可能有多个 IP），防止同一个网卡出去影响业务。</p>
 </li>
-<li><p>–complete-insert：dump 出包含所有列的完整 insert 语句。</p>
+<li><p>--complete-insert：dump 出包含所有列的完整 insert 语句。</p>
 </li>
-<li><p>–compress： 压缩客户端和服务器传输的所有的数据，即 -C。</p>
+<li><p>--compress： 压缩客户端和服务器传输的所有的数据，即 -C。</p>
 </li>
-<li><p><strong>–compress-output</strong>：<strong>默认不压缩输出，目前可以使用的压缩算法有 LZ4 和 ZLIB</strong></p>
+<li><p><strong>--compress-output</strong>：<strong>默认不压缩输出，目前可以使用的压缩算法有 LZ4 和 ZLIB</strong></p>
 </li>
 </ol>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@localhost ~]# mysqlpump --compress-output&#x3D;LZ4 &gt; dump.lz4
@@ -1361,46 +1361,46 @@ UNLOCK TABLES;</code></pre>
 [root@localhost ~]# zlib_decompress dump.zlib dump.txt</code></pre>
 
 <ol start="10">
-<li><p>–databases：手动指定要备份的库，支持多个数据库，用空格分隔，即 - B。</p>
+<li><p>--databases：手动指定要备份的库，支持多个数据库，用空格分隔，即 - B。</p>
 </li>
-<li><p>–default-character-set：指定备份的字符集。</p>
+<li><p>--default-character-set：指定备份的字符集。</p>
 </li>
 </ol>
-<p><strong>12) –default-parallelism：指定并行线程数，默认是 2，如果设置成 0，表示不使用并行备份。</strong>注意：每个线程的备份步骤是：先 create table 但不建立二级索引（主键会在 create table 时候建立），再写入数据，最后建立二级索引。</p>
-<p><strong>13) –defer-table-indexes：延迟创建索引，直到所有数据都加载完之后，再创建索引，默认开启。</strong>若关闭则会和 mysqldump 一样：先创建一个表和所有索引，再导入数据，因为在加载还原数据的时候要维护二级索引的开销，导致效率比较低。关闭使用参数：–skip–defer-table-indexes。</p>
+<p><strong>12) --default-parallelism：指定并行线程数，默认是 2，如果设置成 0，表示不使用并行备份。</strong>注意：每个线程的备份步骤是：先 create table 但不建立二级索引（主键会在 create table 时候建立），再写入数据，最后建立二级索引。</p>
+<p><strong>13) --defer-table-indexes：延迟创建索引，直到所有数据都加载完之后，再创建索引，默认开启。</strong>若关闭则会和 mysqldump 一样：先创建一个表和所有索引，再导入数据，因为在加载还原数据的时候要维护二级索引的开销，导致效率比较低。关闭使用参数：--skip--defer-table-indexes。</p>
 <ol start="14">
-<li>–events：备份数据库的事件，默认开启，关闭使用 –skip-events 参数。</li>
+<li>--events：备份数据库的事件，默认开启，关闭使用 --skip-events 参数。</li>
 </ol>
-<p><strong>15) –exclude-databases：备份排除该参数指定的数据库，多个用逗号分隔。类似的还有 –exclude-events、–exclude-routines、–exclude-tables、–exclude-triggers、–exclude-users</strong></p>
+<p><strong>15) --exclude-databases：备份排除该参数指定的数据库，多个用逗号分隔。类似的还有 --exclude-events、--exclude-routines、--exclude-tables、--exclude-triggers、--exclude-users</strong></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@localhost ~]# mysqlpump --exclude-databases&#x3D;mysql,sys -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql   #备份过滤mysql和sys数据库
 [root@localhost ~]# mysqlpump --exclude-tables&#x3D;rr,tt -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql      #备份过滤所有数据库中rr、tt表
 [root@localhost ~]# mysqlpump -B test --exclude-tables&#x3D;tmp_ifulltext,tt -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql   #备份过滤test库中的rr、tt表
 ...</code></pre>
 
-<p><strong>注意：</strong>要是只备份数据库的账号，需要添加参数 <a href="https%EF%BC%9A//dev.mysql.com/doc/refman/5.7/en/mysqlpump.html#option_mysqlpump_users">–users</a>，并且需要过滤掉所有的数据库，如</p>
+<p><strong>注意：</strong>要是只备份数据库的账号，需要添加参数 <a href="https%EF%BC%9A//dev.mysql.com/doc/refman/5.7/en/mysqlpump.html#option_mysqlpump_users">--users</a>，并且需要过滤掉所有的数据库，如</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#备份除dba和backup的所有账号。
 [root@localhost ~]# mysqlpump --users --exclude-databases&#x3D;sys,mysql,db1,db2 --exclude-users&#x3D;dba,backup -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql</code></pre>
 
-<p><strong>16) –include-databases：指定备份数据库，多个用逗号分隔，类似的还有 –include-events、–include-routines、–include-tables、–include-triggers、–include-users，大致方法使用同 15。</strong></p>
+<p><strong>16) --include-databases：指定备份数据库，多个用逗号分隔，类似的还有 --include-events、--include-routines、--include-tables、--include-triggers、--include-users，大致方法使用同 15。</strong></p>
 <ol start="17">
-<li><p>–insert-ignore：备份用 insert ignore 语句代替 insert 语句。</p>
+<li><p>--insert-ignore：备份用 insert ignore 语句代替 insert 语句。</p>
 </li>
-<li><p>–log-error-file：备份出现的 warnings 和 erros 信息输出到一个指定的文件。</p>
+<li><p>--log-error-file：备份出现的 warnings 和 erros 信息输出到一个指定的文件。</p>
 </li>
-<li><p>–max-allowed-packet：备份时用于 client/server 直接通信的最大 buffer 包的大小。</p>
+<li><p>--max-allowed-packet：备份时用于 client/server 直接通信的最大 buffer 包的大小。</p>
 </li>
-<li><p>–net-buffer-length：备份时用于 client/server 通信的初始 buffer 大小，当创建多行插入语句的时候，mysqlpump 创建行到 N 个字节长。</p>
+<li><p>--net-buffer-length：备份时用于 client/server 通信的初始 buffer 大小，当创建多行插入语句的时候，mysqlpump 创建行到 N 个字节长。</p>
 </li>
-<li><p>–no-create-db：备份不写 CREATE DATABASE 语句。要是备份多个库，需要使用参数 - B，而使用 - B 的时候会出现 create database 语句，该参数可以屏蔽 create database 语句。</p>
+<li><p>--no-create-db：备份不写 CREATE DATABASE 语句。要是备份多个库，需要使用参数 - B，而使用 - B 的时候会出现 create database 语句，该参数可以屏蔽 create database 语句。</p>
 </li>
-<li><p>–no-create-info：备份不写建表语句，即不备份表结构，只备份数据，即 -t。</p>
+<li><p>--no-create-info：备份不写建表语句，即不备份表结构，只备份数据，即 -t。</p>
 </li>
-<li><p>–hex-blob： 备份 binary 字段的时候使用十六进制计数法，受影响的字段类型有 BINARY、VARBINARY、BLOB、BIT。</p>
+<li><p>--hex-blob： 备份 binary 字段的时候使用十六进制计数法，受影响的字段类型有 BINARY、VARBINARY、BLOB、BIT。</p>
 </li>
-<li><p>–host ：备份指定的数据库地址，即 -h。</p>
+<li><p>--host ：备份指定的数据库地址，即 -h。</p>
 </li>
 </ol>
-<p><strong>25) –parallel-schemas=[N：]db_list：指定并行备份的库，多个库用逗号分隔，如果指定了 N，将使用 N 个线程的地队列，如果 N 不指定，将由 –default-parallelism 才确认 N 的值，可以设置多个 –parallel-schemas</strong></p>
+<p><strong>25) --parallel-schemas=[N：]db_list：指定并行备份的库，多个库用逗号分隔，如果指定了 N，将使用 N 个线程的地队列，如果 N 不指定，将由 --default-parallelism 才确认 N 的值，可以设置多个 --parallel-schemas</strong></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#4个线程备份vs和aa，3个线程备份pt。通过show processlist 可以看到有7个线程。
 [root@localhost ~]# mysqlpump --parallel-schemas&#x3D;4：vs,aa --parallel-schemas&#x3D;3：pt  -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql  
  
@@ -1410,47 +1410,47 @@ UNLOCK TABLES;</code></pre>
 #当然要是硬盘IO不允许的话，可以少开几个线程和数据库进行并行备份</code></pre>
 
 <ol start="26">
-<li><p>–password<strong>：</strong>备份需要的密码。</p>
+<li><p>--password<strong>：</strong>备份需要的密码。</p>
 </li>
-<li><p>–port ：备份数据库的端口。</p>
+<li><p>--port ：备份数据库的端口。</p>
 </li>
-<li><p>–protocol={TCP|SOCKET|PIPE|MEMORY}：指定连接服务器的协议。</p>
+<li><p>--protocol={TCP|SOCKET|PIPE|MEMORY}：指定连接服务器的协议。</p>
 </li>
-<li><p>–replace：备份出来 replace into 语句。</p>
+<li><p>--replace：备份出来 replace into 语句。</p>
 </li>
-<li><p>–routines：备份出来包含存储过程和函数，默认开启，需要对 mysql.proc 表有查看权限。生成的文件中会包含 CREATE PROCEDURE 和 CREATE FUNCTION 语句以用于恢复，关闭则需要用 –skip-routines 参数。</p>
+<li><p>--routines：备份出来包含存储过程和函数，默认开启，需要对 mysql.proc 表有查看权限。生成的文件中会包含 CREATE PROCEDURE 和 CREATE FUNCTION 语句以用于恢复，关闭则需要用 --skip-routines 参数。</p>
 </li>
-<li><p>–triggers：备份出来包含触发器，默认开启，使用 –skip-triggers 来关闭。</p>
+<li><p>--triggers：备份出来包含触发器，默认开启，使用 --skip-triggers 来关闭。</p>
 </li>
-<li><p>–set-charset：备份文件里写 SET NAMES default_character_set 到输出，此参默认开启。 – skip-set-charset 禁用此参数，不会在备份文件里面写出 set names…</p>
+<li><p>--set-charset：备份文件里写 SET NAMES default_character_set 到输出，此参默认开启。 -- skip-set-charset 禁用此参数，不会在备份文件里面写出 set names...</p>
 </li>
-<li><p>–single-transaction<strong>：</strong>该参数在事务隔离级别设置成 Repeatable Read，并在 dump 之前发送 start transaction 语句给服务端**。这在使用 innodb 时很有用，因为在发出 start transaction 时，保证了在不阻塞任何应用下的一致性状态。对 myisam 和 memory 等非事务表，还是会改变状态的，当使用此参的时候要确保没有其他连接在使用 ALTER TABLE、CREATE TABLE、DROP TABLE、RENAME TABLE、TRUNCATE TABLE 等语句，否则会出现不正确的内容或则失败。–add-locks 和此参互斥，在 mysql5.7.11 之前，–default-parallelism 大于 1 的时候和此参也互斥，必须使用 –default-parallelism=0。5.7.11 之后解决了 –single-transaction 和 –default-parallelism 的互斥问题。</p>
+<li><p>--single-transaction<strong>：</strong>该参数在事务隔离级别设置成 Repeatable Read，并在 dump 之前发送 start transaction 语句给服务端**。这在使用 innodb 时很有用，因为在发出 start transaction 时，保证了在不阻塞任何应用下的一致性状态。对 myisam 和 memory 等非事务表，还是会改变状态的，当使用此参的时候要确保没有其他连接在使用 ALTER TABLE、CREATE TABLE、DROP TABLE、RENAME TABLE、TRUNCATE TABLE 等语句，否则会出现不正确的内容或则失败。--add-locks 和此参互斥，在 mysql5.7.11 之前，--default-parallelism 大于 1 的时候和此参也互斥，必须使用 --default-parallelism=0。5.7.11 之后解决了 --single-transaction 和 --default-parallelism 的互斥问题。</p>
 </li>
-<li><p>–skip-definer：忽略那些创建视图和存储过程用到的 DEFINER 和 SQL SECURITY 语句，恢复的时候，会使用默认值，否则会在还原的时候看到没有 DEFINER 定义时的账号而报错。**</p>
+<li><p>--skip-definer：忽略那些创建视图和存储过程用到的 DEFINER 和 SQL SECURITY 语句，恢复的时候，会使用默认值，否则会在还原的时候看到没有 DEFINER 定义时的账号而报错。**</p>
 </li>
-<li><p>–skip-dump-rows：只备份表结构，不备份数据，即 -d。注意：mysqldump 支持 –no-data，mysqlpump 不支持 –no-data**</p>
+<li><p>--skip-dump-rows：只备份表结构，不备份数据，即 -d。注意：mysqldump 支持 --no-data，mysqlpump 不支持 --no-data**</p>
 </li>
-<li><p>–socket：对于连接到 localhost，Unix 使用套接字文件，在 Windows 上是命名管道的名称使用，即 -S。</p>
+<li><p>--socket：对于连接到 localhost，Unix 使用套接字文件，在 Windows 上是命名管道的名称使用，即 -S。</p>
 </li>
-<li><p>–ssl<strong>：</strong>–ssl 参数将要被去除，用 –ssl-mode 取代**。关于 ssl 相关的备份。</p>
+<li><p>--ssl<strong>：</strong>--ssl 参数将要被去除，用 --ssl-mode 取代**。关于 ssl 相关的备份。</p>
 </li>
-<li><p>–tz-utc：备份时会在备份文件的最前几行添加 SET TIME_ZONE=’+00：00’。注意：如果还原的服务器不在同一个时区并且还原表中的列有 timestamp 字段，会导致还原出来的结果不一致。默认开启该参数，用 –skip-tz-utc 来关闭参数。</p>
+<li><p>--tz-utc：备份时会在备份文件的最前几行添加 SET TIME_ZONE=&#39;+00：00&#39;。注意：如果还原的服务器不在同一个时区并且还原表中的列有 timestamp 字段，会导致还原出来的结果不一致。默认开启该参数，用 --skip-tz-utc 来关闭参数。</p>
 </li>
-<li><p>–user：备份时候的用户名，即 -u。</p>
+<li><p>--user：备份时候的用户名，即 -u。</p>
 </li>
-<li><p>–users：备份数据库用户，备份的形式是 CREATE USER…，GRANT…，只备份数据库账号可以通过如下命令**</p>
+<li><p>--users：备份数据库用户，备份的形式是 CREATE USER...，GRANT...，只备份数据库账号可以通过如下命令**</p>
 </li>
 </ol>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#过滤掉所有数据库
 [root@localhost ~]# mysqlpump --exclude-databases&#x3D;% --users  -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql</code></pre>
 
 <ol start="40">
-<li><strong>–watch-progress</strong>：<strong>定期显示进度的完成，包括总数表、行和其他对象。该参数默认开启，用 –skip-watch-progress 来关闭。</strong> </li>
+<li><strong>--watch-progress</strong>：<strong>定期显示进度的完成，包括总数表、行和其他对象。该参数默认开启，用 --skip-watch-progress 来关闭。</strong> </li>
 </ol>
 <p><strong>mysqlpump 的多线程架构图如下</strong></p>
 <p><img data-src="https://img2018.cnblogs.com/blog/907596/201901/907596-20190115162636956-1342333863.png"></p>
 <p>-  mysqlpump 是 MySQL5.7 的官方工具, 用于取代 mysqldump, 其参数与 mysqldump 基本一样；<br>-  mysqlpump 是多线程备份, 但只能到表级别, 单表备份还是单线程；<br>-  mysqldump 备份时, 有个默认队列（default）, 队列下开 N 个线程去备份数据库 / 数据库中的表；<br>-  支持开多个队列 (对应不同库 / 表), 然后每个队列设置不同线程, 进行备份；</p>
-<p><strong>mysqlpump 支持基于库和表的并行导出</strong>，mysqlpump 的并行导出功能的架构为：队列 + 线程，允许有多个队列（**–parallel-schemas<strong>），每个队列下有多个线程（N），而一个队列可以绑定 1 个或者多个数据库（逗号分隔）。</strong>mysqlpump 的备份是基于表并行的，对于每张表的导出只能是单个线程的**，这里会有个限制是如果某个数据库有一张表非常大，可能大部分的时间都是消耗在这个表的备份上面，并行备份的效果可能就不明显。这里可以利用 <strong>Mydumper</strong> 其是以 chunk 的方式批量导出，即 <strong>Mydumper 支持一张表多个线程以 chunk 的方式批量导出</strong>。但相对于 Mysqldump 有很大提升。</p>
+<p><strong>mysqlpump 支持基于库和表的并行导出</strong>，mysqlpump 的并行导出功能的架构为：队列 + 线程，允许有多个队列（**--parallel-schemas<strong>），每个队列下有多个线程（N），而一个队列可以绑定 1 个或者多个数据库（逗号分隔）。</strong>mysqlpump 的备份是基于表并行的，对于每张表的导出只能是单个线程的**，这里会有个限制是如果某个数据库有一张表非常大，可能大部分的时间都是消耗在这个表的备份上面，并行备份的效果可能就不明显。这里可以利用 <strong>Mydumper</strong> 其是以 chunk 的方式批量导出，即 <strong>Mydumper 支持一张表多个线程以 chunk 的方式批量导出</strong>。但相对于 Mysqldump 有很大提升。</p>
 <h2 id="对比测试如下"><a href="#对比测试如下" class="headerlink" title="对比测试如下"></a><strong>对比测试如下</strong></h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">mysqlpump压缩备份kevin数据库 三个并发线程备份，消耗时间：222s
 [root@localhost ~]# mysqlpump -uroot -p123456 -h172.16.60.211 --single-transaction --default-character-set&#x3D;utf8 --compress-output&#x3D;LZ4 --default-parallelism&#x3D;3 -B kevin &gt; &#x2F;data&#x2F;db_backup&#x2F;kevin_db.sql.lz4
  
@@ -2138,7 +2138,7 @@ jobDetail.addJobListener(&quot;My Listener&quot;); &#x2F;&#x2F; listener 的名�
 <h1 id="4-合并策略"><a href="#4-合并策略" class="headerlink" title="4 合并策略"></a>4 合并策略</h1><p>Git 可以通过添加 - s 参数来指定合并的策略。一些合并策略甚至含有自己的参数选项，通过<code>-X&lt;option&gt;</code>设置这些合并策略的参数选项。(不要忘记，合并可以在 git merge 和 git pull 命令中发生，因此该合并策略同样适用于 git pull)。</p>
 <h2 id="4-1-resolve"><a href="#4-1-resolve" class="headerlink" title="4.1 resolve"></a>4.1 resolve</h2><p>仅仅使用三路合并算法合并两个分支的顶部节点（例如当前分支和你拉取下来的另一个分支）。这种合并策略遵循三路合并算法，由两个分支的 HEAD 节点以及共同子节点进行三路合并。<br>当然，真正会困扰我们的其实是交叉合并（criss-cross merge）这种情况。所谓的交叉合并，是指共同祖先节点有多个的情况，例如在两个分支合并时，很有可能出现共同祖先节点有两个的情况发生，这时候无法按照三路合并算法进行合并（因为共同祖先节点不唯一）。resolve 策略在解决交叉合并问题时是这样处理的，这里参考《Version Control with Git》：</p>
 <blockquote>
-<p>In criss-cross merge situations, where there is more than one possible merge basis, the resolve strategy works like this: pick one of the possible merge bases, and hope for the best. This is actually not as bad as it sounds. It often turns out that the users have been working on different parts of the code. In that case, Git detects that it’s remerging some changes that are already in place and skips the duplicate changes, avoiding the conflict. Or, if these are slight changes that do cause conflict, at least the conflict should be easy for the developer to handle</p>
+<p>In criss-cross merge situations, where there is more than one possible merge basis, the resolve strategy works like this: pick one of the possible merge bases, and hope for the best. This is actually not as bad as it sounds. It often turns out that the users have been working on different parts of the code. In that case, Git detects that it&#39;s remerging some changes that are already in place and skips the duplicate changes, avoiding the conflict. Or, if these are slight changes that do cause conflict, at least the conflict should be easy for the developer to handle</p>
 </blockquote>
 <p>这里简单翻译一下：在交叉合并的情况时有一个以上的合并基准点（共同祖先节点），resolve 策略是这样工作的：选择其中一个可能的合并基准点并期望这是合并最好的结果。实际上这并没有听起来的那么糟糕。通常情况下用户修改不同部分的代码，在这种情况下，很多的合并冲突其实是多余和重复的。而使用 resolve 进行合并时，产生的冲突也较易于处理，真正会遗失代码的情况很少。</p>
 <h2 id="4-2-recursive"><a href="#4-2-recursive" class="headerlink" title="4.2 recursive"></a>4.2 recursive</h2><p>仅仅使用三路合并算法合并两个分支。和 resolve 不同的是，在交叉合并的情况时，这种合并方式是递归调用的，从共同祖先节点之后两个分支的不同节点开始递归调用三路合并算法进行合并，如果产生冲突，那么该文件不再继续合并，直接抛出冲突；其他未产生冲突的文件将一直执行到顶部节点。额外地，这种方式也能够检测并处理涉及修改文件名的操作。这是 git 合并和拉取代码的默认合并操作。<br>recursive 合并策略有以下参数：</p>
@@ -2275,7 +2275,7 @@ Database changed
 <td align="left">小数值</td>
 </tr>
 </tbody></table>
-<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><p>每个时间类型有一个有效值范围和一个”零”值，当指定不合法的MySQL不能表示的值时使用”零”值。</p>
+<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><p>每个时间类型有一个有效值范围和一个&quot;零&quot;值，当指定不合法的MySQL不能表示的值时使用&quot;零&quot;值。</p>
 <table>
 <thead>
 <tr>
@@ -2296,7 +2296,7 @@ Database changed
 <tr>
 <td align="left">TIME</td>
 <td align="left">3bytes</td>
-<td align="left">‘-838:59:59’/‘838:59:59’</td>
+<td align="left">&#39;-838:59:59&#39;/&#39;838:59:59&#39;</td>
 <td align="left">HH:MM:SS</td>
 <td align="left">时间值或持续时间</td>
 </tr>
@@ -2429,7 +2429,7 @@ INSERT INTO table_name ( field1, field2, ..., fieldN )
                        ( value1, value2, ..., valueN );</code></pre>
 
 <blockquote>
-<p>如果数据是字符型，必须使用单引号或者双引号，如：”value”。</p>
+<p>如果数据是字符型，必须使用单引号或者双引号，如：&quot;value&quot;。</p>
 </blockquote>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 字段和值要一一对应
 INSERT INTO &#96;t_user_info&#96;
@@ -2534,7 +2534,7 @@ WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;
 <li>你可以在 WHERE 子句中使用LIKE子句</li>
 <li>你可以使用LIKE子句代替等号 <strong>=</strong></li>
 <li>LIKE 通常与 <strong>%</strong> 一同使用，类似于一个元字符的搜索。</li>
-<li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE…LIKE 子句来指定条件。</li>
+<li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE...LIKE 子句来指定条件。</li>
 </ul>
 <h3 id="like-与-结合使用"><a href="#like-与-结合使用" class="headerlink" title="like 与 % _ 结合使用"></a>like 与 % _ 结合使用</h3><pre class="line-numbers language-none"><code class="language-none">&#39;%a&#39;     &#x2F;&#x2F;以a结尾的数据
 &#39;a%&#39;     &#x2F;&#x2F;以a开头的数据
@@ -2563,7 +2563,7 @@ FROM tables
 [WHERE conditions];</code></pre>
 
 <ul>
-<li><strong>expression1, expression2, … expression_n</strong>: 要检索的列。</li>
+<li><strong>expression1, expression2, ... expression_n</strong>: 要检索的列。</li>
 <li><strong>tables:</strong> 要检索的数据表。</li>
 <li><strong>WHERE conditions:</strong> 可选， 检索条件。</li>
 <li><strong>DISTINCT:</strong> 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
@@ -2705,55 +2705,55 @@ GROUP BY trial_room_name WITH ROLLUP;
 </thead>
 <tbody><tr>
 <td align="left">^</td>
-<td align="left">匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 ‘\n’ 或 ‘\r’ 之后的位置。</td>
+<td align="left">匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 &#39;\n&#39; 或 &#39;\r&#39; 之后的位置。</td>
 </tr>
 <tr>
 <td align="left">$</td>
-<td align="left">匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 ‘\n’ 或 ‘\r’ 之前的位置。</td>
+<td align="left">匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 &#39;\n&#39; 或 &#39;\r&#39; 之前的位置。</td>
 </tr>
 <tr>
 <td align="left">.</td>
-<td align="left">匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用像 ‘[.\n]’ 的模式。</td>
+<td align="left">匹配除 &quot;\n&quot; 之外的任何单个字符。要匹配包括 &#39;\n&#39; 在内的任何字符，请使用像 &#39;[.\n]&#39; 的模式。</td>
 </tr>
 <tr>
-<td align="left">[…]</td>
-<td align="left">字符集合。匹配所包含的任意一个字符。例如， ‘[abc]’ 可以匹配 “plain” 中的 ‘a’。</td>
+<td align="left">[...]</td>
+<td align="left">字符集合。匹配所包含的任意一个字符。例如， &#39;[abc]&#39; 可以匹配 &quot;plain&quot; 中的 &#39;a&#39;。</td>
 </tr>
 <tr>
-<td align="left">[^…]</td>
-<td align="left">负值字符集合。匹配未包含的任意字符。例如， ‘[^abc]’ 可以匹配 “plain” 中的’p’。</td>
+<td align="left">[^...]</td>
+<td align="left">负值字符集合。匹配未包含的任意字符。例如， &#39;[^abc]&#39; 可以匹配 &quot;plain&quot; 中的&#39;p&#39;。</td>
 </tr>
 <tr>
 <td align="left">p1|p2|p3</td>
-<td align="left">匹配 p1 或 p2 或 p3。例如，’z|food’ 能匹配 “z” 或 “food”。’(z|f)ood’ 则匹配 “zood” 或 “food”。</td>
+<td align="left">匹配 p1 或 p2 或 p3。例如，&#39;z|food&#39; 能匹配 &quot;z&quot; 或 &quot;food&quot;。&#39;(z|f)ood&#39; 则匹配 &quot;zood&quot; 或 &quot;food&quot;。</td>
 </tr>
 <tr>
 <td align="left">*</td>
-<td align="left">匹配前面的子表达式零次或多次。例如，zo* 能匹配 “z” 以及 “zoo”。* 等价于{0,}。</td>
+<td align="left">匹配前面的子表达式零次或多次。例如，zo* 能匹配 &quot;z&quot; 以及 &quot;zoo&quot;。* 等价于{0,}。</td>
 </tr>
 <tr>
 <td align="left">+</td>
-<td align="left">匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+<td align="left">匹配前面的子表达式一次或多次。例如，&#39;zo+&#39; 能匹配 &quot;zo&quot; 以及 &quot;zoo&quot;，但不能匹配 &quot;z&quot;。+ 等价于 {1,}。</td>
 </tr>
 <tr>
 <td align="left">{n}</td>
-<td align="left">n 是一个非负整数。匹配确定的 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td>
+<td align="left">n 是一个非负整数。匹配确定的 n 次。例如，&#39;o{2}&#39; 不能匹配 &quot;Bob&quot; 中的 &#39;o&#39;，但是能匹配 &quot;food&quot; 中的两个 o。</td>
 </tr>
 <tr>
 <td align="left">{n,m}</td>
 <td align="left">m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。</td>
 </tr>
 </tbody></table>
-<p>查找name字段中以’st’为开头的所有数据：</p>
+<p>查找name字段中以&#39;st&#39;为开头的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;^st&#39;;</code></pre>
 
-<p>查找name字段中以’ok’为结尾的所有数据：</p>
+<p>查找name字段中以&#39;ok&#39;为结尾的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;ok$&#39;;</code></pre>
 
-<p>查找name字段中包含’mar’字符串的所有数据：</p>
+<p>查找name字段中包含&#39;mar&#39;字符串的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;mar&#39;;</code></pre>
 
-<p>查找name字段中以元音字符开头或以’ok’字符串结尾的所有数据：</p>
+<p>查找name字段中以元音字符开头或以&#39;ok&#39;字符串结尾的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;^[aeiou]|ok$&#39;;</code></pre>
 
 <h3 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h3><blockquote>
@@ -2888,12 +2888,12 @@ mysql&gt; SELECT * FROM tableName
     -&gt; INTO OUTFILE &#39;&#x2F;home&#x2F;haigui&#x2F;tableName.sql&#39;;
 </code></pre>
 
-<p>SELECT … INTO OUTFILE 语句有以下属性：</p>
+<p>SELECT ... INTO OUTFILE 语句有以下属性：</p>
 <ul>
-<li>LOAD DATA INFILE是SELECT … INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT … INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。</li>
-<li>SELECT…INTO OUTFILE ‘file_name’形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。</li>
+<li>LOAD DATA INFILE是SELECT ... INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT ... INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。</li>
+<li>SELECT...INTO OUTFILE &#39;file_name&#39;形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。</li>
 <li>输出不能是一个已存在的文件。防止文件数据被篡改。</li>
-<li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT … INTO OUTFILE 不会起任何作用。</li>
+<li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT ... INTO OUTFILE 不会起任何作用。</li>
 <li>在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。</li>
 </ul>
 <h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 导入整个数据库
@@ -2922,15 +2922,15 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">-d or –delete</td>
+<td align="left">-d or --delete</td>
 <td align="left">新数据导入数据表中之前删除数据数据表中的所有信息</td>
 </tr>
 <tr>
-<td align="left">-f or –force</td>
+<td align="left">-f or --force</td>
 <td align="left">不管是否遇到错误，mysqlimport将强制继续插入数据</td>
 </tr>
 <tr>
-<td align="left">-i or –ignore</td>
+<td align="left">-i or --ignore</td>
 <td align="left">mysqlimport跳过或者忽略那些有相同唯一 关键字的行， 导入文件中的数据将被忽略。</td>
 </tr>
 <tr>
@@ -2942,15 +2942,15 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 <td align="left">这个选项与－i选项的作用相反；此选项将替代 表中有相同唯一关键字的记录。</td>
 </tr>
 <tr>
-<td align="left">–fields-enclosed- by= char</td>
+<td align="left">--fields-enclosed- by= char</td>
 <td align="left">指定文本文件中数据的记录时以什么括起的， 很多情况下 数据以双引号括起。 默认的情况下数据是没有被字符括起的。</td>
 </tr>
 <tr>
-<td align="left">–fields-terminated- by=char</td>
+<td align="left">--fields-terminated- by=char</td>
 <td align="left">指定各个数据的值之间的分隔符，在句号分隔的文件中， 分隔符是句号。您可以用此选项指定数据之间的分隔符。 默认的分隔符是跳格符（Tab）</td>
 </tr>
 <tr>
-<td align="left">–lines-terminated- by=str</td>
+<td align="left">--lines-terminated- by=str</td>
 <td align="left">此选项指定文本文件中行与行之间数据的分隔字符串 或者字符。 默认的情况下mysqlimport以newline为行分隔符。 您可以选择用一个字符串来替代一个单个的字符： 一个新行或者一个回车。</td>
 </tr>
 </tbody></table>
@@ -3040,7 +3040,7 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 </tr>
 <tr>
 <td><strong>Extra</strong></td>
-<td>该列包含MySQL解决查询的详细信息<br /><strong>Distinct</strong>：MySQL发现第1个匹配行后，停止为当前的行组合搜索更多的行。<br /><strong>Not exists</strong>：MySQL能够对查询进行LEFT JOIN优化，发现1个匹配LEFT JOIN标准的行后，不再为前面的的行组合在该表内检查更多的行。<br />**range checked for each record (index map： #)**：MySQL没有发现好的可以使用的索引，但发现如果来自前面的表的列值已知，可能部分索引可以使用。<br /><strong>Using filesort</strong>：MySQL需要额外的一次传递，以找出如何按排序顺序检索行。<br /><strong>Using index</strong>：从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。<br /><strong>Using temporary</strong>：为了解决查询，MySQL需要创建一个临时表来容纳结果。<br /><strong>Using where</strong>：WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。<br />**Using sort_union(…)， Using union(…)， Using intersect(…)**：这些函数说明如何为index_merge联接类型合并索引扫描。<br /><strong>Using index for group-by</strong>：类似于访问表的Using index方式，Using index for group-by表示MySQL发现了一个索引，可以用来查 询GROUP BY或DISTINCT查询的所有列，而不要额外搜索硬盘访问实际的表。</td>
+<td>该列包含MySQL解决查询的详细信息<br /><strong>Distinct</strong>：MySQL发现第1个匹配行后，停止为当前的行组合搜索更多的行。<br /><strong>Not exists</strong>：MySQL能够对查询进行LEFT JOIN优化，发现1个匹配LEFT JOIN标准的行后，不再为前面的的行组合在该表内检查更多的行。<br />**range checked for each record (index map： #)**：MySQL没有发现好的可以使用的索引，但发现如果来自前面的表的列值已知，可能部分索引可以使用。<br /><strong>Using filesort</strong>：MySQL需要额外的一次传递，以找出如何按排序顺序检索行。<br /><strong>Using index</strong>：从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。<br /><strong>Using temporary</strong>：为了解决查询，MySQL需要创建一个临时表来容纳结果。<br /><strong>Using where</strong>：WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。<br />**Using sort_union(...)， Using union(...)， Using intersect(...)**：这些函数说明如何为index_merge联接类型合并索引扫描。<br /><strong>Using index for group-by</strong>：类似于访问表的Using index方式，Using index for group-by表示MySQL发现了一个索引，可以用来查 询GROUP BY或DISTINCT查询的所有列，而不要额外搜索硬盘访问实际的表。</td>
 </tr>
 </tbody></table>
 <h3 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h3><h4 id="union-1"><a href="#union-1" class="headerlink" title="union"></a>union</h4><blockquote>
@@ -3306,18 +3306,18 @@ SELECT * FROM (
 <td align="left">返回字符串 meteor 的字符数<br /><code>SELECT CHARACTER_LENGTH(&quot;meteor&quot;) AS LengthOfString;</code></td>
 </tr>
 <tr>
-<td align="left">CONCAT(s1,s2…sn)</td>
+<td align="left">CONCAT(s1,s2...sn)</td>
 <td align="left">字符串 s1,s2 等多个字符串合并为一个字符串</td>
 <td align="left">合并多个字符串<br /><code>SELECT CONCAT(&quot;SQL &quot;, &quot;meteor &quot;, &quot;Gooogle &quot;, &quot;Facebook&quot;) AS ConcatenatedString;</code></td>
 </tr>
 <tr>
-<td align="left">CONCAT_WS(x, s1,s2…sn)</td>
-<td align="left">同 CONCAT(s1,s2,…) 函数，但是每个字符串之间要加上 x，x 可以是分隔符</td>
+<td align="left">CONCAT_WS(x, s1,s2...sn)</td>
+<td align="left">同 CONCAT(s1,s2,...) 函数，但是每个字符串之间要加上 x，x 可以是分隔符</td>
 <td align="left">合并多个字符串，并添加分隔符：<br /><code>SELECT CONCAT_WS(&quot;-&quot;, &quot;SQL&quot;, &quot;Tutorial&quot;, &quot;is&quot;, &quot;fun!&quot;)AS ConcatenatedString;</code></td>
 </tr>
 <tr>
-<td align="left">FIELD(s,s1,s2…)</td>
-<td align="left">返回第一个字符串 s 在字符串列表(s1,s2…)中的位置</td>
+<td align="left">FIELD(s,s1,s2...)</td>
+<td align="left">返回第一个字符串 s 在字符串列表(s1,s2...)中的位置</td>
 <td align="left">返回字符串 c 在列表值中的位置：<br /><code>SELECT FIELD(&quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;);</code></td>
 </tr>
 <tr>
@@ -3327,8 +3327,8 @@ SELECT * FROM (
 </tr>
 <tr>
 <td align="left">FORMAT(x,n)</td>
-<td align="left">函数可以将数字 x 进行格式化 “#,###.##”, 将 x 保留到小数点后 n 位，最后一位四舍五入。</td>
-<td align="left">格式化数字 “#,###.##” 形式：<br /><code>SELECT FORMAT(250500.5634, 2);     -- 输出 250,500.56</code></td>
+<td align="left">函数可以将数字 x 进行格式化 &quot;#,###.##&quot;, 将 x 保留到小数点后 n 位，最后一位四舍五入。</td>
+<td align="left">格式化数字 &quot;#,###.##&quot; 形式：<br /><code>SELECT FORMAT(250500.5634, 2);     -- 输出 250,500.56</code></td>
 </tr>
 <tr>
 <td align="left">INSERT(s1,x,len,s2)</td>
@@ -3457,7 +3457,7 @@ SELECT * FROM (
 <tbody><tr>
 <td align="left">ABS(x)</td>
 <td align="left">返回 x 的绝对值</td>
-<td align="left">返回 -1 的绝对值：SELECT ABS(-1) – 返回1</td>
+<td align="left">返回 -1 的绝对值：SELECT ABS(-1) -- 返回1</td>
 </tr>
 <tr>
 <td align="left">ACOS(x)</td>
@@ -3487,12 +3487,12 @@ SELECT * FROM (
 <tr>
 <td align="left">CEIL(x)</td>
 <td align="left">返回大于或等于 x 的最小整数</td>
-<td align="left">SELECT CEIL(1.5) – 返回2</td>
+<td align="left">SELECT CEIL(1.5) -- 返回2</td>
 </tr>
 <tr>
 <td align="left">CEILING(x)</td>
 <td align="left">返回大于或等于 x 的最小整数</td>
-<td align="left">SELECT CEILING(1.5); – 返回2</td>
+<td align="left">SELECT CEILING(1.5); -- 返回2</td>
 </tr>
 <tr>
 <td align="left">COS(x)</td>
@@ -3512,52 +3512,52 @@ SELECT * FROM (
 <tr>
 <td align="left">DEGREES(x)</td>
 <td align="left">将弧度转换为角度</td>
-<td align="left">SELECT DEGREES(3.1415926535898) – 180</td>
+<td align="left">SELECT DEGREES(3.1415926535898) -- 180</td>
 </tr>
 <tr>
 <td align="left">n DIV m</td>
 <td align="left">整除，n 为被除数，m 为除数</td>
-<td align="left">计算 10 除于 5：SELECT 10 DIV 5;  – 2</td>
+<td align="left">计算 10 除于 5：SELECT 10 DIV 5;  -- 2</td>
 </tr>
 <tr>
 <td align="left">EXP(x)</td>
 <td align="left">返回 e 的 x 次方</td>
-<td align="left">计算 e 的三次方：SELECT EXP(3) – 20.085536923188</td>
+<td align="left">计算 e 的三次方：SELECT EXP(3) -- 20.085536923188</td>
 </tr>
 <tr>
 <td align="left">FLOOR(x)</td>
 <td align="left">返回小于或等于 x 的最大整数</td>
-<td align="left">小于或等于 1.5 的整数：SELECT FLOOR(1.5) – 返回1</td>
+<td align="left">小于或等于 1.5 的整数：SELECT FLOOR(1.5) -- 返回1</td>
 </tr>
 <tr>
-<td align="left">GREATEST(expr1, expr2, expr3, …)</td>
+<td align="left">GREATEST(expr1, expr2, expr3, ...)</td>
 <td align="left">返回列表中的最大值</td>
-<td align="left">返回以下数字列表中的最大值：SELECT GREATEST(3, 12, 34, 8, 25); – 34返回以下字符串列表中的最大值：SELECT GREATEST(“Google”, “Runoob”, “Apple”);   – Runoob</td>
+<td align="left">返回以下数字列表中的最大值：SELECT GREATEST(3, 12, 34, 8, 25); -- 34返回以下字符串列表中的最大值：SELECT GREATEST(&quot;Google&quot;, &quot;Runoob&quot;, &quot;Apple&quot;);   -- Runoob</td>
 </tr>
 <tr>
-<td align="left">LEAST(expr1, expr2, expr3, …)</td>
+<td align="left">LEAST(expr1, expr2, expr3, ...)</td>
 <td align="left">返回列表中的最小值</td>
-<td align="left">返回以下数字列表中的最小值：SELECT LEAST(3, 12, 34, 8, 25); – 3返回以下字符串列表中的最小值：SELECT LEAST(“Google”, “Runoob”, “Apple”);   – Apple</td>
+<td align="left">返回以下数字列表中的最小值：SELECT LEAST(3, 12, 34, 8, 25); -- 3返回以下字符串列表中的最小值：SELECT LEAST(&quot;Google&quot;, &quot;Runoob&quot;, &quot;Apple&quot;);   -- Apple</td>
 </tr>
 <tr>
 <td align="left">LN</td>
 <td align="left">返回数字的自然对数，以 e 为底。</td>
-<td align="left">返回 2 的自然对数：SELECT LN(2);  – 0.6931471805599453</td>
+<td align="left">返回 2 的自然对数：SELECT LN(2);  -- 0.6931471805599453</td>
 </tr>
 <tr>
 <td align="left">LOG(x) 或 LOG(base, x)</td>
 <td align="left">返回自然对数(以 e 为底的对数)，如果带有 base 参数，则 base 为指定带底数。</td>
-<td align="left">SELECT LOG(20.085536923188) – 3 SELECT LOG(2, 4); – 2</td>
+<td align="left">SELECT LOG(20.085536923188) -- 3 SELECT LOG(2, 4); -- 2</td>
 </tr>
 <tr>
 <td align="left">LOG10(x)</td>
 <td align="left">返回以 10 为底的对数</td>
-<td align="left">SELECT LOG10(100) – 2</td>
+<td align="left">SELECT LOG10(100) -- 2</td>
 </tr>
 <tr>
 <td align="left">LOG2(x)</td>
 <td align="left">返回以 2 为底的对数</td>
-<td align="left">返回以 2 为底 6 的对数：SELECT LOG2(6);  – 2.584962500721156</td>
+<td align="left">返回以 2 为底 6 的对数：SELECT LOG2(6);  -- 2.584962500721156</td>
 </tr>
 <tr>
 <td align="left">MAX(expression)</td>
@@ -3572,52 +3572,52 @@ SELECT * FROM (
 <tr>
 <td align="left">MOD(x,y)</td>
 <td align="left">返回 x 除以 y 以后的余数</td>
-<td align="left">5 除于 2 的余数：SELECT MOD(5,2) – 1</td>
+<td align="left">5 除于 2 的余数：SELECT MOD(5,2) -- 1</td>
 </tr>
 <tr>
 <td align="left">PI()</td>
 <td align="left">返回圆周率(3.141593）</td>
-<td align="left">SELECT PI() –3.141593</td>
+<td align="left">SELECT PI() --3.141593</td>
 </tr>
 <tr>
 <td align="left">POW(x,y)</td>
 <td align="left">返回 x 的 y 次方</td>
-<td align="left">2 的 3 次方：SELECT POW(2,3) – 8</td>
+<td align="left">2 的 3 次方：SELECT POW(2,3) -- 8</td>
 </tr>
 <tr>
 <td align="left">POWER(x,y)</td>
 <td align="left">返回 x 的 y 次方</td>
-<td align="left">2 的 3 次方：SELECT POWER(2,3) – 8</td>
+<td align="left">2 的 3 次方：SELECT POWER(2,3) -- 8</td>
 </tr>
 <tr>
 <td align="left">RADIANS(x)</td>
 <td align="left">将角度转换为弧度</td>
-<td align="left">180 度转换为弧度：SELECT RADIANS(180) – 3.1415926535898</td>
+<td align="left">180 度转换为弧度：SELECT RADIANS(180) -- 3.1415926535898</td>
 </tr>
 <tr>
 <td align="left">RAND()</td>
 <td align="left">返回 0 到 1 的随机数</td>
-<td align="left">SELECT RAND() –0.93099315644334</td>
+<td align="left">SELECT RAND() --0.93099315644334</td>
 </tr>
 <tr>
 <td align="left">ROUND(x)</td>
 <td align="left">返回离 x 最近的整数</td>
-<td align="left">SELECT ROUND(1.23456) –1</td>
+<td align="left">SELECT ROUND(1.23456) --1</td>
 </tr>
 <tr>
 <td align="left">SIGN(x)</td>
 <td align="left">返回 x 的符号，x 是负数、0、正数分别返回 -1、0 和 1</td>
-<td align="left">SELECT SIGN(-10) – (-1)</td>
+<td align="left">SELECT SIGN(-10) -- (-1)</td>
 </tr>
 <tr>
 <td align="left">SIN(x)</td>
 <td align="left">求正弦值(参数是弧度)</td>
-<td align="left">SELECT SIN(RADIANS(30)) – 0.5</td>
+<td align="left">SELECT SIN(RADIANS(30)) -- 0.5</td>
 </tr>
 <tr>
 <td align="left">SQRT(x)</td>
 <td align="left">返回x的平方根</td>
-<td align="left">25 的平方根：SELECT SQRT(25) – 5</td>
+<td align="left">25 的平方根：SELECT SQRT(25) -- 5</td>
 </tr>
 <tr>
 <td align="left">SUM(expression)</td>
@@ -3627,12 +3627,12 @@ SELECT * FROM (
 <tr>
 <td align="left">TAN(x)</td>
 <td align="left">求正切值(参数是弧度)</td>
-<td align="left">SELECT TAN(1.75);  – -5.52037992250933</td>
+<td align="left">SELECT TAN(1.75);  -- -5.52037992250933</td>
 </tr>
 <tr>
 <td align="left">TRUNCATE(x,y)</td>
 <td align="left">返回数值 x 保留到小数点后 y 位的值（与 ROUND 最大的区别是不会进行四舍五入）</td>
-<td align="left">SELECT TRUNCATE(1.23456,3) – 1.234</td>
+<td align="left">SELECT TRUNCATE(1.23456,3) -- 1.234</td>
 </tr>
 </tbody></table>
 <h3 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h3><table>
@@ -3646,12 +3646,12 @@ SELECT * FROM (
 <tbody><tr>
 <td align="left">ADDDATE(d,n)</td>
 <td align="left">计算起始日期 d 加上 n 天的日期</td>
-<td align="left">SELECT ADDDATE(“2017-06-15”, INTERVAL 10 DAY); -&gt;2017-06-25</td>
+<td align="left">SELECT ADDDATE(&quot;2017-06-15&quot;, INTERVAL 10 DAY); -&gt;2017-06-25</td>
 </tr>
 <tr>
 <td align="left">ADDTIME(t,n)</td>
 <td align="left">n 是一个时间表达式，时间 t 加上时间表达式 n</td>
-<td align="left">加 5 秒：<br />SELECT ADDTIME(‘2011-11-11 11:11:11’, 5); -&gt;2011-11-11 11:11:16 (秒)<br />添加 2 小时, 10 分钟, 5 秒: <br />SELECT ADDTIME(“2020-06-15 09:34:21”, “2:10:5”);  -&gt; 2020-06-15 11:44:26</td>
+<td align="left">加 5 秒：<br />SELECT ADDTIME(&#39;2011-11-11 11:11:11&#39;, 5); -&gt;2011-11-11 11:11:16 (秒)<br />添加 2 小时, 10 分钟, 5 秒: <br />SELECT ADDTIME(&quot;2020-06-15 09:34:21&quot;, &quot;2:10:5&quot;);  -&gt; 2020-06-15 11:44:26</td>
 </tr>
 <tr>
 <td align="left">CURDATE()</td>
@@ -3681,22 +3681,22 @@ SELECT * FROM (
 <tr>
 <td align="left">DATE()</td>
 <td align="left">从日期或日期时间表达式中提取日期值</td>
-<td align="left">SELECT DATE(“2017-06-15”);     -&gt; 2017-06-15</td>
+<td align="left">SELECT DATE(&quot;2017-06-15&quot;);     -&gt; 2017-06-15</td>
 </tr>
 <tr>
 <td align="left">DATEDIFF(d1,d2)</td>
 <td align="left">计算日期 d1-&gt;d2 之间相隔的天数</td>
-<td align="left">SELECT DATEDIFF(‘2001-01-01’,’2001-02-02’) -&gt; -32</td>
+<td align="left">SELECT DATEDIFF(&#39;2001-01-01&#39;,&#39;2001-02-02&#39;) -&gt; -32</td>
 </tr>
 <tr>
 <td align="left">DATE_ADD(d，INTERVAL expr type)</td>
 <td align="left">计算起始日期 d 加上一个时间段后的日期</td>
-<td align="left">SELECT ADDDATE(‘2011-11-11 11:11:11’,1) -&gt; 2011-11-12 11:11:11  (默认是天) SELECT ADDDATE(‘2011-11-11 11:11:11’, INTERVAL 5 MINUTE) -&gt; 2011-11-11 11:16:11 (TYPE的取值与上面那个列出来的函数类似)</td>
+<td align="left">SELECT ADDDATE(&#39;2011-11-11 11:11:11&#39;,1) -&gt; 2011-11-12 11:11:11  (默认是天) SELECT ADDDATE(&#39;2011-11-11 11:11:11&#39;, INTERVAL 5 MINUTE) -&gt; 2011-11-11 11:16:11 (TYPE的取值与上面那个列出来的函数类似)</td>
 </tr>
 <tr>
 <td align="left">DATE_FORMAT(d,f)</td>
 <td align="left">按表达式 f的要求显示日期 d</td>
-<td align="left">SELECT DATE_FORMAT(‘2011-11-11 11:11:11’,’%Y-%m-%d %r’) -&gt; 2011-11-11 11:11:11 AM</td>
+<td align="left">SELECT DATE_FORMAT(&#39;2011-11-11 11:11:11&#39;,&#39;%Y-%m-%d %r&#39;) -&gt; 2011-11-11 11:11:11 AM</td>
 </tr>
 <tr>
 <td align="left">DATE_SUB(date,INTERVAL expr type)</td>
@@ -3706,32 +3706,32 @@ SELECT * FROM (
 <tr>
 <td align="left">DAY(d)</td>
 <td align="left">返回日期值 d 的日期部分</td>
-<td align="left">SELECT DAY(“2017-06-15”);   -&gt; 15</td>
+<td align="left">SELECT DAY(&quot;2017-06-15&quot;);   -&gt; 15</td>
 </tr>
 <tr>
 <td align="left">DAYNAME(d)</td>
 <td align="left">返回日期 d 是星期几，如 Monday,Tuesday</td>
-<td align="left">SELECT DAYNAME(‘2011-11-11 11:11:11’) -&gt;Friday</td>
+<td align="left">SELECT DAYNAME(&#39;2011-11-11 11:11:11&#39;) -&gt;Friday</td>
 </tr>
 <tr>
 <td align="left">DAYOFMONTH(d)</td>
 <td align="left">计算日期 d 是本月的第几天</td>
-<td align="left">SELECT DAYOFMONTH(‘2011-11-11 11:11:11’) -&gt;11</td>
+<td align="left">SELECT DAYOFMONTH(&#39;2011-11-11 11:11:11&#39;) -&gt;11</td>
 </tr>
 <tr>
 <td align="left">DAYOFWEEK(d)</td>
 <td align="left">日期 d 今天是星期几，1 星期日，2 星期一，以此类推</td>
-<td align="left">SELECT DAYOFWEEK(‘2011-11-11 11:11:11’) -&gt;6</td>
+<td align="left">SELECT DAYOFWEEK(&#39;2011-11-11 11:11:11&#39;) -&gt;6</td>
 </tr>
 <tr>
 <td align="left">DAYOFYEAR(d)</td>
 <td align="left">计算日期 d 是本年的第几天</td>
-<td align="left">SELECT DAYOFYEAR(‘2011-11-11 11:11:11’) -&gt;315</td>
+<td align="left">SELECT DAYOFYEAR(&#39;2011-11-11 11:11:11&#39;) -&gt;315</td>
 </tr>
 <tr>
 <td align="left">EXTRACT(type FROM d)</td>
 <td align="left">从日期 d 中获取指定的值，type 指定返回的值。<br />type可取值为：<br /> - MICROSECOND<br/>- SECOND<br/>- MINUTE<br/>- HOUR<br/>- DAY<br/>- WEEK<br/>- MONTH<br/>- QUARTER<br/>- YEAR<br/>- SECOND_MICROSECOND<br/>- MINUTE_MICROSECOND<br/>- MINUTE_SECOND<br/>- HOUR_MICROSECOND<br/>- HOUR_SECOND<br/>- HOUR_MINUTE<br/>- DAY_MICROSECOND<br/>- DAY_SECOND<br/>- DAY_MINUTE<br/>- DAY_HOUR<br/>- YEAR_MONTH</td>
-<td align="left">SELECT EXTRACT(MINUTE FROM ‘2011-11-11 11:11:11’)  -&gt; 11</td>
+<td align="left">SELECT EXTRACT(MINUTE FROM &#39;2011-11-11 11:11:11&#39;)  -&gt; 11</td>
 </tr>
 <tr>
 <td align="left">FROM_DAYS(n)</td>
@@ -3741,12 +3741,12 @@ SELECT * FROM (
 <tr>
 <td align="left">HOUR(t)</td>
 <td align="left">返回 t 中的小时值</td>
-<td align="left">SELECT HOUR(‘1:2:3’) -&gt; 1</td>
+<td align="left">SELECT HOUR(&#39;1:2:3&#39;) -&gt; 1</td>
 </tr>
 <tr>
 <td align="left">LAST_DAY(d)</td>
 <td align="left">返回给给定日期的那一月份的最后一天</td>
-<td align="left">SELECT LAST_DAY(“2017-06-20”); -&gt; 2017-06-30</td>
+<td align="left">SELECT LAST_DAY(&quot;2017-06-20&quot;); -&gt; 2017-06-30</td>
 </tr>
 <tr>
 <td align="left">LOCALTIME()</td>
@@ -3771,22 +3771,22 @@ SELECT * FROM (
 <tr>
 <td align="left">MICROSECOND(date)</td>
 <td align="left">返回日期参数所对应的微秒数</td>
-<td align="left">SELECT MICROSECOND(“2017-06-20 09:34:00.000023”); -&gt; 23</td>
+<td align="left">SELECT MICROSECOND(&quot;2017-06-20 09:34:00.000023&quot;); -&gt; 23</td>
 </tr>
 <tr>
 <td align="left">MINUTE(t)</td>
 <td align="left">返回 t 中的分钟值</td>
-<td align="left">SELECT MINUTE(‘1:2:3’) -&gt; 2</td>
+<td align="left">SELECT MINUTE(&#39;1:2:3&#39;) -&gt; 2</td>
 </tr>
 <tr>
 <td align="left">MONTHNAME(d)</td>
 <td align="left">返回日期当中的月份名称，如 November</td>
-<td align="left">SELECT MONTHNAME(‘2011-11-11 11:11:11’) -&gt; November</td>
+<td align="left">SELECT MONTHNAME(&#39;2011-11-11 11:11:11&#39;) -&gt; November</td>
 </tr>
 <tr>
 <td align="left">MONTH(d)</td>
 <td align="left">返回日期d中的月份值，1 到 12</td>
-<td align="left">SELECT MONTH(‘2011-11-11 11:11:11’) -&gt;11</td>
+<td align="left">SELECT MONTH(&#39;2011-11-11 11:11:11&#39;) -&gt;11</td>
 </tr>
 <tr>
 <td align="left">NOW()</td>
@@ -3806,12 +3806,12 @@ SELECT * FROM (
 <tr>
 <td align="left">QUARTER(d)</td>
 <td align="left">返回日期d是第几季节，返回 1 到 4</td>
-<td align="left">SELECT QUARTER(‘2011-11-11 11:11:11’) -&gt; 4</td>
+<td align="left">SELECT QUARTER(&#39;2011-11-11 11:11:11&#39;) -&gt; 4</td>
 </tr>
 <tr>
 <td align="left">SECOND(t)</td>
 <td align="left">返回 t 中的秒钟值</td>
-<td align="left">SELECT SECOND(‘1:2:3’) -&gt; 3</td>
+<td align="left">SELECT SECOND(&#39;1:2:3&#39;) -&gt; 3</td>
 </tr>
 <tr>
 <td align="left">SEC_TO_TIME(s)</td>
@@ -3821,17 +3821,17 @@ SELECT * FROM (
 <tr>
 <td align="left">STR_TO_DATE(string, format_mask)</td>
 <td align="left">将字符串转变为日期</td>
-<td align="left">SELECT STR_TO_DATE(“August 10 2017”, “%M %d %Y”); -&gt; 2017-08-10</td>
+<td align="left">SELECT STR_TO_DATE(&quot;August 10 2017&quot;, &quot;%M %d %Y&quot;); -&gt; 2017-08-10</td>
 </tr>
 <tr>
 <td align="left">SUBDATE(d,n)</td>
 <td align="left">日期 d 减去 n 天后的日期</td>
-<td align="left">SELECT SUBDATE(‘2011-11-11 11:11:11’, 1) -&gt;2011-11-10 11:11:11 (默认是天)</td>
+<td align="left">SELECT SUBDATE(&#39;2011-11-11 11:11:11&#39;, 1) -&gt;2011-11-10 11:11:11 (默认是天)</td>
 </tr>
 <tr>
 <td align="left">SUBTIME(t,n)</td>
 <td align="left">时间 t 减去 n 秒的时间</td>
-<td align="left">SELECT SUBTIME(‘2011-11-11 11:11:11’, 5) -&gt;2011-11-11 11:11:06 (秒)</td>
+<td align="left">SELECT SUBTIME(&#39;2011-11-11 11:11:11&#39;, 5) -&gt;2011-11-11 11:11:06 (秒)</td>
 </tr>
 <tr>
 <td align="left">SYSDATE()</td>
@@ -3841,57 +3841,57 @@ SELECT * FROM (
 <tr>
 <td align="left">TIME(expression)</td>
 <td align="left">提取传入表达式的时间部分</td>
-<td align="left">SELECT TIME(“19:30:10”); -&gt; 19:30:10</td>
+<td align="left">SELECT TIME(&quot;19:30:10&quot;); -&gt; 19:30:10</td>
 </tr>
 <tr>
 <td align="left">TIME_FORMAT(t,f)</td>
 <td align="left">按表达式 f 的要求显示时间 t</td>
-<td align="left">SELECT TIME_FORMAT(‘11:11:11’,’%r’) 11:11:11 AM</td>
+<td align="left">SELECT TIME_FORMAT(&#39;11:11:11&#39;,&#39;%r&#39;) 11:11:11 AM</td>
 </tr>
 <tr>
 <td align="left">TIME_TO_SEC(t)</td>
 <td align="left">将时间 t 转换为秒</td>
-<td align="left">SELECT TIME_TO_SEC(‘1:12:00’) -&gt; 4320</td>
+<td align="left">SELECT TIME_TO_SEC(&#39;1:12:00&#39;) -&gt; 4320</td>
 </tr>
 <tr>
 <td align="left">TIMEDIFF(time1, time2)</td>
 <td align="left">计算时间差值</td>
-<td align="left">SELECT TIMEDIFF(“13:10:11”, “13:10:10”); -&gt; 00:00:01</td>
+<td align="left">SELECT TIMEDIFF(&quot;13:10:11&quot;, &quot;13:10:10&quot;); -&gt; 00:00:01</td>
 </tr>
 <tr>
 <td align="left">TIMESTAMP(expression, interval)</td>
 <td align="left">单个参数时，函数返回日期或日期时间表达式；有2个参数时，将参数加和</td>
-<td align="left">SELECT TIMESTAMP(“2017-07-23”,  “13:10:11”); -&gt; 2017-07-23 13:10:11</td>
+<td align="left">SELECT TIMESTAMP(&quot;2017-07-23&quot;,  &quot;13:10:11&quot;); -&gt; 2017-07-23 13:10:11</td>
 </tr>
 <tr>
 <td align="left">TO_DAYS(d)</td>
 <td align="left">计算日期 d 距离 0000 年 1 月 1 日的天数</td>
-<td align="left">SELECT TO_DAYS(‘0001-01-01 01:01:01’) -&gt; 366</td>
+<td align="left">SELECT TO_DAYS(&#39;0001-01-01 01:01:01&#39;) -&gt; 366</td>
 </tr>
 <tr>
 <td align="left">WEEK(d)</td>
 <td align="left">计算日期 d 是本年的第几个星期，范围是 0 到 53</td>
-<td align="left">SELECT WEEK(‘2011-11-11 11:11:11’) -&gt; 45</td>
+<td align="left">SELECT WEEK(&#39;2011-11-11 11:11:11&#39;) -&gt; 45</td>
 </tr>
 <tr>
 <td align="left">WEEKDAY(d)</td>
 <td align="left">日期 d 是星期几，0 表示星期一，1 表示星期二</td>
-<td align="left">SELECT WEEKDAY(“2017-06-15”); -&gt; 3</td>
+<td align="left">SELECT WEEKDAY(&quot;2017-06-15&quot;); -&gt; 3</td>
 </tr>
 <tr>
 <td align="left">WEEKOFYEAR(d)</td>
 <td align="left">计算日期 d 是本年的第几个星期，范围是 0 到 53</td>
-<td align="left">SELECT WEEKOFYEAR(‘2011-11-11 11:11:11’) -&gt; 45</td>
+<td align="left">SELECT WEEKOFYEAR(&#39;2011-11-11 11:11:11&#39;) -&gt; 45</td>
 </tr>
 <tr>
 <td align="left">YEAR(d)</td>
 <td align="left">返回年份</td>
-<td align="left">SELECT YEAR(“2017-06-15”); -&gt; 2017</td>
+<td align="left">SELECT YEAR(&quot;2017-06-15&quot;); -&gt; 2017</td>
 </tr>
 <tr>
 <td align="left">YEARWEEK(date, mode)</td>
 <td align="left">返回年份及第几周（0到53），mode 中 0 表示周天，1表示周一，以此类推</td>
-<td align="left">SELECT YEARWEEK(“2017-06-15”); -&gt; 201724</td>
+<td align="left">SELECT YEARWEEK(&quot;2017-06-15&quot;); -&gt; 201724</td>
 </tr>
 </tbody></table>
 <h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h3 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h3><table>
@@ -4627,7 +4627,7 @@ for (...) &#123;
   <entry>
     <title>反向代理和正向代理的区别</title>
     <url>/2021/03/12/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB/</url>
-    <content><![CDATA[<h1 id="一-什么是代理"><a href="#一-什么是代理" class="headerlink" title="一 什么是代理"></a>一 什么是代理</h1><p>代理其实就是一个中介，A 和 B 本来可以直连，中间插入一个 C，C 就是中介。<br>刚开始的时候，代理多数是帮助内网 client 访问外网 server 用的<br>后来出现了反向代理，”反向” 这个词在这儿的意思其实是指方向相反，即代理将来自外网客户端的请求转发到内网服务器，从外到内。</p>
+    <content><![CDATA[<h1 id="一-什么是代理"><a href="#一-什么是代理" class="headerlink" title="一 什么是代理"></a>一 什么是代理</h1><p>代理其实就是一个中介，A 和 B 本来可以直连，中间插入一个 C，C 就是中介。<br>刚开始的时候，代理多数是帮助内网 client 访问外网 server 用的<br>后来出现了反向代理，&quot;反向&quot; 这个词在这儿的意思其实是指方向相反，即代理将来自外网客户端的请求转发到内网服务器，从外到内。</p>
 <span id="more"></span>
 
 <h1 id="二-正向代理"><a href="#二-正向代理" class="headerlink" title="二 正向代理"></a>二 正向代理</h1><p>正向代理类似一个跳板机，代理访问外部资源。</p>

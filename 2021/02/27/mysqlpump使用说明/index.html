@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img2018.cnblogs.com/blog/907596/201901/907596-20190115162636956-1342333863.png">
 <meta property="article:published_time" content="2021-02-27T12:07:23.000Z">
-<meta property="article:modified_time" content="2021-03-20T11:49:45.137Z">
+<meta property="article:modified_time" content="2021-03-21T11:50:13.617Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="mysql">
 <meta property="article:tag" content="备份">
@@ -132,8 +132,9 @@
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
         <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
-        <li class="menu-item menu-item-ebook"><a href="/ebook/" rel="section"><i class="fa fa-book fa-fw"></i>电子书</a></li>
+        <li class="menu-item menu-item-ebook"><a href="/ebook" rel="section"><i class="fa fa-book fa-fw"></i>ebook</a></li>
         <li class="menu-item menu-item-java基础"><a href="/java-basics/" rel="section"><i class="fa fa-code fa-fw"></i>Java基础</a></li>
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
         <li class="menu-item menu-item-experience"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
@@ -285,7 +286,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 19:49:45" itemprop="dateModified" datetime="2021-03-20T19:49:45+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-21 19:50:13" itemprop="dateModified" datetime="2021-03-21T19:50:13+08:00">2021-03-21</time>
       </span>
 
   
@@ -306,34 +307,34 @@
 <h2 id="mysqlpump-主要特点"><a href="#mysqlpump-主要特点" class="headerlink" title="mysqlpump 主要特点"></a>mysqlpump 主要特点</h2><p>-  并行备份数据库和数据库中的对象的，加快备份过程。<br>-  更好的控制数据库和数据库对象（表，存储过程，用户帐户）的备份。<br>-  备份用户账号作为帐户管理语句（CREATE USER，GRANT），而不是直接插入到 MySQL 的系统数据库。<br>-  备份出来直接生成压缩后的备份文件。<br>-  备份进度指示（估计值）。<br>-  重新加载（还原）备份文件，先建表后插入数据最后建立索引，减少了索引维护开销，加快了还原速度。<br>-  备份可以排除或则指定数据库。</p>
 <h2 id="mysqlpump-缺点"><a href="#mysqlpump-缺点" class="headerlink" title="mysqlpump 缺点"></a>mysqlpump 缺点</h2><p><a target="_blank" rel="noopener" href="https://theme-next.js.org/highlight/">https://theme-next.js.org/highlight/</a><br>-  只能并行到表级别, 如果表特别大, 开多线程和单线程是一样的, 并行度不如 mydumper；<br>-  无法获取当前备份对应的 binlog 位置；<br>-  MySQL5.7.11 之前的版本不要使用, 并行导出和 single-transaction 是互斥的；</p>
 <h2 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h2><p>mysqlpump 绝大部分参数使用和 Mysqldump 一致，下面顺便重温一下。注意对于 mysqlpump 专有参数会用<strong>加粗</strong>标记出来。</p>
-<p>1) –add-drop-database： 在建立库之前先执行删库操作</p>
+<p>1) --add-drop-database： 在建立库之前先执行删库操作</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP DATABASE IF EXISTS &#96;...&#96;;</code></pre>
 
 <ol start="2">
-<li>–add-drop-table：在建表之前先执行删表操作</li>
+<li>--add-drop-table：在建表之前先执行删表操作</li>
 </ol>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP TABLE IF EXISTS &#96;...&#96;.&#96;...&#96;;</code></pre>
 
-<p><strong>3) –add-drop-user：在 CREATE USER 语句之前增加 DROP USER。 注意：这个参数需要和 –users 一起使用，否者不生效。</strong></p>
+<p><strong>3) --add-drop-user：在 CREATE USER 语句之前增加 DROP USER。 注意：这个参数需要和 --users 一起使用，否者不生效。</strong></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP USER &#39;backup&#39;@&#39;172.16.60.%&#39;;</code></pre>
 
 <ol start="4">
-<li>–add-locks：备份表时，使用 LOCK TABLES 和 UNLOCK TABLES。注意：这个参数不支持并行备份，需要关闭并行备份功能：–default-parallelism=0</li>
+<li>--add-locks：备份表时，使用 LOCK TABLES 和 UNLOCK TABLES。注意：这个参数不支持并行备份，需要关闭并行备份功能：--default-parallelism=0</li>
 </ol>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">LOCK TABLES &#96;...&#96;.&#96;...&#96; WRITE;
 ...
 UNLOCK TABLES;</code></pre>
 
 <ol start="5">
-<li><p>–all-databases：备份所有库，即 -A。</p>
+<li><p>--all-databases：备份所有库，即 -A。</p>
 </li>
-<li><p>–bind-address：指定通过哪个网络接口来连接 Mysql 服务器（一台服务器可能有多个 IP），防止同一个网卡出去影响业务。</p>
+<li><p>--bind-address：指定通过哪个网络接口来连接 Mysql 服务器（一台服务器可能有多个 IP），防止同一个网卡出去影响业务。</p>
 </li>
-<li><p>–complete-insert：dump 出包含所有列的完整 insert 语句。</p>
+<li><p>--complete-insert：dump 出包含所有列的完整 insert 语句。</p>
 </li>
-<li><p>–compress： 压缩客户端和服务器传输的所有的数据，即 -C。</p>
+<li><p>--compress： 压缩客户端和服务器传输的所有的数据，即 -C。</p>
 </li>
-<li><p><strong>–compress-output</strong>：<strong>默认不压缩输出，目前可以使用的压缩算法有 LZ4 和 ZLIB</strong></p>
+<li><p><strong>--compress-output</strong>：<strong>默认不压缩输出，目前可以使用的压缩算法有 LZ4 和 ZLIB</strong></p>
 </li>
 </ol>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@localhost ~]# mysqlpump --compress-output&#x3D;LZ4 &gt; dump.lz4
@@ -343,46 +344,46 @@ UNLOCK TABLES;</code></pre>
 [root@localhost ~]# zlib_decompress dump.zlib dump.txt</code></pre>
 
 <ol start="10">
-<li><p>–databases：手动指定要备份的库，支持多个数据库，用空格分隔，即 - B。</p>
+<li><p>--databases：手动指定要备份的库，支持多个数据库，用空格分隔，即 - B。</p>
 </li>
-<li><p>–default-character-set：指定备份的字符集。</p>
+<li><p>--default-character-set：指定备份的字符集。</p>
 </li>
 </ol>
-<p><strong>12) –default-parallelism：指定并行线程数，默认是 2，如果设置成 0，表示不使用并行备份。</strong>注意：每个线程的备份步骤是：先 create table 但不建立二级索引（主键会在 create table 时候建立），再写入数据，最后建立二级索引。</p>
-<p><strong>13) –defer-table-indexes：延迟创建索引，直到所有数据都加载完之后，再创建索引，默认开启。</strong>若关闭则会和 mysqldump 一样：先创建一个表和所有索引，再导入数据，因为在加载还原数据的时候要维护二级索引的开销，导致效率比较低。关闭使用参数：–skip–defer-table-indexes。</p>
+<p><strong>12) --default-parallelism：指定并行线程数，默认是 2，如果设置成 0，表示不使用并行备份。</strong>注意：每个线程的备份步骤是：先 create table 但不建立二级索引（主键会在 create table 时候建立），再写入数据，最后建立二级索引。</p>
+<p><strong>13) --defer-table-indexes：延迟创建索引，直到所有数据都加载完之后，再创建索引，默认开启。</strong>若关闭则会和 mysqldump 一样：先创建一个表和所有索引，再导入数据，因为在加载还原数据的时候要维护二级索引的开销，导致效率比较低。关闭使用参数：--skip--defer-table-indexes。</p>
 <ol start="14">
-<li>–events：备份数据库的事件，默认开启，关闭使用 –skip-events 参数。</li>
+<li>--events：备份数据库的事件，默认开启，关闭使用 --skip-events 参数。</li>
 </ol>
-<p><strong>15) –exclude-databases：备份排除该参数指定的数据库，多个用逗号分隔。类似的还有 –exclude-events、–exclude-routines、–exclude-tables、–exclude-triggers、–exclude-users</strong></p>
+<p><strong>15) --exclude-databases：备份排除该参数指定的数据库，多个用逗号分隔。类似的还有 --exclude-events、--exclude-routines、--exclude-tables、--exclude-triggers、--exclude-users</strong></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@localhost ~]# mysqlpump --exclude-databases&#x3D;mysql,sys -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql   #备份过滤mysql和sys数据库
 [root@localhost ~]# mysqlpump --exclude-tables&#x3D;rr,tt -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql      #备份过滤所有数据库中rr、tt表
 [root@localhost ~]# mysqlpump -B test --exclude-tables&#x3D;tmp_ifulltext,tt -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql   #备份过滤test库中的rr、tt表
 ...</code></pre>
 
-<p><strong>注意：</strong>要是只备份数据库的账号，需要添加参数 <a href="https%EF%BC%9A//dev.mysql.com/doc/refman/5.7/en/mysqlpump.html#option_mysqlpump_users">–users</a>，并且需要过滤掉所有的数据库，如</p>
+<p><strong>注意：</strong>要是只备份数据库的账号，需要添加参数 <a href="https%EF%BC%9A//dev.mysql.com/doc/refman/5.7/en/mysqlpump.html#option_mysqlpump_users">--users</a>，并且需要过滤掉所有的数据库，如</p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#备份除dba和backup的所有账号。
 [root@localhost ~]# mysqlpump --users --exclude-databases&#x3D;sys,mysql,db1,db2 --exclude-users&#x3D;dba,backup -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql</code></pre>
 
-<p><strong>16) –include-databases：指定备份数据库，多个用逗号分隔，类似的还有 –include-events、–include-routines、–include-tables、–include-triggers、–include-users，大致方法使用同 15。</strong></p>
+<p><strong>16) --include-databases：指定备份数据库，多个用逗号分隔，类似的还有 --include-events、--include-routines、--include-tables、--include-triggers、--include-users，大致方法使用同 15。</strong></p>
 <ol start="17">
-<li><p>–insert-ignore：备份用 insert ignore 语句代替 insert 语句。</p>
+<li><p>--insert-ignore：备份用 insert ignore 语句代替 insert 语句。</p>
 </li>
-<li><p>–log-error-file：备份出现的 warnings 和 erros 信息输出到一个指定的文件。</p>
+<li><p>--log-error-file：备份出现的 warnings 和 erros 信息输出到一个指定的文件。</p>
 </li>
-<li><p>–max-allowed-packet：备份时用于 client/server 直接通信的最大 buffer 包的大小。</p>
+<li><p>--max-allowed-packet：备份时用于 client/server 直接通信的最大 buffer 包的大小。</p>
 </li>
-<li><p>–net-buffer-length：备份时用于 client/server 通信的初始 buffer 大小，当创建多行插入语句的时候，mysqlpump 创建行到 N 个字节长。</p>
+<li><p>--net-buffer-length：备份时用于 client/server 通信的初始 buffer 大小，当创建多行插入语句的时候，mysqlpump 创建行到 N 个字节长。</p>
 </li>
-<li><p>–no-create-db：备份不写 CREATE DATABASE 语句。要是备份多个库，需要使用参数 - B，而使用 - B 的时候会出现 create database 语句，该参数可以屏蔽 create database 语句。</p>
+<li><p>--no-create-db：备份不写 CREATE DATABASE 语句。要是备份多个库，需要使用参数 - B，而使用 - B 的时候会出现 create database 语句，该参数可以屏蔽 create database 语句。</p>
 </li>
-<li><p>–no-create-info：备份不写建表语句，即不备份表结构，只备份数据，即 -t。</p>
+<li><p>--no-create-info：备份不写建表语句，即不备份表结构，只备份数据，即 -t。</p>
 </li>
-<li><p>–hex-blob： 备份 binary 字段的时候使用十六进制计数法，受影响的字段类型有 BINARY、VARBINARY、BLOB、BIT。</p>
+<li><p>--hex-blob： 备份 binary 字段的时候使用十六进制计数法，受影响的字段类型有 BINARY、VARBINARY、BLOB、BIT。</p>
 </li>
-<li><p>–host ：备份指定的数据库地址，即 -h。</p>
+<li><p>--host ：备份指定的数据库地址，即 -h。</p>
 </li>
 </ol>
-<p><strong>25) –parallel-schemas=[N：]db_list：指定并行备份的库，多个库用逗号分隔，如果指定了 N，将使用 N 个线程的地队列，如果 N 不指定，将由 –default-parallelism 才确认 N 的值，可以设置多个 –parallel-schemas</strong></p>
+<p><strong>25) --parallel-schemas=[N：]db_list：指定并行备份的库，多个库用逗号分隔，如果指定了 N，将使用 N 个线程的地队列，如果 N 不指定，将由 --default-parallelism 才确认 N 的值，可以设置多个 --parallel-schemas</strong></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#4个线程备份vs和aa，3个线程备份pt。通过show processlist 可以看到有7个线程。
 [root@localhost ~]# mysqlpump --parallel-schemas&#x3D;4：vs,aa --parallel-schemas&#x3D;3：pt  -p123456 --set-gtid-purged&#x3D;off &gt; &#x2F;root&#x2F;db.sql  
  
@@ -392,47 +393,47 @@ UNLOCK TABLES;</code></pre>
 #当然要是硬盘IO不允许的话，可以少开几个线程和数据库进行并行备份</code></pre>
 
 <ol start="26">
-<li><p>–password<strong>：</strong>备份需要的密码。</p>
+<li><p>--password<strong>：</strong>备份需要的密码。</p>
 </li>
-<li><p>–port ：备份数据库的端口。</p>
+<li><p>--port ：备份数据库的端口。</p>
 </li>
-<li><p>–protocol={TCP|SOCKET|PIPE|MEMORY}：指定连接服务器的协议。</p>
+<li><p>--protocol={TCP|SOCKET|PIPE|MEMORY}：指定连接服务器的协议。</p>
 </li>
-<li><p>–replace：备份出来 replace into 语句。</p>
+<li><p>--replace：备份出来 replace into 语句。</p>
 </li>
-<li><p>–routines：备份出来包含存储过程和函数，默认开启，需要对 mysql.proc 表有查看权限。生成的文件中会包含 CREATE PROCEDURE 和 CREATE FUNCTION 语句以用于恢复，关闭则需要用 –skip-routines 参数。</p>
+<li><p>--routines：备份出来包含存储过程和函数，默认开启，需要对 mysql.proc 表有查看权限。生成的文件中会包含 CREATE PROCEDURE 和 CREATE FUNCTION 语句以用于恢复，关闭则需要用 --skip-routines 参数。</p>
 </li>
-<li><p>–triggers：备份出来包含触发器，默认开启，使用 –skip-triggers 来关闭。</p>
+<li><p>--triggers：备份出来包含触发器，默认开启，使用 --skip-triggers 来关闭。</p>
 </li>
-<li><p>–set-charset：备份文件里写 SET NAMES default_character_set 到输出，此参默认开启。 – skip-set-charset 禁用此参数，不会在备份文件里面写出 set names…</p>
+<li><p>--set-charset：备份文件里写 SET NAMES default_character_set 到输出，此参默认开启。 -- skip-set-charset 禁用此参数，不会在备份文件里面写出 set names...</p>
 </li>
-<li><p>–single-transaction<strong>：</strong>该参数在事务隔离级别设置成 Repeatable Read，并在 dump 之前发送 start transaction 语句给服务端**。这在使用 innodb 时很有用，因为在发出 start transaction 时，保证了在不阻塞任何应用下的一致性状态。对 myisam 和 memory 等非事务表，还是会改变状态的，当使用此参的时候要确保没有其他连接在使用 ALTER TABLE、CREATE TABLE、DROP TABLE、RENAME TABLE、TRUNCATE TABLE 等语句，否则会出现不正确的内容或则失败。–add-locks 和此参互斥，在 mysql5.7.11 之前，–default-parallelism 大于 1 的时候和此参也互斥，必须使用 –default-parallelism=0。5.7.11 之后解决了 –single-transaction 和 –default-parallelism 的互斥问题。</p>
+<li><p>--single-transaction<strong>：</strong>该参数在事务隔离级别设置成 Repeatable Read，并在 dump 之前发送 start transaction 语句给服务端**。这在使用 innodb 时很有用，因为在发出 start transaction 时，保证了在不阻塞任何应用下的一致性状态。对 myisam 和 memory 等非事务表，还是会改变状态的，当使用此参的时候要确保没有其他连接在使用 ALTER TABLE、CREATE TABLE、DROP TABLE、RENAME TABLE、TRUNCATE TABLE 等语句，否则会出现不正确的内容或则失败。--add-locks 和此参互斥，在 mysql5.7.11 之前，--default-parallelism 大于 1 的时候和此参也互斥，必须使用 --default-parallelism=0。5.7.11 之后解决了 --single-transaction 和 --default-parallelism 的互斥问题。</p>
 </li>
-<li><p>–skip-definer：忽略那些创建视图和存储过程用到的 DEFINER 和 SQL SECURITY 语句，恢复的时候，会使用默认值，否则会在还原的时候看到没有 DEFINER 定义时的账号而报错。**</p>
+<li><p>--skip-definer：忽略那些创建视图和存储过程用到的 DEFINER 和 SQL SECURITY 语句，恢复的时候，会使用默认值，否则会在还原的时候看到没有 DEFINER 定义时的账号而报错。**</p>
 </li>
-<li><p>–skip-dump-rows：只备份表结构，不备份数据，即 -d。注意：mysqldump 支持 –no-data，mysqlpump 不支持 –no-data**</p>
+<li><p>--skip-dump-rows：只备份表结构，不备份数据，即 -d。注意：mysqldump 支持 --no-data，mysqlpump 不支持 --no-data**</p>
 </li>
-<li><p>–socket：对于连接到 localhost，Unix 使用套接字文件，在 Windows 上是命名管道的名称使用，即 -S。</p>
+<li><p>--socket：对于连接到 localhost，Unix 使用套接字文件，在 Windows 上是命名管道的名称使用，即 -S。</p>
 </li>
-<li><p>–ssl<strong>：</strong>–ssl 参数将要被去除，用 –ssl-mode 取代**。关于 ssl 相关的备份。</p>
+<li><p>--ssl<strong>：</strong>--ssl 参数将要被去除，用 --ssl-mode 取代**。关于 ssl 相关的备份。</p>
 </li>
-<li><p>–tz-utc：备份时会在备份文件的最前几行添加 SET TIME_ZONE=’+00：00’。注意：如果还原的服务器不在同一个时区并且还原表中的列有 timestamp 字段，会导致还原出来的结果不一致。默认开启该参数，用 –skip-tz-utc 来关闭参数。</p>
+<li><p>--tz-utc：备份时会在备份文件的最前几行添加 SET TIME_ZONE=&#39;+00：00&#39;。注意：如果还原的服务器不在同一个时区并且还原表中的列有 timestamp 字段，会导致还原出来的结果不一致。默认开启该参数，用 --skip-tz-utc 来关闭参数。</p>
 </li>
-<li><p>–user：备份时候的用户名，即 -u。</p>
+<li><p>--user：备份时候的用户名，即 -u。</p>
 </li>
-<li><p>–users：备份数据库用户，备份的形式是 CREATE USER…，GRANT…，只备份数据库账号可以通过如下命令**</p>
+<li><p>--users：备份数据库用户，备份的形式是 CREATE USER...，GRANT...，只备份数据库账号可以通过如下命令**</p>
 </li>
 </ol>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#过滤掉所有数据库
 [root@localhost ~]# mysqlpump --exclude-databases&#x3D;% --users  -p123456 --set-gtid-purged&#x3D;off &gt;&#x2F;root&#x2F;db.sql</code></pre>
 
 <ol start="40">
-<li><strong>–watch-progress</strong>：<strong>定期显示进度的完成，包括总数表、行和其他对象。该参数默认开启，用 –skip-watch-progress 来关闭。</strong> </li>
+<li><strong>--watch-progress</strong>：<strong>定期显示进度的完成，包括总数表、行和其他对象。该参数默认开启，用 --skip-watch-progress 来关闭。</strong> </li>
 </ol>
 <p><strong>mysqlpump 的多线程架构图如下</strong></p>
 <p><img data-src="https://img2018.cnblogs.com/blog/907596/201901/907596-20190115162636956-1342333863.png"></p>
 <p>-  mysqlpump 是 MySQL5.7 的官方工具, 用于取代 mysqldump, 其参数与 mysqldump 基本一样；<br>-  mysqlpump 是多线程备份, 但只能到表级别, 单表备份还是单线程；<br>-  mysqldump 备份时, 有个默认队列（default）, 队列下开 N 个线程去备份数据库 / 数据库中的表；<br>-  支持开多个队列 (对应不同库 / 表), 然后每个队列设置不同线程, 进行备份；</p>
-<p><strong>mysqlpump 支持基于库和表的并行导出</strong>，mysqlpump 的并行导出功能的架构为：队列 + 线程，允许有多个队列（**–parallel-schemas<strong>），每个队列下有多个线程（N），而一个队列可以绑定 1 个或者多个数据库（逗号分隔）。</strong>mysqlpump 的备份是基于表并行的，对于每张表的导出只能是单个线程的**，这里会有个限制是如果某个数据库有一张表非常大，可能大部分的时间都是消耗在这个表的备份上面，并行备份的效果可能就不明显。这里可以利用 <strong>Mydumper</strong> 其是以 chunk 的方式批量导出，即 <strong>Mydumper 支持一张表多个线程以 chunk 的方式批量导出</strong>。但相对于 Mysqldump 有很大提升。</p>
+<p><strong>mysqlpump 支持基于库和表的并行导出</strong>，mysqlpump 的并行导出功能的架构为：队列 + 线程，允许有多个队列（**--parallel-schemas<strong>），每个队列下有多个线程（N），而一个队列可以绑定 1 个或者多个数据库（逗号分隔）。</strong>mysqlpump 的备份是基于表并行的，对于每张表的导出只能是单个线程的**，这里会有个限制是如果某个数据库有一张表非常大，可能大部分的时间都是消耗在这个表的备份上面，并行备份的效果可能就不明显。这里可以利用 <strong>Mydumper</strong> 其是以 chunk 的方式批量导出，即 <strong>Mydumper 支持一张表多个线程以 chunk 的方式批量导出</strong>。但相对于 Mysqldump 有很大提升。</p>
 <h2 id="对比测试如下"><a href="#对比测试如下" class="headerlink" title="对比测试如下"></a><strong>对比测试如下</strong></h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">mysqlpump压缩备份kevin数据库 三个并发线程备份，消耗时间：222s
 [root@localhost ~]# mysqlpump -uroot -p123456 -h172.16.60.211 --single-transaction --default-character-set&#x3D;utf8 --compress-output&#x3D;LZ4 --default-parallelism&#x3D;3 -B kevin &gt; &#x2F;data&#x2F;db_backup&#x2F;kevin_db.sql.lz4
  

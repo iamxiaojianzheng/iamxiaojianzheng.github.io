@@ -30,7 +30,7 @@
 <meta property="og:description" content="连接# 命令行连接mysql mysql -u root -p &gt; Enter password: ******  # 退出 mysql&gt; exit">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-03-16T02:02:57.000Z">
-<meta property="article:modified_time" content="2021-03-20T11:49:45.137Z">
+<meta property="article:modified_time" content="2021-03-21T11:50:13.613Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="基础语法">
@@ -130,8 +130,9 @@
         <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
         <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
         <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
-        <li class="menu-item menu-item-ebook"><a href="/ebook/" rel="section"><i class="fa fa-book fa-fw"></i>电子书</a></li>
+        <li class="menu-item menu-item-ebook"><a href="/ebook" rel="section"><i class="fa fa-book fa-fw"></i>ebook</a></li>
         <li class="menu-item menu-item-java基础"><a href="/java-basics/" rel="section"><i class="fa fa-code fa-fw"></i>Java基础</a></li>
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
         <li class="menu-item menu-item-experience"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
@@ -283,7 +284,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-03-20 19:49:45" itemprop="dateModified" datetime="2021-03-20T19:49:45+08:00">2021-03-20</time>
+        <time title="修改时间：2021-03-21 19:50:13" itemprop="dateModified" datetime="2021-03-21T19:50:13+08:00">2021-03-21</time>
       </span>
 
   
@@ -398,7 +399,7 @@ Database changed
 <td align="left">小数值</td>
 </tr>
 </tbody></table>
-<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><p>每个时间类型有一个有效值范围和一个”零”值，当指定不合法的MySQL不能表示的值时使用”零”值。</p>
+<h3 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h3><p>每个时间类型有一个有效值范围和一个&quot;零&quot;值，当指定不合法的MySQL不能表示的值时使用&quot;零&quot;值。</p>
 <table>
 <thead>
 <tr>
@@ -419,7 +420,7 @@ Database changed
 <tr>
 <td align="left">TIME</td>
 <td align="left">3bytes</td>
-<td align="left">‘-838:59:59’/‘838:59:59’</td>
+<td align="left">&#39;-838:59:59&#39;/&#39;838:59:59&#39;</td>
 <td align="left">HH:MM:SS</td>
 <td align="left">时间值或持续时间</td>
 </tr>
@@ -552,7 +553,7 @@ INSERT INTO table_name ( field1, field2, ..., fieldN )
                        ( value1, value2, ..., valueN );</code></pre>
 
 <blockquote>
-<p>如果数据是字符型，必须使用单引号或者双引号，如：”value”。</p>
+<p>如果数据是字符型，必须使用单引号或者双引号，如：&quot;value&quot;。</p>
 </blockquote>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">-- 字段和值要一一对应
 INSERT INTO &#96;t_user_info&#96;
@@ -657,7 +658,7 @@ WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;
 <li>你可以在 WHERE 子句中使用LIKE子句</li>
 <li>你可以使用LIKE子句代替等号 <strong>=</strong></li>
 <li>LIKE 通常与 <strong>%</strong> 一同使用，类似于一个元字符的搜索。</li>
-<li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE…LIKE 子句来指定条件。</li>
+<li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE...LIKE 子句来指定条件。</li>
 </ul>
 <h3 id="like-与-结合使用"><a href="#like-与-结合使用" class="headerlink" title="like 与 % _ 结合使用"></a>like 与 % _ 结合使用</h3><pre class="line-numbers language-none"><code class="language-none">&#39;%a&#39;     &#x2F;&#x2F;以a结尾的数据
 &#39;a%&#39;     &#x2F;&#x2F;以a开头的数据
@@ -686,7 +687,7 @@ FROM tables
 [WHERE conditions];</code></pre>
 
 <ul>
-<li><strong>expression1, expression2, … expression_n</strong>: 要检索的列。</li>
+<li><strong>expression1, expression2, ... expression_n</strong>: 要检索的列。</li>
 <li><strong>tables:</strong> 要检索的数据表。</li>
 <li><strong>WHERE conditions:</strong> 可选， 检索条件。</li>
 <li><strong>DISTINCT:</strong> 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
@@ -828,55 +829,55 @@ GROUP BY trial_room_name WITH ROLLUP;
 </thead>
 <tbody><tr>
 <td align="left">^</td>
-<td align="left">匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 ‘\n’ 或 ‘\r’ 之后的位置。</td>
+<td align="left">匹配输入字符串的开始位置。如果设置了 RegExp 对象的 Multiline 属性，^ 也匹配 &#39;\n&#39; 或 &#39;\r&#39; 之后的位置。</td>
 </tr>
 <tr>
 <td align="left">$</td>
-<td align="left">匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 ‘\n’ 或 ‘\r’ 之前的位置。</td>
+<td align="left">匹配输入字符串的结束位置。如果设置了RegExp 对象的 Multiline 属性，$ 也匹配 &#39;\n&#39; 或 &#39;\r&#39; 之前的位置。</td>
 </tr>
 <tr>
 <td align="left">.</td>
-<td align="left">匹配除 “\n” 之外的任何单个字符。要匹配包括 ‘\n’ 在内的任何字符，请使用像 ‘[.\n]’ 的模式。</td>
+<td align="left">匹配除 &quot;\n&quot; 之外的任何单个字符。要匹配包括 &#39;\n&#39; 在内的任何字符，请使用像 &#39;[.\n]&#39; 的模式。</td>
 </tr>
 <tr>
-<td align="left">[…]</td>
-<td align="left">字符集合。匹配所包含的任意一个字符。例如， ‘[abc]’ 可以匹配 “plain” 中的 ‘a’。</td>
+<td align="left">[...]</td>
+<td align="left">字符集合。匹配所包含的任意一个字符。例如， &#39;[abc]&#39; 可以匹配 &quot;plain&quot; 中的 &#39;a&#39;。</td>
 </tr>
 <tr>
-<td align="left">[^…]</td>
-<td align="left">负值字符集合。匹配未包含的任意字符。例如， ‘[^abc]’ 可以匹配 “plain” 中的’p’。</td>
+<td align="left">[^...]</td>
+<td align="left">负值字符集合。匹配未包含的任意字符。例如， &#39;[^abc]&#39; 可以匹配 &quot;plain&quot; 中的&#39;p&#39;。</td>
 </tr>
 <tr>
 <td align="left">p1|p2|p3</td>
-<td align="left">匹配 p1 或 p2 或 p3。例如，’z|food’ 能匹配 “z” 或 “food”。’(z|f)ood’ 则匹配 “zood” 或 “food”。</td>
+<td align="left">匹配 p1 或 p2 或 p3。例如，&#39;z|food&#39; 能匹配 &quot;z&quot; 或 &quot;food&quot;。&#39;(z|f)ood&#39; 则匹配 &quot;zood&quot; 或 &quot;food&quot;。</td>
 </tr>
 <tr>
 <td align="left">*</td>
-<td align="left">匹配前面的子表达式零次或多次。例如，zo* 能匹配 “z” 以及 “zoo”。* 等价于{0,}。</td>
+<td align="left">匹配前面的子表达式零次或多次。例如，zo* 能匹配 &quot;z&quot; 以及 &quot;zoo&quot;。* 等价于{0,}。</td>
 </tr>
 <tr>
 <td align="left">+</td>
-<td align="left">匹配前面的子表达式一次或多次。例如，’zo+’ 能匹配 “zo” 以及 “zoo”，但不能匹配 “z”。+ 等价于 {1,}。</td>
+<td align="left">匹配前面的子表达式一次或多次。例如，&#39;zo+&#39; 能匹配 &quot;zo&quot; 以及 &quot;zoo&quot;，但不能匹配 &quot;z&quot;。+ 等价于 {1,}。</td>
 </tr>
 <tr>
 <td align="left">{n}</td>
-<td align="left">n 是一个非负整数。匹配确定的 n 次。例如，’o{2}’ 不能匹配 “Bob” 中的 ‘o’，但是能匹配 “food” 中的两个 o。</td>
+<td align="left">n 是一个非负整数。匹配确定的 n 次。例如，&#39;o{2}&#39; 不能匹配 &quot;Bob&quot; 中的 &#39;o&#39;，但是能匹配 &quot;food&quot; 中的两个 o。</td>
 </tr>
 <tr>
 <td align="left">{n,m}</td>
 <td align="left">m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。</td>
 </tr>
 </tbody></table>
-<p>查找name字段中以’st’为开头的所有数据：</p>
+<p>查找name字段中以&#39;st&#39;为开头的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;^st&#39;;</code></pre>
 
-<p>查找name字段中以’ok’为结尾的所有数据：</p>
+<p>查找name字段中以&#39;ok&#39;为结尾的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;ok$&#39;;</code></pre>
 
-<p>查找name字段中包含’mar’字符串的所有数据：</p>
+<p>查找name字段中包含&#39;mar&#39;字符串的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;mar&#39;;</code></pre>
 
-<p>查找name字段中以元音字符开头或以’ok’字符串结尾的所有数据：</p>
+<p>查找name字段中以元音字符开头或以&#39;ok&#39;字符串结尾的所有数据：</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">WHERE name REGEXP &#39;^[aeiou]|ok$&#39;;</code></pre>
 
 <h3 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h3><blockquote>
@@ -1011,12 +1012,12 @@ mysql&gt; SELECT * FROM tableName
     -&gt; INTO OUTFILE &#39;&#x2F;home&#x2F;haigui&#x2F;tableName.sql&#39;;
 </code></pre>
 
-<p>SELECT … INTO OUTFILE 语句有以下属性：</p>
+<p>SELECT ... INTO OUTFILE 语句有以下属性：</p>
 <ul>
-<li>LOAD DATA INFILE是SELECT … INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT … INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。</li>
-<li>SELECT…INTO OUTFILE ‘file_name’形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。</li>
+<li>LOAD DATA INFILE是SELECT ... INTO OUTFILE的逆操作，SELECT句法。为了将一个数据库的数据写入一个文件，使用SELECT ... INTO OUTFILE，为了将文件读回数据库，使用LOAD DATA INFILE。</li>
+<li>SELECT...INTO OUTFILE &#39;file_name&#39;形式的SELECT可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有FILE权限，才能使用此语法。</li>
 <li>输出不能是一个已存在的文件。防止文件数据被篡改。</li>
-<li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT … INTO OUTFILE 不会起任何作用。</li>
+<li>你需要有一个登陆服务器的账号来检索文件。否则 SELECT ... INTO OUTFILE 不会起任何作用。</li>
 <li>在UNIX中，该文件被创建后是可读的，权限由MySQL服务器所拥有。这意味着，虽然你就可以读取该文件，但可能无法将其删除。</li>
 </ul>
 <h3 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 导入整个数据库
@@ -1045,15 +1046,15 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">-d or –delete</td>
+<td align="left">-d or --delete</td>
 <td align="left">新数据导入数据表中之前删除数据数据表中的所有信息</td>
 </tr>
 <tr>
-<td align="left">-f or –force</td>
+<td align="left">-f or --force</td>
 <td align="left">不管是否遇到错误，mysqlimport将强制继续插入数据</td>
 </tr>
 <tr>
-<td align="left">-i or –ignore</td>
+<td align="left">-i or --ignore</td>
 <td align="left">mysqlimport跳过或者忽略那些有相同唯一 关键字的行， 导入文件中的数据将被忽略。</td>
 </tr>
 <tr>
@@ -1065,15 +1066,15 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 <td align="left">这个选项与－i选项的作用相反；此选项将替代 表中有相同唯一关键字的记录。</td>
 </tr>
 <tr>
-<td align="left">–fields-enclosed- by= char</td>
+<td align="left">--fields-enclosed- by= char</td>
 <td align="left">指定文本文件中数据的记录时以什么括起的， 很多情况下 数据以双引号括起。 默认的情况下数据是没有被字符括起的。</td>
 </tr>
 <tr>
-<td align="left">–fields-terminated- by=char</td>
+<td align="left">--fields-terminated- by=char</td>
 <td align="left">指定各个数据的值之间的分隔符，在句号分隔的文件中， 分隔符是句号。您可以用此选项指定数据之间的分隔符。 默认的分隔符是跳格符（Tab）</td>
 </tr>
 <tr>
-<td align="left">–lines-terminated- by=str</td>
+<td align="left">--lines-terminated- by=str</td>
 <td align="left">此选项指定文本文件中行与行之间数据的分隔字符串 或者字符。 默认的情况下mysqlimport以newline为行分隔符。 您可以选择用一个字符串来替代一个单个的字符： 一个新行或者一个回车。</td>
 </tr>
 </tbody></table>
@@ -1163,7 +1164,7 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 </tr>
 <tr>
 <td><strong>Extra</strong></td>
-<td>该列包含MySQL解决查询的详细信息<br /><strong>Distinct</strong>：MySQL发现第1个匹配行后，停止为当前的行组合搜索更多的行。<br /><strong>Not exists</strong>：MySQL能够对查询进行LEFT JOIN优化，发现1个匹配LEFT JOIN标准的行后，不再为前面的的行组合在该表内检查更多的行。<br />**range checked for each record (index map： #)**：MySQL没有发现好的可以使用的索引，但发现如果来自前面的表的列值已知，可能部分索引可以使用。<br /><strong>Using filesort</strong>：MySQL需要额外的一次传递，以找出如何按排序顺序检索行。<br /><strong>Using index</strong>：从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。<br /><strong>Using temporary</strong>：为了解决查询，MySQL需要创建一个临时表来容纳结果。<br /><strong>Using where</strong>：WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。<br />**Using sort_union(…)， Using union(…)， Using intersect(…)**：这些函数说明如何为index_merge联接类型合并索引扫描。<br /><strong>Using index for group-by</strong>：类似于访问表的Using index方式，Using index for group-by表示MySQL发现了一个索引，可以用来查 询GROUP BY或DISTINCT查询的所有列，而不要额外搜索硬盘访问实际的表。</td>
+<td>该列包含MySQL解决查询的详细信息<br /><strong>Distinct</strong>：MySQL发现第1个匹配行后，停止为当前的行组合搜索更多的行。<br /><strong>Not exists</strong>：MySQL能够对查询进行LEFT JOIN优化，发现1个匹配LEFT JOIN标准的行后，不再为前面的的行组合在该表内检查更多的行。<br />**range checked for each record (index map： #)**：MySQL没有发现好的可以使用的索引，但发现如果来自前面的表的列值已知，可能部分索引可以使用。<br /><strong>Using filesort</strong>：MySQL需要额外的一次传递，以找出如何按排序顺序检索行。<br /><strong>Using index</strong>：从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。<br /><strong>Using temporary</strong>：为了解决查询，MySQL需要创建一个临时表来容纳结果。<br /><strong>Using where</strong>：WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。<br />**Using sort_union(...)， Using union(...)， Using intersect(...)**：这些函数说明如何为index_merge联接类型合并索引扫描。<br /><strong>Using index for group-by</strong>：类似于访问表的Using index方式，Using index for group-by表示MySQL发现了一个索引，可以用来查 询GROUP BY或DISTINCT查询的所有列，而不要额外搜索硬盘访问实际的表。</td>
 </tr>
 </tbody></table>
 <h3 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h3><h4 id="union-1"><a href="#union-1" class="headerlink" title="union"></a>union</h4><blockquote>
@@ -1429,18 +1430,18 @@ SELECT * FROM (
 <td align="left">返回字符串 meteor 的字符数<br /><code>SELECT CHARACTER_LENGTH(&quot;meteor&quot;) AS LengthOfString;</code></td>
 </tr>
 <tr>
-<td align="left">CONCAT(s1,s2…sn)</td>
+<td align="left">CONCAT(s1,s2...sn)</td>
 <td align="left">字符串 s1,s2 等多个字符串合并为一个字符串</td>
 <td align="left">合并多个字符串<br /><code>SELECT CONCAT(&quot;SQL &quot;, &quot;meteor &quot;, &quot;Gooogle &quot;, &quot;Facebook&quot;) AS ConcatenatedString;</code></td>
 </tr>
 <tr>
-<td align="left">CONCAT_WS(x, s1,s2…sn)</td>
-<td align="left">同 CONCAT(s1,s2,…) 函数，但是每个字符串之间要加上 x，x 可以是分隔符</td>
+<td align="left">CONCAT_WS(x, s1,s2...sn)</td>
+<td align="left">同 CONCAT(s1,s2,...) 函数，但是每个字符串之间要加上 x，x 可以是分隔符</td>
 <td align="left">合并多个字符串，并添加分隔符：<br /><code>SELECT CONCAT_WS(&quot;-&quot;, &quot;SQL&quot;, &quot;Tutorial&quot;, &quot;is&quot;, &quot;fun!&quot;)AS ConcatenatedString;</code></td>
 </tr>
 <tr>
-<td align="left">FIELD(s,s1,s2…)</td>
-<td align="left">返回第一个字符串 s 在字符串列表(s1,s2…)中的位置</td>
+<td align="left">FIELD(s,s1,s2...)</td>
+<td align="left">返回第一个字符串 s 在字符串列表(s1,s2...)中的位置</td>
 <td align="left">返回字符串 c 在列表值中的位置：<br /><code>SELECT FIELD(&quot;c&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;);</code></td>
 </tr>
 <tr>
@@ -1450,8 +1451,8 @@ SELECT * FROM (
 </tr>
 <tr>
 <td align="left">FORMAT(x,n)</td>
-<td align="left">函数可以将数字 x 进行格式化 “#,###.##”, 将 x 保留到小数点后 n 位，最后一位四舍五入。</td>
-<td align="left">格式化数字 “#,###.##” 形式：<br /><code>SELECT FORMAT(250500.5634, 2);     -- 输出 250,500.56</code></td>
+<td align="left">函数可以将数字 x 进行格式化 &quot;#,###.##&quot;, 将 x 保留到小数点后 n 位，最后一位四舍五入。</td>
+<td align="left">格式化数字 &quot;#,###.##&quot; 形式：<br /><code>SELECT FORMAT(250500.5634, 2);     -- 输出 250,500.56</code></td>
 </tr>
 <tr>
 <td align="left">INSERT(s1,x,len,s2)</td>
@@ -1580,7 +1581,7 @@ SELECT * FROM (
 <tbody><tr>
 <td align="left">ABS(x)</td>
 <td align="left">返回 x 的绝对值</td>
-<td align="left">返回 -1 的绝对值：SELECT ABS(-1) – 返回1</td>
+<td align="left">返回 -1 的绝对值：SELECT ABS(-1) -- 返回1</td>
 </tr>
 <tr>
 <td align="left">ACOS(x)</td>
@@ -1610,12 +1611,12 @@ SELECT * FROM (
 <tr>
 <td align="left">CEIL(x)</td>
 <td align="left">返回大于或等于 x 的最小整数</td>
-<td align="left">SELECT CEIL(1.5) – 返回2</td>
+<td align="left">SELECT CEIL(1.5) -- 返回2</td>
 </tr>
 <tr>
 <td align="left">CEILING(x)</td>
 <td align="left">返回大于或等于 x 的最小整数</td>
-<td align="left">SELECT CEILING(1.5); – 返回2</td>
+<td align="left">SELECT CEILING(1.5); -- 返回2</td>
 </tr>
 <tr>
 <td align="left">COS(x)</td>
@@ -1635,52 +1636,52 @@ SELECT * FROM (
 <tr>
 <td align="left">DEGREES(x)</td>
 <td align="left">将弧度转换为角度</td>
-<td align="left">SELECT DEGREES(3.1415926535898) – 180</td>
+<td align="left">SELECT DEGREES(3.1415926535898) -- 180</td>
 </tr>
 <tr>
 <td align="left">n DIV m</td>
 <td align="left">整除，n 为被除数，m 为除数</td>
-<td align="left">计算 10 除于 5：SELECT 10 DIV 5;  – 2</td>
+<td align="left">计算 10 除于 5：SELECT 10 DIV 5;  -- 2</td>
 </tr>
 <tr>
 <td align="left">EXP(x)</td>
 <td align="left">返回 e 的 x 次方</td>
-<td align="left">计算 e 的三次方：SELECT EXP(3) – 20.085536923188</td>
+<td align="left">计算 e 的三次方：SELECT EXP(3) -- 20.085536923188</td>
 </tr>
 <tr>
 <td align="left">FLOOR(x)</td>
 <td align="left">返回小于或等于 x 的最大整数</td>
-<td align="left">小于或等于 1.5 的整数：SELECT FLOOR(1.5) – 返回1</td>
+<td align="left">小于或等于 1.5 的整数：SELECT FLOOR(1.5) -- 返回1</td>
 </tr>
 <tr>
-<td align="left">GREATEST(expr1, expr2, expr3, …)</td>
+<td align="left">GREATEST(expr1, expr2, expr3, ...)</td>
 <td align="left">返回列表中的最大值</td>
-<td align="left">返回以下数字列表中的最大值：SELECT GREATEST(3, 12, 34, 8, 25); – 34返回以下字符串列表中的最大值：SELECT GREATEST(“Google”, “Runoob”, “Apple”);   – Runoob</td>
+<td align="left">返回以下数字列表中的最大值：SELECT GREATEST(3, 12, 34, 8, 25); -- 34返回以下字符串列表中的最大值：SELECT GREATEST(&quot;Google&quot;, &quot;Runoob&quot;, &quot;Apple&quot;);   -- Runoob</td>
 </tr>
 <tr>
-<td align="left">LEAST(expr1, expr2, expr3, …)</td>
+<td align="left">LEAST(expr1, expr2, expr3, ...)</td>
 <td align="left">返回列表中的最小值</td>
-<td align="left">返回以下数字列表中的最小值：SELECT LEAST(3, 12, 34, 8, 25); – 3返回以下字符串列表中的最小值：SELECT LEAST(“Google”, “Runoob”, “Apple”);   – Apple</td>
+<td align="left">返回以下数字列表中的最小值：SELECT LEAST(3, 12, 34, 8, 25); -- 3返回以下字符串列表中的最小值：SELECT LEAST(&quot;Google&quot;, &quot;Runoob&quot;, &quot;Apple&quot;);   -- Apple</td>
 </tr>
 <tr>
 <td align="left">LN</td>
 <td align="left">返回数字的自然对数，以 e 为底。</td>
-<td align="left">返回 2 的自然对数：SELECT LN(2);  – 0.6931471805599453</td>
+<td align="left">返回 2 的自然对数：SELECT LN(2);  -- 0.6931471805599453</td>
 </tr>
 <tr>
 <td align="left">LOG(x) 或 LOG(base, x)</td>
 <td align="left">返回自然对数(以 e 为底的对数)，如果带有 base 参数，则 base 为指定带底数。</td>
-<td align="left">SELECT LOG(20.085536923188) – 3 SELECT LOG(2, 4); – 2</td>
+<td align="left">SELECT LOG(20.085536923188) -- 3 SELECT LOG(2, 4); -- 2</td>
 </tr>
 <tr>
 <td align="left">LOG10(x)</td>
 <td align="left">返回以 10 为底的对数</td>
-<td align="left">SELECT LOG10(100) – 2</td>
+<td align="left">SELECT LOG10(100) -- 2</td>
 </tr>
 <tr>
 <td align="left">LOG2(x)</td>
 <td align="left">返回以 2 为底的对数</td>
-<td align="left">返回以 2 为底 6 的对数：SELECT LOG2(6);  – 2.584962500721156</td>
+<td align="left">返回以 2 为底 6 的对数：SELECT LOG2(6);  -- 2.584962500721156</td>
 </tr>
 <tr>
 <td align="left">MAX(expression)</td>
@@ -1695,52 +1696,52 @@ SELECT * FROM (
 <tr>
 <td align="left">MOD(x,y)</td>
 <td align="left">返回 x 除以 y 以后的余数</td>
-<td align="left">5 除于 2 的余数：SELECT MOD(5,2) – 1</td>
+<td align="left">5 除于 2 的余数：SELECT MOD(5,2) -- 1</td>
 </tr>
 <tr>
 <td align="left">PI()</td>
 <td align="left">返回圆周率(3.141593）</td>
-<td align="left">SELECT PI() –3.141593</td>
+<td align="left">SELECT PI() --3.141593</td>
 </tr>
 <tr>
 <td align="left">POW(x,y)</td>
 <td align="left">返回 x 的 y 次方</td>
-<td align="left">2 的 3 次方：SELECT POW(2,3) – 8</td>
+<td align="left">2 的 3 次方：SELECT POW(2,3) -- 8</td>
 </tr>
 <tr>
 <td align="left">POWER(x,y)</td>
 <td align="left">返回 x 的 y 次方</td>
-<td align="left">2 的 3 次方：SELECT POWER(2,3) – 8</td>
+<td align="left">2 的 3 次方：SELECT POWER(2,3) -- 8</td>
 </tr>
 <tr>
 <td align="left">RADIANS(x)</td>
 <td align="left">将角度转换为弧度</td>
-<td align="left">180 度转换为弧度：SELECT RADIANS(180) – 3.1415926535898</td>
+<td align="left">180 度转换为弧度：SELECT RADIANS(180) -- 3.1415926535898</td>
 </tr>
 <tr>
 <td align="left">RAND()</td>
 <td align="left">返回 0 到 1 的随机数</td>
-<td align="left">SELECT RAND() –0.93099315644334</td>
+<td align="left">SELECT RAND() --0.93099315644334</td>
 </tr>
 <tr>
 <td align="left">ROUND(x)</td>
 <td align="left">返回离 x 最近的整数</td>
-<td align="left">SELECT ROUND(1.23456) –1</td>
+<td align="left">SELECT ROUND(1.23456) --1</td>
 </tr>
 <tr>
 <td align="left">SIGN(x)</td>
 <td align="left">返回 x 的符号，x 是负数、0、正数分别返回 -1、0 和 1</td>
-<td align="left">SELECT SIGN(-10) – (-1)</td>
+<td align="left">SELECT SIGN(-10) -- (-1)</td>
 </tr>
 <tr>
 <td align="left">SIN(x)</td>
 <td align="left">求正弦值(参数是弧度)</td>
-<td align="left">SELECT SIN(RADIANS(30)) – 0.5</td>
+<td align="left">SELECT SIN(RADIANS(30)) -- 0.5</td>
 </tr>
 <tr>
 <td align="left">SQRT(x)</td>
 <td align="left">返回x的平方根</td>
-<td align="left">25 的平方根：SELECT SQRT(25) – 5</td>
+<td align="left">25 的平方根：SELECT SQRT(25) -- 5</td>
 </tr>
 <tr>
 <td align="left">SUM(expression)</td>
@@ -1750,12 +1751,12 @@ SELECT * FROM (
 <tr>
 <td align="left">TAN(x)</td>
 <td align="left">求正切值(参数是弧度)</td>
-<td align="left">SELECT TAN(1.75);  – -5.52037992250933</td>
+<td align="left">SELECT TAN(1.75);  -- -5.52037992250933</td>
 </tr>
 <tr>
 <td align="left">TRUNCATE(x,y)</td>
 <td align="left">返回数值 x 保留到小数点后 y 位的值（与 ROUND 最大的区别是不会进行四舍五入）</td>
-<td align="left">SELECT TRUNCATE(1.23456,3) – 1.234</td>
+<td align="left">SELECT TRUNCATE(1.23456,3) -- 1.234</td>
 </tr>
 </tbody></table>
 <h3 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h3><table>
@@ -1769,12 +1770,12 @@ SELECT * FROM (
 <tbody><tr>
 <td align="left">ADDDATE(d,n)</td>
 <td align="left">计算起始日期 d 加上 n 天的日期</td>
-<td align="left">SELECT ADDDATE(“2017-06-15”, INTERVAL 10 DAY); -&gt;2017-06-25</td>
+<td align="left">SELECT ADDDATE(&quot;2017-06-15&quot;, INTERVAL 10 DAY); -&gt;2017-06-25</td>
 </tr>
 <tr>
 <td align="left">ADDTIME(t,n)</td>
 <td align="left">n 是一个时间表达式，时间 t 加上时间表达式 n</td>
-<td align="left">加 5 秒：<br />SELECT ADDTIME(‘2011-11-11 11:11:11’, 5); -&gt;2011-11-11 11:11:16 (秒)<br />添加 2 小时, 10 分钟, 5 秒: <br />SELECT ADDTIME(“2020-06-15 09:34:21”, “2:10:5”);  -&gt; 2020-06-15 11:44:26</td>
+<td align="left">加 5 秒：<br />SELECT ADDTIME(&#39;2011-11-11 11:11:11&#39;, 5); -&gt;2011-11-11 11:11:16 (秒)<br />添加 2 小时, 10 分钟, 5 秒: <br />SELECT ADDTIME(&quot;2020-06-15 09:34:21&quot;, &quot;2:10:5&quot;);  -&gt; 2020-06-15 11:44:26</td>
 </tr>
 <tr>
 <td align="left">CURDATE()</td>
@@ -1804,22 +1805,22 @@ SELECT * FROM (
 <tr>
 <td align="left">DATE()</td>
 <td align="left">从日期或日期时间表达式中提取日期值</td>
-<td align="left">SELECT DATE(“2017-06-15”);     -&gt; 2017-06-15</td>
+<td align="left">SELECT DATE(&quot;2017-06-15&quot;);     -&gt; 2017-06-15</td>
 </tr>
 <tr>
 <td align="left">DATEDIFF(d1,d2)</td>
 <td align="left">计算日期 d1-&gt;d2 之间相隔的天数</td>
-<td align="left">SELECT DATEDIFF(‘2001-01-01’,’2001-02-02’) -&gt; -32</td>
+<td align="left">SELECT DATEDIFF(&#39;2001-01-01&#39;,&#39;2001-02-02&#39;) -&gt; -32</td>
 </tr>
 <tr>
 <td align="left">DATE_ADD(d，INTERVAL expr type)</td>
 <td align="left">计算起始日期 d 加上一个时间段后的日期</td>
-<td align="left">SELECT ADDDATE(‘2011-11-11 11:11:11’,1) -&gt; 2011-11-12 11:11:11  (默认是天) SELECT ADDDATE(‘2011-11-11 11:11:11’, INTERVAL 5 MINUTE) -&gt; 2011-11-11 11:16:11 (TYPE的取值与上面那个列出来的函数类似)</td>
+<td align="left">SELECT ADDDATE(&#39;2011-11-11 11:11:11&#39;,1) -&gt; 2011-11-12 11:11:11  (默认是天) SELECT ADDDATE(&#39;2011-11-11 11:11:11&#39;, INTERVAL 5 MINUTE) -&gt; 2011-11-11 11:16:11 (TYPE的取值与上面那个列出来的函数类似)</td>
 </tr>
 <tr>
 <td align="left">DATE_FORMAT(d,f)</td>
 <td align="left">按表达式 f的要求显示日期 d</td>
-<td align="left">SELECT DATE_FORMAT(‘2011-11-11 11:11:11’,’%Y-%m-%d %r’) -&gt; 2011-11-11 11:11:11 AM</td>
+<td align="left">SELECT DATE_FORMAT(&#39;2011-11-11 11:11:11&#39;,&#39;%Y-%m-%d %r&#39;) -&gt; 2011-11-11 11:11:11 AM</td>
 </tr>
 <tr>
 <td align="left">DATE_SUB(date,INTERVAL expr type)</td>
@@ -1829,32 +1830,32 @@ SELECT * FROM (
 <tr>
 <td align="left">DAY(d)</td>
 <td align="left">返回日期值 d 的日期部分</td>
-<td align="left">SELECT DAY(“2017-06-15”);   -&gt; 15</td>
+<td align="left">SELECT DAY(&quot;2017-06-15&quot;);   -&gt; 15</td>
 </tr>
 <tr>
 <td align="left">DAYNAME(d)</td>
 <td align="left">返回日期 d 是星期几，如 Monday,Tuesday</td>
-<td align="left">SELECT DAYNAME(‘2011-11-11 11:11:11’) -&gt;Friday</td>
+<td align="left">SELECT DAYNAME(&#39;2011-11-11 11:11:11&#39;) -&gt;Friday</td>
 </tr>
 <tr>
 <td align="left">DAYOFMONTH(d)</td>
 <td align="left">计算日期 d 是本月的第几天</td>
-<td align="left">SELECT DAYOFMONTH(‘2011-11-11 11:11:11’) -&gt;11</td>
+<td align="left">SELECT DAYOFMONTH(&#39;2011-11-11 11:11:11&#39;) -&gt;11</td>
 </tr>
 <tr>
 <td align="left">DAYOFWEEK(d)</td>
 <td align="left">日期 d 今天是星期几，1 星期日，2 星期一，以此类推</td>
-<td align="left">SELECT DAYOFWEEK(‘2011-11-11 11:11:11’) -&gt;6</td>
+<td align="left">SELECT DAYOFWEEK(&#39;2011-11-11 11:11:11&#39;) -&gt;6</td>
 </tr>
 <tr>
 <td align="left">DAYOFYEAR(d)</td>
 <td align="left">计算日期 d 是本年的第几天</td>
-<td align="left">SELECT DAYOFYEAR(‘2011-11-11 11:11:11’) -&gt;315</td>
+<td align="left">SELECT DAYOFYEAR(&#39;2011-11-11 11:11:11&#39;) -&gt;315</td>
 </tr>
 <tr>
 <td align="left">EXTRACT(type FROM d)</td>
 <td align="left">从日期 d 中获取指定的值，type 指定返回的值。<br />type可取值为：<br /> - MICROSECOND<br/>- SECOND<br/>- MINUTE<br/>- HOUR<br/>- DAY<br/>- WEEK<br/>- MONTH<br/>- QUARTER<br/>- YEAR<br/>- SECOND_MICROSECOND<br/>- MINUTE_MICROSECOND<br/>- MINUTE_SECOND<br/>- HOUR_MICROSECOND<br/>- HOUR_SECOND<br/>- HOUR_MINUTE<br/>- DAY_MICROSECOND<br/>- DAY_SECOND<br/>- DAY_MINUTE<br/>- DAY_HOUR<br/>- YEAR_MONTH</td>
-<td align="left">SELECT EXTRACT(MINUTE FROM ‘2011-11-11 11:11:11’)  -&gt; 11</td>
+<td align="left">SELECT EXTRACT(MINUTE FROM &#39;2011-11-11 11:11:11&#39;)  -&gt; 11</td>
 </tr>
 <tr>
 <td align="left">FROM_DAYS(n)</td>
@@ -1864,12 +1865,12 @@ SELECT * FROM (
 <tr>
 <td align="left">HOUR(t)</td>
 <td align="left">返回 t 中的小时值</td>
-<td align="left">SELECT HOUR(‘1:2:3’) -&gt; 1</td>
+<td align="left">SELECT HOUR(&#39;1:2:3&#39;) -&gt; 1</td>
 </tr>
 <tr>
 <td align="left">LAST_DAY(d)</td>
 <td align="left">返回给给定日期的那一月份的最后一天</td>
-<td align="left">SELECT LAST_DAY(“2017-06-20”); -&gt; 2017-06-30</td>
+<td align="left">SELECT LAST_DAY(&quot;2017-06-20&quot;); -&gt; 2017-06-30</td>
 </tr>
 <tr>
 <td align="left">LOCALTIME()</td>
@@ -1894,22 +1895,22 @@ SELECT * FROM (
 <tr>
 <td align="left">MICROSECOND(date)</td>
 <td align="left">返回日期参数所对应的微秒数</td>
-<td align="left">SELECT MICROSECOND(“2017-06-20 09:34:00.000023”); -&gt; 23</td>
+<td align="left">SELECT MICROSECOND(&quot;2017-06-20 09:34:00.000023&quot;); -&gt; 23</td>
 </tr>
 <tr>
 <td align="left">MINUTE(t)</td>
 <td align="left">返回 t 中的分钟值</td>
-<td align="left">SELECT MINUTE(‘1:2:3’) -&gt; 2</td>
+<td align="left">SELECT MINUTE(&#39;1:2:3&#39;) -&gt; 2</td>
 </tr>
 <tr>
 <td align="left">MONTHNAME(d)</td>
 <td align="left">返回日期当中的月份名称，如 November</td>
-<td align="left">SELECT MONTHNAME(‘2011-11-11 11:11:11’) -&gt; November</td>
+<td align="left">SELECT MONTHNAME(&#39;2011-11-11 11:11:11&#39;) -&gt; November</td>
 </tr>
 <tr>
 <td align="left">MONTH(d)</td>
 <td align="left">返回日期d中的月份值，1 到 12</td>
-<td align="left">SELECT MONTH(‘2011-11-11 11:11:11’) -&gt;11</td>
+<td align="left">SELECT MONTH(&#39;2011-11-11 11:11:11&#39;) -&gt;11</td>
 </tr>
 <tr>
 <td align="left">NOW()</td>
@@ -1929,12 +1930,12 @@ SELECT * FROM (
 <tr>
 <td align="left">QUARTER(d)</td>
 <td align="left">返回日期d是第几季节，返回 1 到 4</td>
-<td align="left">SELECT QUARTER(‘2011-11-11 11:11:11’) -&gt; 4</td>
+<td align="left">SELECT QUARTER(&#39;2011-11-11 11:11:11&#39;) -&gt; 4</td>
 </tr>
 <tr>
 <td align="left">SECOND(t)</td>
 <td align="left">返回 t 中的秒钟值</td>
-<td align="left">SELECT SECOND(‘1:2:3’) -&gt; 3</td>
+<td align="left">SELECT SECOND(&#39;1:2:3&#39;) -&gt; 3</td>
 </tr>
 <tr>
 <td align="left">SEC_TO_TIME(s)</td>
@@ -1944,17 +1945,17 @@ SELECT * FROM (
 <tr>
 <td align="left">STR_TO_DATE(string, format_mask)</td>
 <td align="left">将字符串转变为日期</td>
-<td align="left">SELECT STR_TO_DATE(“August 10 2017”, “%M %d %Y”); -&gt; 2017-08-10</td>
+<td align="left">SELECT STR_TO_DATE(&quot;August 10 2017&quot;, &quot;%M %d %Y&quot;); -&gt; 2017-08-10</td>
 </tr>
 <tr>
 <td align="left">SUBDATE(d,n)</td>
 <td align="left">日期 d 减去 n 天后的日期</td>
-<td align="left">SELECT SUBDATE(‘2011-11-11 11:11:11’, 1) -&gt;2011-11-10 11:11:11 (默认是天)</td>
+<td align="left">SELECT SUBDATE(&#39;2011-11-11 11:11:11&#39;, 1) -&gt;2011-11-10 11:11:11 (默认是天)</td>
 </tr>
 <tr>
 <td align="left">SUBTIME(t,n)</td>
 <td align="left">时间 t 减去 n 秒的时间</td>
-<td align="left">SELECT SUBTIME(‘2011-11-11 11:11:11’, 5) -&gt;2011-11-11 11:11:06 (秒)</td>
+<td align="left">SELECT SUBTIME(&#39;2011-11-11 11:11:11&#39;, 5) -&gt;2011-11-11 11:11:06 (秒)</td>
 </tr>
 <tr>
 <td align="left">SYSDATE()</td>
@@ -1964,57 +1965,57 @@ SELECT * FROM (
 <tr>
 <td align="left">TIME(expression)</td>
 <td align="left">提取传入表达式的时间部分</td>
-<td align="left">SELECT TIME(“19:30:10”); -&gt; 19:30:10</td>
+<td align="left">SELECT TIME(&quot;19:30:10&quot;); -&gt; 19:30:10</td>
 </tr>
 <tr>
 <td align="left">TIME_FORMAT(t,f)</td>
 <td align="left">按表达式 f 的要求显示时间 t</td>
-<td align="left">SELECT TIME_FORMAT(‘11:11:11’,’%r’) 11:11:11 AM</td>
+<td align="left">SELECT TIME_FORMAT(&#39;11:11:11&#39;,&#39;%r&#39;) 11:11:11 AM</td>
 </tr>
 <tr>
 <td align="left">TIME_TO_SEC(t)</td>
 <td align="left">将时间 t 转换为秒</td>
-<td align="left">SELECT TIME_TO_SEC(‘1:12:00’) -&gt; 4320</td>
+<td align="left">SELECT TIME_TO_SEC(&#39;1:12:00&#39;) -&gt; 4320</td>
 </tr>
 <tr>
 <td align="left">TIMEDIFF(time1, time2)</td>
 <td align="left">计算时间差值</td>
-<td align="left">SELECT TIMEDIFF(“13:10:11”, “13:10:10”); -&gt; 00:00:01</td>
+<td align="left">SELECT TIMEDIFF(&quot;13:10:11&quot;, &quot;13:10:10&quot;); -&gt; 00:00:01</td>
 </tr>
 <tr>
 <td align="left">TIMESTAMP(expression, interval)</td>
 <td align="left">单个参数时，函数返回日期或日期时间表达式；有2个参数时，将参数加和</td>
-<td align="left">SELECT TIMESTAMP(“2017-07-23”,  “13:10:11”); -&gt; 2017-07-23 13:10:11</td>
+<td align="left">SELECT TIMESTAMP(&quot;2017-07-23&quot;,  &quot;13:10:11&quot;); -&gt; 2017-07-23 13:10:11</td>
 </tr>
 <tr>
 <td align="left">TO_DAYS(d)</td>
 <td align="left">计算日期 d 距离 0000 年 1 月 1 日的天数</td>
-<td align="left">SELECT TO_DAYS(‘0001-01-01 01:01:01’) -&gt; 366</td>
+<td align="left">SELECT TO_DAYS(&#39;0001-01-01 01:01:01&#39;) -&gt; 366</td>
 </tr>
 <tr>
 <td align="left">WEEK(d)</td>
 <td align="left">计算日期 d 是本年的第几个星期，范围是 0 到 53</td>
-<td align="left">SELECT WEEK(‘2011-11-11 11:11:11’) -&gt; 45</td>
+<td align="left">SELECT WEEK(&#39;2011-11-11 11:11:11&#39;) -&gt; 45</td>
 </tr>
 <tr>
 <td align="left">WEEKDAY(d)</td>
 <td align="left">日期 d 是星期几，0 表示星期一，1 表示星期二</td>
-<td align="left">SELECT WEEKDAY(“2017-06-15”); -&gt; 3</td>
+<td align="left">SELECT WEEKDAY(&quot;2017-06-15&quot;); -&gt; 3</td>
 </tr>
 <tr>
 <td align="left">WEEKOFYEAR(d)</td>
 <td align="left">计算日期 d 是本年的第几个星期，范围是 0 到 53</td>
-<td align="left">SELECT WEEKOFYEAR(‘2011-11-11 11:11:11’) -&gt; 45</td>
+<td align="left">SELECT WEEKOFYEAR(&#39;2011-11-11 11:11:11&#39;) -&gt; 45</td>
 </tr>
 <tr>
 <td align="left">YEAR(d)</td>
 <td align="left">返回年份</td>
-<td align="left">SELECT YEAR(“2017-06-15”); -&gt; 2017</td>
+<td align="left">SELECT YEAR(&quot;2017-06-15&quot;); -&gt; 2017</td>
 </tr>
 <tr>
 <td align="left">YEARWEEK(date, mode)</td>
 <td align="left">返回年份及第几周（0到53），mode 中 0 表示周天，1表示周一，以此类推</td>
-<td align="left">SELECT YEARWEEK(“2017-06-15”); -&gt; 201724</td>
+<td align="left">SELECT YEARWEEK(&quot;2017-06-15&quot;); -&gt; 201724</td>
 </tr>
 </tbody></table>
 <h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><h3 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h3><table>
