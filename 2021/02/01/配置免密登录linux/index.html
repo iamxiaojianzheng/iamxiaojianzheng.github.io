@@ -319,8 +319,10 @@ mv &#x2F;home&#x2F;id_rsa.pub ~&#x2F;.ssh&#x2F;authorized_keys
 # 修改sshd_config配置, 确保以下几项配置前面没有#字符
 vim &#x2F;etc&#x2F;ssh&#x2F;sshd_config
 
+StrictModes no
+RSAAuthentication yes
 PubkeyAuthentication yes
-AuthorizedKeysFile  .ssh&#x2F;authorized_keys
+AuthorizedKeysFile      .ssh&#x2F;authorized_keys
 
 # 重启ssh服务
 systemctl restart sshd
