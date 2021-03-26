@@ -201,14 +201,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -240,6 +240,92 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/25/Docker%E4%B8%ADMySQL%E9%85%8D%E7%BD%AE%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E5%90%AF%E5%8A%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/03/25/Docker%E4%B8%ADMySQL%E9%85%8D%E7%BD%AE%E5%BF%98%E8%AE%B0%E5%AF%86%E7%A0%81%E5%90%AF%E5%8A%A8/" class="post-title-link" itemprop="url">Docker中MySQL配置忘记密码启动</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-25 13:15:48" itemprop="dateCreated datePublished" datetime="2021-03-25T13:15:48+08:00">2021-03-25</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li><p>docker exec -it mysql容器名 bash</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">docker exec -it mysql bash</code></pre></li>
+<li><p>添加 skip-grant-tables 配置</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vi &#x2F;etc&#x2F;mysql&#x2F;conf.d&#x2F;docker.cnf
+
+[mysqld]
+skip-host-cache
+skip-name-resolve
+skip-grant-tables</code></pre>
+<p>如果提示vi找不到，则执行以下命令</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">apt-get update &amp;&amp; apt-get install vim -y</code></pre></li>
+<li><p>执行exit，退出mysql容器</p>
+</li>
+<li><p>执行<code>systemctl restart docker</code>, 重启docker</p>
+</li>
+<li><p><code>docker exec -it mysql容器名 mysql</code> 进入无密码模式的mysql中</p>
+</li>
+<li><p>操作你需要改动的命令</p>
+</li>
+<li><p>最后记得执行 <code>flush privileges;</code>，使你刚刚改动的内容生效</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -929,77 +1015,6 @@ mysql&gt; exit
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/03/12/%E5%87%A0%E7%A7%8D%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9A%84Java%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E4%B8%8E%E6%AF%94%E8%BE%83/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/12/%E9%80%8F%E5%BD%BB%E7%9A%84%E6%8E%8C%E6%8F%A1Spring%E4%B8%AD-transactional%E7%9A%84%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/12/%E9%80%8F%E5%BD%BB%E7%9A%84%E6%8E%8C%E6%8F%A1Spring%E4%B8%AD-transactional%E7%9A%84%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">透彻的掌握Spring中@transactional的使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-12 16:31:34" itemprop="dateCreated datePublished" datetime="2021-03-12T16:31:34+08:00">2021-03-12</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>事务管理是应用系统开发中必不可少的一部分。Spring 为事务管理提供了丰富的功能支持。Spring 事务管理分为编码式和声明式的两种方式。编程式事务指的是通过编码方式实现事务；声明式事务基于 AOP, 将具体业务逻辑与事务处理解耦。声明式事务管理使业务代码逻辑不受污染, 因此在实际使用中声明式事务用的比较多。声明式事务有两种方式，一种是在配置文件（XML）中做相关的事务规则声明，另一种是基于 @Transactional 注解的方式。注释配置是目前流行的使用方式，因此本文将着重介绍基于 @Transactional 注解的事务管理。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/12/%E9%80%8F%E5%BD%BB%E7%9A%84%E6%8E%8C%E6%8F%A1Spring%E4%B8%AD-transactional%E7%9A%84%E4%BD%BF%E7%94%A8/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
