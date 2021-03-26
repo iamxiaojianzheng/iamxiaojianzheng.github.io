@@ -1211,6 +1211,58 @@ OK</code></pre>
       </tags>
   </entry>
   <entry>
+    <title>虚拟机走主机代理</title>
+    <url>/2021/03/26/%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B5%B0%E4%B8%BB%E6%9C%BA%E4%BB%A3%E7%90%86/</url>
+    <content><![CDATA[<h1 id="情况1-代理软件开放代理端口，虚拟机通过该端口进行代理"><a href="#情况1-代理软件开放代理端口，虚拟机通过该端口进行代理" class="headerlink" title="情况1 代理软件开放代理端口，虚拟机通过该端口进行代理"></a>情况1 代理软件开放代理端口，虚拟机通过该端口进行代理</h1><ol>
+<li><p>Linux安装proxychains</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">git clone https:&#x2F;&#x2F;github.com&#x2F;rofl0r&#x2F;proxychains-ng.git
+
+cd proxychains-ng
+
+.&#x2F;configure
+make
+make install
+make install-config
+
+# make install-config 执行完毕后会输出配置文件的存放路径
+
+# 如果提示make: Nothing to be done for &#96;all&#96;，可以尝试执行
+make clean</code></pre></li>
+<li><p>配置conf</p>
+<pre class="line-numbers language-none"><code class="language-none">vim &#x2F;usr&#x2F;local&#x2F;etc&#x2F;proxychains.conf
+
+# 根据代理软件具体开放的协议类型，配置代理ip和port
+
+http    本机ip 代理port
+socks5  本机ip 代理port</code></pre></li>
+<li><p>Windows配置端口转发</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">netsh interface portproxy add v4tov4 listenport&#x3D;转发端口 listenaddress&#x3D;监听地址 connectport&#x3D;转发端口 connectaddress&#x3D;转发地址
+
+# 举例
+netsh interface portproxy add v4tov4 listenport&#x3D;64601 listenaddress&#x3D;192.168.100.153 connectport&#x3D;64601 connectaddress&#x3D;127.0.0.1
+
+netsh interface portproxy show all
+
+# 查看端口转发列表
+侦听 ipv4:                 连接到 ipv4:
+
+地址            端口        地址            端口
+--------------- ----------  --------------- ----------
+192.168.100.153 64601       127.0.0.1       64601</code></pre></li>
+<li><p>添加防火墙入站规则，开放代理端口，为了虚拟机可以访问到本机ip+端口port</p>
+</li>
+<li><p>测试虚拟机是否可以走代理访问</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">proxychains telnet google.com</code></pre></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>VMware</tag>
+        <tag>VirutalBox</tag>
+        <tag>代理</tag>
+        <tag>虚拟机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>记一次重装系统</title>
     <url>/2021/03/19/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/</url>
     <content><![CDATA[<p>这次重装系统（为何要重装有兴趣的可翻看上上篇）我是一万个不愿意的，因为我知道系统重装的成本有多大。就单纯装个系统来说可能只需要十几分钟，但是装系统前的准备工作（主要是备份和制作安装启动 U 盘）以及系统装完后的恢复备份、软件安装调试、系统设置等，要想完全恢复之前的使用环境，差不多得需要一天的时间。现在是晚上的 10:42，先记录下该做的一些工作，按步骤来就不会出错。</p>
