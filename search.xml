@@ -519,21 +519,6 @@ scoop bucket add spoon https:&#x2F;&#x2F;github.com&#x2F;FDUZS&#x2F;spoon.git</c
       </tags>
   </entry>
   <entry>
-    <title>VSCod安装Vim及拼音切换问题</title>
-    <url>/2021/03/16/VSCode%E5%AE%89%E8%A3%85Vim%E5%8F%8A%E6%8B%BC%E9%9F%B3%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<p>安装插件<br><a href="https://github.com/VSCodeVim/Vim">https://github.com/VSCodeVim/Vim</a></p>
-<p>解决切换拼音输入法问题<br><a href="https://github.com/daipeihust/im-select">https://github.com/daipeihust/im-select</a><br><a href="https://www.zhihu.com/question/303850876/answer/822818615">https://www.zhihu.com/question/303850876/answer/822818615</a></p>
-<pre class="line-numbers language-none"><code class="language-none">&quot;vim.autoSwitchInputMethod.enable&quot;: true,
-&quot;vim.autoSwitchInputMethod.defaultIM&quot;: &quot;1033&quot;,
-&quot;vim.autoSwitchInputMethod.obtainIMCmd&quot;: &quot;C:\\Users\\JIAHE\\Desktop\\im-select.exe&quot;,
-&quot;vim.autoSwitchInputMethod.switchIMCmd&quot;: &quot;C:\\Users\\JIAHE\\Desktop\\im-select.exe &#123;im&#125;&quot;</code></pre>
-]]></content>
-      <tags>
-        <tag>Vim</tag>
-        <tag>VSCode</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Spring Framework 5.3.4 参考指南（官方文档翻译）</title>
     <url>/2021/03/13/Spring-Framework-5-3-4-%E5%8F%82%E8%80%83%E6%8C%87%E5%8D%97%EF%BC%88%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
@@ -623,6 +608,21 @@ scoop bucket add spoon https:&#x2F;&#x2F;github.com&#x2F;FDUZS&#x2F;spoon.git</c
       <tags>
         <tag>Spring</tag>
         <tag>翻译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VSCod安装Vim及拼音切换问题</title>
+    <url>/2021/03/16/VSCode%E5%AE%89%E8%A3%85Vim%E5%8F%8A%E6%8B%BC%E9%9F%B3%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>安装插件<br><a href="https://github.com/VSCodeVim/Vim">https://github.com/VSCodeVim/Vim</a></p>
+<p>解决切换拼音输入法问题<br><a href="https://github.com/daipeihust/im-select">https://github.com/daipeihust/im-select</a><br><a href="https://www.zhihu.com/question/303850876/answer/822818615">https://www.zhihu.com/question/303850876/answer/822818615</a></p>
+<pre class="line-numbers language-none"><code class="language-none">&quot;vim.autoSwitchInputMethod.enable&quot;: true,
+&quot;vim.autoSwitchInputMethod.defaultIM&quot;: &quot;1033&quot;,
+&quot;vim.autoSwitchInputMethod.obtainIMCmd&quot;: &quot;C:\\Users\\JIAHE\\Desktop\\im-select.exe&quot;,
+&quot;vim.autoSwitchInputMethod.switchIMCmd&quot;: &quot;C:\\Users\\JIAHE\\Desktop\\im-select.exe &#123;im&#125;&quot;</code></pre>
+]]></content>
+      <tags>
+        <tag>Vim</tag>
+        <tag>VSCode</tag>
       </tags>
   </entry>
   <entry>
