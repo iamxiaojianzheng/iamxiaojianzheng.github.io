@@ -877,6 +877,55 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
       </tags>
   </entry>
   <entry>
+    <title>VirtualBox虚拟机配置双网卡访问内外网</title>
+    <url>/2021/03/30/VirtualBox%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8F%8C%E7%BD%91%E5%8D%A1%E8%AE%BF%E9%97%AE%E5%86%85%E5%A4%96%E7%BD%91/</url>
+    <content><![CDATA[<p><strong>宿主机：Windows 10</strong></p>
+<p><strong>虚拟机：VirtualBox</strong></p>
+<p><strong>虚拟机操作系统：CentOS 7</strong></p>
+<p><strong>要求：虚拟机的 CentOS 7 与宿主机互通，并且虚拟操作系统能访问外网。</strong></p>
+<span id="more"></span>
+
+<h1 id="方案-1"><a href="#方案-1" class="headerlink" title="方案 1"></a>方案 1</h1><p><strong>配置双网卡</strong></p>
+<p>网卡 1 使用 NAT 网络模式</p>
+<p>网卡 2 使用 Host-Only 模式</p>
+<p>虚拟机 CentOS 7 使用网卡 1 与外网通信，使用网卡 2 实现与主机以及其他虚拟机之间相互通信。</p>
+<h2 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h2><p>在 VirtualBox-&gt; 管理 -&gt; 全局设定 -&gt; 网络中查看 NAT 网络状态，已配置好 NAT 网络的全局设定如下所示。</p>
+<p><img data-src="https://pic3.zhimg.com/v2-082225e74cc563dbc910721020b8ae36_r.jpg"></p>
+<p>也可以点击右边的加号自己添加 NAT 网络。</p>
+<h2 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h2><p>在 VirtualBox-&gt; 管理 -&gt; 主机网络管理器中查看是否有 Host-Only 网卡，没有则手动添加。</p>
+<p>下图是配置好的 Host-Only 网卡</p>
+<p><img data-src="https://pic4.zhimg.com/v2-2644a3e622ca72eabd8c4305166cb7c3_r.jpg"></p>
+<h2 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h2><p>在需要开启双网卡的虚拟操作系统中，进入设置 -&gt; 网络，开启两张网卡。</p>
+<p>下图是我的配置，网卡 1 使用 NAT 网络模式，网卡 2 使用 Host-Only 模式</p>
+<p><img data-src="https://pic4.zhimg.com/v2-3085f7aaa05c840c212ba070f6c3afe3_r.jpg"><img data-src="https://pic2.zhimg.com/v2-d11d614cd0e84b6ea6c54d710640def1_r.jpg"></p>
+<h2 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h2><p>在 VirtualBox 中配置好以后，启动虚拟机，进入 CentOS 进行额外的配置。</p>
+<p>使用 ifconfig 命令可以看到三张网卡：<strong>enp0s3</strong>、<strong>enp0s8</strong>、lo。</p>
+<p>enp0s3 即启用了 NAT 网络模式的那张网卡，enp0s8 则是启用了 Host-Only 模式的网卡。</p>
+<p><img data-src="https://pic1.zhimg.com/v2-8d600354c2fb8b6ce98705ed11bf5218_r.jpg"></p>
+<p>可以看到两张网卡都起来了，如果没起，使用命令 <code>ifconfig enp0s3 up</code> 启动网卡。</p>
+<p>使用 <code>service network status</code> 可以查看网卡状态，可以看到 enp0s8 网卡缺少配置文件，需要自己配置。</p>
+<p><img data-src="https://pic3.zhimg.com/v2-c9047870ae3d6b02917486e4c97832da_r.jpg"></p>
+<p>添加网卡配置文件步骤：</p>
+<p>一、使用 <code>nmcli con</code> 查看网卡 uuid</p>
+<p><img data-src="https://pic3.zhimg.com/v2-2f81b41922b6aedac1f04bcd7fc43ac2_r.jpg"></p>
+<p>二、使用 <code>ip addr</code> 或者 <code>ifconfig</code> 查看网卡 mac 地址</p>
+<p><img data-src="https://pic3.zhimg.com/v2-c5175529f797934ddcafd5dd8a8e5d12_r.jpg"></p>
+<p>三、将 <code>/etc/sysconfig/network-scripts/ifcfg-enp0s3</code> 拷贝一份，重命名成 <strong>ifcfg-enp0s8</strong>。然后修改 enp0s8 的网卡配置文件，修改完成以后，使用 <code>systemctl restart network</code> 重启网络使配置生效</p>
+<p><img data-src="https://pic2.zhimg.com/v2-db88f58b0adb738293e4cd02f078aa59_r.jpg"><img data-src="https://pic2.zhimg.com/v2-55bfb7bc5b3eb8e1226e5522c3fefb11_r.jpg"></p>
+<p>在虚拟操作系统中改完网卡配置以后，查看网卡状态，并检查虚拟操作系统与外网、虚拟操作系统与宿主机之间的网络连接情况。</p>
+<p><img data-src="https://pic4.zhimg.com/v2-a5944a9c8bf1d4e1aae7e114b1eb61a7_r.jpg"></p>
+<p><img data-src="https://pic3.zhimg.com/v2-8573443aaa48a5d78c83683fe862ad22_r.jpg"></p>
+<h1 id="方案-2"><a href="#方案-2" class="headerlink" title="方案 2"></a>方案 2</h1><p>配置单网卡，网卡模式选择 Host-Only，宿主机网络共享给虚拟机的 Host-Only 网卡。</p>
+<blockquote>
+<p>转载: <a href="https://zhuanlan.zhihu.com/p/341328334">https://zhuanlan.zhihu.com/p/341328334</a></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>VirtualBox</tag>
+        <tag>虚拟机</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows10常用快捷键</title>
     <url>/2021/02/05/Windows10%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
     <content><![CDATA[<h1 id="窗口相关"><a href="#窗口相关" class="headerlink" title="窗口相关"></a>窗口相关</h1><h1 id="虚拟桌面"><a href="#虚拟桌面" class="headerlink" title="虚拟桌面"></a>虚拟桌面</h1><p><code>Ctrl + Win + d</code>    新建桌面<br><code>Ctrl + Win + ←/→</code>  左右切换桌面</p>
@@ -1423,10 +1472,10 @@ netsh interface portproxy show all
 </ol>
 ]]></content>
       <tags>
+        <tag>虚拟机</tag>
         <tag>VMware</tag>
         <tag>VirutalBox</tag>
         <tag>代理</tag>
-        <tag>虚拟机</tag>
       </tags>
   </entry>
   <entry>

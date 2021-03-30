@@ -22,21 +22,35 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="这是一篇翻译文章 译文地址：我编程 20 年的指导原则 原文地址：My guiding principles after 20 years of programming  我从 1999 年开始编程，今年我已经正式编码了 20 多年。我从 Basic 语言入门，但很快就转到 Pascal 和 C，然后用 Delphi 和 C++ 学习了面向对象编程（OOP）。2006 年我开始用 Java，20">
-<meta property="og:type" content="website">
-<meta property="og:title" content="巨人的肩膀">
-<meta property="og:url" content="https://xiaojianzheng.cn/experience/index.html">
+<meta name="description" content="宿主机：Windows 10 虚拟机：VirtualBox 虚拟机操作系统：CentOS 7 要求：虚拟机的 CentOS 7 与宿主机互通，并且虚拟操作系统能访问外网。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VirtualBox虚拟机配置双网卡访问内外网">
+<meta property="og:url" content="https://xiaojianzheng.cn/2021/03/30/VirtualBox%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8F%8C%E7%BD%91%E5%8D%A1%E8%AE%BF%E9%97%AE%E5%86%85%E5%A4%96%E7%BD%91/index.html">
 <meta property="og:site_name" content="JIAHE">
-<meta property="og:description" content="这是一篇翻译文章 译文地址：我编程 20 年的指导原则 原文地址：My guiding principles after 20 years of programming  我从 1999 年开始编程，今年我已经正式编码了 20 多年。我从 Basic 语言入门，但很快就转到 Pascal 和 C，然后用 Delphi 和 C++ 学习了面向对象编程（OOP）。2006 年我开始用 Java，20">
+<meta property="og:description" content="宿主机：Windows 10 虚拟机：VirtualBox 虚拟机操作系统：CentOS 7 要求：虚拟机的 CentOS 7 与宿主机互通，并且虚拟操作系统能访问外网。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-03-30T13:27:55.296Z">
-<meta property="article:modified_time" content="2021-03-30T13:27:55.296Z">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-082225e74cc563dbc910721020b8ae36_r.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-2644a3e622ca72eabd8c4305166cb7c3_r.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-3085f7aaa05c840c212ba070f6c3afe3_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-d11d614cd0e84b6ea6c54d710640def1_r.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/v2-8d600354c2fb8b6ce98705ed11bf5218_r.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-c9047870ae3d6b02917486e4c97832da_r.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-2f81b41922b6aedac1f04bcd7fc43ac2_r.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-c5175529f797934ddcafd5dd8a8e5d12_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-db88f58b0adb738293e4cd02f078aa59_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/v2-55bfb7bc5b3eb8e1226e5522c3fefb11_r.jpg">
+<meta property="og:image" content="https://pic4.zhimg.com/v2-a5944a9c8bf1d4e1aae7e114b1eb61a7_r.jpg">
+<meta property="og:image" content="https://pic3.zhimg.com/v2-8573443aaa48a5d78c83683fe862ad22_r.jpg">
+<meta property="article:published_time" content="2021-03-30T13:25:37.000Z">
+<meta property="article:modified_time" content="2021-03-30T13:25:37.000Z">
 <meta property="article:author" content="JIAHE">
-<meta property="article:tag" content="JIAHE">
+<meta property="article:tag" content="VirtualBox">
+<meta property="article:tag" content="虚拟机">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/v2-082225e74cc563dbc910721020b8ae36_r.jpg">
 
 
-<link rel="canonical" href="https://xiaojianzheng.cn/experience/">
+<link rel="canonical" href="https://xiaojianzheng.cn/2021/03/30/VirtualBox%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8F%8C%E7%BD%91%E5%8D%A1%E8%AE%BF%E9%97%AE%E5%86%85%E5%A4%96%E7%BD%91/">
 
 
 <script class="page-configurations">
@@ -44,12 +58,11 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
-<title>巨人的肩膀 | JIAHE
-</title>
+<title>VirtualBox虚拟机配置双网卡访问内外网 | JIAHE</title>
   
 
 
@@ -182,7 +195,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -195,6 +208,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-1"><span class="nav-number">1.</span> <span class="nav-text">方案 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A41"><span class="nav-number">1.1.</span> <span class="nav-text">步骤1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A42"><span class="nav-number">1.2.</span> <span class="nav-text">步骤2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A43"><span class="nav-number">1.3.</span> <span class="nav-text">步骤3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A44"><span class="nav-number">1.4.</span> <span class="nav-text">步骤4</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-2"><span class="nav-number">2.</span> <span class="nav-text">方案 2</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -246,93 +260,125 @@
 </noscript>
 
 
-    <div class="main-inner page posts-expand">
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
   
   
 
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/30/VirtualBox%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8F%8C%E7%BD%91%E5%8D%A1%E8%AE%BF%E9%97%AE%E5%86%85%E5%A4%96%E7%BD%91/">
 
-    
-    
-    
-    <div class="post-block" lang="zh-CN"><header class="post-header">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
 
-<h1 class="post-title" itemprop="name headline">巨人的肩膀
-</h1>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          VirtualBox虚拟机配置双网卡访问内外网
+        </h1>
 
-<div class="post-meta-container">
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-03-30 21:25:37" itemprop="dateCreated datePublished" datetime="2021-03-30T21:25:37+08:00">2021-03-30</time>
+    </span>
+
+  
 </div>
 
-</header>
+        </div>
+      </header>
 
-      
-      
-      <div class="post-body">
-          <blockquote>
-<p>这是一篇翻译文章</p>
-<p>译文地址：<a target="_blank" rel="noopener" href="https://www.jitao.tech/blog/2020/03/my-guiding-principles-after-20-years-of-programming/">我编程 20 年的指导原则</a></p>
-<p>原文地址：<a target="_blank" rel="noopener" href="https://medium.com/@alexewerlof/my-guiding-principles-after-20-years-of-programming-a087dc55596c">My guiding principles after 20 years of programming</a></p>
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>宿主机：Windows 10</strong></p>
+<p><strong>虚拟机：VirtualBox</strong></p>
+<p><strong>虚拟机操作系统：CentOS 7</strong></p>
+<p><strong>要求：虚拟机的 CentOS 7 与宿主机互通，并且虚拟操作系统能访问外网。</strong></p>
+<span id="more"></span>
+
+<h1 id="方案-1"><a href="#方案-1" class="headerlink" title="方案 1"></a>方案 1</h1><p><strong>配置双网卡</strong></p>
+<p>网卡 1 使用 NAT 网络模式</p>
+<p>网卡 2 使用 Host-Only 模式</p>
+<p>虚拟机 CentOS 7 使用网卡 1 与外网通信，使用网卡 2 实现与主机以及其他虚拟机之间相互通信。</p>
+<h2 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h2><p>在 VirtualBox-&gt; 管理 -&gt; 全局设定 -&gt; 网络中查看 NAT 网络状态，已配置好 NAT 网络的全局设定如下所示。</p>
+<p><img data-src="https://pic3.zhimg.com/v2-082225e74cc563dbc910721020b8ae36_r.jpg"></p>
+<p>也可以点击右边的加号自己添加 NAT 网络。</p>
+<h2 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h2><p>在 VirtualBox-&gt; 管理 -&gt; 主机网络管理器中查看是否有 Host-Only 网卡，没有则手动添加。</p>
+<p>下图是配置好的 Host-Only 网卡</p>
+<p><img data-src="https://pic4.zhimg.com/v2-2644a3e622ca72eabd8c4305166cb7c3_r.jpg"></p>
+<h2 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h2><p>在需要开启双网卡的虚拟操作系统中，进入设置 -&gt; 网络，开启两张网卡。</p>
+<p>下图是我的配置，网卡 1 使用 NAT 网络模式，网卡 2 使用 Host-Only 模式</p>
+<p><img data-src="https://pic4.zhimg.com/v2-3085f7aaa05c840c212ba070f6c3afe3_r.jpg"><img data-src="https://pic2.zhimg.com/v2-d11d614cd0e84b6ea6c54d710640def1_r.jpg"></p>
+<h2 id="步骤4"><a href="#步骤4" class="headerlink" title="步骤4"></a>步骤4</h2><p>在 VirtualBox 中配置好以后，启动虚拟机，进入 CentOS 进行额外的配置。</p>
+<p>使用 ifconfig 命令可以看到三张网卡：<strong>enp0s3</strong>、<strong>enp0s8</strong>、lo。</p>
+<p>enp0s3 即启用了 NAT 网络模式的那张网卡，enp0s8 则是启用了 Host-Only 模式的网卡。</p>
+<p><img data-src="https://pic1.zhimg.com/v2-8d600354c2fb8b6ce98705ed11bf5218_r.jpg"></p>
+<p>可以看到两张网卡都起来了，如果没起，使用命令 <code>ifconfig enp0s3 up</code> 启动网卡。</p>
+<p>使用 <code>service network status</code> 可以查看网卡状态，可以看到 enp0s8 网卡缺少配置文件，需要自己配置。</p>
+<p><img data-src="https://pic3.zhimg.com/v2-c9047870ae3d6b02917486e4c97832da_r.jpg"></p>
+<p>添加网卡配置文件步骤：</p>
+<p>一、使用 <code>nmcli con</code> 查看网卡 uuid</p>
+<p><img data-src="https://pic3.zhimg.com/v2-2f81b41922b6aedac1f04bcd7fc43ac2_r.jpg"></p>
+<p>二、使用 <code>ip addr</code> 或者 <code>ifconfig</code> 查看网卡 mac 地址</p>
+<p><img data-src="https://pic3.zhimg.com/v2-c5175529f797934ddcafd5dd8a8e5d12_r.jpg"></p>
+<p>三、将 <code>/etc/sysconfig/network-scripts/ifcfg-enp0s3</code> 拷贝一份，重命名成 <strong>ifcfg-enp0s8</strong>。然后修改 enp0s8 的网卡配置文件，修改完成以后，使用 <code>systemctl restart network</code> 重启网络使配置生效</p>
+<p><img data-src="https://pic2.zhimg.com/v2-db88f58b0adb738293e4cd02f078aa59_r.jpg"><img data-src="https://pic2.zhimg.com/v2-55bfb7bc5b3eb8e1226e5522c3fefb11_r.jpg"></p>
+<p>在虚拟操作系统中改完网卡配置以后，查看网卡状态，并检查虚拟操作系统与外网、虚拟操作系统与宿主机之间的网络连接情况。</p>
+<p><img data-src="https://pic4.zhimg.com/v2-a5944a9c8bf1d4e1aae7e114b1eb61a7_r.jpg"></p>
+<p><img data-src="https://pic3.zhimg.com/v2-8573443aaa48a5d78c83683fe862ad22_r.jpg"></p>
+<h1 id="方案-2"><a href="#方案-2" class="headerlink" title="方案 2"></a>方案 2</h1><p>配置单网卡，网卡模式选择 Host-Only，宿主机网络共享给虚拟机的 Host-Only 网卡。</p>
+<blockquote>
+<p>转载: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/341328334">https://zhuanlan.zhihu.com/p/341328334</a></p>
 </blockquote>
-<p>我从 1999 年开始编程，今年我已经正式编码了 20 多年。我从 Basic 语言入门，但很快就转到 Pascal 和 C，然后用 Delphi 和 C++ 学习了面向对象编程（OOP）。2006 年我开始用 Java，2011 年我开始用 JavaScript。 我曾在多个行业工作过，从机器人、金融科技、医疗科技到媒体和电信。有时候我是作为研究员，CTO，TPM（技术产品经理），老师，系统架构师或者 TL（技术领导）的角色，但是我一直坚持编码。我参与一些为数百万人服务的产品，也有一些在发布前就失败了。我曾做过顾问工作，我甚至有自己的初创公司。我在开源项目、闭源项目和内部开源项目（公司内部团体开发的专有代码）上花了很多时间。我参与过微控制器，移动和桌面应用，再到云服务器，再到最近的 Serverless。</p>
-<hr>
-<p>在我编程 20 周年的纪念日上，我试图列出多年来积累起来的最重要的原则，作为我职业生涯中的指导原则:</p>
-<ol>
-<li><p>不要与工具作斗争：库、语言、平台等等。尽可能多地使用原生的开发方式。不要技术<a target="_blank" rel="noopener" href="https://medium.com/free-code-camp">捆绑</a>，但也不要问题捆绑。为工作选择<strong>合适的工具</strong>，否则你将不得不为你的工具找到合适的工作。</p>
-</li>
-<li><p>你不是为机器编写代码，而是为你的同事和<strong>未来的自己</strong>编写代码（除非它是一个废弃的项目，或者你正在编写汇编代码）。为了能给后来者作为参考而写代码。</p>
-</li>
-<li><p>任何重要且有价值的软件都是协作的结果。有效沟通和公开合作。信任别人，进而赢得别人的信任。尊重人胜过尊重代码。以身作则。把你的追随者变成领导者。</p>
-</li>
-<li><p>分而治之。编写具有分离关注点的松散耦合的独立模块。分别测试每个部分然后一起（集成）测试。保持测试接近实际，但也要测试边缘用例。</p>
-</li>
-<li><p>轻视自己。不要成为代码的关键人物。对它进行优化，以便人们找到修复 Bug 和向代码添加功能的方法。解放自己，以进入下一个项目/公司。不要拥有代码，否则你将永远无法超越它。</p>
-</li>
-<li><p>安全是分层的：每一层都需要单独评估，但也需要与整体相关。风险是一种商业决策，与脆弱性和概率有直接关系。每个产品/组织都有不同的风险偏好（为了更大的收益，他们愿意承担的风险）。通常这三个关注点会相互冲突：用户体验、安全性、性能。</p>
-</li>
-<li><p>要认识到，每段代码都有一个生命周期，并且会死亡。有些时候，还没看到上线的曙光就在婴儿时期夭折了。接受放手。了解三类功能的区别:</p>
-<p><strong>核心</strong>：就像汽车的引擎。没有它，产品就没有意义。</p>
-<p><strong>必要的</strong>：就像汽车的备件。它很少被使用，但是当需要时，它的功能决定了系统的成功。</p>
-<p><strong>附加价值</strong>：就像汽车的杯座一样。最好有一个，但产品没有它是完全可用的。</p>
-</li>
-<li><p>不要将您的身份附加到代码中。不要把任何人的身份附加到他们的代码上。要意识到，人是独立于他们的工作产出物之外的。不要把代码批评当成是针对你个人的，但是在批评别人的代码时也要非常小心。</p>
-</li>
-<li><p>技术债就像快餐。有时这是可以接受的，但如果你习惯了，它会超乎你想象地更快地杀死产品（而且是以一种痛苦的方式）。</p>
-</li>
-<li><p>当你为解决方案做决定的时候，假设其他条件都是一样的，按照这个优先级:</p>
-<p><strong>安全性 &gt; 可用性(可访问性和用户体验) &gt; 可维护性 &gt; 简单性（开发人员体验/DX）&gt; 简短性（代码长度） &gt; 性能</strong></p>
-<p>但是不要盲目地遵循它，因为它取决于产品的性质。 就像任何职业一样，你获得的经验越多，你就越能在每个特定的情况下找到合适的平衡点。例如，在设计游戏引擎时，性能是最重要的，但在创建银行应用程序时，安全性是最重要的因素。</p>
-</li>
-<li><p><strong>复制和粘贴</strong>孕育了 Bug。这就是它们繁衍的方式。总是搞明白你复制过来的内容，总是审核你导入的内容。Bug 藏身在<strong>复杂性</strong>当中。“魔法” 在我的依赖库里能接受，但是不能出现在我的代码里。</p>
-</li>
-<li><p>不要只为乐观场景写代码。写出好的错误提示，回答为什么会发生，如何检测到它，以及如何解决它。验证所有系统输入（包括用户输入）：快速失败，但尽可能从错误中恢复。假设用户拿着枪：在你的错误信息上投入足够的努力去说服他们射击别的东西而不是你的头!</p>
-</li>
-<li><p>不要使用<strong>依赖库</strong>，除非导入、维护、处理它们的边界情况/Bug 和他们不满足需求时重构的成本远远低于你拥有的代码。</p>
-</li>
-<li><p>远离 <strong><a target="_blank" rel="noopener" href="https://blog.daftcode.pl/hype-driven-development-3469fc2e9b22">炒作驱动的开发</a><strong>。但是要尽可能地学习。总是有自己的</strong>宠物项目</strong>。</p>
-</li>
-<li><p>走出你的舒适区。每天学习。把你学过的东西<strong>教给别人</strong>。如果你是大师，你就不需要学习。让自己接触其他语言、技术、文化，保持好奇心。</p>
-</li>
-<li><p>好的代码不需要文档，伟大的代码<strong>有良好的文档</strong>，这样任何没有经历过演进、试错过程和明白导致当前状态的需求的人都可以使用它。未文档化的功能是不存在的功能。不存在的功能不应该有代码。</p>
-</li>
-<li><p>尽量避免覆盖、继承和隐式小聪明。写纯函数。它们更容易测试和推理。任何非纯函数都应该是类。任何具有不同函数的代码构造都应该具有不同的名称。</p>
-</li>
-<li><p>除非你完全理解了<strong>问题</strong>，否则永远不要开始编码（制定解决方案）。花更多的时间在听和读而不是编码上是很正常的。在开始编写代码之前了解领域知识。一个问题就像一个迷宫。您需要逐步地经历 “编码-测试-改进” 周期，并探索问题空间，直到您完成。</p>
-</li>
-<li><p>不要去解决不存在的问题。不要进行<strong>投机性编程</strong>。只有确定代码将来会被扩展，才花功夫提高代码的扩展性。当代码要被扩展时，有很大的可能性问题定义已经与代码初次编写时不同了。</p>
-</li>
-<li><p>大家一起开发软件时更有趣。建立一个可持续发展的<strong>社区</strong>。听。灵感。学习。分享。</p>
-</li>
-</ol>
-<hr>
-<p>我并不是软件开发方面的权威。这些都是我一路走来获得的智慧。我相信另一个 20 年后这个列表会更加完善。</p>
 
-      </div>
-      
-      
-      
     </div>
 
     
     
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VirtualBox/" rel="tag"># VirtualBox</a>
+              <a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" rel="tag"># 虚拟机</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/30/HTTP%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E4%B9%8Bwrk/" rel="prev" title="HTTP压测工具之wrk">
+                  <i class="fa fa-chevron-left"></i> HTTP压测工具之wrk
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
 
 
 
@@ -425,7 +471,7 @@ if (document.querySelectorAll('.pdf-container').length) {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/experience/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/03/30/VirtualBox%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8F%8C%E7%BD%91%E5%8D%A1%E8%AE%BF%E9%97%AE%E5%86%85%E5%A4%96%E7%BD%91/',]
       });
       });
   </script>
