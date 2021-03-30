@@ -22,22 +22,22 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="通过ssh实现免密登录linux">
+<meta name="description" content="wrk 是一款简单的 HTTP 压测工具, 托管在 Github 上,https:&#x2F;&#x2F;github.com&#x2F;wg&#x2F;wrk.wrk 的一个很好的特性就是能用很少的线程压出很大的并发量。 原因是它使用了一些操作系统特定的高性能 io 机制, 比如 select, epoll, kqueue 等。 其实它是复用了 redis 的 ae 异步事件驱动框架。 确切的说 ae 事件驱动框架并不是 redis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="配置免密登录linux">
-<meta property="og:url" content="https://xiaojianzheng.cn/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/index.html">
+<meta property="og:title" content="HTTP压测工具之wrk">
+<meta property="og:url" content="https://xiaojianzheng.cn/2021/03/30/HTTP%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E4%B9%8Bwrk/index.html">
 <meta property="og:site_name" content="JIAHE">
-<meta property="og:description" content="通过ssh实现免密登录linux">
+<meta property="og:description" content="wrk 是一款简单的 HTTP 压测工具, 托管在 Github 上,https:&#x2F;&#x2F;github.com&#x2F;wg&#x2F;wrk.wrk 的一个很好的特性就是能用很少的线程压出很大的并发量。 原因是它使用了一些操作系统特定的高性能 io 机制, 比如 select, epoll, kqueue 等。 其实它是复用了 redis 的 ae 异步事件驱动框架。 确切的说 ae 事件驱动框架并不是 redis">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-02-01T12:21:43.000Z">
-<meta property="article:modified_time" content="2021-02-01T12:21:43.000Z">
+<meta property="article:published_time" content="2021-03-30T13:03:56.000Z">
+<meta property="article:modified_time" content="2021-03-30T13:03:56.000Z">
 <meta property="article:author" content="JIAHE">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="ssh">
+<meta property="article:tag" content="wrk">
+<meta property="article:tag" content="http">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://xiaojianzheng.cn/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/">
+<link rel="canonical" href="https://xiaojianzheng.cn/2021/03/30/HTTP%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E4%B9%8Bwrk/">
 
 
 <script class="page-configurations">
@@ -49,7 +49,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>配置免密登录linux | JIAHE</title>
+<title>HTTP压测工具之wrk | JIAHE</title>
   
 
 
@@ -195,7 +195,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows"><span class="nav-number">1.</span> <span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux"><span class="nav-number">2.</span> <span class="nav-text">Linux</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%B5%8B%E8%AF%95%E4%B8%80%E4%B8%8B"><span class="nav-number">2.</span> <span class="nav-text">开始测试一下</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">高级用法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -258,7 +258,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/30/HTTP%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E4%B9%8Bwrk/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -271,7 +271,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          配置免密登录linux
+          HTTP压测工具之wrk
         </h1>
 
         <div class="post-meta-container">
@@ -282,13 +282,12 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2021-02-01 20:21:43" itemprop="dateCreated datePublished" datetime="2021-02-01T20:21:43+08:00">2021-02-01</time>
+      <time title="创建时间：2021-03-30 21:03:56" itemprop="dateCreated datePublished" datetime="2021-03-30T21:03:56+08:00">2021-03-30</time>
     </span>
 
   
 </div>
 
-            <div class="post-description">通过ssh实现免密登录linux</div>
         </div>
       </header>
 
@@ -296,45 +295,161 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><p>切换到git环境下</p>
-<p><strong>没有git环境的，自行百度安装</strong></p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 切换目录
-cd ~&#x2F;.ssh
+        <blockquote>
+<p>wrk 是一款简单的 HTTP 压测工具, 托管在 Github 上,<a target="_blank" rel="noopener" href="https://github.com/wg/wrk">https://github.com/wg/wrk</a>.<br>wrk 的一个很好的特性就是能用很少的线程压出很大的并发量。 原因是它使用了一些操作系统特定的高性能 io 机制, 比如 select, epoll, kqueue 等。 其实它是复用了 redis 的 ae 异步事件驱动框架。 确切的说 ae 事件驱动框架并不是 redis 发明的, 它来至于 Tcl 的解释器 jim, 这个小巧高效的框架, 因为被 redis 采用而更多的被大家所熟知。</p>
+</blockquote>
+<span id="more"></span>
 
-# 新建config文件
-vim config
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">git clone https:&#x2F;&#x2F;github.com&#x2F;wg&#x2F;wrk.git  
+cd wrk  
+make</code></pre>
 
-# 输入以下内容
-Host centos # 自定义, 用于后续的免密登录
-HostName 192.168.117.29 # 服务器地址ip
-User root # 登录的用户名
-Port 22 # 端口
-IdentityFile ~&#x2F;.ssh&#x2F;id_rsa # 私钥路径, id_rsa.pub是公钥
+<p>如果编译过程中出错:</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">src&#x2F;wrk.h:11:25: fatal error: openssl&#x2F;ssl.h: No such file or directory  
+ #include &lt;openssl&#x2F;ssl.h&gt;</code></pre>
 
-# 生成密钥对, 可以自行指定文件名, 默认为id_rsa和id_rsa.pub
-ssh-keygen
+<p>则需要安装<code>openssl</code>, 使用<code>sudo apt-get install libssl-dev</code>或 <code>sudo yum install openssl-devel</code>安装即可, 最后编辑<code>etc/profile</code>配置环境变量。由于笔者使用的是阿里云 centos7, 相关依赖都已经存在了, 所以可以直接使用。</p>
+<h1 id="开始测试一下"><a href="#开始测试一下" class="headerlink" title="开始测试一下"></a>开始测试一下</h1><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">wrk -t12 -c100 -d30s http:&#x2F;&#x2F;www.baidu.com</code></pre>
 
-# 发送id_rsa.pub文件至Linux服务器上
-scp id_rsa.pub 用户名@ip:&#x2F;home&#x2F;
+<p>这段脚本的输出是:</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@jerrik &#x2F;]# wrk -t12 -c100 -d30s http:&#x2F;&#x2F;www.baidu.com  
+Running 30s test @ http:&#x2F;&#x2F;www.baidu.com
+  12 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +&#x2F;- Stdev
+    Latency   211.76ms  304.92ms   1.97s    88.17%
+    Req&#x2F;Sec    72.93     68.72   797.00     90.97%
+  23725 requests in 30.05s, 347.47MB read
+  Socket errors: connect 0, read 48, write 0, timeout 50
+Requests&#x2F;sec:    789.57
+Transfer&#x2F;sec:     11.56MB
+[root@jerrik &#x2F;]#</code></pre>
 
-# 登录Linux服务器后, 进行操作
-mv &#x2F;home&#x2F;id_rsa.pub ~&#x2F;.ssh&#x2F;authorized_keys
+<blockquote>
+<p>一般线程数不宜过多。 核数的 2 到 4 倍足够了。 多了反而因为线程切换过多造成效率降低。 因为 wrk 不是使用每个连接一个线程的模型, 而是通过异步网络 io 提升并发量。 所以网络通信不会阻塞线程执行。 这也是 wrk 可以用很少的线程模拟大量网路连接的原因。 而现在很多性能工具并没有采用这种方式, 而是采用提高线程数来实现高并发。 所以并发量一旦设的很高, 测试机自身压力就很大。 测试效果反而下降。</p>
+</blockquote>
+<p>参数解释:</p>
+<ul>
+<li><code>12 threads and 100 connections</code>:<br>  总共是 12 个线程, 100 个连接 (不是一个线程对应一个连接)</li>
+<li><code>latency</code>和<code>Req/Sec</code>:<br>  代表单个线程的统计数据,<code>latency</code>代表延迟时间,<code>Req/Sec</code>代表单个线程每秒完成的请求数，他们都具有平均值, 标准偏差, 最大值, 正负一个标准差占比。一般我们来说我们主要关注平均值和最大值. 标准差如果太大说明样本本身离散程度比较高. 有可能系统性能波动很大.</li>
+<li><code>23725 requests in 30.05s, 347.47MB read</code><br>  在 30 秒之内总共有 23725 个请求, 总共读取 347.47MB 的数据</li>
+<li><code>Socket errors: connect 0, read 48, write 0, timeout 50</code><br>  总共有 48 个读错误, 50 个超时。</li>
+<li><code>Requests/sec和Transfer/sec</code><br>  所有线程平均每秒钟完成了 789.57 个请求, 每秒钟读取 11.56MB 数据量</li>
+</ul>
+<p>如果想看看响应时间的分布, 可以增加<code>--latency</code>:</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">wrk -t12 -c100 -d30s --latency http:&#x2F;&#x2F;www.baidu.com</code></pre>
 
-# 修改sshd_config配置, 确保以下几项配置前面没有#字符
-vim &#x2F;etc&#x2F;ssh&#x2F;sshd_config
+<p>结果为:</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">[root@jerrik ~]# wrk -t12 -c100 -d30s --latency http:&#x2F;&#x2F;www.baidu.com 
+Running 30s test @ http:&#x2F;&#x2F;www.baidu.com
+  12 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +&#x2F;- Stdev
+    Latency   204.30ms  287.90ms   1.97s    88.61%
+    Req&#x2F;Sec    71.43     67.59   810.00     89.77%
+  Latency Distribution
+     50%   14.76ms
+     75%  296.79ms
+     90%  545.03ms
+     99%    1.40s 
+  23676 requests in 30.03s, 346.84MB read
+  Socket errors: connect 0, read 42, write 0, timeout 46
+Requests&#x2F;sec:    788.29
+Transfer&#x2F;sec:     11.55MB</code></pre>
 
-StrictModes no
-RSAAuthentication yes
-PubkeyAuthentication yes
-AuthorizedKeysFile      .ssh&#x2F;authorized_keys
+<p>说明有 50% 的请求在 14.76ms 之内, 90% 在 545.03ms 之内。</p>
+<h1 id="高级用法"><a href="#高级用法" class="headerlink" title="高级用法"></a>高级用法</h1><p>wrk 可以结合 lua 来做, 通过 wrk 提供的几个 lua 函数来对请求进行修改, 结果输出、设置延迟等操作。下面来看看 wrk 提供的几个 lua 函数:</p>
+<ul>
+<li>setup 函数<br>  这个函数在目标 IP 地址已经解析完, 并且所有 thread 已经生成, 但是还没有开始时被调用。 每个线程执行一次这个函数。<br>  可以通过 thread:get(name), thread:set(name, value) 设置线程级别的变量。</li>
+<li>init 函数<br>  每次请求发送之前被调用。<br>  可以接受 wrk 命令行的额外参数。 通过 -- 指定。</li>
+<li>delay 函数<br>  这个函数返回一个数值, 在这次请求执行完以后延迟多长时间执行下一个请求。 可以对应 thinking time 的场景。</li>
+<li>request 函数<br>  通过这个函数可以每次请求之前修改本次请求的属性。 返回一个字符串。 这个函数要慎用, 会影响测试端性能。</li>
+<li>response 函数<br>  每次请求返回以后被调用。 可以根据响应内容做特殊处理, 比如遇到特殊响应停止执行测试, 或输出到控制台等等。</li>
+</ul>
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua">function response(status, headers, body)  
+   if status ~&#x3D; 200 then  
+      print(body)  
+      wrk.thread:stop()  
+   end  
+end</code></pre>
 
-# 重启ssh服务
-systemctl restart sshd
+<ul>
+<li>done 函数<br>  在所有请求执行完以后调用, 一般用于自定义统计结果.</li>
+</ul>
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua">done &#x3D; function(summary, latency, requests)  
+   io.write(&quot;------------------------------\n&quot;)  
+   for _, p in pairs(&#123; 50, 90, 99, 99.999 &#125;) do  
+      n &#x3D; latency:percentile(p)  
+      io.write(string.format(&quot;%g%%,%d\n&quot;, p, n))  
+   end  
+end</code></pre>
 
-# 返回Windows，打开cmd
-ssh centos # 这里的centos, 对应config文件中Host配置的内容</code></pre>
+<p>wrk 官网提供的 setup.lua 实例:</p>
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua">-- example script that demonstrates use of setup() to pass
+-- data to and from the threads
 
-<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><p>操作顺序一致，无需安装git环境，不过需要确保ssh和scp命令可执行</p>
+local counter &#x3D; 1
+local threads &#x3D; &#123;&#125;
+
+function setup(thread)
+   thread:set(&quot;id&quot;, counter)
+   table.insert(threads, thread)
+   counter &#x3D; counter + 1
+end
+
+function init(args)
+   requests  &#x3D; 0
+   responses &#x3D; 0
+
+   local msg &#x3D; &quot;thread %d created&quot;
+   print(msg:format(id))
+end
+
+function request()
+   requests &#x3D; requests + 1
+   return wrk.request()
+end
+
+function response(status, headers, body)
+   responses &#x3D; responses + 1
+end
+
+function done(summary, latency, requests)
+   for index, thread in ipairs(threads) do
+      local id        &#x3D; thread:get(&quot;id&quot;)
+      local requests  &#x3D; thread:get(&quot;requests&quot;)
+      local responses &#x3D; thread:get(&quot;responses&quot;)
+      local msg &#x3D; &quot;thread %d made %d requests and got %d responses&quot;
+      print(msg:format(id, requests, responses))
+   end
+end</code></pre>
+
+<p>使用 setup.lua:</p>
+<pre class="line-numbers language-lua" data-language="lua"><code class="language-lua">[root@jerrik wrk]# wrk -t 4 -c 100 -d 20s --latency -s scripts&#x2F;setup.lua https:&#x2F;&#x2F;www.baidu.com
+thread 1 created
+thread 2 created
+thread 3 created
+thread 4 created
+Running 20s test @ https:&#x2F;&#x2F;www.baidu.com
+  4 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +&#x2F;- Stdev
+    Latency   251.75ms  336.19ms   2.00s    86.89%
+    Req&#x2F;Sec   138.51     69.90   690.00     71.23%
+  Latency Distribution
+     50%  215.74ms
+     75%  401.87ms
+     90%  664.84ms
+     99%    1.54s 
+  11021 requests in 20.02s, 162.82MB read
+  Socket errors: connect 0, read 3, write 0, timeout 50
+Requests&#x2F;sec:    550.62
+Transfer&#x2F;sec:      8.13MB
+thread 1 made 2945 requests and got 2919 responses
+thread 2 made 2831 requests and got 2807 responses
+thread 3 made 2772 requests and got 2747 responses
+thread 4 made 2573 requests and got 2548 responses
+[root@jerrik wrk]#</code></pre>
+
+<p>将每个线程的请求数和响应数输出来了。其它更多使用可以参考 github script 目录下的 lua 脚本。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>wrk 作为 http 压测还是非常简便的, 但是要想应对更多复杂场景, 就需要多熟悉 lua 的使用, 深入了解 wrk 提供的那几个函数。其它 http 压测工具, jmeter,apache ab,siege 也可以了解一下。</p>
 
     </div>
 
@@ -344,19 +459,19 @@ ssh centos # 这里的centos, 对应config文件中Host配置的内容</code></p
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/linux/" rel="tag"># linux</a>
-              <a href="/tags/ssh/" rel="tag"># ssh</a>
+              <a href="/tags/wrk/" rel="tag"># wrk</a>
+              <a href="/tags/http/" rel="tag"># http</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2021/03/26/%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B5%B0%E4%B8%BB%E6%9C%BA%E4%BB%A3%E7%90%86/" rel="prev" title="虚拟机走主机代理">
+                  <i class="fa fa-chevron-left"></i> 虚拟机走主机代理
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2021/02/02/Windows%E5%8D%B8%E8%BD%BD%E8%87%AA%E5%B8%A6Flash/" rel="next" title="Windows卸载自带Flash">
-                  Windows卸载自带Flash <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
@@ -458,7 +573,7 @@ if (document.querySelectorAll('.pdf-container').length) {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/02/01/%E9%85%8D%E7%BD%AE%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95linux/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/03/30/HTTP%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E4%B9%8Bwrk/',]
       });
       });
   </script>
