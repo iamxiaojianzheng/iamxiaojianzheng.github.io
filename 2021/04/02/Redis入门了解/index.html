@@ -22,14 +22,13 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="我是 Redis你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。  说起我的诞生，跟关系数据库 MySQL 还挺有渊源的。 在我还没来到这个世界上的时候，MySQL 过的很辛苦，互联网发展的越来越快，它容纳的数据也越来越多，用户请求也随之暴涨，而每一个用户请求都变成了对它的一个又一个读写操作，MySQL 是苦不堪言。尤其是到 “双 11”、“618“这种全民购物狂欢的日">
+<meta name="description" content="我是 Redis你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。 说起我的诞生，跟关系数据库 MySQL 还挺有渊源的。 在我还没来到这个世界上的时候，MySQL 过的很辛苦，互联网发展的越来越快，它容纳的数据也越来越多，用户请求也随之暴涨，而每一个用户请求都变成了对它的一个又一个读写操作，MySQL 是苦不堪言。尤其是到 “双 11”、“618“这种全民购物狂欢的日子">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis入门了解">
 <meta property="og:url" content="https://xiaojianzheng.cn/2021/04/02/Redis%E5%85%A5%E9%97%A8%E4%BA%86%E8%A7%A3/index.html">
 <meta property="og:site_name" content="JIAHE">
-<meta property="og:description" content="我是 Redis你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。  说起我的诞生，跟关系数据库 MySQL 还挺有渊源的。 在我还没来到这个世界上的时候，MySQL 过的很辛苦，互联网发展的越来越快，它容纳的数据也越来越多，用户请求也随之暴涨，而每一个用户请求都变成了对它的一个又一个读写操作，MySQL 是苦不堪言。尤其是到 “双 11”、“618“这种全民购物狂欢的日">
+<meta property="og:description" content="我是 Redis你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。 说起我的诞生，跟关系数据库 MySQL 还挺有渊源的。 在我还没来到这个世界上的时候，MySQL 过的很辛苦，互联网发展的越来越快，它容纳的数据也越来越多，用户请求也随之暴涨，而每一个用户请求都变成了对它的一个又一个读写操作，MySQL 是苦不堪言。尤其是到 “双 11”、“618“这种全民购物狂欢的日子">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img2020.cnblogs.com/blog/659280/202009/659280-20200914095729796-1088270694.png">
 <meta property="og:image" content="https://pic4.zhimg.com/80/v2-d0c187542d3b8c7d0be37fa555ea1233_720w.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/v2-7f57747f177f960c091e4f5f61a4ef85_720w.jpg">
 <meta property="og:image" content="https://pic1.zhimg.com/80/v2-459e40288409c09412bf8188fa798590_720w.jpg">
@@ -75,7 +74,7 @@
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="redis">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img2020.cnblogs.com/blog/659280/202009/659280-20200914095729796-1088270694.png">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-d0c187542d3b8c7d0be37fa555ea1233_720w.jpg">
 
 
 <link rel="canonical" href="https://xiaojianzheng.cn/2021/04/02/Redis%E5%85%A5%E9%97%A8%E4%BA%86%E8%A7%A3/">
@@ -336,13 +335,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="我是-Redis"><a href="#我是-Redis" class="headerlink" title="我是 Redis"></a>我是 Redis</h1><p>你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。 <img data-src="https://img2020.cnblogs.com/blog/659280/202009/659280-20200914095729796-1088270694.png"></p>
+        <h1 id="我是-Redis"><a href="#我是-Redis" class="headerlink" title="我是 Redis"></a>我是 Redis</h1><p>你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。</p>
 <p>说起我的诞生，跟关系数据库 MySQL 还挺有渊源的。</p>
 <p>在我还没来到这个世界上的时候，MySQL 过的很辛苦，互联网发展的越来越快，它容纳的数据也越来越多，用户请求也随之暴涨，而每一个用户请求都变成了对它的一个又一个读写操作，MySQL 是苦不堪言。尤其是到 “双 11”、“618“这种全民购物狂欢的日子，都是 MySQL 受苦受难的日子。</p>
 <p>据后来 MySQL 告诉我说，其实有一大半的用户请求都是读操作，而且经常都是重复查询一个东西，浪费它很多时间去进行磁盘 I/O。</p>
 <p>后来有人就琢磨，是不是可以学学 CPU，给数据库也加一个缓存呢？于是我就诞生了！</p>
 <p>出生不久，我就和 MySQL 成为了好朋友，我们俩常常携手出现在后端服务器中。</p>
 <p>应用程序们从 MySQL 查询到的数据，在我这里登记一下，后面再需要用到的时候，就先找我要，我这里没有再找 MySQL 要。</p>
+<span id="more"></span>
+
 <p><img data-src="https://pic4.zhimg.com/80/v2-d0c187542d3b8c7d0be37fa555ea1233_720w.jpg"></p>
 <p>为了方便使用，我支持好几种数据结构的存储：</p>
 <blockquote>

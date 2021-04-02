@@ -1618,13 +1618,15 @@ ssh centos # 这里的centos, 对应config文件中Host配置的内容</code></p
   <entry>
     <title>Redis入门了解</title>
     <url>/2021/04/02/Redis%E5%85%A5%E9%97%A8%E4%BA%86%E8%A7%A3/</url>
-    <content><![CDATA[<h1 id="我是-Redis"><a href="#我是-Redis" class="headerlink" title="我是 Redis"></a>我是 Redis</h1><p>你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。 <img data-src="https://img2020.cnblogs.com/blog/659280/202009/659280-20200914095729796-1088270694.png"></p>
+    <content><![CDATA[<h1 id="我是-Redis"><a href="#我是-Redis" class="headerlink" title="我是 Redis"></a>我是 Redis</h1><p>你好，我是 Redis，一个叫 Antirez 的男人把我带到了这个世界上。</p>
 <p>说起我的诞生，跟关系数据库 MySQL 还挺有渊源的。</p>
 <p>在我还没来到这个世界上的时候，MySQL 过的很辛苦，互联网发展的越来越快，它容纳的数据也越来越多，用户请求也随之暴涨，而每一个用户请求都变成了对它的一个又一个读写操作，MySQL 是苦不堪言。尤其是到 “双 11”、“618“这种全民购物狂欢的日子，都是 MySQL 受苦受难的日子。</p>
 <p>据后来 MySQL 告诉我说，其实有一大半的用户请求都是读操作，而且经常都是重复查询一个东西，浪费它很多时间去进行磁盘 I/O。</p>
 <p>后来有人就琢磨，是不是可以学学 CPU，给数据库也加一个缓存呢？于是我就诞生了！</p>
 <p>出生不久，我就和 MySQL 成为了好朋友，我们俩常常携手出现在后端服务器中。</p>
 <p>应用程序们从 MySQL 查询到的数据，在我这里登记一下，后面再需要用到的时候，就先找我要，我这里没有再找 MySQL 要。</p>
+<span id="more"></span>
+
 <p><img data-src="https://pic4.zhimg.com/80/v2-d0c187542d3b8c7d0be37fa555ea1233_720w.jpg"></p>
 <p>为了方便使用，我支持好几种数据结构的存储：</p>
 <blockquote>
