@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+  </script>
+<meta name="description" content="http:&#x2F;&#x2F;redisdoc.com&#x2F;index.html  字符串 SET SET key value [EX seconds] [PX milliseconds] [NX|XX] SETNX SETNX key value SETEX SETEX key seconds value PSETEX PSETEX key milliseconds value GET GET key GETSE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JIAHE">
+<meta property="og:url" content="https://xiaojianzheng.cn/redis-command-reference/index.html">
+<meta property="og:site_name" content="JIAHE">
+<meta property="og:description" content="http:&#x2F;&#x2F;redisdoc.com&#x2F;index.html  字符串 SET SET key value [EX seconds] [PX milliseconds] [NX|XX] SETNX SETNX key value SETEX SETEX key seconds value PSETEX PSETEX key milliseconds value GET GET key GETSE">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-04-03T05:01:18.281Z">
+<meta property="article:modified_time" content="2021-04-03T05:01:18.281Z">
+<meta property="article:author" content="JIAHE">
+<meta property="article:tag" content="JIAHE">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xiaojianzheng.cn/redis-command-reference/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+<title> | JIAHE
+</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">JIAHE</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
+        <li class="menu-item menu-item-java基础"><a href="/java-basics/" rel="section"><i class="fa fa-code fa-fw"></i>Java基础</a></li>
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
+        <li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li>
+        <li class="menu-item menu-item-experience"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-常用软件"><a href="/windows-software-cheat-sheet/" rel="section"><i class="fab fa-windows fa-fw"></i>常用软件</a></li>
+        <li class="menu-item menu-item-redis命令参考"><a href="/redis-command-reference/" rel="section"><i class="fas fa-database fa-fw"></i>Redis命令参考</a></li>
+        <li class="menu-item menu-item-mysql基础"><a href="/mysql-basics/" rel="section"><i class="fas fa-database fa-fw"></i>MySQL基础</a></li>
+        <li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li>
+        <li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li>
+        <li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.</span> <span class="nav-text">字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">2.</span> <span class="nav-text">哈希表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88"><span class="nav-number">4.</span> <span class="nav-text">集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E5%BA%8F%E9%9B%86%E5%90%88"><span class="nav-number">5.</span> <span class="nav-text">有序集合</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HyperLogLog"><span class="nav-number">6.</span> <span class="nav-text">HyperLogLog</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9C%B0%E7%90%86%E4%BD%8D%E7%BD%AE"><span class="nav-number">7.</span> <span class="nav-text">地理位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%8D%E5%9B%BE"><span class="nav-number">8.</span> <span class="nav-text">位图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">9.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E8%BF%87%E6%9C%9F"><span class="nav-number">10.</span> <span class="nav-text">自动过期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1"><span class="nav-number">11.</span> <span class="nav-text">事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lua-%E8%84%9A%E6%9C%AC"><span class="nav-number">12.</span> <span class="nav-text">Lua 脚本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">13.</span> <span class="nav-text">持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E4%B8%8E%E8%AE%A2%E9%98%85"><span class="nav-number">14.</span> <span class="nav-text">发布与订阅</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6"><span class="nav-number">15.</span> <span class="nav-text">复制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">16.</span> <span class="nav-text">客户端与服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9"><span class="nav-number">17.</span> <span class="nav-text">配置选项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E8%AF%95"><span class="nav-number">18.</span> <span class="nav-text">调试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">19.</span> <span class="nav-text">内部命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E6%96%87%E6%A1%A3"><span class="nav-number">20.</span> <span class="nav-text">功能文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIAHE</p>
+  <div class="site-description" itemprop="description">Collection & Reuse</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+  
+  
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="http://redisdoc.com/index.html">http://redisdoc.com/index.html</a></p>
+</blockquote>
+<h1 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/set.html">SET</a> <code>SET key value [EX seconds] [PX milliseconds] [NX|XX]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/setnx.html">SETNX</a> <code>SETNX key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/setex.html">SETEX</a> <code>SETEX key seconds value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/psetex.html">PSETEX</a> <code>PSETEX key milliseconds value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/get.html">GET</a> <code>GET key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/getset.html">GETSET</a> <code>GETSET key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/strlen.html">STRLEN</a> <code>STRLEN key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/append.html">APPEND</a> <code>APPEND key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/setrange.html">SETRANGE</a> <code>SETRANGE key offset value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/getrange.html">GETRANGE</a> <code>GETRANGE key start end</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/incr.html">INCR</a> <code>INCR key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/incrby.html">INCRBY</a> <code>INCRBY key increment</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/incrbyfloat.html">INCRBYFLOAT</a> <code>INCRBYFLOAT key increment</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/decr.html">DECR</a> <code>DECR key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/decrby.html">DECRBY</a> <code>DECRBY key decrement</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/mset.html">MSET</a> <code>MSET key value [key value …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/msetnx.html">MSETNX</a> <code>MSETNX key value [key value …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/mget.html">MGET</a> <code>MGET key [key …]</code></li>
+</ul>
+<h1 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hset.html">HSET</a> <code>HSET hash field value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hsetnx.html">HSETNX</a> <code>HSETNX hash field value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hget.html">HGET</a> <code>HGET hash field</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hexists.html">HEXISTS</a> <code>HEXISTS hash field</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hdel.html">HDEL</a> <code>HDEL</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hlen.html">HLEN</a> <code>HLEN</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hstrlen.html">HSTRLEN</a> <code>HSTRLEN</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hincrby.html">HINCRBY</a> <code>HINCRBY</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hincrbyfloat.html">HINCRBYFLOAT</a> <code>HINCRBYFLOAT</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hmset.html">HMSET</a> <code>HMSET</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hmget.html">HMGET</a> <code>HMGET</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hkeys.html">HKEYS</a> <code>HKEYS</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hvals.html">HVALS</a> <code>HVALS</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hgetall.html">HGETALL</a> <code>HGETALL</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hscan.html">HSCAN</a> <code>HSCAN</code></li>
+</ul>
+<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lpush.html">LPUSH</a> <code>LPUSH key value [value …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lpushx.html">LPUSHX</a> <code>LPUSHX key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpush.html">RPUSH</a> <code>RPUSH key value [value …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpushx.html">RPUSHX</a> <code>RPUSHX key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lpop.html">LPOP</a> <code>LPOP key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpop.html">RPOP</a> <code>RPOP key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpoplpush.html">RPOPLPUSH</a> <code>RPOPLPUSH source destination</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lrem.html">LREM</a> <code>LREM key count value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/llen.html">LLEN</a> <code>LLEN key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lindex.html">LINDEX</a> <code>LINDEX key index</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/linsert.html">LINSERT</a> <code>LINSERT key BEFORE|AFTER pivot value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lset.html">LSET</a> <code>LSET key index value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lrange.html">LRANGE</a> <code>LRANGE key start stop</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/ltrim.html">LTRIM</a> <code>LTRIM key start stop</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/blpop.html">BLPOP</a> <code>BLPOP key [key …] timeout</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/brpop.html">BRPOP</a> <code>BRPOP key [key …] timeout</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/brpoplpush.html">BRPOPLPUSH</a> <code>BRPOPLPUSH source destination timeout</code></li>
+</ul>
+<h1 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sadd.html">SADD</a> <code>SADD key member [member …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sismember.html">SISMEMBER</a> <code>SISMEMBER key member</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/spop.html">SPOP</a> <code>SPOP key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/srandmember.html">SRANDMEMBER</a> <code>SRANDMEMBER key [count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/srem.html">SREM</a> <code>SREM key member [member …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/smove.html">SMOVE</a> <code>SMOVE source destination member</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/scard.html">SCARD</a> <code>SCARD key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/smembers.html">SMEMBERS</a> <code>SMEMBERS key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sscan.html">SSCAN</a> <code>SSCAN key cursor [MATCH pattern] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sinter.html">SINTER</a> <code>SINTER key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sinterstore.html">SINTERSTORE</a> <code>SINTERSTORE destination key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sunion.html">SUNION</a> <code>SUNION key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sunionstore.html">SUNIONSTORE</a> <code>SUNIONSTORE destination key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sdiff.html">SDIFF</a> <code>SDIFF key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sdiffstore.html">SDIFFSTORE</a> <code>SDIFFSTORE destination key [key …]</code></li>
+</ul>
+<h1 id="有序集合"><a href="#有序集合" class="headerlink" title="有序集合"></a>有序集合</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zadd.html">ZADD</a> <code>ZADD key score member [[score member] [score member] …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zscore.html">ZSCORE</a> <code>ZSCORE key member</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zincrby.html">ZINCRBY</a> <code>ZINCRBY key increment member</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zcard.html">ZCARD</a> <code>ZCARD key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zcount.html">ZCOUNT</a> <code>ZCOUNT key min max</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrange.html">ZRANGE</a> <code>ZRANGE key start stop [WITHSCORES]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrevrange.html">ZREVRANGE</a> <code>ZREVRANGE key start stop [WITHSCORES]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrangebyscore.html">ZRANGEBYSCORE</a> <code>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrevrangebyscore.html">ZREVRANGEBYSCORE</a> <code>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrank.html">ZRANK</a> <code>ZRANK key member</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrevrank.html">ZREVRANK</a> <code>ZREVRANK key member</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrem.html">ZREM</a> <code>ZREM key member [member …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zremrangebyrank.html">ZREMRANGEBYRANK</a> <code>ZREMRANGEBYRANK key start stop</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zremrangebyscore.html">ZREMRANGEBYSCORE</a> <code>ZREMRANGEBYSCORE key min max</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrangebylex.html">ZRANGEBYLEX</a> <code>ZRANGEBYLEX key min max [LIMIT offset count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zlexcount.html">ZLEXCOUNT</a> <code>ZLEXCOUNT key min max</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zremrangebylex.html">ZREMRANGEBYLEX</a> <code>ZREMRANGEBYLEX key min max</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zscan.html">ZSCAN</a> <code>ZSCAN key cursor [MATCH pattern] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zunionstore.html">ZUNIONSTORE</a> <code>ZUNIONSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zinterstore.html">ZINTERSTORE</a> <code>ZINTERSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</code></li>
+</ul>
+<h1 id="HyperLogLog"><a href="#HyperLogLog" class="headerlink" title="HyperLogLog"></a>HyperLogLog</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hyperloglog/pfadd.html">PFADD</a> <code>PFADD key element [element …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hyperloglog/pfcount.html">PFCOUNT</a> <code>PFCOUNT key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hyperloglog/pfmerge.html">PFMERGE</a> <code>PFMERGE destkey sourcekey [sourcekey …]</code></li>
+</ul>
+<h1 id="地理位置"><a href="#地理位置" class="headerlink" title="地理位置"></a>地理位置</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/geo/geoadd.html">GEOADD</a> <code>GEOADD key longitude latitude member [longitude latitude member …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/geo/geopos.html">GEOPOS</a> <code>GEOPOS key member [member …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/geo/geodist.html">GEODIST</a> <code>GEODIST key member1 member2 [unit]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/geo/georadius.html">GEORADIUS</a> <code>GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [ASC|DESC] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/geo/georadiusbymember.html">GEORADIUSBYMEMBER</a> <code>GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [ASC|DESC] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/geo/geohash.html">GEOHASH</a> <code>GEOHASH key member [member …]</code></li>
+</ul>
+<h1 id="位图"><a href="#位图" class="headerlink" title="位图"></a>位图</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/bitmap/setbit.html">SETBIT</a> <code>SETBIT key offset value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/bitmap/getbit.html">GETBIT</a> <code>GETBIT key offset</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/bitmap/bitcount.html">BITCOUNT</a> <code>BITCOUNT key [start] [end]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/bitmap/bitpos.html">BITPOS</a> <code>BITPOS key bit [start] [end]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/bitmap/bitop.html">BITOP</a> <code>BITOP operation destkey key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/bitmap/bitfield.html">BITFIELD</a> <code>BITFIELD key [GET type offset] [SET type offset value] [INCRBY type offset increment] [OVERFLOW WRAP|SAT|FAIL]</code></li>
+</ul>
+<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/exists.html">EXISTS</a> <code>EXISTS key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/type.html">TYPE</a> <code>TYPE key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/rename.html">RENAME</a> <code>RENAME key newkey</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/renamenx.html">RENAMENX</a> <code>RENAMENX key newkey</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/move.html">MOVE</a> <code>MOVE key db</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/del.html">DEL</a> <code>DEL key [key …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/randomkey.html">RANDOMKEY</a> <code>RANDOMKEY</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/dbsize.html">DBSIZE</a> <code>DBSIZE</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/keys.html">KEYS</a> <code>KEYS pattern</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/scan.html">SCAN</a> <code>SCAN cursor [MATCH pattern] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/sort.html">SORT</a> <code>SORT key [BY pattern] [LIMIT offset count] [GET pattern [GET pattern …]] [ASC | DESC] [ALPHA] [STORE destination]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/flushdb.html">FLUSHDB</a> <code>FLUSHDB</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/flushall.html">FLUSHALL</a> <code>FLUSHALL</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/select.html">SELECT</a> <code>SELECT index</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/database/swapdb.html">SWAPDB</a> <code>SWAPDB db1 db2</code></li>
+</ul>
+<h1 id="自动过期"><a href="#自动过期" class="headerlink" title="自动过期"></a>自动过期</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/expire.html">EXPIRE</a> <code>EXPIRE key seconds</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/expireat.html">EXPIREAT</a> <code>EXPIREAT key timestamp</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/ttl.html">TTL</a> <code>TTL key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/persist.html">PERSIST</a> <code>PERSIST key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/pexpire.html">PEXPIRE</a> <code>PEXPIRE key milliseconds</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/pexpireat.html">PEXPIREAT</a> <code>PEXPIREAT key milliseconds-timestamp</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/expire/pttl.html">PTTL</a> <code>PTTL key</code></li>
+</ul>
+<h1 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/transaction/multi.html">MULTI</a> <code>MULTI</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/transaction/exec.html">EXEC</a> <code>EXEC</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/transaction/discard.html">DISCARD</a> <code>DISCARD</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/transaction/watch.html">WATCH</a> <code>WATCH</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/transaction/unwatch.html">UNWATCH</a> <code>UNWATCH</code></li>
+</ul>
+<h1 id="Lua-脚本"><a href="#Lua-脚本" class="headerlink" title="Lua 脚本"></a>Lua 脚本</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/script/eval.html">EVAL</a> <code>EVAL script numkeys key [key …] arg [arg …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/script/evalsha.html">EVALSHA</a> <code>EVALSHA sha1 numkeys key [key …] arg [arg …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/script/script_load.html">SCRIPT_LOAD</a> <code>SCRIPT LOAD script</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/script/script_exists.html">SCRIPT_EXISTS</a> <code>SCRIPT EXISTS sha1 [sha1 …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/script/script_flush.html">SCRIPT_FLUSH</a> <code>SCRIPT FLUSH</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/script/script_kill.html">SCRIPT_KILL</a> <code>SCRIPT KILL</code></li>
+</ul>
+<h1 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/persistence/save.html">SAVE</a> <code>SAVE</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/persistence/bgsave.html">BGSAVE</a> <code>BGSAVE</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/persistence/bgrewriteaof.html">BGREWRITEAOF</a> <code>BGREWRITEAOF</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/persistence/lastsave.html">LASTSAVE</a> <code>LASTSAVE</code></li>
+</ul>
+<h1 id="发布与订阅"><a href="#发布与订阅" class="headerlink" title="发布与订阅"></a>发布与订阅</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/pubsub/publish.html">PUBLISH</a> <code>PUBLISH channel message</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/pubsub/subscribe.html">SUBSCRIBE</a> <code>SUBSCRIBE channel [channel …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/pubsub/psubscribe.html">PSUBSCRIBE</a> <code>PSUBSCRIBE pattern [pattern …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/pubsub/unsubscribe.html">UNSUBSCRIBE</a> <code>UNSUBSCRIBE [channel [channel …]]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/pubsub/punsubscribe.html">PUNSUBSCRIBE</a> <code>PUNSUBSCRIBE [pattern [pattern …]]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/pubsub/pubsub.html">PUBSUB</a> <code>PUBSUB &lt;subcommand&gt; [argument [argument …]]</code></li>
+</ul>
+<h1 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/replication/slaveof.html">SLAVEOF</a> <code>SLAVEOF host port</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/replication/role.html">ROLE</a> <code>ROLE</code></li>
+</ul>
+<h1 id="客户端与服务器"><a href="#客户端与服务器" class="headerlink" title="客户端与服务器"></a>客户端与服务器</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/auth.html">AUTH</a> <code>AUTH password</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/quit.html">QUIT</a> <code>QUIT</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/info.html">INFO</a> <code>INFO [section]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/shutdown.html">SHUTDOWN</a> <code>SHUTDOWN [SAVE|NOSAVE]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/time.html">TIME</a> <code>TIME</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/client_getname.html">CLIENT_GETNAME</a> <code>CLIENT GETNAME</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/client_kill.html">CLIENT_KILL</a> <code>CLIENT KILL ip:port</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/client_list.html">CLIENT_LIST</a> <code>CLIENT LIST</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/client_and_server/client_setname.html">CLIENT_SETNAME</a> <code>CLIENT SETNAME connection-name</code></li>
+</ul>
+<h1 id="配置选项"><a href="#配置选项" class="headerlink" title="配置选项"></a>配置选项</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/configure/config_set.html">CONFIG_SET</a> <code>CONFIG SET parameter value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/configure/config_get.html">CONFIG_GET</a> <code>CONFIG GET parameter</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/configure/config_resetstat.html">CONFIG_RESETSTAT</a> <code>CONFIG RESETSTAT</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/configure/config_rewrite.html">CONFIG_REWRITE</a> <code>CONFIG REWRITE</code></li>
+</ul>
+<h1 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/ping.html">PING</a> <code>PING</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/echo.html">ECHO</a> <code>ECHO message</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/object.html">OBJECT</a> <code>OBJECT subcommand [arguments [arguments]]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/slowlog.html">SLOWLOG</a> <code>SLOWLOG subcommand [argument]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/monitor.html">MONITOR</a> <code>MONITOR</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/debug_object.html">DEBUG_OBJECT</a> <code>DEBUG OBJECT key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/debug/debug_segfault.html">DEBUG_SEGFAULT</a> <code>DEBUG SEGFAULT</code></li>
+</ul>
+<h1 id="内部命令"><a href="#内部命令" class="headerlink" title="内部命令"></a>内部命令</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/internal/migrate.html">MIGRATE</a> <code>MIGRATE host port key destination-db timeout [COPY] [REPLACE]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/internal/dump.html">DUMP</a> <code>DUMP key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/internal/restore.html">RESTORE</a> <code>RESTORE key ttl serialized-value [REPLACE]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/internal/sync.html">SYNC</a> <code>SYNC</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/internal/psync.html">PSYNC</a> <code>PSYNC master_run_id offset</code></li>
+</ul>
+<h1 id="功能文档"><a href="#功能文档" class="headerlink" title="功能文档"></a>功能文档</h1><ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/cluster-spec.html">Redis 集群规范</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/persistence.html">持久化（persistence）</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/pubsub.html">发布与订阅（pub/sub）</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/sentinel.html">Sentinel</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/cluster-tutorial.html">集群教程</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/notification.html">键空间通知（keyspace notification）</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/protocol.html">通信协议（protocol）</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/replication.html">复制（Replication）</a></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/topic/transaction.html">事务（transaction）</a></li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+<script>
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/redis-command-reference/',]
+      });
+      });
+  </script>
+
+</body>
+</html>
