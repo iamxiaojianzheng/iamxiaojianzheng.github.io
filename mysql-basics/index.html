@@ -29,8 +29,8 @@
 <meta property="og:site_name" content="JIAHE">
 <meta property="og:description" content="连接# 命令行连接mysql mysql -u root -p &gt; Enter password: ******  # 退出 mysql&gt; exit   数据库的基本操作创建数据库# 连接MySQL后，创建 CREATE database 数据库名;  # 建议使用这种方式进行创建数据库 CREATE database if not exists 数据库名 default charse">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-09T14:09:18.957Z">
-<meta property="article:modified_time" content="2021-04-09T14:09:18.957Z">
+<meta property="article:published_time" content="2021-04-09T16:43:14.358Z">
+<meta property="article:modified_time" content="2021-04-09T16:43:14.358Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="JIAHE">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">数据库的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">2.2.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9"><span class="nav-number">2.3.</span> <span class="nav-text">选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-number">2.4.</span> <span class="nav-text">查看</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">数据表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">创建数据表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%BB%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.1.</span> <span class="nav-text">使用主键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.2.</span> <span class="nav-text">使用外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%A9%BA%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用非空约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.4.</span> <span class="nav-text">使用唯一性约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.5.</span> <span class="nav-text">使用默认约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A1%A8%E7%9A%84%E5%B1%9E%E6%80%A7%E5%80%BC%E8%87%AA%E5%8A%A8%E5%A2%9E%E5%8A%A0"><span class="nav-number">3.1.6.</span> <span class="nav-text">设置表的属性值自动增加</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">3.2.</span> <span class="nav-text">查看数据表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.3.</span> <span class="nav-text">修改数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.4.</span> <span class="nav-text">删除数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL8-0%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">3.5.</span> <span class="nav-text">MySQL8.0的新特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.6.</span> <span class="nav-text">插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">4.2.</span> <span class="nav-text">日期和时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.3.</span> <span class="nav-text">字符串</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">5.</span> <span class="nav-text">查询数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#where"><span class="nav-number">5.1.</span> <span class="nav-text">where</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#update"><span class="nav-number">5.2.</span> <span class="nav-text">update</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delete"><span class="nav-number">5.3.</span> <span class="nav-text">delete</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#like"><span class="nav-number">5.4.</span> <span class="nav-text">like</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#like-%E4%B8%8E-%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">5.5.</span> <span class="nav-text">like 与 % _ 结合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#union"><span class="nav-number">5.6.</span> <span class="nav-text">union</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#order-by"><span class="nav-number">5.7.</span> <span class="nav-text">order by</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#group-by"><span class="nav-number">5.8.</span> <span class="nav-text">group by</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#join"><span class="nav-number">5.9.</span> <span class="nav-text">join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null%E5%80%BC%E5%88%A4%E6%96%AD"><span class="nav-number">5.10.</span> <span class="nav-text">null值判断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#regexp"><span class="nav-number">5.11.</span> <span class="nav-text">regexp</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ALTER"><span class="nav-number">5.12.</span> <span class="nav-text">ALTER</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">6.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E7%B4%A2%E5%BC%95"><span class="nav-number">6.1.</span> <span class="nav-text">普通索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95"><span class="nav-number">6.2.</span> <span class="nav-text">唯一索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E6%88%96%E5%88%A0%E9%99%A4%E4%B8%BB%E9%94%AE"><span class="nav-number">6.3.</span> <span class="nav-text">添加或删除主键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E4%BF%A1%E6%81%AF"><span class="nav-number">6.4.</span> <span class="nav-text">查看索引信息</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0"><span class="nav-number">7.</span> <span class="nav-text">存储过程和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">7.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8"><span class="nav-number">7.2.</span> <span class="nav-text">调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-1"><span class="nav-number">7.3.</span> <span class="nav-text">查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-number">7.4.</span> <span class="nav-text">修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4-1"><span class="nav-number">7.5.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E3%80%81%E5%AF%BC%E5%85%A5"><span class="nav-number">8.</span> <span class="nav-text">导出、导入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA"><span class="nav-number">8.1.</span> <span class="nav-text">导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5"><span class="nav-number">8.2.</span> <span class="nav-text">导入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#explain"><span class="nav-number">9.</span> <span class="nav-text">explain</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E5%90%AB%E4%B9%89"><span class="nav-number">9.1.</span> <span class="nav-text">字段含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-type"><span class="nav-number">9.2.</span> <span class="nav-text">select_type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#union-1"><span class="nav-number">9.2.1.</span> <span class="nav-text">union</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DEPENDENT-UNION-%E4%B8%8E-DEPENDENT-SUBQUERY"><span class="nav-number">9.2.2.</span> <span class="nav-text">DEPENDENT UNION 与 DEPENDENT SUBQUERY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUBQUERY"><span class="nav-number">9.2.3.</span> <span class="nav-text">SUBQUERY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DERIVED"><span class="nav-number">9.2.4.</span> <span class="nav-text">DERIVED</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">9.3.</span> <span class="nav-text">type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system"><span class="nav-number">9.3.1.</span> <span class="nav-text">system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">9.3.2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eq-ref"><span class="nav-number">9.3.3.</span> <span class="nav-text">eq_ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">9.3.4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-subquery"><span class="nav-number">9.3.5.</span> <span class="nav-text">unique_subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-subquery"><span class="nav-number">9.3.6.</span> <span class="nav-text">index_subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range-%E5%8F%AA%E6%A3%80%E7%B4%A2%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E7%9A%84%E8%A1%8C"><span class="nav-number">9.3.7.</span> <span class="nav-text">range 只检索给定范围的行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-%E5%8F%AA%E9%81%8D%E5%8E%86%E7%B4%A2%E5%BC%95%E6%A0%91"><span class="nav-number">9.3.8.</span> <span class="nav-text">index 只遍历索引树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#all-%E9%81%8D%E5%8E%86%E5%85%A8%E8%A1%A8"><span class="nav-number">9.3.9.</span> <span class="nav-text">all 遍历全表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">10.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%87%BD%E6%95%B0"><span class="nav-number">10.1.</span> <span class="nav-text">系统信息函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="nav-number">10.2.</span> <span class="nav-text">字符串函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC-1"><span class="nav-number">10.3.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F"><span class="nav-number">10.4.</span> <span class="nav-text">日期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">11.</span> <span class="nav-text">运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">11.1.</span> <span class="nav-text">算数运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">11.2.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">11.3.</span> <span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">11.4.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">11.5.</span> <span class="nav-text">优先级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%83%E9%99%90"><span class="nav-number">12.</span> <span class="nav-text">权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">13.</span> <span class="nav-text">问题及解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%88%A0MySQL%E4%B8%ADroot%E6%89%80%E6%9C%89%E6%9D%83%E9%99%90%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">13.1.</span> <span class="nav-text">误删MySQL中root所有权限的方法</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5"><span class="nav-number">1.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">数据库的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4"><span class="nav-number">2.2.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9"><span class="nav-number">2.3.</span> <span class="nav-text">选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B"><span class="nav-number">2.4.</span> <span class="nav-text">查看</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.</span> <span class="nav-text">数据表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.1.</span> <span class="nav-text">创建数据表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%BB%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.1.</span> <span class="nav-text">使用主键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%96%E9%94%AE%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.2.</span> <span class="nav-text">使用外键约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9D%9E%E7%A9%BA%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.3.</span> <span class="nav-text">使用非空约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E6%80%A7%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.4.</span> <span class="nav-text">使用唯一性约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E7%BA%A6%E6%9D%9F"><span class="nav-number">3.1.5.</span> <span class="nav-text">使用默认约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A1%A8%E7%9A%84%E5%B1%9E%E6%80%A7%E5%80%BC%E8%87%AA%E5%8A%A8%E5%A2%9E%E5%8A%A0"><span class="nav-number">3.1.6.</span> <span class="nav-text">设置表的属性值自动增加</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%BB%93%E6%9E%84"><span class="nav-number">3.2.</span> <span class="nav-text">查看数据表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.3.</span> <span class="nav-text">修改数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E8%A1%A8"><span class="nav-number">3.4.</span> <span class="nav-text">删除数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL8-0%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">3.5.</span> <span class="nav-text">MySQL8.0的新特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5"><span class="nav-number">3.6.</span> <span class="nav-text">插入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC"><span class="nav-number">4.1.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">4.2.</span> <span class="nav-text">日期和时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">4.3.</span> <span class="nav-text">字符串</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%95%B0%E6%8D%AE"><span class="nav-number">5.</span> <span class="nav-text">查询数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5"><span class="nav-number">5.1.</span> <span class="nav-text">基本查询语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E8%A1%A8%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.</span> <span class="nav-text">单表查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%AD%97%E6%AE%B5"><span class="nav-number">5.2.1.</span> <span class="nav-text">查询所有字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8SELECT%E8%AF%AD%E5%8F%A5%E4%B8%AD%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.2.</span> <span class="nav-text">在SELECT语句中指定字段查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B9%E6%8D%AE%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.3.</span> <span class="nav-text">根据条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6IN%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.4.</span> <span class="nav-text">带IN关键字的查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6BETWEEN-AND%E7%9A%84%E8%8C%83%E5%9B%B4%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.5.</span> <span class="nav-text">带BETWEEN AND的范围查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6LIKE%E7%9A%84%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.6.</span> <span class="nav-text">带LIKE的字符匹配查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%A9%BA%E5%80%BC%E6%88%96%E9%9D%9E%E7%A9%BA%E5%80%BC"><span class="nav-number">5.2.7.</span> <span class="nav-text">查询空值或非空值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6AND%E7%9A%84%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.8.</span> <span class="nav-text">带AND的多条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6OR%E7%9A%84%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.9.</span> <span class="nav-text">带OR的多条件查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E4%B8%8D%E9%87%8D%E5%A4%8D"><span class="nav-number">5.2.10.</span> <span class="nav-text">查询结果不重复</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8E%92%E5%BA%8F"><span class="nav-number">5.2.11.</span> <span class="nav-text">对查询结果排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.2.12.</span> <span class="nav-text">分组查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8LIMIT%E9%99%90%E5%88%B6%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E7%9A%84%E6%95%B0%E9%87%8F"><span class="nav-number">5.2.13.</span> <span class="nav-text">使用LIMIT限制查询结果的数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%9B%86%E5%90%88%E5%87%BD%E6%95%B0%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.3.</span> <span class="nav-text">使用集合函数查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.4.</span> <span class="nav-text">连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.4.1.</span> <span class="nav-text">内连接查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.4.2.</span> <span class="nav-text">外连接查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E6%9D%A1%E4%BB%B6%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.4.3.</span> <span class="nav-text">复合条件连接查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.</span> <span class="nav-text">子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6%E6%9C%89ANY%E3%80%81SOME%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.1.</span> <span class="nav-text">带有ANY、SOME关键字的子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6ALL%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.2.</span> <span class="nav-text">带ALL关键字的子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6EXISTS%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.3.</span> <span class="nav-text">带EXISTS关键字的子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6IN%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.4.</span> <span class="nav-text">带IN关键字的子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%A6%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.5.5.</span> <span class="nav-text">带比较运算符的子查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C"><span class="nav-number">5.6.</span> <span class="nav-text">合并查询结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E8%A1%A8%E5%92%8C%E5%AD%97%E6%AE%B5%E5%8F%96%E5%88%AB%E5%90%8D"><span class="nav-number">5.7.</span> <span class="nav-text">为表和字段取别名</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E8%A1%A8%E5%8F%96%E5%88%AB%E5%90%8D"><span class="nav-number">5.7.1.</span> <span class="nav-text">为表取别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%AD%97%E6%AE%B5%E5%8F%96%E5%88%AB%E5%90%8D"><span class="nav-number">5.7.2.</span> <span class="nav-text">为字段取别名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.8.</span> <span class="nav-text">使用正则表达式查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL8-0%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7-1"><span class="nav-number">5.9.</span> <span class="nav-text">MySQL8.0的新特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E3%80%81%E6%9B%B4%E6%96%B0%E4%B8%8E%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">插入、更新与删除数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">6.1.</span> <span class="nav-text">插入数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E8%A1%A8%E7%9A%84%E6%89%80%E6%9C%89%E5%AD%97%E6%AE%B5%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE"><span class="nav-number">6.1.1.</span> <span class="nav-text">为表的所有字段插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%97%B6%E6%8F%92%E5%85%A5%E5%A4%9A%E6%9D%A1%E8%AE%B0%E5%BD%95"><span class="nav-number">6.1.2.</span> <span class="nav-text">同时插入多条记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%8F%92%E5%85%A5%E5%88%B0%E8%A1%A8%E4%B8%AD"><span class="nav-number">6.1.3.</span> <span class="nav-text">将查询结果插入到表中</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="nav-number">6.2.</span> <span class="nav-text">更新数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE"><span class="nav-number">6.3.</span> <span class="nav-text">删除数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E8%A1%A8%E5%A2%9E%E5%8A%A0%E8%AE%A1%E7%AE%97%E5%88%97"><span class="nav-number">6.4.</span> <span class="nav-text">为表增加计算列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL8-0%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7-2"><span class="nav-number">6.5.</span> <span class="nav-text">MySQL8.0的新特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">7.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%AE%80%E4%BB%8B"><span class="nav-number">7.1.</span> <span class="nav-text">索引简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%90%AB%E4%B9%89%E5%92%8C%E7%89%B9%E7%82%B9"><span class="nav-number">7.1.1.</span> <span class="nav-text">索引的含义和特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">7.1.2.</span> <span class="nav-text">索引的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">7.1.3.</span> <span class="nav-text">索引的设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-number">7.2.</span> <span class="nav-text">创建索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%88%9B%E5%BB%BA%E8%A1%A8%E7%9A%84%E6%97%B6%E5%80%99%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-number">7.2.1.</span> <span class="nav-text">在创建表的时候创建索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84%E8%A1%A8%E4%B8%8A%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95"><span class="nav-number">7.2.2.</span> <span class="nav-text">在已经存在的表上创建索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="nav-number">7.3.</span> <span class="nav-text">删除索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E4%BF%A1%E6%81%AF"><span class="nav-number">7.4.</span> <span class="nav-text">查看索引信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL8-0%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7-3"><span class="nav-number">7.5.</span> <span class="nav-text">MySQL8.0的新特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0"><span class="nav-number">8.</span> <span class="nav-text">存储过程和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA"><span class="nav-number">8.1.</span> <span class="nav-text">创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8"><span class="nav-number">8.2.</span> <span class="nav-text">调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B-1"><span class="nav-number">8.3.</span> <span class="nav-text">查看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9"><span class="nav-number">8.4.</span> <span class="nav-text">修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4-1"><span class="nav-number">8.5.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E3%80%81%E5%AF%BC%E5%85%A5"><span class="nav-number">9.</span> <span class="nav-text">导出、导入</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA"><span class="nav-number">9.1.</span> <span class="nav-text">导出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5"><span class="nav-number">9.2.</span> <span class="nav-text">导入</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#explain"><span class="nav-number">10.</span> <span class="nav-text">explain</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E6%AE%B5%E5%90%AB%E4%B9%89"><span class="nav-number">10.1.</span> <span class="nav-text">字段含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#select-type"><span class="nav-number">10.2.</span> <span class="nav-text">select_type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#union"><span class="nav-number">10.2.1.</span> <span class="nav-text">union</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DEPENDENT-UNION-%E4%B8%8E-DEPENDENT-SUBQUERY"><span class="nav-number">10.2.2.</span> <span class="nav-text">DEPENDENT UNION 与 DEPENDENT SUBQUERY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SUBQUERY"><span class="nav-number">10.2.3.</span> <span class="nav-text">SUBQUERY</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DERIVED"><span class="nav-number">10.2.4.</span> <span class="nav-text">DERIVED</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#type"><span class="nav-number">10.3.</span> <span class="nav-text">type</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system"><span class="nav-number">10.3.1.</span> <span class="nav-text">system</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#const"><span class="nav-number">10.3.2.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eq-ref"><span class="nav-number">10.3.3.</span> <span class="nav-text">eq_ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref"><span class="nav-number">10.3.4.</span> <span class="nav-text">ref</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unique-subquery"><span class="nav-number">10.3.5.</span> <span class="nav-text">unique_subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-subquery"><span class="nav-number">10.3.6.</span> <span class="nav-text">index_subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#range-%E5%8F%AA%E6%A3%80%E7%B4%A2%E7%BB%99%E5%AE%9A%E8%8C%83%E5%9B%B4%E7%9A%84%E8%A1%8C"><span class="nav-number">10.3.7.</span> <span class="nav-text">range 只检索给定范围的行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#index-%E5%8F%AA%E9%81%8D%E5%8E%86%E7%B4%A2%E5%BC%95%E6%A0%91"><span class="nav-number">10.3.8.</span> <span class="nav-text">index 只遍历索引树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#all-%E9%81%8D%E5%8E%86%E5%85%A8%E8%A1%A8"><span class="nav-number">10.3.9.</span> <span class="nav-text">all 遍历全表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">11.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%E5%87%BD%E6%95%B0"><span class="nav-number">11.1.</span> <span class="nav-text">系统信息函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0"><span class="nav-number">11.2.</span> <span class="nav-text">字符串函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC-1"><span class="nav-number">11.3.</span> <span class="nav-text">数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F"><span class="nav-number">11.4.</span> <span class="nav-text">日期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">12.</span> <span class="nav-text">运算符</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%95%B0%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">12.1.</span> <span class="nav-text">算数运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">12.2.</span> <span class="nav-text">比较运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">12.3.</span> <span class="nav-text">逻辑运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-number">12.4.</span> <span class="nav-text">位运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">12.5.</span> <span class="nav-text">优先级</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9D%83%E9%99%90"><span class="nav-number">13.</span> <span class="nav-text">权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95"><span class="nav-number">14.</span> <span class="nav-text">问题及解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%88%A0MySQL%E4%B8%ADroot%E6%89%80%E6%9C%89%E6%9D%83%E9%99%90%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">14.1.</span> <span class="nav-text">误删MySQL中root所有权限的方法</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -443,17 +443,7 @@ ALTER TABLE &lt;表名&gt; DROP FOREIGN KEY &lt;外键约束名&gt;</code></pre>
 <li>删除没有被关联的表</li>
 </ol>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP TABLE [IF EXISTS] 表1，表2，...，表n;
-
-# 清空数据表，保留表结构，支持where
-# 对于 MyISAM 会立刻释放磁盘空间，InnoDB 不会释放磁盘空间
-delete from table_name;
-
-# 带条件的删除，表结构不变，不管是 innodb 还是 MyISAM 都不会释放磁盘空间
-# 使用 optimize table table_name 会立刻释放磁盘空间，不管是 innodb 还是 myisam
-delete from table_name where xxx &#x3D; xxx;
-
-# 清空数据表，保留表结构，立刻释放磁盘空间
-truncate table table_name;</code></pre>
+</code></pre>
 
 <ol start="2">
 <li>删除被其他表关联的主表</li>
@@ -673,16 +663,7 @@ VALUES
 <blockquote>
 <p><strong>注意</strong>：char(n) 和 varchar(n) 中括号中 n 代表字符的个数，并不代表字节个数，比如 CHAR(30) 就可以存储 30 个字符。</p>
 </blockquote>
-<h1 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h1><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-&lt;SELECT clause&gt; 
-[&lt;FROM clause&gt;] 
-[&lt;WHERE clause&gt;] 
-[&lt;GROUP BY clause&gt;] 
-[&lt;HAVING clause&gt;] 
-[&lt;ORDER BY clause&gt;] 
-[&lt;LIMIT clause&gt;] 
-
--- 执行顺序
+<h1 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h1><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 执行顺序
 1.  from 
 2.  on
 3.  join
@@ -706,64 +687,42 @@ VALUES
 -&gt; LIMIT 子句
 -&gt; 最终结果 </code></pre>
 
-<ul>
-<li>查询语句中你可以使用一个或者多个表，表之间使用逗号 <strong>,</strong> 分割，并使用WHERE语句来设定查询条件。</li>
-<li>SELECT 命令可以读取一条或者多条记录。</li>
-<li>你可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据</li>
-<li>你可以使用 WHERE 语句来包含任何条件。</li>
-<li>你可以使用 LIMIT 属性来设定返回的记录数。</li>
-<li>你可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。</li>
-</ul>
-<h2 id="where"><a href="#where" class="headerlink" title="where"></a>where</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-[WHERE condition1 [AND [OR]] condition2.....
+<h2 id="基本查询语句"><a href="#基本查询语句" class="headerlink" title="基本查询语句"></a>基本查询语句</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT
+    &#123; * | &lt;字段列表&gt; &#125;
+    [
+        FROM &lt;表1&gt;, &lt;表2&gt; ...
+        [WHERE &lt;表达式&gt;]
+        [GROUP BY &lt;group by definition&gt;]
+        [HAVING &lt;expression&gt; [&#123;&lt;operator&gt; &lt;expression&gt;&#125; ...]]
+        [ORDER BY &lt;order by definition&gt;]
+        [LIMIT [&lt;offset&gt;,] &lt;row count&gt;]
+    ]
+SELECT [字段1, 字段2, ..., 字段n]
+FROM [表或视图]
+WHERE [查询条件];</code></pre>
 
- -- 操作符
- &#x3D; !&#x3D; &gt; &lt; &gt;&#x3D; &lt;&#x3D;</code></pre>
+<h2 id="单表查询"><a href="#单表查询" class="headerlink" title="单表查询"></a>单表查询</h2><h3 id="查询所有字段"><a href="#查询所有字段" class="headerlink" title="查询所有字段"></a>查询所有字段</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT * FROM &lt;表名&gt;</code></pre>
 
-<ul>
-<li>查询语句中你可以使用一个或者多个表，表之间使用逗号 <strong>,</strong> 分割，并使用WHERE语句来设定查询条件。</li>
-<li>你可以在 WHERE 子句中指定任何条件。</li>
-<li>你可以使用 AND 或者 OR 指定一个或多个条件。</li>
-<li>WHERE 子句也可以运用于 SQL 的 DELETE 或者 UPDATE 命令。</li>
-<li>WHERE 子句类似于程序语言中的 if 条件，根据 MySQL 表中的字段值来读取指定的数据。</li>
-</ul>
-<h2 id="update"><a href="#update" class="headerlink" title="update"></a>update</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-UPDATE table_name SET field1&#x3D;expression1, field2&#x3D;expression2
-[WHERE Clause]
+<h3 id="在SELECT语句中指定字段查询"><a href="#在SELECT语句中指定字段查询" class="headerlink" title="在SELECT语句中指定字段查询"></a>在SELECT语句中指定字段查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n] FROM &lt;表名&gt;</code></pre>
 
--- expression
-a &#x3D; 1
-a &#x3D; a + 1
-a &#x3D; replace(a, &#39;1&#39;, &#39;2&#39;)
-a &#x3D; default 设置为默认的值</code></pre>
+<h3 id="根据条件查询"><a href="#根据条件查询" class="headerlink" title="根据条件查询"></a>根据条件查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE &lt;查询条件&gt;</code></pre>
 
-<ul>
-<li>你可以同时更新一个或多个字段。</li>
-<li>你可以在 WHERE 子句中指定任何条件。</li>
-</ul>
-<h2 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-DELETE FROM table_name [WHERE Clause]
-</code></pre>
+<h3 id="带IN关键字的查询"><a href="#带IN关键字的查询" class="headerlink" title="带IN关键字的查询"></a>带IN关键字的查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE 字段名 [NOT] IN (value1, value2, ..., valueN)</code></pre>
 
-<ul>
-<li>如果没有指定 WHERE 子句，MySQL 表中的所有记录将被删除。</li>
-<li>你可以在 WHERE 子句中指定任何条件</li>
-</ul>
-<h2 id="like"><a href="#like" class="headerlink" title="like"></a>like</h2><blockquote>
-<p>模糊匹配字符串</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;
-</code></pre>
+<h3 id="带BETWEEN-AND的范围查询"><a href="#带BETWEEN-AND的范围查询" class="headerlink" title="带BETWEEN AND的范围查询"></a>带BETWEEN AND的范围查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE 字段名 [NOT] BETWEEN value_min AND value_max</code></pre>
 
-<ul>
-<li>你可以在 WHERE 子句中使用LIKE子句</li>
-<li>你可以使用LIKE子句代替等号 <strong>=</strong></li>
-<li>LIKE 通常与 <strong>%</strong> 一同使用，类似于一个元字符的搜索。</li>
-<li>你可以在 DELETE 或 UPDATE 命令中使用 WHERE...LIKE 子句来指定条件。</li>
-</ul>
-<h2 id="like-与-结合使用"><a href="#like-与-结合使用" class="headerlink" title="like 与 % _ 结合使用"></a>like 与 % _ 结合使用</h2><pre class="line-numbers language-none"><code class="language-none">&#39;%a&#39;     &#x2F;&#x2F;以a结尾的数据
-&#39;a%&#39;     &#x2F;&#x2F;以a开头的数据
+<h3 id="带LIKE的字符匹配查询"><a href="#带LIKE的字符匹配查询" class="headerlink" title="带LIKE的字符匹配查询"></a>带LIKE的字符匹配查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE 字段名 LIKE &lt;模糊表达式&gt;</code></pre>
+
+<pre class="line-numbers language-none"><code class="language-none">&#39;%a&#39;     &#x2F;&#x2F;以a结尾的字符串
+&#39;a%&#39;     &#x2F;&#x2F;以a开头的字符串
 &#39;%a%&#39;    &#x2F;&#x2F;含有a的数据
 &#39;_a_&#39;    &#x2F;&#x2F;三位且中间字母是a的
 &#39;_a&#39;     &#x2F;&#x2F;两位且结尾字母是a的_
@@ -776,152 +735,93 @@ WHERE field1 LIKE condition1 [AND [OR]] filed2 &#x3D; &#39;somevalue&#39;
 <li><code>[^]</code> ：表示不在括号所列之内的单个字符。其取值和 [] 相同，但它要求所匹配对象为指定字符以外的任一个字符。</li>
 <li>查询内容包含通配符时,由于通配符的缘故，导致我们查询特殊字符 “%”、“_”、“[” 的语句无法正常实现，而把特殊字符用 “[ ]” 括起便可正常查询。</li>
 </ul>
-<h2 id="union"><a href="#union" class="headerlink" title="union"></a>union</h2><blockquote>
-<p>MySQL UNION 操作符用于连接两个以上的 SELECT 语句的结果组合到一个结果集合中。多个 SELECT 语句会删除重复的数据。</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-SELECT expression1, expression2, ... expression_n
-FROM tables
-[WHERE conditions]
-UNION [ALL | DISTINCT]
-SELECT expression1, expression2, ... expression_n
-FROM tables
-[WHERE conditions];</code></pre>
+<h3 id="查询空值或非空值"><a href="#查询空值或非空值" class="headerlink" title="查询空值或非空值"></a>查询空值或非空值</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE 字段名 IS [NOT] NULL</code></pre>
 
-<ul>
-<li><strong>expression1, expression2, ... expression_n</strong>: 要检索的列。</li>
-<li><strong>tables:</strong> 要检索的数据表。</li>
-<li><strong>WHERE conditions:</strong> 可选， 检索条件。</li>
-<li><strong>DISTINCT:</strong> 可选，删除结果集中重复的数据。默认情况下 UNION 操作符已经删除了重复数据，所以 DISTINCT 修饰符对结果没啥影响。</li>
-<li><strong>ALL:</strong> 可选，返回所有结果集，包含重复数据。</li>
-</ul>
-<pre class="line-numbers language-none"><code class="language-none">mysql&gt; SELECT * FROM Websites;
-+----+--------------+---------------------------+-------+---------+
-| id | name         | url  | alexa | country |
-+----+--------------+---------------------------+-------+---------+
-| 1  | baidu       | https:&#x2F;&#x2F;www.baidu.cm&#x2F;    | 1     | USA     |
-| 2  | 淘宝          | https:&#x2F;&#x2F;www.taobao.com&#x2F;   | 13    | CN      |
-| 3  | 菜鸟教程      | http:&#x2F;&#x2F;www.meteor.com&#x2F;    | 4689  | CN      |
-| 4  | 微博          | http:&#x2F;&#x2F;weibo.com&#x2F;         | 20    | CN      |
-| 5  | Facebook     | https:&#x2F;&#x2F;www.facebook.com&#x2F; | 3     | USA     |
-| 7  | stackoverflow | http:&#x2F;&#x2F;stackoverflow.com&#x2F; |   0 | IND     |
-+----+---------------+---------------------------+-------+---------+</code></pre>
+<h3 id="带AND的多条件查询"><a href="#带AND的多条件查询" class="headerlink" title="带AND的多条件查询"></a>带AND的多条件查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE &lt;条件表达式1&gt; AND &lt;条件表达式2&gt; AND ... AND &lt;条件表达式n&gt;</code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">mysql&gt; SELECT * FROM apps;
-+----+------------+-------------------------+---------+
-| id | app_name   | url| country |
-+----+------------+-------------------------+---------+
-|  1 | QQ APP     | http:&#x2F;&#x2F;im.qq.com&#x2F;       | CN      |
-|  2 | 微博 APP    | http:&#x2F;&#x2F;weibo.com&#x2F;       | CN      |
-|  3 | 淘宝 APP    | https:&#x2F;&#x2F;www.taobao.com&#x2F; | CN      |
-+----+------------+-------------------------+---------+</code></pre>
-
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT country FROM Websites
-UNION
-SELECT country FROM apps
-ORDER BY country;
-
--- 输出结果如下
-+---------+
-| country |
-+---------+
-|	CN	  |
-|	IND   |
-|	USA   |
-+---------+
-
-SELECT country FROM Websites
-UNION ALL
-SELECT country FROM apps
-ORDER BY country;
-
--- 输出结果如下
-+---------+
-| country |
-+---------+
-|	CN	  |
-|	CN	  |
-|	CN	  |
-|	CN	  |
-|	CN	  |
-|	IND   |
-|	USA   |
-|	USA   |
-|	USA   |
-+---------+</code></pre>
+<h3 id="带OR的多条件查询"><a href="#带OR的多条件查询" class="headerlink" title="带OR的多条件查询"></a>带OR的多条件查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+WHERE &lt;条件表达式1&gt; OR &lt;条件表达式2&gt; OR ... OR &lt;条件表达式n&gt;</code></pre>
 
 <blockquote>
-<p><strong>注释：</strong>UNION 不能用于列出两个表中所有的country。如果一些网站和APP来自同一个国家，每个国家只会列出一次。UNION 只会选取不同的值。请使用 UNION ALL 来选取重复的值！</p>
+<p>OR可以和AND一起使用，但是在使用时要注意两者的优先级，由于AND的优先级高于OR，因此先对AND两边的操作数进行操作，再与OR中的操作数结合。</p>
 </blockquote>
-<h2 id="order-by"><a href="#order-by" class="headerlink" title="order by"></a>order by</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-ORDER BY field1 [ASC [DESC][默认 ASC]], [field2...] [ASC [DESC][默认 ASC]]
-</code></pre>
+<h3 id="查询结果不重复"><a href="#查询结果不重复" class="headerlink" title="查询结果不重复"></a>查询结果不重复</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT DISTINCT 字段名 FROM &lt;表名&gt;</code></pre>
 
-<ul>
-<li>你可以使用任何字段来作为排序的条件，从而返回排序后的查询结果。</li>
-<li>你可以设定多个字段来排序。</li>
-<li>你可以使用 ASC 或 DESC 关键字来设置查询结果是按升序或降序排列。 默认情况下，它是按升序排列。</li>
-</ul>
-<h2 id="group-by"><a href="#group-by" class="headerlink" title="group by"></a>group by</h2><blockquote>
-<p>GROUP BY 语句根据一个或多个列对结果集进行分组。</p>
-<p>在分组的列上我们可以使用 COUNT, SUM, AVG,等函数。</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-GROUP BY column_name;
-</code></pre>
-
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) 
-FROM t_user_info 
-WHERE trial_room_name IS NOT NULL
-GROUP BY trial_room_name;
-
--- 输出结果
-+-----------------------------+
-|trial_room_name | court(id)  |
-+-----------------------------+
-|	第1办公室	   |  296		|
-|	第2办公室	   |  138		|
-+------------------------------+
-
-SELECT coalesce(trial_room_name, &#39;总计&#39;), count(id) 
-FROM t_user_info 
-WHERE trial_room_name IS NOT NULL
-GROUP BY trial_room_name WITH ROLLUP;
-
--- 输出结果 
-+-----------------------------+
-|trial_room_name | court(id)  |
-+-----------------------------+
-|	第1办公室	   |  296		|
-|	第2办公室	   |  138		|
-|	总计          |  434		 |
-+------------------------------+</code></pre>
+<h3 id="对查询结果排序"><a href="#对查询结果排序" class="headerlink" title="对查询结果排序"></a>对查询结果排序</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n]
+FROM &lt;表名&gt;
+ORDER BY 字段名1 [, 字段名2, ..., 字段名n] [ASC(默认) | DESC]</code></pre>
 
 <blockquote>
-<p>WITH ROLLUP 可以实现在分组统计数据基础上再进行相同的统计（SUM,AVG,COUNT…）。</p>
+<p>在对多列进行排序的时候，首先排序的第一列必须有相同的列值，才会对第二列进行排序，如果第一列数据中所有值都是唯一的，将不再对第二列进行排序。</p>
 </blockquote>
-<h2 id="join"><a href="#join" class="headerlink" title="join"></a>join</h2><blockquote>
-<p>使用 MySQL 的 JOIN 在两个或多个表中查询数据。</p>
-<p>你可以在 SELECT, UPDATE 和 DELETE 语句中使用 Mysql 的 JOIN 来联合多表查询。</p>
-</blockquote>
-<p>JOIN 按照功能大致分为如下三类：</p>
-<ul>
-<li><strong>INNER JOIN（内连接,或等值连接）</strong>：获取两个表中字段匹配关系的记录，a inner join b 可以理解为 a &amp; b。</li>
-<li><strong>LEFT JOIN（左连接）：</strong>获取左表所有记录，即使右表没有对应匹配的记录，a left join b 可以理解为 a - b。</li>
-<li><strong>RIGHT JOIN（右连接）：</strong> 与 LEFT JOIN 相反，用于获取右表所有记录，即使左表没有对应匹配的记录，a right join b 可以理解为 b - a。</li>
-</ul>
 <blockquote>
-<p>可以通过 交集 、差集的概念来理解</p>
+<p>ASC和DESC关键字只对其前面的字段起作用，如果需要对多列进行排序并且指定排序方式时，需要在每个字段后面都加上排序方式，如：ORDER BY a DESC, b ASC</p>
 </blockquote>
-<h2 id="null值判断"><a href="#null值判断" class="headerlink" title="null值判断"></a>null值判断</h2><ul>
-<li><strong>IS NULL:</strong> 当列的值是 NULL,此运算符返回 true。</li>
-<li><strong>IS NOT NULL:</strong> 当列的值不为 NULL, 运算符返回 true。</li>
-<li><strong>&lt;=&gt;:</strong> 比较操作符（不同于 = 运算符），当比较的的两个值相等或者都为 NULL 时返回 true。</li>
-</ul>
+<h3 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">[GROUP BY 字段] [HAVING &lt;条件表达式&gt;]</code></pre>
+
+<h3 id="使用LIMIT限制查询结果的数量"><a href="#使用LIMIT限制查询结果的数量" class="headerlink" title="使用LIMIT限制查询结果的数量"></a>使用LIMIT限制查询结果的数量</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">LIMIT [位置偏移量,] 行数</code></pre>
+
 <blockquote>
-<p>关于 NULL 的条件比较运算是比较特殊的。你不能使用 = NULL 或 != NULL 在列中查找 NULL 值 。</p>
+<p>位置偏移量从0开始，所以&quot;LIMIT 1, 1&quot;将返回第二行，而不是第一行</p>
 </blockquote>
-<h2 id="regexp"><a href="#regexp" class="headerlink" title="regexp"></a>regexp</h2><p>下表中的正则模式可应用于 REGEXP 操作符中。</p>
+<h2 id="使用集合函数查询"><a href="#使用集合函数查询" class="headerlink" title="使用集合函数查询"></a>使用集合函数查询</h2><h2 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h2><h3 id="内连接查询"><a href="#内连接查询" class="headerlink" title="内连接查询"></a>内连接查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 方式1
+SELECT T1.*, T2.*
+FROM t_1 AS T1, t_2 AS T2
+WHERE T1.字段1 &#x3D; T2.字段2</code></pre>
+
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 方式2
+SELECT T1.*, T2.*
+FROM t_1 AS T1 INNER JOIN t_2 AS T2
+ON T1.字段1 &#x3D; T2.字段2</code></pre>
+
+<h3 id="外连接查询"><a href="#外连接查询" class="headerlink" title="外连接查询"></a>外连接查询</h3><ol>
+<li><p>LEFT JOIN 左连接：返回包括左表中所有记录和右表中连接字段相等的记录</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT T1.*, T2.*
+FROM t_1 AS T1 LEFT JOIN t_2 AS T2
+ON T1.字段1 &#x3D; T2.字段2</code></pre></li>
+<li><p>RIGHT JOIN 右连接：返回包括右表中所有记录和左表中连接字段相等的记录</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT T1.*, T2.*
+FROM t_1 AS T1 RIGHT JOIN t_2 AS T2
+ON T1.字段1 &#x3D; T2.字段2</code></pre></li>
+</ol>
+<h3 id="复合条件连接查询"><a href="#复合条件连接查询" class="headerlink" title="复合条件连接查询"></a>复合条件连接查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">[LEFT | INNER | RIGHT] &lt;表名&gt;
+ON &lt;等值条件表达式1&gt; AND &lt;等值条件表达式2&gt;</code></pre>
+
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><h3 id="带有ANY、SOME关键字的子查询"><a href="#带有ANY、SOME关键字的子查询" class="headerlink" title="带有ANY、SOME关键字的子查询"></a>带有ANY、SOME关键字的子查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE &lt;字段名&gt; &lt;运算符&gt; [ANY | SOME] (SELECT语句)</code></pre>
+
+<blockquote>
+<p>ANY和SOME关键字是同义词，表示满足其中任一条件，他们允许创建一个表达式对子查询的返回值列表进行比较，只要满足内层子查询中的任何一个比较条件，就返回一个结果作为外层查询的条件。</p>
+</blockquote>
+<h3 id="带ALL关键字的子查询"><a href="#带ALL关键字的子查询" class="headerlink" title="带ALL关键字的子查询"></a>带ALL关键字的子查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE &lt;字段名&gt; &lt;运算符&gt; ALL (SELECT语句)</code></pre>
+
+<blockquote>
+<p>与ANY和SOME相反，需要满足所有内层查询的条件。</p>
+</blockquote>
+<h3 id="带EXISTS关键字的子查询"><a href="#带EXISTS关键字的子查询" class="headerlink" title="带EXISTS关键字的子查询"></a>带EXISTS关键字的子查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE [NOT] EXISTS (SELECT语句)</code></pre>
+
+<blockquote>
+<p>只要EXISTS关键字后面的子查询返回的行数大于0，则返回TRUE；外层查询才会继续查询。加上NOT关键字，则含义相反。</p>
+</blockquote>
+<h3 id="带IN关键字的子查询"><a href="#带IN关键字的子查询" class="headerlink" title="带IN关键字的子查询"></a>带IN关键字的子查询</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE 字段名1 [NOT] IN (SELECT 字段名2 FROM ...)</code></pre>
+
+<h3 id="带比较运算符的子查询"><a href="#带比较运算符的子查询" class="headerlink" title="带比较运算符的子查询"></a>带比较运算符的子查询</h3><h2 id="合并查询结果"><a href="#合并查询结果" class="headerlink" title="合并查询结果"></a>合并查询结果</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT [字段名1, 字段名2, ..., 字段名n] FROM &lt;表名1&gt;
+UNION [ALL]
+SELECT [字段名1, 字段名2, ..., 字段名n] FROM &lt;表名2&gt;</code></pre>
+
+<blockquote>
+<p>利用UNION关键字，可以给出多条SELECT语句，并将它们的结果组合成单个结果集，合并时，两个表对应的列数和数据类型必须相同。各个SELECT语句之间使用UNION或UNION ALL关键字分隔，UNION不使用关键字ALL，执行的时候删除重复的记录，所有返回的行都是唯一的，使用关键字ALL的作用是不删除重复行也不对结果集进排序。</p>
+</blockquote>
+<h2 id="为表和字段取别名"><a href="#为表和字段取别名" class="headerlink" title="为表和字段取别名"></a>为表和字段取别名</h2><h3 id="为表取别名"><a href="#为表取别名" class="headerlink" title="为表取别名"></a>为表取别名</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">&lt;表名&gt; [AS] 表别名</code></pre>
+
+<h3 id="为字段取别名"><a href="#为字段取别名" class="headerlink" title="为字段取别名"></a>为字段取别名</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">&lt;列名&gt; [AS] 列别名</code></pre>
+
+<h2 id="使用正则表达式查询"><a href="#使用正则表达式查询" class="headerlink" title="使用正则表达式查询"></a>使用正则表达式查询</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE 字段名 REGEXP &#39;正则表达式字符串&#39;</code></pre>
+
 <table>
 <thead>
 <tr>
@@ -970,127 +870,118 @@ GROUP BY trial_room_name WITH ROLLUP;
 <td align="left">m 和 n 均为非负整数，其中n &lt;= m。最少匹配 n 次且最多匹配 m 次。</td>
 </tr>
 </tbody></table>
-<p>查找name字段中以&#39;st&#39;为开头的所有数据：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE name REGEXP &#39;^st&#39;;</code></pre>
-
-<p>查找name字段中以&#39;ok&#39;为结尾的所有数据：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE name REGEXP &#39;ok$&#39;;</code></pre>
-
-<p>查找name字段中包含&#39;mar&#39;字符串的所有数据：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE name REGEXP &#39;mar&#39;;</code></pre>
-
-<p>查找name字段中以元音字符开头或以&#39;ok&#39;字符串结尾的所有数据：</p>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">WHERE name REGEXP &#39;^[aeiou]|ok$&#39;;</code></pre>
-
-<h2 id="ALTER"><a href="#ALTER" class="headerlink" title="ALTER"></a>ALTER</h2><blockquote>
-<p>当我们需要修改数据表名或者修改数据表字段时，就需要使用到MySQL ALTER命令。</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 删除字段
-ALTER table table_name drop column_name ;
-
--- 删除外键
-ALTER table table_name drop foregion key keyName;
-
--- 新增字段
--- 新增字段放至第一列
-ALTER table table_name add column_name column_type first;
--- 新增字段放至name字段之后
-ALTER table table_name add column_name column_type after name;
-
--- 修改字段
-ALTER table table_name modify column_name new_column_type;
-ALTER table table_name change old_column_name new_column_name new_column_type;
-
--- 修改字段默认值
-ALTER table table_name ALTER column_name set default default_value;
-
--- 删除字段默认值
-ALTER table table_name ALTER column_name drop default;
-
--- 修改数据表配置
-ALTER table table_name engine &#x3D; MYISAM;
-
--- 修改表名
-ALTER table table_name rename to new_table_name;
-</code></pre>
-
-<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="普通索引"><a href="#普通索引" class="headerlink" title="普通索引"></a>普通索引</h2><blockquote>
-<p>创建索引</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">CREATE INDEX indexName ON tableName (columnName)</code></pre>
+<h2 id="MySQL8-0的新特性-1"><a href="#MySQL8-0的新特性-1" class="headerlink" title="MySQL8.0的新特性"></a>MySQL8.0的新特性</h2><ul>
+<li>GROUP BY 不再隐式排序</li>
+<li>新增通用表表达式CTE（Common Table Expression）</li>
+</ul>
+<h1 id="插入、更新与删除数据"><a href="#插入、更新与删除数据" class="headerlink" title="插入、更新与删除数据"></a>插入、更新与删除数据</h1><h2 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h2><h3 id="为表的所有字段插入数据"><a href="#为表的所有字段插入数据" class="headerlink" title="为表的所有字段插入数据"></a>为表的所有字段插入数据</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">INSERT INTO &lt;表名&gt; (字段名列表) VALUES (字段值列表)</code></pre>
 
 <blockquote>
-<p>修改表结构，添加索引</p>
+<p>若字段名列表省略，则字段值列表必须与整个表的字段名相对应，位置和数量都要相同。</p>
 </blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">ALTER TABLE tableName ADD INDEX indexName(columnName)</code></pre>
+<h3 id="同时插入多条记录"><a href="#同时插入多条记录" class="headerlink" title="同时插入多条记录"></a>同时插入多条记录</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">INSERT INTO &lt;表名&gt; (字段名列表)
+VALUES (字段值列表1), (字段值列表2), ..., (字段值列表n)</code></pre>
+
+<h3 id="将查询结果插入到表中"><a href="#将查询结果插入到表中" class="headerlink" title="将查询结果插入到表中"></a>将查询结果插入到表中</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">INSERT INTO &lt;表名1&gt; (字段名列表1)
+SELECT (字段名列表2) FROM &lt;表名2&gt; WHERE (condition)</code></pre>
 
 <blockquote>
-<p>创建表时指定索引</p>
+<p>字段名列表1和字段名列表2要个数相同、数据类型相同</p>
 </blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-INDEX [indexName] (username(length)) [USING xxx]
+<h2 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">UPDATE &lt;表名&gt;
+SET 字段名1 &#x3D; 字段值1, 字段名2 &#x3D; 字段值2, ..., 字段名n &#x3D; 字段值n
+WHERE (condition)</code></pre>
 
-CREATE TABLE &#96;t_user_info&#96;  (
+<h2 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"># 清空数据表，保留表结构，支持where
+# 对于 MyISAM 会立刻释放磁盘空间，InnoDB 不会释放磁盘空间
+# 带条件的删除，表结构不变，不管是 innodb 还是 MyISAM 都不会释放磁盘空间
+# 使用 optimize table table_name 会立刻释放磁盘空间，不管是 innodb 还是 myisam
+DELETE FROM &lt;表名&gt; [WHERE &lt;condition&gt;]
 
-  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键&#39;,
-  &#96;product_type_no&#96; varchar(100) NOT NULL DEFAULT &#39;n&#39; COMMENT &#39;删除标记&#39;,
+# 该命令直接删除原来的表，并重新创建一个表，因为是直接删除表而不是删除记录，所以执行速度比DELETE快
+TRUNCATE table table_name;</code></pre>
 
-  PRIMARY KEY (&#96;id&#96;) USING BTREE,
+<h2 id="为表增加计算列"><a href="#为表增加计算列" class="headerlink" title="为表增加计算列"></a>为表增加计算列</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">CRAETE TABLE &lt;表名&gt;
+(
+    &lt;字段名&gt; &lt;数据类型&gt; [GENERATED ALWAYS] AS (expression) [VIRTUAL | STORED] [UNIQUE [KEY]] [COMMENT comment] [NOT NULL | NULL] [[PRIMARY] KEY]
+)</code></pre>
 
-  INDEX &#96;product_type_no&#96;(&#96;product_type_no&#96;(255)) USING BTREE,
+<h2 id="MySQL8-0的新特性-2"><a href="#MySQL8-0的新特性-2" class="headerlink" title="MySQL8.0的新特性"></a>MySQL8.0的新特性</h2><ul>
+<li>DDL的原子化</li>
+</ul>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="索引简介"><a href="#索引简介" class="headerlink" title="索引简介"></a>索引简介</h2><h3 id="索引的含义和特点"><a href="#索引的含义和特点" class="headerlink" title="索引的含义和特点"></a>索引的含义和特点</h3><p>索引是一个单独的、存储在磁盘上的数据库结构，包含着对数据表里所有记录的引用指针。使用索引可以快速找出在某个或多个列中有一特定值的行，所有 MySQL列类型都可以被索引，对相关列使用索引是提高査询操作速度的最佳途径。</p>
+<p>例如，数据库中有2万条记录，现在要执行一个查询&quot;SELECT * FROM table where num=10000&quot;，如果没有索引，就必须遍历整个表，直到num等于100的这一行被找到为止如果在num列上创建索引， MySQL不需要任何扫描，直接在索引里面找10000就可以得知这行的位置。可见，索引的建立可以提高数据库的查询速度。</p>
+<p>索引是在存储引擎中实现的，因此，每种存储引擎的索引都不一定完全相同，并且每种存储引擎也不一定支持所有索引类型。根据存储引擎定义每个表的最大索引数和最大索引长度。所有存储引擎支持每个表至少16个索引，总索引长度至少为256字节。大多数存储引擎有更高的限制。MySQL中索引的存储类型有两种，即BTREE和HASH，具体和表的存储引擎相关；MyISAM和InnoDB存储引擎只支持BTREE索引；MEMORY/HEAP存储引擎可以支持HASH和BTREE索引。</p>
+<p>索引的优点主要有以下几条：</p>
+<ol>
+<li>通过创建唯一索引，可以保证数据库表中每一行数据的唯一性。</li>
+<li>可以大大加快数据的查询速度，这也是创建索引的主要原因。</li>
+<li>在实现数据的参考完整性方面，可以加速表和表之间的连接。</li>
+<li>在使用分组和排序子句进行数据查询时，也可以显著减少查询中分组和排序的时间。</li>
+</ol>
+<p>增加索引也有许多不利的方面，主要表现在如下几个方面：</p>
+<ol>
+<li>创建索引和维护索引要耗费时间，并且随着薮据量的增加所耗费的时间也会增加。</li>
+<li>索引需要占磁盘空间，除了数据表占数据空间之外，每一个索引还要占一定的物理空间，如果有大量的索引，索引文件可能比数据文件更快达到最大文件尺寸。</li>
+<li>当对表中的数据进行增加、删除和修改的时候，索引也要动态地维护，这样就降低了数据的维护速度。</li>
+</ol>
+<h3 id="索引的分类"><a href="#索引的分类" class="headerlink" title="索引的分类"></a>索引的分类</h3><ol>
+<li><p>普通索引和唯一索引</p>
+<blockquote>
+<p>普通索引是MySQL中基本索引类型，允许定义索引的列中插入重复值和空值。<br>唯一索引要求索引列的值必须位置，但允许有空值。如果是组合索引，则列值的组合必须唯一，主键索引是一种特殊的唯一索引，不允许有空值。</p>
+</blockquote>
+</li>
+<li><p>单列索引和组合索引</p>
+<blockquote>
+<p>单列索引即一个索引只包含单个列，一个表可以有多个单列索引。<br>组合索引是指在表的多个字段组合上创建的索引，只有在查询条件中使用了这些字段的左边字段时，索引才会被使用，使用组合索引时遵循最左前缀集合。</p>
+</blockquote>
+</li>
+<li><p>全文索引</p>
+<blockquote>
+<p>全文索引类型为 FULLTEXT,在定义索引的列上支持值的全文查找,允许在这些索引列中插入重复值和空值。全文索引可以在CHAR、VARCHAR或者TEXT类型的列上创建。MySQL中只有MyISAM存储引擎支持全文索引。</p>
+</blockquote>
+</li>
+<li><p>空间索引</p>
+<blockquote>
+<p>空间索引是对空间数据类型的字段建立的索引, MySQL中的空间数据类型有4种,分别是GEOMETRY、PONT、LINESTRING和POLYGON。MySQL使用SPATIAL关键字进行扩展,使得能够用创建正规索引类似的语法创建空间索引。创建空间索引的列,必须将其声明为NOT NULL,空间索引只能在存储引擎为 MyISAM的表中创建。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="索引的设计原则"><a href="#索引的设计原则" class="headerlink" title="索引的设计原则"></a>索引的设计原则</h3><p>索引设计不合理或者缺少索引都会对数据库和应用程序的性能造成障碍。高效的索引对于获<br>得良好的性能非常重要。设计索引时，应该考虑以下准则:</p>
+<ol>
+<li>索引并非越多越好，一个表中如有大量的索引，不仅占用磁盘空间，还会影响 INSERTDELETE、 UPDATE等语句的性能，因为在表中的数据更改时，索引也会进行调整和更新。</li>
+<li>避免对经常更新的表进行过多的索引，并且索引中的列要尽可能少。应该经常用于查询的字段创建索引，但要避免添加不必要的字段</li>
+<li>数据量小的表最好不要使用索引，由于数据较少，查询花费的时间可能比遍历索引的时间还要短，索引可能不会产生优化效果。</li>
+<li>在条件表达式中经常用到的不同值较多的列上建立索引，在不同值很少的列上不要建立索引。比如在学生表的“性别”字段上只有“男”与“女”两个不同值，因此就无须建立索引，如果建立索引不但不会提高査询效率，反而会严重降低数据更新速度。</li>
+<li>当唯一性是某种数据本身的特征时，指定唯一索引。使用唯一索引需能确保定义的列的数据完整性，以提高査询速度。</li>
+<li>在频繁进行排序或分组(即进行 group by或 order by操作)的列上建立索引，如果待排序的列有多个，可以在这些列上建立组合索引。</li>
+</ol>
+<h2 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h2><h3 id="在创建表的时候创建索引"><a href="#在创建表的时候创建索引" class="headerlink" title="在创建表的时候创建索引"></a>在创建表的时候创建索引</h3><h3 id="在已经存在的表上创建索引"><a href="#在已经存在的表上创建索引" class="headerlink" title="在已经存在的表上创建索引"></a>在已经存在的表上创建索引</h3><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 方式1
+ALTER TABLE &lt;表名&gt;
+ADD [UNIQUE|FULLTEXT|SPATIAL] INDEX [索引名称] (字段名[长度], ...) [ASC|DESC]</code></pre>
 
-) ENGINE &#x3D; InnoDB AUTO_INCREMENT &#x3D; 5090 CHARACTER SET &#x3D; utf8mb4 COLLATE &#x3D; utf8mb4_general_ci COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39; ROW_FORMAT &#x3D; DYNAMIC;</code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 方式2
+CREATE [UNIQUE|FULLTEXT|SPATIAL] INDEX [索引名称]
+ON &lt;表名&gt; (字段名[长度], ...) [ASC|DESC]</code></pre>
+
+<h2 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 方式1
+ALTER TABLE &lt;表名&gt; DROP INDEX 索引名称</code></pre>
+
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 方式2
+DROP INDEX 索引名称 ON &lt;表名&gt;</code></pre>
 
 <blockquote>
-<p>删除索引</p>
+<p>添加AUTO_INCREMENT约束字段的唯一索引不能被删除。</p>
 </blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">DROP INDEX indexName ON tableName</code></pre>
-
-<h2 id="唯一索引"><a href="#唯一索引" class="headerlink" title="唯一索引"></a>唯一索引</h2><p>它与前面的普通索引类似，不同的就是：索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。</p>
 <blockquote>
-<p>创建索引</p>
+<p>删除表中的列时，如果要删除的列为索引的组成部分，则该列也会从索引中删除，如果组成索引的所有列都被删除，则整个索引将被删除。</p>
 </blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-CREATE UNIQUE INDEX indexName ON tableName(columnName(length)) 
+<h2 id="查看索引信息"><a href="#查看索引信息" class="headerlink" title="查看索引信息"></a>查看索引信息</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SHOW INDEX FROM &lt;表名&gt;;</code></pre>
 
--- 栗子
-CREATE UNIQUE INDEX &#96;field_key&#96; ON &#96;t_user_info&#96;(&#96;field_key&#96;) </code></pre>
-
-<blockquote>
-<p>修改表结构，添加索引</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">-- 基本语法
-ALTER table tableName ADD UNIQUE [indexName] (columnName(length))
-
--- 栗子
-ALTER table &#96;t_user_info&#96; ADD UNIQUE &#96;field_key&#96; (&#96;field_key&#96;)</code></pre>
-
-<blockquote>
-<p>创建表时指定</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">CREATE TABLE &#96;t_user_info&#96;  (
-
-  &#96;id&#96; bigint(20) NOT NULL AUTO_INCREMENT COMMENT &#39;主键&#39;,
-
-  PRIMARY KEY (&#96;id&#96;) USING BTREE,
-
-  UNIQUE INDEX &#96;source_info&#96;(&#96;channel_source_type&#96;, &#96;channel_source_id&#96;) USING BTREE,
-  UNIQUE INDEX &#96;summary_key&#96;(&#96;summary_key&#96;) USING BTREE,
-
-) ENGINE &#x3D; InnoDB COMMENT &#x3D; &#39;用户视图表,用于快速查询&#39;;</code></pre>
-
-<h2 id="添加或删除主键"><a href="#添加或删除主键" class="headerlink" title="添加或删除主键"></a>添加或删除主键</h2><blockquote>
-<p>添加主键</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">ALTER TABLE tableName ADD PRIMARY KEY (id);</code></pre>
-
-<blockquote>
-<p>删除主键</p>
-</blockquote>
-<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">ALTER TABLE tableName DROP PRIMARY KEY;</code></pre>
-
-<h2 id="查看索引信息"><a href="#查看索引信息" class="headerlink" title="查看索引信息"></a>查看索引信息</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SHOW INDEX FROM tableName;</code></pre>
-
+<h2 id="MySQL8-0的新特性-3"><a href="#MySQL8-0的新特性-3" class="headerlink" title="MySQL8.0的新特性"></a>MySQL8.0的新特性</h2><ul>
+<li>支持降序索引</li>
+<li>统计直方图</li>
+</ul>
 <h1 id="存储过程和函数"><a href="#存储过程和函数" class="headerlink" title="存储过程和函数"></a>存储过程和函数</h1><h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><p>创建存储过程</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">CREATE PROCEDURE sp_name ( [proc_parameter] )
 [characteristics ...] routine_body</code></pre>
@@ -1314,7 +1205,7 @@ mysql&gt; LOAD DATA LOCAL INFILE &#39;dump.txt&#39; INTO TABLE tableName;
 <td>该列包含MySQL解决查询的详细信息<br /> <strong>Distinct</strong> ：MySQL发现第1个匹配行后，停止为当前的行组合搜索更多的行。<br /> <strong>Not exists</strong> ：MySQL能够对查询进行LEFT JOIN优化，发现1个匹配LEFT JOIN标准的行后，不再为前面的的行组合在该表内检查更多的行。<br /> <strong>range checked for each record (index map： #)</strong> ：MySQL没有发现好的可以使用的索引，但发现如果来自前面的表的列值已知，可能部分索引可以使用。<br /><strong>Using filesort</strong>：MySQL需要额外的一次传递，以找出如何按排序顺序检索行。<br /> <strong>Using index</strong>：从只使用索引树中的信息而不需要进一步搜索读取实际的行来检索表中的列信息。<br /><strong>Using temporary</strong>：为了解决查询，MySQL需要创建一个临时表来容纳结果。<br /> <strong>Using where</strong> ：WHERE 子句用于限制哪一个行匹配下一个表或发送到客户。<br /> <strong>Using sort_union(...)， Using union(...)， Using intersect(...)</strong> ：这些函数说明如何为index_merge联接类型合并索引扫描。<br /><strong>Using index for group-by</strong>：类似于访问表的Using index方式，Using index for group-by表示MySQL发现了一个索引，可以用来查 询GROUP BY或DISTINCT查询的所有列，而不要额外搜索硬盘访问实际的表。</td>
 </tr>
 </tbody></table>
-<h2 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h2><h3 id="union-1"><a href="#union-1" class="headerlink" title="union"></a>union</h3><blockquote>
+<h2 id="select-type"><a href="#select-type" class="headerlink" title="select_type"></a>select_type</h2><h3 id="union"><a href="#union" class="headerlink" title="union"></a>union</h3><blockquote>
 <p>当通过union来连接多个查询结果时，第二个之后的select其select_type为UNION</p>
 </blockquote>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">EXPLAIN 
