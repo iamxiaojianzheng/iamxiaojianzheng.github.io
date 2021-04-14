@@ -29,8 +29,8 @@
 <meta property="og:site_name" content="JIAHE">
 <meta property="og:description" content="预备知识事物事物的定义事物是一个用户定义的完整的工作单元，一个事物内的所有语句被作为整体执行，要么全部执行，要么全部不执行。遇到错误时，可以回滚事务，取消事务内所做的所有改变，从而保证数据库中数据的一致性和可恢复性。 事务的特性 原子性（Atomic）：表示，组成一个事务的多个数据库操作是一个不可分割的原子单元，只有所有操作执行成功，整个事物才提交，事务中任何一个对数据库操作失败，已经执行的所有操">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-13T01:19:44.905Z">
-<meta property="article:modified_time" content="2021-04-13T01:19:44.905Z">
+<meta property="article:published_time" content="2021-04-14T05:32:14.032Z">
+<meta property="article:modified_time" content="2021-04-14T05:32:14.032Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="JIAHE">
 <meta name="twitter:card" content="summary">
@@ -128,16 +128,17 @@
   <ul class="main-menu menu">
         <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
         <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
+        <li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
         <li class="menu-item menu-item-java基础"><a href="/java-basics/" rel="section"><i class="fa fa-code fa-fw"></i>Java基础</a></li>
         <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
         <li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li>
         <li class="menu-item menu-item-常用软件"><a href="/windows-software-cheat-sheet/" rel="section"><i class="fab fa-windows fa-fw"></i>常用软件</a></li>
+        <li class="menu-item menu-item-spring实践总结"><a href="/spring-practice/" rel="section"><i class="fa fa-code fa-fw"></i>Spring实践总结</a></li>
         <li class="menu-item menu-item-redis基础"><a href="/redis-basics/" rel="section"><i class="fas fa-database fa-fw"></i>Redis基础</a></li>
         <li class="menu-item menu-item-mysql基础"><a href="/mysql-basics/" rel="section"><i class="fas fa-database fa-fw"></i>MySQL基础</a></li>
         <li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li>
         <li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li>
         <li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li>
-        <li class="menu-item menu-item-experience"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>experience</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -282,13 +283,13 @@
 <h3 id="封锁技术"><a href="#封锁技术" class="headerlink" title="封锁技术"></a>封锁技术</h3><p>并发控制的主要技术是封锁，锁与锁定是实现并发控制的重要技术。锁是一种机制，当多个事物可能会并发的访问同一个数据库对象时，该机制可以实现对并发访问的控制。</p>
 <p>锁有两种最基本、最简单的类型：排他锁（X锁）、共享锁（S锁）。</p>
 <p>排他锁又称为写锁。如果事务T在数据库对象A上加了X锁，则只允许事务T读取、更改A。其他任何事务都不能对A加X锁或S锁，直到事务T释放A上的X锁为止，这就保证了其他事务在事务T释放A上的X锁之前，不能再读取、更改、使用A，即保护A不被同时读写。</p>
-<p>共享又称为读锁。如果事务T在数据库对象A上加了S锁，则只允许事务T读取A但不能更改A。其他任何事物都只能对A 加S锁而不能加X锁，直到事务T释放A上的S锁为止。这就保证了其他事务在T释放A上的S锁之前，只能读取A但不能更改，即保护A不被同时写。</p>
+<p>共享锁又称为读锁。如果事务T在数据库对象A上加了S锁，则只允许事务T读取A但不能更改A。其他任何事物都只能对A 加S锁而不能加X锁，直到事务T释放A上的S锁为止。这就保证了其他事务在T释放A上的S锁之前，只能读取A但不能更改，即保护A不被同时写。</p>
 <p>当运用X锁和S锁对数据库对象进行加锁或锁定时，还需要遵守一些规定或约定。这些规定被称为锁定协议，可以规定不同严格程度的锁定协议，防止不同并发访问中的问题。</p>
 <p>3个级别的锁定协议</p>
 <ol>
-<li>一级锁定协议<br>事务T在修改数据库对象A之前，必须对其加X锁，直到事务结束时才释放X锁，如果事务T仅仅是读取A，则不需要加任何锁。<br>该协议可以防止丢失修改的问题，但不能防止脏读、不可重复读问题。</li>
-<li>二级锁定协议<br>二级锁定协议是在一级锁定协议的基础上，加上事务T在读取A之前必须加S锁，读完之后立即释放S锁。<br>二级锁定协议可以进一步防止脏读的问题，但不能防止不可重复读问题。</li>
-<li>三级锁定协议<br>三级锁定协议是在一级锁定协议的基础上，加上事务T读取A之前必须加S锁，直到事务T结束后才释放S锁。<br>三级锁定协议可以进一步防止不可重复读问题。</li>
+<li>一级锁定协议<br>事务T在修改数据库对象A之前，必须对其加X锁，直到事务结束时才释放X锁，如果事务T仅仅是读取A，则不需要加任何锁。该协议可以防止丢失修改的问题，但不能防止脏读、不可重复读问题。</li>
+<li>二级锁定协议<br>二级锁定协议是在一级锁定协议的基础上，加上事务T在读取A之前必须加S锁，读完之后立即释放S锁。二级锁定协议可以进一步防止脏读的问题，但不能防止不可重复读问题。</li>
+<li>三级锁定协议<br>三级锁定协议是在一级锁定协议的基础上，加上事务T读取A之前必须加S锁，直到事务T结束后才释放S锁。三级锁定协议可以进一步防止不可重复读问题。</li>
 </ol>
 <h1 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h1><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 命令行连接mysql
 mysql -u root -p
