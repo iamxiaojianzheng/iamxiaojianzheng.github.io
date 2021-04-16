@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+  </script>
+<meta name="description" content="一、可读性的重要性编程有很大一部分时间是在阅读代码，不仅要阅读自己的代码，而且要阅读别人的代码。因此，可读性良好的代码能够大大提高编程效率。 可读性良好的代码往往会让代码架构更好，因为程序员更愿意去修改这部分代码，而且也更容易修改。 只有在核心领域为了效率才可以放弃可读性，否则可读性是第一位。 二、用名字表达代码含义一些比较有表达力的单词：    单词 可替代单词    send deliver、">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JIAHE">
+<meta property="og:url" content="https://xiaojianzheng.cn/code-easy-read/index.html">
+<meta property="og:site_name" content="JIAHE">
+<meta property="og:description" content="一、可读性的重要性编程有很大一部分时间是在阅读代码，不仅要阅读自己的代码，而且要阅读别人的代码。因此，可读性良好的代码能够大大提高编程效率。 可读性良好的代码往往会让代码架构更好，因为程序员更愿意去修改这部分代码，而且也更容易修改。 只有在核心领域为了效率才可以放弃可读性，否则可读性是第一位。 二、用名字表达代码含义一些比较有表达力的单词：    单词 可替代单词    send deliver、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209003453268.png">
+<meta property="article:published_time" content="2021-04-16T05:19:49.133Z">
+<meta property="article:modified_time" content="2021-04-16T05:19:49.133Z">
+<meta property="article:author" content="JIAHE">
+<meta property="article:tag" content="JIAHE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209003453268.png">
+
+
+<link rel="canonical" href="https://xiaojianzheng.cn/code-easy-read/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+<title> | JIAHE
+</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">JIAHE</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
+        <li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
+        
+            
+  <li class="menu-item menu-item-java"><a href="/java/" rel="section"><i class="fa fa-code fa-fw"></i>Java</a></li>
+
+
+      
+        <li class="menu-item menu-item-代码可读性"><a href="/code-easy-read/" rel="section"><i class="far fa-file-code fa-fw"></i>代码可读性</a></li>
+        
+            
+  <li class="menu-item menu-item-计算机网络"><a href="/network/" rel="section"><i class="fas fa-network-wired fa-fw"></i>计算机网络</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-操作系统基础"><a href="/os/" rel="section"><i class="fas fa-laptop fa-fw"></i>操作系统基础</a></li>
+
+
+      
+        <li class="menu-item menu-item-http"><a href="/http/" rel="section"><i class="fab fa-connectdevelop fa-fw"></i>HTTP</a></li>
+        <li class="menu-item menu-item-linux"><a href="/linux/" rel="section"><i class="fab fa-linux fa-fw"></i>Linux</a></li>
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
+        <li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li>
+        <li class="menu-item menu-item-常用软件"><a href="/windows-software-cheat-sheet/" rel="section"><i class="fab fa-windows fa-fw"></i>常用软件</a></li>
+        
+            
+  <li class="menu-item menu-item-数据库"><a href="/database/" rel="section"><i class="fas fa-database fa-fw"></i>数据库</a></li>
+
+
+      
+        <li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li>
+        <li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li>
+        <li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8F%AF%E8%AF%BB%E6%80%A7%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">一、可读性的重要性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%94%A8%E5%90%8D%E5%AD%97%E8%A1%A8%E8%BE%BE%E4%BB%A3%E7%A0%81%E5%90%AB%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">二、用名字表达代码含义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%90%8D%E5%AD%97%E4%B8%8D%E8%83%BD%E5%B8%A6%E6%9D%A5%E6%AD%A7%E4%B9%89"><span class="nav-number">3.</span> <span class="nav-text">三、名字不能带来歧义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%89%AF%E5%A5%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">4.</span> <span class="nav-text">四、良好的代码风格</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E4%B8%BA%E4%BD%95%E7%BC%96%E5%86%99%E6%B3%A8%E9%87%8A"><span class="nav-number">5.</span> <span class="nav-text">五、为何编写注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E6%B3%A8%E9%87%8A"><span class="nav-number">6.</span> <span class="nav-text">六、如何编写注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%8F%90%E9%AB%98%E6%8E%A7%E5%88%B6%E6%B5%81%E7%9A%84%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="nav-number">7.</span> <span class="nav-text">七、提高控制流的可读性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%8B%86%E5%88%86%E9%95%BF%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">8.</span> <span class="nav-text">八、拆分长表达式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%8F%98%E9%87%8F%E4%B8%8E%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="nav-number">9.</span> <span class="nav-text">九、变量与可读性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E6%8A%BD%E5%8F%96%E5%87%BD%E6%95%B0"><span class="nav-number">10.</span> <span class="nav-text">十、抽取函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E4%B8%80%E6%AC%A1%E5%8F%AA%E5%81%9A%E4%B8%80%E4%BB%B6%E4%BA%8B"><span class="nav-number">11.</span> <span class="nav-text">十一、一次只做一件事</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E7%94%A8%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E8%A1%A8%E8%BF%B0%E4%BB%A3%E7%A0%81"><span class="nav-number">12.</span> <span class="nav-text">十二、用自然语言表述代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%87%8F%E5%B0%91%E4%BB%A3%E7%A0%81%E9%87%8F"><span class="nav-number">13.</span> <span class="nav-text">十三、减少代码量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">14.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIAHE</p>
+  <div class="site-description" itemprop="description">Collection & Reuse</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner page posts-expand">
+  
+
+      
+      
+
+      
+      
+
+      
+      
+
+      
+      
+  
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h1 id="一、可读性的重要性"><a href="#一、可读性的重要性" class="headerlink" title="一、可读性的重要性"></a>一、可读性的重要性</h1><p>编程有很大一部分时间是在阅读代码，不仅要阅读自己的代码，而且要阅读别人的代码。因此，可读性良好的代码能够大大提高编程效率。</p>
+<p>可读性良好的代码往往会让代码架构更好，因为程序员更愿意去修改这部分代码，而且也更容易修改。</p>
+<p>只有在核心领域为了效率才可以放弃可读性，否则可读性是第一位。</p>
+<h1 id="二、用名字表达代码含义"><a href="#二、用名字表达代码含义" class="headerlink" title="二、用名字表达代码含义"></a>二、用名字表达代码含义</h1><p>一些比较有表达力的单词：</p>
+<table>
+<thead>
+<tr>
+<th align="center">单词</th>
+<th>可替代单词</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">send</td>
+<td>deliver、dispatch、announce、distribute、route</td>
+</tr>
+<tr>
+<td align="center">find</td>
+<td>search、extract、locate、recover</td>
+</tr>
+<tr>
+<td align="center">start</td>
+<td>launch、create、begin、open</td>
+</tr>
+<tr>
+<td align="center">make</td>
+<td>create、set up、build、generate、compose、add、new</td>
+</tr>
+</tbody></table>
+<p>使用 i、j、k 作为循环迭代器的名字过于简单，user_i、member_i 这种名字会更有表达力。因为循环层次越多，代码越难理解，有表达力的迭代器名字可读性会更高。</p>
+<p>为名字添加形容词等信息能让名字更具有表达力，但是名字也会变长。名字长短的准则是：作用域越大，名字越长。因此只有在短作用域才能使用一些简单名字。</p>
+<h1 id="三、名字不能带来歧义"><a href="#三、名字不能带来歧义" class="headerlink" title="三、名字不能带来歧义"></a>三、名字不能带来歧义</h1><p>起完名字要思考一下别人会对这个名字有何解读，会不会误解了原本想表达的含义。</p>
+<p>布尔相关的命名加上 is、can、should、has 等前缀。</p>
+<ul>
+<li>用 min、max 表示数量范围；</li>
+<li>用 first、last 表示访问空间的包含范围；</li>
+<li>begin、end 表示访问空间的排除范围，即 end 不包含尾部。</li>
+</ul>
+<p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/image-20191209003453268.png" alt="img"></p>
+<h1 id="四、良好的代码风格"><a href="#四、良好的代码风格" class="headerlink" title="四、良好的代码风格"></a>四、良好的代码风格</h1><p>适当的空行和缩进。</p>
+<p>排列整齐的注释：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">int a &#x3D; 1;   &#x2F;&#x2F; 注释
+int b &#x3D; 11;  &#x2F;&#x2F; 注释
+int c &#x3D; 111; &#x2F;&#x2F; 注释</code></pre>
+
+<p>语句顺序不能随意，比如与 html 表单相关联的变量的赋值应该和表单在 html 中的顺序一致。</p>
+<h1 id="五、为何编写注释"><a href="#五、为何编写注释" class="headerlink" title="五、为何编写注释"></a>五、为何编写注释</h1><p>阅读代码首先会注意到注释，如果注释没太大作用，那么就会浪费代码阅读的时间。那些能直接看出含义的代码不需要写注释，特别是不需要为每个方法都加上注释，比如那些简单的 getter 和 setter 方法，为这些方法写注释反而让代码可读性更差。</p>
+<p>不能因为有注释就随便起个名字，而是争取起个好名字而不写注释。</p>
+<p>可以用注释来记录采用当前解决办法的思考过程，从而让读者更容易理解代码。</p>
+<p>注释用来提醒一些特殊情况。</p>
+<p>用 TODO 等做标记：</p>
+<table>
+<thead>
+<tr>
+<th>标记</th>
+<th>用法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TODO</td>
+<td>待做</td>
+</tr>
+<tr>
+<td>FIXME</td>
+<td>待修复</td>
+</tr>
+<tr>
+<td>HACK</td>
+<td>粗糙的解决方案</td>
+</tr>
+<tr>
+<td>XXX</td>
+<td>危险！这里有重要的问题</td>
+</tr>
+</tbody></table>
+<h1 id="六、如何编写注释"><a href="#六、如何编写注释" class="headerlink" title="六、如何编写注释"></a>六、如何编写注释</h1><p>尽量简洁明了：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; The first String is student&#39;s name
+&#x2F;&#x2F; The Second Integer is student&#39;s score
+Map&lt;String, Integer&gt; scoreMap &#x3D; new HashMap&lt;&gt;();
+&#x2F;&#x2F; Student&#39;s name -&gt; Student&#39;s score
+Map&lt;String, Integer&gt; scoreMap &#x3D; new HashMap&lt;&gt;();</code></pre>
+
+<p>添加测试用例来说明：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; ...
+&#x2F;&#x2F; Example: add(1, 2), return 3
+int add(int x, int y) &#123;
+    return x + y;
+&#125;</code></pre>
+
+<p>使用专业名词来缩短概念上的解释，比如用设计模式名来说明代码。</p>
+<h1 id="七、提高控制流的可读性"><a href="#七、提高控制流的可读性" class="headerlink" title="七、提高控制流的可读性"></a>七、提高控制流的可读性</h1><p>条件表达式中，左侧是变量，右侧是常数。比如下面第一个语句正确：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">if (len &lt; 10)
+if (10 &gt; len)</code></pre>
+
+<p>只有在逻辑简单的情况下使用 ? : 三目运算符来使代码更紧凑，否则应该拆分成 if / else；</p>
+<p>do / while 的条件放在后面，不够简单明了，并且会有一些迷惑的地方，最好使用 while 来代替。</p>
+<p>如果只有一个 goto 目标，那么 goto 尚且还能接受，但是过于复杂的 goto 会让代码可读性特别差，应该避免使用 goto。</p>
+<p>在嵌套的循环中，用一些 return 语句往往能减少嵌套的层数。</p>
+<h1 id="八、拆分长表达式"><a href="#八、拆分长表达式" class="headerlink" title="八、拆分长表达式"></a>八、拆分长表达式</h1><p>长表达式的可读性很差，可以引入一些解释变量从而拆分表达式：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">if line.split(&#39;:&#39;)[0].strip() &#x3D;&#x3D; &quot;root&quot;:
+    ...
+username &#x3D; line.split(&#39;:&#39;)[0].strip()
+if username &#x3D;&#x3D; &quot;root&quot;:
+    ...</code></pre>
+
+<p>使用摩根定理简化一些逻辑表达式：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">if (!a &amp;&amp; !b) &#123;
+    ...
+&#125;
+if (!(a || b)) &#123;
+    ...
+&#125;</code></pre>
+
+<h1 id="九、变量与可读性"><a href="#九、变量与可读性" class="headerlink" title="九、变量与可读性"></a>九、变量与可读性</h1><p><strong>去除控制流变量</strong> 。在循环中通过使用 break 或者 return 可以减少控制流变量的使用。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">boolean done &#x3D; false;
+while (&#x2F;* condition *&#x2F; &amp;&amp; !done) &#123;
+    ...
+    if ( ... ) &#123;
+        done &#x3D; true;
+        continue;
+    &#125;
+&#125;
+while(&#x2F;* condition *&#x2F;) &#123;
+    ...
+    if ( ... ) &#123;
+        break;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>减小变量作用域</strong> 。作用域越小，越容易定位到变量所有使用的地方。</p>
+<p>JavaScript 可以用闭包减小作用域。以下代码中 submit_form 是函数变量，submitted 变量控制函数不会被提交两次。第一个实现中 submitted 是全局变量，第二个实现把 submitted 放到匿名函数中，从而限制了起作用域范围。</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">submitted &#x3D; false;
+var submit_form &#x3D; function(form_name) &#123;
+    if (submitted) &#123;
+        return;
+    &#125;
+    submitted &#x3D; true;
+&#125;;
+var submit_form &#x3D; (function() &#123;
+    var submitted &#x3D; false;
+    return function(form_name) &#123;
+        if(submitted) &#123;
+            return;
+        &#125;
+        submitted &#x3D; true;
+    &#125;
+&#125;());  &#x2F;&#x2F; () 使得外层匿名函数立即执行</code></pre>
+
+<p>JavaScript 中没有用 var 声明的变量都是全局变量，而全局变量很容易造成迷惑，因此应当总是用 var 来声明变量。</p>
+<p>变量定义的位置应当离它使用的位置最近。</p>
+<p><strong>实例解析</strong></p>
+<p>在一个网页中有以下文本输入字段：</p>
+<pre class="line-numbers language-html" data-language="html"><code class="language-html">&lt;input type &#x3D; &quot;text&quot; id &#x3D; &quot;input1&quot; value &#x3D; &quot;a&quot;&gt;
+&lt;input type &#x3D; &quot;text&quot; id &#x3D; &quot;input2&quot; value &#x3D; &quot;b&quot;&gt;
+&lt;input type &#x3D; &quot;text&quot; id &#x3D; &quot;input3&quot; value &#x3D; &quot;&quot;&gt;
+&lt;input type &#x3D; &quot;text&quot; id &#x3D; &quot;input4&quot; value &#x3D; &quot;d&quot;&gt;</code></pre>
+
+<p>现在要接受一个字符串并把它放到第一个空的 input 字段中，初始实现如下：</p>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">var setFirstEmptyInput &#x3D; function(new_alue) &#123;
+    var found &#x3D; false;
+    var i &#x3D; 1;
+    var elem &#x3D; document.getElementById(&#39;input&#39; + i);
+    while (elem !&#x3D; null) &#123;
+        if (elem.value &#x3D;&#x3D;&#x3D; &#39;&#39;) &#123;
+            found &#x3D; true;
+            break;
+        &#125;
+        i++;
+        elem &#x3D; document.getElementById(&#39;input&#39; + i);
+    &#125;
+    if (found) elem.value &#x3D; new_value;
+    return elem;
+&#125;</code></pre>
+
+<p>以上实现有以下问题：</p>
+<ul>
+<li>found 可以去除；</li>
+<li>elem 作用域过大；</li>
+<li>可以用 for 循环代替 while 循环；</li>
+</ul>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">var setFirstEmptyInput &#x3D; function(new_value) &#123;
+    for (var i &#x3D; 1; true; i++) &#123;
+        var elem &#x3D; document.getElementById(&#39;input&#39; + i);
+        if (elem &#x3D;&#x3D;&#x3D; null) &#123;
+            return null;
+        &#125;
+        if (elem.value &#x3D;&#x3D;&#x3D; &#39;&#39;) &#123;
+            elem.value &#x3D; new_value;
+            return elem;
+        &#125;
+    &#125;
+&#125;;</code></pre>
+
+<h1 id="十、抽取函数"><a href="#十、抽取函数" class="headerlink" title="十、抽取函数"></a>十、抽取函数</h1><p>工程学就是把大问题拆分成小问题再把这些问题的解决方案放回一起。</p>
+<p>首先应该明确一个函数的高层次目标，然后对于不是直接为了这个目标工作的代码，抽取出来放到独立的函数中。</p>
+<p>介绍性的代码：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">int findClostElement(int[] arr) &#123;
+    int clostIdx;
+    int clostDist &#x3D; Interger.MAX_VALUE;
+    for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
+        int x &#x3D; ...;
+        int y &#x3D; ...;
+        int z &#x3D; ...;
+        int value &#x3D; x * y * z;
+        int dist &#x3D; Math.sqrt(Math.pow(value, 2), Math.pow(arr[i], 2));
+        if (dist &lt; clostDist) &#123;
+            clostIdx &#x3D; i;
+            clostDist &#x3D; value;
+        &#125;
+    &#125;
+    return clostIdx;
+&#125;</code></pre>
+
+<p>以上代码中循环部分主要计算距离，这部分不属于代码高层次目标，高层次目标是寻找最小距离的值，因此可以把这部分代替提取到独立的函数中。这样做也带来一个额外的好处有：可以单独进行测试、可以快速找到程序错误并修改。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public int findClostElement(int[] arr) &#123;
+    int clostIdx;
+    int clostDist &#x3D; Interger.MAX_VALUE;
+    for (int i &#x3D; 0; i &lt; arr.length; i++) &#123;
+        int dist &#x3D; computDist(arr, i);
+        if (dist &lt; clostDist) &#123;
+            clostIdx &#x3D; i;
+            clostDist &#x3D; value;
+        &#125;
+    &#125;
+    return clostIdx;
+&#125;</code></pre>
+
+<p>并不是函数抽取的越多越好，如果抽取过多，在阅读代码的时候可能需要不断跳来跳去。只有在当前函数不需要去了解某一块代码细节而能够表达其内容时，把这块代码抽取成子函数才是好的。</p>
+<p>函数抽取也用于减小代码的冗余。</p>
+<h1 id="十一、一次只做一件事"><a href="#十一、一次只做一件事" class="headerlink" title="十一、一次只做一件事"></a>十一、一次只做一件事</h1><p>只做一件事的代码很容易让人知道其要做的事；</p>
+<p>基本流程：列出代码所做的所有任务；把每个任务拆分到不同的函数，或者不同的段落。</p>
+<h1 id="十二、用自然语言表述代码"><a href="#十二、用自然语言表述代码" class="headerlink" title="十二、用自然语言表述代码"></a>十二、用自然语言表述代码</h1><p>先用自然语言书写代码逻辑，也就是伪代码，然后再写代码，这样代码逻辑会更清晰。</p>
+<h1 id="十三、减少代码量"><a href="#十三、减少代码量" class="headerlink" title="十三、减少代码量"></a>十三、减少代码量</h1><p>不要过度设计，编码过程会有很多变化，过度设计的内容到最后往往是无用的。</p>
+<p>多用标准库实现。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li>Dustin, Boswell, Trevor, 等. 编写可读代码的艺术 [M]. 机械工业出版社, 2012.</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+<script>
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/code-easy-read/',]
+      });
+      });
+  </script>
+
+</body>
+</html>
