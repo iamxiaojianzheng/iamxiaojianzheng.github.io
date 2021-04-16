@@ -22,19 +22,25 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Mist","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
   </script>
-<meta name="description" content="Collection &amp; Reuse">
+<meta name="description" content="磁盘结构 盘面（Platter）：一个磁盘有多个盘面； 磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道； 扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小； 磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）； 制动手臂（">
 <meta property="og:type" content="website">
-<meta property="og:title" content="JIAHE">
-<meta property="og:url" content="https://xiaojianzheng.cn/archives/page/2/index.html">
+<meta property="og:title" content="设备管理">
+<meta property="og:url" content="https://xiaojianzheng.cn/os/device-management.html">
 <meta property="og:site_name" content="JIAHE">
-<meta property="og:description" content="Collection &amp; Reuse">
+<meta property="og:description" content="磁盘结构 盘面（Platter）：一个磁盘有多个盘面； 磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道； 扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小； 磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）； 制动手臂（">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/014fbc4d-d873-4a12-b160-867ddaed9807.jpg">
+<meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/4e2485e4-34bd-4967-9f02-0c093b797aaa.png">
+<meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/271ce08f-c124-475f-b490-be44fedc6d2e.png">
+<meta property="article:published_time" content="2021-04-16T05:09:54.864Z">
+<meta property="article:modified_time" content="2021-04-16T05:09:54.864Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="JIAHE">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/014fbc4d-d873-4a12-b160-867ddaed9807.jpg">
 
 
-<link rel="canonical" href="https://xiaojianzheng.cn/archives/page/2/">
+<link rel="canonical" href="https://xiaojianzheng.cn/os/device-management">
 
 
 <script class="page-configurations">
@@ -46,7 +52,8 @@
     lang   : 'zh-CN'
   };
 </script>
-<title>归档 | JIAHE</title>
+<title>设备管理 | JIAHE
+</title>
   
 
 
@@ -201,7 +208,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -214,6 +221,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">磁盘结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">磁盘调度算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">1. 先来先服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%9C%80%E7%9F%AD%E5%AF%BB%E9%81%93%E6%97%B6%E9%97%B4%E4%BC%98%E5%85%88"><span class="nav-number">2.2.</span> <span class="nav-text">2. 最短寻道时间优先</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E7%94%B5%E6%A2%AF%E7%AE%97%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">3. 电梯算法</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -263,232 +271,124 @@
 </noscript>
 
 
-    <div class="main-inner archive posts-collapse">
-
-
+    <div class="main-inner page posts-expand">
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 26 篇日志。 继续努力。</span>
-      </div>
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
+      
+
+      
+      
+
+      
+
+        
+        <ul class="sub-menu menu">
+          
+            
+          
+          
+              
+  <li class="menu-item menu-item-概述"><a href="/os/index.html" rel="section">概述</a></li>
+
+
+          
+          
+              
+  <li class="menu-item menu-item-进程管理"><a href="/os/process-and-thread.html" rel="section">进程管理</a></li>
+
+
+          
+          
+              
+  <li class="menu-item menu-item-死锁"><a href="/os/deadlock.html" rel="section">死锁</a></li>
+
+
+          
+          
+              
+  <li class="menu-item menu-item-内存管理"><a href="/os/memory-management.html" rel="section">内存管理</a></li>
+
+
+          
+          
+              
+  <li class="menu-item menu-item-设备管理"><a href="/os/device-management.html" rel="section">设备管理</a></li>
+
+
+          
+        </ul>
+        
+
+        
+        
+      
+
+      
+      
+  
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">设备管理
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h1 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a>磁盘结构</h1><ul>
+<li>盘面（Platter）：一个磁盘有多个盘面；</li>
+<li>磁道（Track）：盘面上的圆形带状区域，一个盘面可以有多个磁道；</li>
+<li>扇区（Track Sector）：磁道上的一个弧段，一个磁道可以有多个扇区，它是最小的物理储存单位，目前主要有 512 bytes 与 4 K 两种大小；</li>
+<li>磁头（Head）：与盘面非常接近，能够将盘面上的磁场转换为电信号（读），或者将电信号转换为盘面的磁场（写）；</li>
+<li>制动手臂（Actuator arm）：用于在磁道之间移动磁头；</li>
+<li>主轴（Spindle）：使整个盘面转动。</li>
+</ul>
+<p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/014fbc4d-d873-4a12-b160-867ddaed9807.jpg" alt="img"></p>
+<h1 id="磁盘调度算法"><a href="#磁盘调度算法" class="headerlink" title="磁盘调度算法"></a>磁盘调度算法</h1><p>读写一个磁盘块的时间的影响因素有：</p>
+<ul>
+<li>旋转时间（主轴转动盘面，使得磁头移动到适当的扇区上）</li>
+<li>寻道时间（制动手臂移动，使得磁头移动到适当的磁道上）</li>
+<li>实际的数据传输时间</li>
+</ul>
+<p>其中，寻道时间最长，因此磁盘调度的主要目标是使磁盘的平均寻道时间最短。</p>
+<h2 id="1-先来先服务"><a href="#1-先来先服务" class="headerlink" title="1. 先来先服务"></a>1. 先来先服务</h2><blockquote>
+<p>FCFS, First Come First Served</p>
+</blockquote>
+<p>按照磁盘请求的顺序进行调度。</p>
+<p>优点是公平和简单。缺点也很明显，因为未对寻道做任何优化，使平均寻道时间可能较长。</p>
+<h2 id="2-最短寻道时间优先"><a href="#2-最短寻道时间优先" class="headerlink" title="2. 最短寻道时间优先"></a>2. 最短寻道时间优先</h2><blockquote>
+<p>SSTF, Shortest Seek Time First</p>
+</blockquote>
+<p>优先调度与当前磁头所在磁道距离最近的磁道。</p>
+<p>虽然平均寻道时间比较低，但是不够公平。如果新到达的磁道请求总是比一个在等待的磁道请求近，那么在等待的磁道请求会一直等待下去，也就是出现饥饿现象。具体来说，两端的磁道请求更容易出现饥饿现象。</p>
+<p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/4e2485e4-34bd-4967-9f02-0c093b797aaa.png" alt="img"></p>
+<h2 id="3-电梯算法"><a href="#3-电梯算法" class="headerlink" title="3. 电梯算法"></a>3. 电梯算法</h2><blockquote>
+<p>SCAN</p>
+</blockquote>
+<p>电梯总是保持一个方向运行，直到该方向没有请求为止，然后改变运行方向。</p>
+<p>电梯算法（扫描算法）和电梯的运行过程类似，总是按一个方向来进行磁盘调度，直到该方向上没有未完成的磁盘请求，然后改变方向。</p>
+<p>因为考虑了移动方向，因此所有的磁盘请求都会被满足，解决了 SSTF 的饥饿问题。</p>
+<p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/271ce08f-c124-475f-b490-be44fedc6d2e.png" alt="img"></p>
+
+      </div>
+      
+      
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-19T14:43:55+08:00"
-              content="2021-03-19">
-          03-19
-        </time>
-      </div>
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" itemprop="url">
-            <span itemprop="name">Scoop不完全上手指南</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-17T14:10:42+08:00"
-              content="2021-03-17">
-          03-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/17/git-merge%E8%AF%A6%E8%A7%A3/" itemprop="url">
-            <span itemprop="name">git-merge详解</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-16T15:51:48+08:00"
-              content="2021-03-16">
-          03-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/16/VSCode%E5%AE%89%E8%A3%85Vim%E5%8F%8A%E6%8B%BC%E9%9F%B3%E5%88%87%E6%8D%A2%E9%97%AE%E9%A2%98/" itemprop="url">
-            <span itemprop="name">VSCod安装Vim及拼音切换问题</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-13T21:29:54+08:00"
-              content="2021-03-13">
-          03-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/13/Spring-Framework-5-3-4-%E5%8F%82%E8%80%83%E6%8C%87%E5%8D%97%EF%BC%88%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E7%BF%BB%E8%AF%91%EF%BC%89/" itemprop="url">
-            <span itemprop="name">Spring Framework 5.3.4 参考指南（官方文档翻译）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-13T16:31:34+08:00"
-              content="2021-03-13">
-          03-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/13/Git%E5%AD%A6%E4%B9%A0%E5%8C%BA/" itemprop="url">
-            <span itemprop="name">Git学习区</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-12T16:58:53+08:00"
-              content="2021-03-12">
-          03-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/12/%E5%87%A0%E7%A7%8D%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E7%9A%84Java%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%E4%B8%8E%E6%AF%94%E8%BE%83/" itemprop="url">
-            <span itemprop="name">几种任务调度的Java实现方法与比较</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-12T16:31:34+08:00"
-              content="2021-03-12">
-          03-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/12/%E9%80%8F%E5%BD%BB%E7%9A%84%E6%8E%8C%E6%8F%A1Spring%E4%B8%AD-transactional%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="url">
-            <span itemprop="name">透彻的掌握Spring中@transactional的使用</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-12T15:39:42+08:00"
-              content="2021-03-12">
-          03-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/12/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">
-            <span itemprop="name">反向代理和正向代理的区别</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-03-01T11:12:12+08:00"
-              content="2021-03-01">
-          03-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/03/01/Java%E5%AF%B9Zip%E6%A0%BC%E5%BC%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E8%A7%A3%E5%8E%8B%E7%BC%A9/" itemprop="url">
-            <span itemprop="name">Java对Zip格式压缩和解压缩</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2021-02-27T20:07:23+08:00"
-              content="2021-02-27">
-          02-27
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/02/27/mysqlpump%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" itemprop="url">
-            <span itemprop="name">mysqlpump使用说明</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-
-    </div>
-  </div>
-  
-  
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
-  </nav>
 
 
 <script>
@@ -580,7 +480,7 @@ if (document.querySelectorAll('.pdf-container').length) {
       quicklink.listen({
         timeout : 3000,
         priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/archives/page/2/',]
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/os/device-management.html',]
       });
       });
   </script>
