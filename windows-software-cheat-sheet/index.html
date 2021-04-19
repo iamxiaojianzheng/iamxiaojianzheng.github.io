@@ -29,8 +29,8 @@
 <meta property="og:site_name" content="JIAHE">
 <meta property="og:description" content="scoop# 安装Scoop Invoke-Expression (New-Object System.Net.WebClient).DownloadString(&#39;https:&#x2F;&#x2F;get.scoop.sh&#39;)  如果上面安装不成功的话，可以尝试下面这个 Set-ExecutionPolicy RemoteSigned -scope CurrentUser iw">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-04-16T05:37:09.300Z">
-<meta property="article:modified_time" content="2021-04-16T05:37:09.300Z">
+<meta property="article:published_time" content="2021-04-19T06:04:33.229Z">
+<meta property="article:modified_time" content="2021-04-19T06:04:33.229Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="JIAHE">
 <meta name="twitter:card" content="summary">
@@ -359,7 +359,16 @@ bcdedit &#x2F;set hypervisorlaunchtype auto</code></pre>
 5. 在手动激活窗口你会得到一个请求码，复制它并把它粘贴到keygen里。最后别忘了连按至少两下回车结束输入。
 6. 如果不出意外，你会得到一个看似用Base64编码的激活码。直接复制它，并把它粘贴到Navicat的手动激活窗口，最后点激活按钮。</code></pre>
 
-<p><strong>VirtualBox</strong> <a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a><br><strong>CentOS</strong> <a target="_blank" rel="noopener" href="https://wiki.centos.org/Download">https://wiki.centos.org/Download</a><br>基础教程 <a target="_blank" rel="noopener" href="https://blog.csdn.net/wang2834557/article/details/103872427">https://blog.csdn.net/wang2834557/article/details/103872427</a></p>
+<p><strong>VirtualBox</strong> <a target="_blank" rel="noopener" href="https://www.virtualbox.org/wiki/Downloads">https://www.virtualbox.org/wiki/Downloads</a></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vboxmanage startvm &lt;uuid&gt;|&lt;name&gt; [--type gui|sdl|headless]
+
+vboxmanage startvm CentOS7-JIAHE --type headless
+
+vboxmanage controlvm &lt;uuid&gt;|&lt;name&gt; pause|resume|reset|poweroff|savestate|
+
+vboxmanage controlvm CentOS7-JIAHE poweroff</code></pre>
+
+<p><strong>CentOS</strong> <a target="_blank" rel="noopener" href="https://wiki.centos.org/Download">https://wiki.centos.org/Download</a><br>基础教程 <a target="_blank" rel="noopener" href="https://blog.csdn.net/wang2834557/article/details/103872427">https://blog.csdn.net/wang2834557/article/details/103872427</a></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vim &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33
 
 BOOTPROTO&#x3D;&quot;static&quot;
