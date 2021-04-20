@@ -511,6 +511,35 @@ public static void decompress(String srcPath, String dest) throws Exception &#12
       </tags>
   </entry>
   <entry>
+    <title>MySQL5.7\ -\ 统计连续超过3天提交了任务的用户</title>
+    <url>/2021/04/20/MySQL5.7%E7%BB%9F%E8%AE%A1%E8%BF%9E%E7%BB%AD%E8%B6%85%E8%BF%873%E5%A4%A9%E6%8F%90%E4%BA%A4%E4%BA%86%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%94%A8%E6%88%B7/</url>
+    <content><![CDATA[<p>需求：统计表中连续超过3天都提交了任务的用户名</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT rn AS &#39;连续提交任务天数&#39;, submit_creator AS &#39;提交人&#39; FROM
+(
+    SELECT
+        @rn:&#x3D; CASE
+            -- 当前记录的用户名等于上一条记录的用户名 AND 当前记录的日期与上一条记录的日期之差为1
+            WHEN @pre_submit_creator&#x3D;creator AND DATEDIFF(@pre_submit_date,submit_date) &#x3D; 1
+            THEN @rn + 1
+            ELSE 1 END AS rn,
+        @pre_submit_date:&#x3D;submit_date AS submit_date,
+        @pre_submit_creator:&#x3D;creator AS submit_creator
+    FROM
+        (
+            -- 日期降序并去重
+            SELECT DISTINCT DATE(gmt_create) AS submit_date, creator FROM task_log
+            ORDER BY DATE(gmt_create) DESC
+        )    AS log,
+    (SELECT @rn&#x3D;0, @submit_creator&#x3D;null, @submit_date&#x3D;null) AS b
+) log
+where rn &gt;&#x3D; 3;</code></pre>
+
+]]></content>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Scoop不完全上手指南</title>
     <url>/2021/03/19/Scoop%E4%B8%8D%E5%AE%8C%E5%85%A8%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<h3 id="Scoop-是什么"><a href="#Scoop-是什么" class="headerlink" title="Scoop 是什么"></a>Scoop 是什么</h3><p>借用 Mike Zick 对 Cygwin 和 MSYS 的<a href="http://sourceforge.net/mailarchive/forum.php?thread_name=200506130821.11185.mszick@morethan.org&forum_name=mingw-msys">描述</a>，他对 Scoop 作了一个类比描述：</p>
