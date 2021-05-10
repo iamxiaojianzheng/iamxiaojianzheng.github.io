@@ -42,8 +42,8 @@
 <meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7c54de21-e2ff-402e-bc42-4037de1c1592.png">
 <meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/485fdf34-ccf8-4185-97c6-17374ee719a0.png">
 <meta property="og:image" content="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/f7d170a3-e446-4a64-ac2d-cb95028f81a8.png">
-<meta property="article:published_time" content="2021-04-27T09:11:56.540Z">
-<meta property="article:modified_time" content="2021-04-27T09:11:56.540Z">
+<meta property="article:published_time" content="2021-05-10T08:56:34.586Z">
+<meta property="article:modified_time" content="2021-05-10T08:56:34.586Z">
 <meta property="article:author" content="JIAHE">
 <meta property="article:tag" content="JIAHE">
 <meta name="twitter:card" content="summary">
@@ -242,7 +242,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">二、数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STRING"><span class="nav-number">2.1.</span> <span class="nav-text">STRING</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LIST"><span class="nav-number">2.2.</span> <span class="nav-text">LIST</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SET"><span class="nav-number">2.3.</span> <span class="nav-text">SET</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HASH"><span class="nav-number">2.4.</span> <span class="nav-text">HASH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZSET"><span class="nav-number">2.5.</span> <span class="nav-text">ZSET</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">三、数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">3.1.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%B7%83%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">跳跃表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">四、使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">4.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">查找表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">4.4.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E7%BC%93%E5%AD%98"><span class="nav-number">4.5.</span> <span class="nav-text">会话缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.6.</span> <span class="nav-text">分布式锁实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">4.7.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81Redis-%E4%B8%8E-Memcached"><span class="nav-number">5.</span> <span class="nav-text">五、Redis 与 Memcached</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">数据持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">5.3.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">5.4.</span> <span class="nav-text">内存管理机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%94%AE%E7%9A%84%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="nav-number">6.</span> <span class="nav-text">六、键的过期时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、数据淘汰策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">八、持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RDB-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.1.</span> <span class="nav-text">RDB 持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.2.</span> <span class="nav-text">AOF 持久化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E4%BA%8B%E5%8A%A1"><span class="nav-number">9.</span> <span class="nav-text">九、事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E4%BA%8B%E4%BB%B6"><span class="nav-number">10.</span> <span class="nav-text">十、事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6"><span class="nav-number">10.1.</span> <span class="nav-text">文件事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E4%BA%8B%E4%BB%B6"><span class="nav-number">10.2.</span> <span class="nav-text">时间事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9A%84%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%89%A7%E8%A1%8C"><span class="nav-number">10.3.</span> <span class="nav-text">事件的调度与执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%A4%8D%E5%88%B6"><span class="nav-number">11.</span> <span class="nav-text">十一、复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">11.1.</span> <span class="nav-text">连接过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E9%93%BE"><span class="nav-number">11.2.</span> <span class="nav-text">主从链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81Sentinel"><span class="nav-number">12.</span> <span class="nav-text">十二、Sentinel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%88%86%E7%89%87"><span class="nav-number">13.</span> <span class="nav-text">十三、分片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%BA%E5%9D%9B%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90"><span class="nav-number">14.</span> <span class="nav-text">十四、一个简单的论坛系统分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E4%BF%A1%E6%81%AF"><span class="nav-number">14.1.</span> <span class="nav-text">文章信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E8%B5%9E%E5%8A%9F%E8%83%BD"><span class="nav-number">14.2.</span> <span class="nav-text">点赞功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%96%87%E7%AB%A0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F"><span class="nav-number">14.3.</span> <span class="nav-text">对文章进行排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">15.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">一、概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">二、数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#STRING"><span class="nav-number">2.1.</span> <span class="nav-text">STRING</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BC%96%E7%A0%81"><span class="nav-number">2.1.1.</span> <span class="nav-text">内部编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.1.2.</span> <span class="nav-text">典型使用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LIST"><span class="nav-number">2.2.</span> <span class="nav-text">LIST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BC%96%E7%A0%81-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">内部编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">2.2.3.</span> <span class="nav-text">典型应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SET"><span class="nav-number">2.3.</span> <span class="nav-text">SET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-1"><span class="nav-number">2.3.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BC%96%E7%A0%81-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">内部编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="nav-number">2.3.3.</span> <span class="nav-text">内存优化技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-1"><span class="nav-number">2.3.4.</span> <span class="nav-text">典型应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HASH"><span class="nav-number">2.4.</span> <span class="nav-text">HASH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BC%96%E7%A0%81-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">内部编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">内存优化技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-2"><span class="nav-number">2.4.3.</span> <span class="nav-text">典型应用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZSET"><span class="nav-number">2.5.</span> <span class="nav-text">ZSET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%B9%E7%82%B9-2"><span class="nav-number">2.5.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8%E7%BC%96%E7%A0%81-4"><span class="nav-number">2.5.2.</span> <span class="nav-text">内部编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF-3"><span class="nav-number">2.5.3.</span> <span class="nav-text">典型应用场景</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">三、数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">3.1.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%B3%E8%B7%83%E8%A1%A8"><span class="nav-number">3.2.</span> <span class="nav-text">跳跃表</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.</span> <span class="nav-text">四、使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">4.2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E8%A1%A8"><span class="nav-number">4.3.</span> <span class="nav-text">查找表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97"><span class="nav-number">4.4.</span> <span class="nav-text">消息队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E7%BC%93%E5%AD%98"><span class="nav-number">4.5.</span> <span class="nav-text">会话缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.6.</span> <span class="nav-text">分布式锁实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83"><span class="nav-number">4.7.</span> <span class="nav-text">其它</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%94%E3%80%81Redis-%E4%B8%8E-Memcached"><span class="nav-number">5.</span> <span class="nav-text">五、Redis 与 Memcached</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.1.</span> <span class="nav-text">数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">5.2.</span> <span class="nav-text">数据持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F"><span class="nav-number">5.3.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">5.4.</span> <span class="nav-text">内存管理机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E9%94%AE%E7%9A%84%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4"><span class="nav-number">6.</span> <span class="nav-text">六、键的过期时间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="nav-number">7.</span> <span class="nav-text">七、数据淘汰策略</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.</span> <span class="nav-text">八、持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RDB-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.1.</span> <span class="nav-text">RDB 持久化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AOF-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">8.2.</span> <span class="nav-text">AOF 持久化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E4%BA%8B%E5%8A%A1"><span class="nav-number">9.</span> <span class="nav-text">九、事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E4%BA%8B%E4%BB%B6"><span class="nav-number">10.</span> <span class="nav-text">十、事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6"><span class="nav-number">10.1.</span> <span class="nav-text">文件事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E4%BA%8B%E4%BB%B6"><span class="nav-number">10.2.</span> <span class="nav-text">时间事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9A%84%E8%B0%83%E5%BA%A6%E4%B8%8E%E6%89%A7%E8%A1%8C"><span class="nav-number">10.3.</span> <span class="nav-text">事件的调度与执行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%A4%8D%E5%88%B6"><span class="nav-number">11.</span> <span class="nav-text">十一、复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%87%E7%A8%8B"><span class="nav-number">11.1.</span> <span class="nav-text">连接过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E9%93%BE"><span class="nav-number">11.2.</span> <span class="nav-text">主从链</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81Sentinel"><span class="nav-number">12.</span> <span class="nav-text">十二、Sentinel</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E5%88%86%E7%89%87"><span class="nav-number">13.</span> <span class="nav-text">十三、分片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E8%AE%BA%E5%9D%9B%E7%B3%BB%E7%BB%9F%E5%88%86%E6%9E%90"><span class="nav-number">14.</span> <span class="nav-text">十四、一个简单的论坛系统分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E4%BF%A1%E6%81%AF"><span class="nav-number">14.1.</span> <span class="nav-text">文章信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%82%B9%E8%B5%9E%E5%8A%9F%E8%83%BD"><span class="nav-number">14.2.</span> <span class="nav-text">点赞功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%96%87%E7%AB%A0%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F"><span class="nav-number">14.3.</span> <span class="nav-text">对文章进行排序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">15.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -255,13 +255,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">29</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">43</span>
+        <span class="site-state-item-count">48</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -408,120 +408,185 @@
 <p><a target="_blank" rel="noopener" href="https://redislabs.com/ebook/part-1-getting-started/chapter-1-getting-to-know-redis/1-2-what-redis-data-structures-look-like/">What Redis data structures look like(opens new window)</a></p>
 </blockquote>
 <h2 id="STRING"><a href="#STRING" class="headerlink" title="STRING"></a>STRING</h2><p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/6019b2db-bc3e-4408-b6d8-96025f4481d6.png" alt="img"></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&gt; set hello world
-OK
-&gt; get hello
-&quot;world&quot;
-&gt; del hello
-(integer) 1
-&gt; get hello
-(nil)</code></pre>
-
+<ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/set.html">SET</a> <code>SET key value [EX seconds] [PX milliseconds] [NX|XX]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/setnx.html">SETNX</a> <code>SETNX key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/setex.html">SETEX</a> <code>SETEX key seconds value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/psetex.html">PSETEX</a> <code>PSETEX key milliseconds value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/get.html">GET</a> <code>GET key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/getset.html">GETSET</a> <code>GETSET key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/strlen.html">STRLEN</a> <code>STRLEN key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/append.html">APPEND</a> <code>APPEND key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/setrange.html">SETRANGE</a> <code>SETRANGE key offset value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/getrange.html">GETRANGE</a> <code>GETRANGE key start end</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/incr.html">INCR</a> <code>INCR key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/incrby.html">INCRBY</a> <code>INCRBY key increment</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/incrbyfloat.html">INCRBYFLOAT</a> <code>INCRBYFLOAT key increment</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/decr.html">DECR</a> <code>DECR key</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/decrby.html">DECRBY</a> <code>DECRBY key decrement</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/mset.html">MSET</a> <code>MSET key value [key value …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/msetnx.html">MSETNX</a> <code>MSETNX key value [key value …]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/string/mget.html">MGET</a> <code>MGET key [key …]</code></li>
+</ul>
+<h3 id="内部编码"><a href="#内部编码" class="headerlink" title="内部编码"></a>内部编码</h3><p>Redis会根据当前值得到类型和长度决定使用哪种内部编码实现。</p>
+<ul>
+<li>int 小于8字节的长整型</li>
+<li>embstr 小于等于39字节的字符串</li>
+<li>raw 大于39字节的字符串</li>
+</ul>
+<h3 id="典型使用场景"><a href="#典型使用场景" class="headerlink" title="典型使用场景"></a>典型使用场景</h3><ol>
+<li><p>缓存功能<br>将Redis作为缓存层，MySQL作为存储层，绝大部分请求的数据优先从Redis中获取。（注意：key的设计，过期时间的设置）</p>
+</li>
+<li><p>计数统计<br>实际一个真是的技术系统要考虑的问题会很多：防作弊、按照不同维度计数、数据持久化到底层数据源等。</p>
+</li>
+<li><p>共享Session<br>将Redis作为分布式服务下的Session存储服务，避免同一用户的请求被负载均衡到不同的服务器上时需要重新登录的问题。</p>
+</li>
+<li><p>限速<br>同样是通过计数功能，可以限制指定功能接口的请求频率。</p>
+</li>
+</ol>
 <h2 id="LIST"><a href="#LIST" class="headerlink" title="LIST"></a>LIST</h2><p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/fb327611-7e2b-4f2f-9f5b-38592d408f07.png" alt="img"></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&gt; rpush list-key item
-(integer) 1
-&gt; rpush list-key item2
-(integer) 2
-&gt; rpush list-key item
-(integer) 3
-
-&gt; lrange list-key 0 -1
-1) &quot;item&quot;
-2) &quot;item2&quot;
-3) &quot;item&quot;
-
-&gt; lindex list-key 1
-&quot;item2&quot;
-
-&gt; lpop list-key
-&quot;item&quot;
-
-&gt; lrange list-key 0 -1
-1) &quot;item2&quot;
-2) &quot;item&quot;</code></pre>
-
+<ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lpush.html">LPUSH</a> <code>LPUSH key value [value …]</code> 从左边插入元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lpushx.html">LPUSHX</a> <code>LPUSHX key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpush.html">RPUSH</a> <code>RPUSH key value [value …]</code> 从右边新增元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpushx.html">RPUSHX</a> <code>RPUSHX key value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lpop.html">LPOP</a> <code>LPOP key</code> 从左边删除元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpop.html">RPOP</a> <code>RPOP key</code> 从右边删除元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/rpoplpush.html">RPOPLPUSH</a> <code>RPOPLPUSH source destination</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lrem.html">LREM</a> <code>LREM key count value</code> 删除指定元素，count&gt;0 则从左到右删除count个，count&lt;0 则从右到左删除，count=0 则删除所有</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/llen.html">LLEN</a> <code>LLEN key</code> 获取列表长度</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lindex.html">LINDEX</a> <code>LINDEX key index</code> 获取指定索引下标的元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/linsert.html">LINSERT</a> <code>LINSERT key BEFORE|AFTER pivot value</code> 向某个元素前或者后插入元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lset.html">LSET</a> <code>LSET key index value</code> 修改指定索引下标的元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/lrange.html">LRANGE</a> <code>LRANGE key start stop</code> 获取指定范围内的元素列表</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/ltrim.html">LTRIM</a> <code>LTRIM key start stop</code> 只保留指定范围的元素，其余元素删除</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/blpop.html">BLPOP</a> <code>BLPOP key [key …] timeout</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/brpop.html">BRPOP</a> <code>BRPOP key [key …] timeout</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/list/brpoplpush.html">BRPOPLPUSH</a> <code>BRPOPLPUSH source destination timeout</code></li>
+</ul>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>列表中的元素是有序的</li>
+<li>列表中的元素是可以重复的</li>
+</ol>
+<h3 id="内部编码-1"><a href="#内部编码-1" class="headerlink" title="内部编码"></a>内部编码</h3><ul>
+<li>ziplist（压缩列表）当哈希类型元素个数小于<code>hash-max-ziplist-entries</code>配置（默512个）、同事所有值都小于<code>hash-max-ziplist-value</code>配置（默认64字节）时，Redis会使用ziplist作为哈希的内部实现，ziplist使用更加紧凑的结构实现多个元素的连续存储，所在节省内存方面比hashtable更加优秀。</li>
+<li>linkedlist（链表）当列表类型无法满足ziplist的条件时，Redis会使用linkedlist作为列表的内部实现。</li>
+<li>quicklist</li>
+</ul>
+<h3 id="典型应用场景"><a href="#典型应用场景" class="headerlink" title="典型应用场景"></a>典型应用场景</h3><ol>
+<li>消息队列</li>
+</ol>
+<p>通过lpush+brpop命令组合即可实现阻塞队列，生产者使用lpush从列表左侧插入元素，消费者使用brpop命令阻塞式获取列表右侧的元素。</p>
+<p>实际上列表的使用场景很多，在选择时可以参考一下口诀：</p>
+<ul>
+<li>lpush + lpop = Stack（栈）</li>
+<li>lpush + rpop = Queue（队列）</li>
+<li>lpush + ltrim = Capped Collection（有限集合）</li>
+<li>lpush + brpop = Message Queue（消息队列）</li>
+</ul>
 <h2 id="SET"><a href="#SET" class="headerlink" title="SET"></a>SET</h2><p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/cd5fbcff-3f35-43a6-8ffa-082a93ce0f0e.png" alt="img"></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&gt; sadd set-key item
-(integer) 1
-&gt; sadd set-key item2
-(integer) 1
-&gt; sadd set-key item3
-(integer) 1
-&gt; sadd set-key item
-(integer) 0
-
-&gt; smembers set-key
-1) &quot;item&quot;
-2) &quot;item2&quot;
-3) &quot;item3&quot;
-
-&gt; sismember set-key item4
-(integer) 0
-&gt; sismember set-key item
-(integer) 1
-
-&gt; srem set-key item2
-(integer) 1
-&gt; srem set-key item2
-(integer) 0
-
-&gt; smembers set-key
-1) &quot;item&quot;
-2) &quot;item3&quot;</code></pre>
-
+<ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sadd.html">SADD</a> <code>SADD key member [member …]</code> 添加元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sismember.html">SISMEMBER</a> <code>SISMEMBER key member</code> 判断元素是否在集合中，存在返回1，否则返回0</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/spop.html">SPOP</a> <code>SPOP key [count]</code> 从集合中随机弹出元素，会删除，count参数从3.2版本开始可用</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/srandmember.html">SRANDMEMBER</a> <code>SRANDMEMBER key [count]</code> 随机从集合中弹出指定个数元素，count默认为1，不会删除</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/srem.html">SREM</a> <code>SREM key member [member …]</code> 移除集合中的一个或多个元素，不存在的元素会被忽略</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/smove.html">SMOVE</a> <code>SMOVE source destination member</code> 将 member 元素从 source 集合移动到 destination 集合。</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/scard.html">SCARD</a> <code>SCARD key</code> 计算元素个数，时间复杂度为O(1)，因为是直接使用Redis内部的计数变量</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/smembers.html">SMEMBERS</a> <code>SMEMBERS key</code> 获取所有元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sscan.html">SSCAN</a> <code>SSCAN key cursor [MATCH pattern] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sinter.html">SINTER</a> <code>SINTER key [key …]</code> 取多个集合的交集</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sinterstore.html">SINTERSTORE</a> <code>SINTERSTORE destination key [key …]</code> 将多个集合的交集结果保存到第一个key中</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sunion.html">SUNION</a> <code>SUNION key [key …]</code> 取多个集合的并集</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sunionstore.html">SUNIONSTORE</a> <code>SUNIONSTORE destination key [key …]</code> 将多个集合的并集结果保存到第一个key中</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sdiff.html">SDIFF</a> <code>SDIFF key [key …]</code> 取多个集合的差集</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/set/sdiffstore.html">SDIFFSTORE</a> <code>SDIFFSTORE destination key [key …]</code> 将多个集合的差集结果保存到第一个key中</li>
+</ul>
+<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>不允许有重复元素，且元素在集合中无序。</li>
+<li>除了支持增删改查，还支持交集、并集和差集。</li>
+</ol>
+<h3 id="内部编码-2"><a href="#内部编码-2" class="headerlink" title="内部编码"></a>内部编码</h3><ul>
+<li>intset（整数集合）当集合中的元素都是整数且元素个数小于<code>set-max-intset-entries</code>配置（默认512个）时，Redis会选用intset来作为集合的内部实现，从而减少内存的使用。</li>
+<li>hashtable（哈希表）当即和类型无法满足intset的条件时，Redis会使用hashtable作为集合的内部实现</li>
+</ul>
+<h3 id="内存优化技巧"><a href="#内存优化技巧" class="headerlink" title="内存优化技巧"></a>内存优化技巧</h3><h3 id="典型应用场景-1"><a href="#典型应用场景-1" class="headerlink" title="典型应用场景"></a>典型应用场景</h3><ol>
+<li>标签</li>
+</ol>
+<p>例如一个用户可能对游戏、音乐比较感兴趣，另一个用户可能对音乐、体育感兴趣，这些兴趣点就是标签；再例如博客中文章的关键词也可以作为一种标签。（用户和标签的关系维护应该在一个事务内执行，放至部分命令失败造成的数据不一致。可通过Lua脚本将两个命令放在一个事物中）</p>
+<p>集合类型的应用场景通常为以下几种：</p>
+<ul>
+<li>sadd = Tagging（标签）</li>
+<li>spop + srandmember = Random item（生成随机数，比如抽奖）</li>
+<li>sadd + sinter = Social Graph（社交需求）</li>
+</ul>
 <h2 id="HASH"><a href="#HASH" class="headerlink" title="HASH"></a>HASH</h2><p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/7bd202a7-93d4-4f3a-a878-af68ae25539a.png" alt="img"></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&gt; hset hash-key sub-key1 value1
-(integer) 1
-&gt; hset hash-key sub-key2 value2
-(integer) 1
-&gt; hset hash-key sub-key1 value1
-(integer) 0
+<ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hset.html">HSET</a> <code>HSET hash field value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hsetnx.html">HSETNX</a> <code>HSETNX hash field value</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hget.html">HGET</a> <code>HGET hash field</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hexists.html">HEXISTS</a> <code>HEXISTS hash field</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hdel.html">HDEL</a> <code>HDEL</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hlen.html">HLEN</a> <code>HLEN</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hstrlen.html">HSTRLEN</a> <code>HSTRLEN</code> Redis3.2以上版本</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hincrby.html">HINCRBY</a> <code>HINCRBY</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hincrbyfloat.html">HINCRBYFLOAT</a> <code>HINCRBYFLOAT</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hmset.html">HMSET</a> <code>HMSET</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hmget.html">HMGET</a> <code>HMGET</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hkeys.html">HKEYS</a> <code>HKEYS</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hvals.html">HVALS</a> <code>HVALS</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hgetall.html">HGETALL</a> <code>HGETALL</code> <strong>谨慎使用</strong></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/hash/hscan.html">HSCAN</a> <code>HSCAN</code></li>
+</ul>
+<h3 id="内部编码-3"><a href="#内部编码-3" class="headerlink" title="内部编码"></a>内部编码</h3><ul>
+<li>ziplist（压缩列表） 当哈希类型元素个数小于<code>hash-max-ziplist-entries</code>配置（默512个）、同事所有值都小于<code>hash-max-ziplist-value</code>配置（默认64字节）时，Redis会使用ziplist作为哈希的内部实现，ziplist使用更加紧凑的结构实现多个元素的连续存储，所在节省内存方面比hashtable更加优秀。</li>
+<li>hashtable（哈希表）当哈希类型无法满足ziplist的条件时，Redis会使用hashtable作为哈希的内部实现，因为此时ziplist的读写效率会下降，而hashtable的读写时间复杂度为<code>O(1)</code>。</li>
+</ul>
+<h3 id="内存优化技巧-1"><a href="#内存优化技巧-1" class="headerlink" title="内存优化技巧"></a>内存优化技巧</h3><h3 id="典型应用场景-2"><a href="#典型应用场景-2" class="headerlink" title="典型应用场景"></a>典型应用场景</h3><ol>
+<li>缓存用户信息</li>
+</ol>
+<p><strong>方法一：</strong>序列化字符串类型：将用户信息序列化后用一个键保存<br>优势：简化编程，如果理的使用序列化，可以提高内存的使用效率。<br>劣势：序列化和反序列化有一定的开销，同时每次更新属性都需要把全部属性取出进行反序列化，更新后再序列化到Redis中。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">set user:1 serialize(userInfo)</code></pre>
 
-&gt; hgetall hash-key
-1) &quot;sub-key1&quot;
-2) &quot;value1&quot;
-3) &quot;sub-key2&quot;
-4) &quot;value2&quot;
-
-&gt; hdel hash-key sub-key2
-(integer) 1
-&gt; hdel hash-key sub-key2
-(integer) 0
-
-&gt; hget hash-key sub-key1
-&quot;value1&quot;
-
-&gt; hgetall hash-key
-1) &quot;sub-key1&quot;
-2) &quot;value1&quot;</code></pre>
+<p><strong>方法二：</strong>每个用户属性使用一对key-value，value中保存用户信息。<br>优势：简单直观，如果使用合理可以减少内存空间的使用。<br>劣势：要控制哈希在ziplist和hashtable两种内部编码的转换，hashtable会消耗更多的内存。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">hmset user:1 name tom age 18 city changsha</code></pre>
 
 <h2 id="ZSET"><a href="#ZSET" class="headerlink" title="ZSET"></a>ZSET</h2><p><img data-src="https://cs-notes-1256109796.cos.ap-guangzhou.myqcloud.com/1202b2d6-9469-4251-bd47-ca6034fb6116.png" alt="img"></p>
-<pre class="line-numbers language-html" data-language="html"><code class="language-html">&gt; zadd zset-key 728 member1
-(integer) 1
-&gt; zadd zset-key 982 member0
-(integer) 1
-&gt; zadd zset-key 982 member0
-(integer) 0
-
-&gt; zrange zset-key 0 -1 withscores
-1) &quot;member1&quot;
-2) &quot;728&quot;
-3) &quot;member0&quot;
-4) &quot;982&quot;
-
-&gt; zrangebyscore zset-key 0 800 withscores
-1) &quot;member1&quot;
-2) &quot;728&quot;
-
-&gt; zrem zset-key member1
-(integer) 1
-&gt; zrem zset-key member1
-(integer) 0
-
-&gt; zrange zset-key 0 -1 withscores
-1) &quot;member0&quot;
-2) &quot;982&quot;</code></pre>
-
+<ul>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zadd.html">ZADD</a> <code>ZADD key score member [[score member] [score member] …]</code> 添加元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zscore.html">ZSCORE</a> <code>ZSCORE key member</code> 返回元素对应的score值</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zincrby.html">ZINCRBY</a> <code>ZINCRBY key increment member</code> 增加元素的score值</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zcard.html">ZCARD</a> <code>ZCARD key</code> 返回集合中元素个数</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zcount.html">ZCOUNT</a> <code>ZCOUNT key min max</code> 返回集合中元素的score值在[min, max]之间的元素个数</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrange.html">ZRANGE</a> <code>ZRANGE key start stop [WITHSCORES]</code> 返回指定索引范围内已从低到高排序好的元素集合，加上withscores，还会返回元素的score值</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrevrange.html">ZREVRANGE</a> <code>ZREVRANGE key start stop [WITHSCORES]</code> 返回指定索引范围内已从高到低排序好的元素集合，加上withscores，还会返回元素的score值</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrangebyscore.html">ZRANGEBYSCORE</a> <code>ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrevrangebyscore.html">ZREVRANGEBYSCORE</a> <code>ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrank.html">ZRANK</a> <code>ZRANK key member</code> 返回元素在集合中的排名，从低到高排序，0为顶</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrevrank.html">ZREVRANK</a> <code>ZREVRANK key member</code> 返回元素在集合中的排名，从高到低排序，0为低</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrem.html">ZREM</a> <code>ZREM key member [member …]</code> 删除指定元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zremrangebyrank.html">ZREMRANGEBYRANK</a> <code>ZREMRANGEBYRANK key start stop</code> 删除指定索引范围的所有元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zremrangebyscore.html">ZREMRANGEBYSCORE</a> <code>ZREMRANGEBYSCORE key min max</code> 删除指定score范围内的所有元素</li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zrangebylex.html">ZRANGEBYLEX</a> <code>ZRANGEBYLEX key min max [LIMIT offset count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zlexcount.html">ZLEXCOUNT</a> <code>ZLEXCOUNT key min max</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zremrangebylex.html">ZREMRANGEBYLEX</a> <code>ZREMRANGEBYLEX key min max</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zscan.html">ZSCAN</a> <code>ZSCAN key cursor [MATCH pattern] [COUNT count]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zunionstore.html">ZUNIONSTORE</a> <code>ZUNIONSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</code></li>
+<li><a target="_blank" rel="noopener" href="http://redisdoc.com/sorted_set/zinterstore.html">ZINTERSTORE</a> <code>ZINTERSTORE destination numkeys key [key …] [WEIGHTS weight [weight …]] [AGGREGATE SUM|MIN|MAX]</code></li>
+</ul>
+<p>min max 支持开区间（小括号）和闭区间（中括号），-inf和+inf分别代表无限小和无限大</p>
+<h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>集合内元素不能重复</li>
+<li>可以通过给元素设置一个score作为排序的依据，以达到排序效果</li>
+</ol>
+<h3 id="内部编码-4"><a href="#内部编码-4" class="headerlink" title="内部编码"></a>内部编码</h3><ul>
+<li>ziplist（压缩列表）当有序集合的元素个数小于<code>zset-max-ziplist-entries</code>配置（默128个），同时每个元素的值都小于<code>zset-max-ziplist-value</code>配置（默认 64字节）时，Redis会使用ziplist作为有序集合的内部实现，ziplist可以有效减少内存的使用。</li>
+<li>skiplist（跳跃表）当ziplist条件不满足时，有序集合会使用skiplist作为内部实现，因为此时ziplist的读写效率会下降。</li>
+</ul>
+<h3 id="典型应用场景-3"><a href="#典型应用场景-3" class="headerlink" title="典型应用场景"></a>典型应用场景</h3><ol>
+<li>排行榜</li>
+</ol>
+<p>例如视频网站需要对用户上传到视频做排行榜，榜单的维度可能是多个方面：时间、播放量、点赞数等。</p>
 <h1 id="三、数据结构"><a href="#三、数据结构" class="headerlink" title="三、数据结构"></a>三、数据结构</h1><h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>dictht 是一个散列表结构，使用拉链法解决哈希冲突。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">&#x2F;* This is our hash table structure. Every dictionary has two of this as we
  * implement incremental rehashing, for the old to the new table. *&#x2F;

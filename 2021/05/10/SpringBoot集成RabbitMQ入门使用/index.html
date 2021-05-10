@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+  </script>
+<meta name="description" content="添加依赖&lt;dependency&gt;   &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;   &lt;artifactId&gt;spring-boot-starter-amqp&lt;&#x2F;artifactId&gt; &lt;dependency&gt;  配置信息   属性 描述    spring.ra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot集成RabbitMQ入门使用">
+<meta property="og:url" content="https://xiaojianzheng.cn/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="JIAHE">
+<meta property="og:description" content="添加依赖&lt;dependency&gt;   &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;   &lt;artifactId&gt;spring-boot-starter-amqp&lt;&#x2F;artifactId&gt; &lt;dependency&gt;  配置信息   属性 描述    spring.ra">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-10T01:27:24.000Z">
+<meta property="article:modified_time" content="2021-05-10T01:27:24.000Z">
+<meta property="article:author" content="JIAHE">
+<meta property="article:tag" content="SpringBoot">
+<meta property="article:tag" content="RabbitMQ">
+<meta property="article:tag" content="消息队列">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xiaojianzheng.cn/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>SpringBoot集成RabbitMQ入门使用 | JIAHE</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">JIAHE</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
+        <li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
+        
+            
+  <li class="menu-item menu-item-java"><a href="/java/" rel="section"><i class="fa fa-code fa-fw"></i>Java</a></li>
+
+
+      
+        <li class="menu-item menu-item-代码可读性"><a href="/code-easy-read/" rel="section"><i class="far fa-file-code fa-fw"></i>代码可读性</a></li>
+        
+            
+  <li class="menu-item menu-item-数据库"><a href="/database/" rel="section"><i class="fas fa-database fa-fw"></i>数据库</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-计算机网络"><a href="/network/" rel="section"><i class="fas fa-network-wired fa-fw"></i>计算机网络</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-操作系统基础"><a href="/os/" rel="section"><i class="fas fa-laptop fa-fw"></i>操作系统基础</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-基础概念"><a href="/basic-concepts/" rel="section"><i class="fas fa-star fa-fw"></i>基础概念</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-数据结构与算法"><a href="/data-structure/" rel="section"><i class="fas fa-poll fa-fw"></i>数据结构与算法</a></li>
+
+
+      
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
+        <li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li>
+        <li class="menu-item menu-item-常用软件"><a href="/windows-software-cheat-sheet/" rel="section"><i class="fab fa-windows fa-fw"></i>常用软件</a></li>
+        <li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li>
+        <li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li>
+        <li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="nav-number">1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">2.</span> <span class="nav-text">配置信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87RabbitTemplate%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF"><span class="nav-number">3.</span> <span class="nav-text">通过RabbitTemplate发送消息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%B6%88%E6%81%AF%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">配置消息转换器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%B6%88%E6%81%AF%E5%B1%9E%E6%80%A7"><span class="nav-number">3.2.</span> <span class="nav-text">设置消息属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%8F%97%E6%9D%A5%E8%87%AARabbitMQ%E7%9A%84%E6%B6%88%E6%81%AF"><span class="nav-number">4.</span> <span class="nav-text">接受来自RabbitMQ的消息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8RabbitTemplate%E6%8E%A5%E6%94%B6%E6%B6%88%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">使用RabbitTemplate接收消息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9B%91%E5%90%AC%E5%99%A8%E5%A4%84%E7%90%86RabbitMQ%E7%9A%84%E6%B6%88%E6%81%AF"><span class="nav-number">4.2.</span> <span class="nav-text">使用监听器处理RabbitMQ的消息</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIAHE</p>
+  <div class="site-description" itemprop="description">Collection & Reuse</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringBoot集成RabbitMQ入门使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-05-10 09:27:24" itemprop="dateCreated datePublished" datetime="2021-05-10T09:27:24+08:00">2021-05-10</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h1><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;
+  &lt;artifactId&gt;spring-boot-starter-amqp&lt;&#x2F;artifactId&gt;
+&lt;dependency&gt;</code></pre>
+
+<h1 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h1><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>spring.rabbitmq.addresses</td>
+<td>逗号分隔的RabbitMQ代理地址列表</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.host</td>
+<td>代理的主机（默认为localhost）</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.port</td>
+<td>代理的端口（默认为5672）</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.username</td>
+<td>访问代理所使用的用户名（可选）</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.password</td>
+<td>访问代理所使用的密码（可选）</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.template.exchange</td>
+<td>设置默认的Exchange（可选）</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.template.routing-key</td>
+<td>设置默认的Routing-Key（可选）</td>
+</tr>
+<tr>
+<td>spring.rabbitmq.template.receive-timeout</td>
+<td>设置默认超时时间（可选）</td>
+</tr>
+</tbody></table>
+<span id="more"></span>
+
+<h1 id="通过RabbitTemplate发送消息"><a href="#通过RabbitTemplate发送消息" class="headerlink" title="通过RabbitTemplate发送消息"></a>通过RabbitTemplate发送消息</h1><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; 发送原始的消息
+void send(Message message) throws AmqpException;
+void send(String routingKey, Message message) throws AmqpException;
+void send(String exchange, String routingKey, Message message) throws AmqpException;
+
+&#x2F;&#x2F; 发送根据对象转换而成的消息
+void convertAndSend(Object message) throws AmqpException;
+void convertAndSend(String routingKey, Object message) throws AmqpException;
+void convertAndSend(String exchange, String routingKey, Object message) throws AmqpException;
+
+&#x2F;&#x2F; 发送根据对象转换而成的消息并且带有后期处理的功能
+void convertAndSend(Object message, MessagePostProcessor mPP) throws AmqpException;
+void convertAndSend(String routingKey, Object message, MessagePostProcessor mPP) throws AmqpException;
+void convertAndSend(String exchange, String routingKey, Object message, MessagePostProcessor mPP) throws AmqpException;</code></pre>
+
+<p>代码示例</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Service
+public class RabbitOrderMessagingService implements OrderMessagingService &#123;
+    private RabbitTemplate rabbit;
+
+    @Autowired
+    public RabbitOrderMessagingService(RabbitTemplate rabbit) &#123;
+        this.rabbit &#x3D; rabbit;
+    &#125;
+
+    public void sendOrder(Order order) &#123;
+        MessageConverter converter &#x3D; rabbit.getMessageConverter();
+        MessageProperties props &#x3D; new MessageProperties();
+        Message message &#x3D; converter.toMessage(order, props);
+        rabbit.send(&quot;tacocloud.order&quot;, message);
+    &#125;
+&#125;</code></pre>
+
+<h2 id="配置消息转换器"><a href="#配置消息转换器" class="headerlink" title="配置消息转换器"></a>配置消息转换器</h2><ul>
+<li><strong>Jackson2JsonMessageConverter</strong> 使用Jackson2JSON实现对象和JSON的相互转换</li>
+<li><strong>MarshallingMessageConverter</strong> 使用Spring的Marshaller和Unmarshaller进行转换</li>
+<li><strong>SerializerMessageConverter</strong> 使用Spring的Serializer和Deserializer转换String和任意种类的原生对象</li>
+<li><strong>SimpleMessageConverter</strong> 转换String、字节数组和Serializable类型</li>
+<li><strong>ContentTypeDelegatingMessageConverter</strong> 基于contentType头信息，讲转换功能委托给另外一个MessageConverter</li>
+<li><strong>MessaagingMessageConverter</strong> 将消息转换功能委托为另外一个MessageConverter，并将头信息的转换委托给AmqpHeaderConverter</li>
+</ul>
+<h2 id="设置消息属性"><a href="#设置消息属性" class="headerlink" title="设置消息属性"></a>设置消息属性</h2><p>通过<code>send</code>方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public void sendOrder(Order order) &#123;
+    MessageConverter converter &#x3D; rabbit.getMessageConverter();
+    MessageProperties props &#x3D; new MessageProperties();
+    props.setHeader(&quot;X_ORDER_SOURCE&quot;, &quot;WEB&quot;);
+    Message message &#x3D; converter.toMessage(order, props);
+    rabbit.send(&quot;tacocloud.order&quot;, message);
+&#125;</code></pre>
+
+<p>通过<code>convertAndSend</code>方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">@Override
+public void sendOrder(Order order) &#123;
+    rabbit.convertAndSend(&quot;tacocloud.order.queue&quot;, order,
+        new MessagePostProcessor() &#123;
+            @Override
+            public Message postProcessMessage(Message message) throws AmqpException &#123;
+                MessageProperties props &#x3D; message.getMessageProperties();
+                props.setHeader(&quot;X_ORDER_SOURCE&quot;, &quot;WEB&quot;);
+                return message;
+            &#125;
+        &#125;);
+&#125;</code></pre>
+
+<h1 id="接受来自RabbitMQ的消息"><a href="#接受来自RabbitMQ的消息" class="headerlink" title="接受来自RabbitMQ的消息"></a>接受来自RabbitMQ的消息</h1><ul>
+<li>使用RabbitTemplate从队列拉取消息</li>
+<li>将消息推送至带有<code>@RabbitListener</code>注解的方法</li>
+</ul>
+<h2 id="使用RabbitTemplate接收消息"><a href="#使用RabbitTemplate接收消息" class="headerlink" title="使用RabbitTemplate接收消息"></a>使用RabbitTemplate接收消息</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">@Component
+public class RabbitOrderReceiver &#123;
+    private RabbitTemplate rabbit;
+    private MessageConverter converter;
+
+    @Autowired
+    public RabbitOrderReceiver(RabbitTemplate rabbit) &#123;
+        this.rabbit &#x3D; rabbit;
+        this.converter &#x3D; rabbit.getMessageConverter();
+    &#125;
+
+    public Order receiveOrder() &#123;
+        &#x2F;&#x2F; 延时等待返回
+        &#x2F;&#x2F; Message message &#x3D; rabbit.receive(&quot;tacocloud.orders&quot;, 300000);
+
+        &#x2F;&#x2F; 无等待返回
+        Message message &#x3D; rabbit.receive(&quot;tacocloud.orders&quot;);
+
+        &#x2F;&#x2F; 手动转换
+        &#x2F;&#x2F; return message !&#x3D; null ? (Order) converter.fromMessage(message) : null;
+
+        &#x2F;&#x2F; 自动转换
+        return (Order) rabbit.receiveAndConvert(&quot;tacocloud.order.queue&quot;);
+        &#x2F;&#x2F; 另一种自动转换写法
+        &#x2F;&#x2F; return rabbit.receiveAndConvert(&quot;tacocloud.order.queue&quot;, new ParamterizedTypeReference&lt;Order&gt;() &#123;&#125;);
+    &#125;
+&#125;</code></pre>
+
+<h2 id="使用监听器处理RabbitMQ的消息"><a href="#使用监听器处理RabbitMQ的消息" class="headerlink" title="使用监听器处理RabbitMQ的消息"></a>使用监听器处理RabbitMQ的消息</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java">@Component
+public class OrderListener &#123;
+    private KitchenUI ui;
+
+    @Autowired
+    public OrderListener(KitchenUI ui) &#123;
+        this.ui &#x3D; ui;
+    &#125;
+
+    &#x2F;&#x2F; 当消息抵达RabbitMQ队列时该方法应该被调用
+    @RabbitListener(queues &#x3D; &quot;tacocloud.order.queue&quot;)
+    public void receiveOrder(Order order) &#123;
+        ui.displayOrder(order);
+    &#125;
+&#125;</code></pre>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>
+              <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
+              <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag"># 消息队列</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/10/SpringCloud%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%9B%BE/" rel="prev" title="SpringCloud图解工作原理">
+                  <i class="fa fa-chevron-left"></i> SpringCloud图解工作原理
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+<script>
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/',]
+      });
+      });
+  </script>
+
+</body>
+</html>
