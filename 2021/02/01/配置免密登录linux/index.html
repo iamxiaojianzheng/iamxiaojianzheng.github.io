@@ -241,13 +241,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -356,7 +356,7 @@ mv &#x2F;home&#x2F;id_rsa.pub ~&#x2F;.ssh&#x2F;authorized_keys
 vim &#x2F;etc&#x2F;ssh&#x2F;sshd_config
 
 StrictModes no
-RSAAuthentication yes
+RSAAuthentication yes # 如果没有就自己加上
 PubkeyAuthentication yes
 AuthorizedKeysFile      .ssh&#x2F;authorized_keys
 

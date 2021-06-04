@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Gemini","version":"8.2.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}};
+  </script>
+<meta name="description" content="DispatcherServletWeb MVC Config应用程序可以声明所需的在 Special Bean Types 中列出的基础bean来处理请求。DispatcherServlet 会检查每个特殊bbean的 WebApplicationContext。如果没有匹配的bean类型，它会使用{spring-framework-main-code}&#x2F;spring-springmvc&#x2F;src">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Web MVC">
+<meta property="og:url" content="https://xiaojianzheng.cn/2021/06/02/Spring%20Web%20MVC/index.html">
+<meta property="og:site_name" content="JIAHE">
+<meta property="og:description" content="DispatcherServletWeb MVC Config应用程序可以声明所需的在 Special Bean Types 中列出的基础bean来处理请求。DispatcherServlet 会检查每个特殊bbean的 WebApplicationContext。如果没有匹配的bean类型，它会使用{spring-framework-main-code}&#x2F;spring-springmvc&#x2F;src">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-02T03:11:52.000Z">
+<meta property="article:modified_time" content="2021-06-02T03:11:52.000Z">
+<meta property="article:author" content="JIAHE">
+<meta property="article:tag" content="Spring Web MVC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xiaojianzheng.cn/2021/06/02/Spring%20Web%20MVC/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<title>Spring Web MVC | JIAHE</title>
+  
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">JIAHE</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li>
+        <li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
+        
+            
+  <li class="menu-item menu-item-java"><a href="/java/" rel="section"><i class="fa fa-code fa-fw"></i>Java</a></li>
+
+
+      
+        <li class="menu-item menu-item-代码可读性"><a href="/code-easy-read/" rel="section"><i class="far fa-file-code fa-fw"></i>代码可读性</a></li>
+        
+            
+  <li class="menu-item menu-item-数据库"><a href="/database/" rel="section"><i class="fas fa-database fa-fw"></i>数据库</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-计算机网络"><a href="/network/" rel="section"><i class="fas fa-network-wired fa-fw"></i>计算机网络</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-操作系统基础"><a href="/os/" rel="section"><i class="fas fa-laptop fa-fw"></i>操作系统基础</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-基础概念"><a href="/basic-concepts/" rel="section"><i class="fas fa-star fa-fw"></i>基础概念</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-数据结构与算法"><a href="/data-structure/" rel="section"><i class="fas fa-poll fa-fw"></i>数据结构与算法</a></li>
+
+
+      
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
+        <li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li>
+        <li class="menu-item menu-item-常用软件"><a href="/windows-software-cheat-sheet/" rel="section"><i class="fab fa-windows fa-fw"></i>常用软件</a></li>
+        <li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li>
+        <li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li>
+        <li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DispatcherServlet"><span class="nav-number">1.</span> <span class="nav-text">DispatcherServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-MVC-Config"><span class="nav-number">1.1.</span> <span class="nav-text">Web MVC Config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet-Config"><span class="nav-number">1.2.</span> <span class="nav-text">Servlet Config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Processing"><span class="nav-number">1.3.</span> <span class="nav-text">Processing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path-Matching"><span class="nav-number">1.4.</span> <span class="nav-text">Path Matching</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIAHE</p>
+  <div class="site-description" itemprop="description">Collection & Reuse</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/02/Spring%20Web%20MVC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Web MVC
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-02 11:11:52" itemprop="dateCreated datePublished" datetime="2021-06-02T11:11:52+08:00">2021-06-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="DispatcherServlet"><a href="#DispatcherServlet" class="headerlink" title="DispatcherServlet"></a>DispatcherServlet</h1><h2 id="Web-MVC-Config"><a href="#Web-MVC-Config" class="headerlink" title="Web MVC Config"></a>Web MVC Config</h2><p>应用程序可以声明所需的在 <code>Special Bean Types</code> 中列出的基础bean来处理请求。<code>DispatcherServlet</code> 会检查每个特殊bbean的 <code>WebApplicationContext</code>。如果没有匹配的bean类型，它会使用{spring-framework-main-code}/spring-springmvc/src/main/resources/org/springframework/web/servlet/DispatcherServlet.properties[<code>DispatcherServlet.properties</code>]中列出默认类型。</p>
+<p>在大多数情况下，<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-config">MVC Config</a> 是最好的起点。它在 Java 或 XML 中声明了所需的 bean，并提供了一个更高级别的配置回调 API 来自定义它。</p>
+<blockquote>
+<p>✏️ Spring Boot 依赖于 MVC Java 配置来配置 Spring MVC，并提供了许多额外方便的选项。</p>
+</blockquote>
+<h2 id="Servlet-Config"><a href="#Servlet-Config" class="headerlink" title="Servlet Config"></a>Servlet Config</h2><p>在 Servlet 3.0+ 环境中，您可以选择以编程方式配置 Servlet 容器作为替代方案或与 <code>web.xml</code> 文件结合使用。</p>
+<p>以下示例注册一个 <code>DispatcherServlet</code>：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">import org.springframework.web.WebApplicationInitializer;
+
+public class MyWebApplicationInitializer implements WebApplicationInitializer &#123;
+
+    @Override
+    public void onStartup(ServletContext container) &#123;
+        XmlWebApplicationContext appContext &#x3D; new XmlWebApplicationContext();
+        appContext.setConfigLocation(&quot;&#x2F;WEB-INF&#x2F;spring&#x2F;dispatcher-config.xml&quot;);
+
+        ServletRegistration.Dynamic registration &#x3D; container.addServlet(&quot;dispatcher&quot;, new DispatcherServlet(appContext));
+        registration.setLoadOnStartup(1);
+        registration.addMapping(&quot;&#x2F;&quot;);
+    &#125;
+&#125;</code></pre>
+
+<p><code>WebApplicationInitializer</code> 是 Spring MVC 提供的一个接口，可确保检测到您的实现并自动用于初始化任何 Servlet 3 容器。<code>AbstractDispatcherServletInitializer</code> 是实现了 <code>WebApplicationInitializer</code> 接口的抽象基类，可以通过覆盖其方法来指定 servlet 映射和 <code>DispatcherServlet</code> 配置的位置，使得注册 <code>DispatcherServlet</code> 变得更加容易。</p>
+<p>推荐使用基于Java代码的配置方式，示例如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class MyWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer &#123;
+
+    @Override
+    protected Class&lt;?&gt;[] getRootConfigClasses() &#123;
+        return null;
+    &#125;
+
+    @Override
+    protected Class&lt;?&gt;[] getServletConfigClasses() &#123;
+        return new Class&lt;?&gt;[] &#123; MyWebConfig.class &#125;;
+    &#125;
+
+    @Override
+    protected String[] getServletMappings() &#123;
+        return new String[] &#123; &quot;&#x2F;&quot; &#125;;
+    &#125;
+&#125;</code></pre>
+
+<p>如果你想使用基于XML的配置方式，你可以直接继承 <code>AbstractDispatcherServletInitializer</code>，示例如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class MyWebAppInitializer extends AbstractDispatcherServletInitializer &#123;
+
+    @Override
+    protected WebApplicationContext createRootApplicationContext() &#123;
+        return null;
+    &#125;
+
+    @Override
+    protected WebApplicationContext createServletApplicationContext() &#123;
+        XmlWebApplicationContext cxt &#x3D; new XmlWebApplicationContext();
+        cxt.setConfigLocation(&quot;&#x2F;WEB-INF&#x2F;spring&#x2F;dispatcher-config.xml&quot;);
+        return cxt;
+    &#125;
+
+    @Override
+    protected String[] getServletMappings() &#123;
+        return new String[] &#123; &quot;&#x2F;&quot; &#125;;
+    &#125;
+&#125;</code></pre>
+
+<p><code>AbstractDispatcherServletInitializer</code> 还提供了一种方便的方法来添加 <code>Filter</code> 实例并使它们自动映射到 <code>DispatcherServlet</code>，示例如下：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class MyWebAppInitializer extends AbstractDispatcherServletInitializer &#123;
+
+    &#x2F;&#x2F; ...
+
+    @Override
+    protected Filter[] getServletFilters() &#123;
+        return new Filter[] &#123;
+            new HiddenHttpMethodFilter(),
+            new CharacterEncodingFilter()
+        &#125;;
+    &#125;
+&#125;</code></pre>
+
+<p>每个过滤器都根据其具体类型添加了一个默认名称，并自动映射到 <code>DispatcherServlet</code>。</p>
+<p><code>AbstractDispatcherServletInitializer</code> 的 <code>isAsyncSupported</code> 受保护方法提供了一个单一的地方来启用对 <code>DispatcherServlet</code> 和映射到它的所有过滤器的异步支持。默认情况下，此标志设置为 true。</p>
+<p>最后，如果您需要进一步自定义 <code>DispatcherServlet</code> 本身，您可以覆盖 <code>createDispatcherServlet</code> 方法。</p>
+<h2 id="Processing"><a href="#Processing" class="headerlink" title="Processing"></a>Processing</h2><p><code>DispatcherServlet</code>处理请求的过程如下：</p>
+<ol>
+<li><p>找到一个<code>WebApplicationContext</code>用于作为一个属性绑定到请求中，以便于在处理过程中控制器和其他元素能够使用到。（默认绑定在<code>DispatcherServlet.WEB_APPLICATION_CONTEXT_ATTRIBUTE</code>中）</p>
+</li>
+<li><p>将本地化解析器绑定到请求中，如果不需要可以忽略</p>
+</li>
+<li><p>将主题解析器绑定到请求中，让视图等元素决定使用哪个主题，如果不需要而已忽略</p>
+</li>
+<li><p>如果你指定了一个<code>multipart file</code>解析器，则会解析请求的<code>multiparts</code>。若能在请求中找到，则会将该请求包装为<code>MultipartHttpServletRequest</code>，以便于处理过程中其他元素进一步处理。有关<code>multipart</code>处理器，请参阅<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-multipart">Multipart Resolver</a></p>
+</li>
+<li><p>查找匹配的处理器。如果找到，则执行与处理器（预处理器,后置处理器、控制器）相关联的执行链以准备用于渲染模型。或者，对于带有注解的controller，可以直接响应（在HandlerAdapter）而不是返回视图。</p>
+</li>
+<li><p>如果返回的是模型，则将渲染视图。否则不会渲染视图（可能由于预处理器或后置处理器拦截了请求，或处于安全原因），因为请求已经得到合理响应。</p>
+</li>
+</ol>
+<p>可以通过在<code>WebApplicationContext</code>中声明<code>HandlerExceptionResolver</code> beans来解决请求处理过程中抛出的异常。这些异常解析器允许自定义逻辑来解决异常。有关更多详细信息，请参阅<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-exceptionhandlers">Exceptions</a>。</p>
+<p>Spring <code>DispatcherServlet</code> 还支持返回<code>last-modification-date</code>，如 Servlet API 指定的那样。确定特定请求的最后修改日期的过程很简单：<code>DispatcherServlet </code>查找适当的处理程序映射并测试找到的处理程序是否实现了<code>LastModified </code>接口。如果是，则将<code>LastModified</code>接口的<code>long getLastModified(request)</code>方法的值返回给客户端。</p>
+<p>您可以通过将<code>Servlet</code>初始化参数（<code>init-param</code>元素）添加到<code>web.xml </code>文件中的 Servlet 声明来自定义各个<code>DispatcherServlet </code>实例。下表列出了支持的参数：</p>
+<p><strong>Table 1. DispatcherServlet initialization parameters</strong></p>
+<table>
+<thead>
+<tr>
+<th align="left">Parameter</th>
+<th align="left">Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>contextClass</strong></td>
+<td align="left">实现 <code>ConfigurableWebApplicationContext</code> 的类，由这个 Servlet 实例化和本地配置。默认情况下，使用 <code>XmlWebApplicationContext</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong>contextConfigLocation</strong></td>
+<td align="left">传递给上下文实例（由<code>contextClass </code>指定）以指示可以找到上下文的位置的字符串。该字符串可能包含多个字符串（使用逗号作为分隔符）以支持多个上下文。在 bean 定义两次的多个上下文位置的情况下，最新的位置优先。</td>
+</tr>
+<tr>
+<td align="left"><strong>namespace</strong></td>
+<td align="left"><code>WebApplicationContext</code> 的命名空间。默认为 <code>[servlet-name]-servlet</code>。</td>
+</tr>
+<tr>
+<td align="left"><strong>throwExceptionIfNoHandlerFound</strong></td>
+<td align="left">当找不到一个对应请求的处理器是，将抛出<code>NoHandlerFoundException</code>。该异常可以使用<code>HandlerExceptionResolver </code>捕获（例如，通过使用被标记了<code>@ExceptionHandler</code>的控制器方法）并像其他任何方法一样处理。<br/>默认情况下，这设置为<code>false</code>，在这种情况下 <code>DispatcherServlet</code> 将响应状态设置为 404 (NOT_FOUND) 而不引发异常。<br/>请注意，如果还配置了<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-default-servlet-handler">默认servlet处理器</a>，则未解析的请求始终转发到默认 servlet，并且永远不会引发 404。</td>
+</tr>
+</tbody></table>
+<h2 id="Path-Matching"><a href="#Path-Matching" class="headerlink" title="Path Matching"></a>Path Matching</h2><p>ServletAPI会将一个完整的请求路径解析为<code>requestURI</code>，并且进一步分解出<code>contextPath</code>、<code>servletPath</code>以及<code>pathInfo</code>。其中具体的值取决于Servlet的映射方式。SpringMVC将通过这些值确定用于映射handler的<code>lookup path</code>。<code>lookup path</code>是<code>DispatcherServlet</code>自身映射中的路径，不包括<code>contextPath</code>和<code>servletMapping</code>前缀（如果存在）。</p>
+<p>由于<code>servletPath</code>和<code>pathInfo</code>会被解码，使得无法直接与<code>requestURI</code>进行比较，如果想要获取<code>lookup path</code>，则需要对<code>requestURI</code>进行解码。由于原本请求路径中可能包含编码的保留字符，使得解码操作将存在破坏原本请求路径的可能，产生安全隐患。</p>
+<p>该问题可通过升级到5.3或更高的版本来解决，从5.3版本开始，将使用<code>PathPattern</code>来替代<code>PathMatcher</code>。其通过将路径分段解析，每次仅处理一个分段的解码操作，这样保证了不会存在改变路径结构的风险。<code>PathPattern</code>也支持使用<code>servletPath</code>前缀映射，不过需要保证其中不包含需要编码的字符。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring-Web-MVC/" rel="tag"># Spring Web MVC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/24/SpringCloud%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" rel="prev" title="SpringCloud基础介绍">
+                  <i class="fa fa-chevron-left"></i> SpringCloud基础介绍
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+<script>
+if (document.querySelectorAll('.pdf-container').length) {
+  NexT.utils.getScript('https://cdn.jsdelivr.net/npm/pdfobject@2.2.4/pdfobject.min.js', () => {
+    document.querySelectorAll('.pdf-container').forEach(element => {
+      PDFObject.embed(element.dataset.target, element, {
+        pdfOpenParams: {
+          navpanes : 0,
+          toolbar  : 0,
+          statusbar: 0,
+          pagemode : 'thumbs',
+          view     : 'FitH'
+        },
+        PDFJS_URL: '/lib/pdf/web/viewer.html',
+        height   : element.dataset.height
+      });
+    });
+  }, window.PDFObject);
+}
+</script>
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://xiaojianzheng.cn/2021/06/02/Spring%20Web%20MVC/',]
+      });
+      });
+  </script>
+
+</body>
+</html>
