@@ -243,13 +243,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -282,6 +282,90 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/04/20/MySQL5.7%E7%BB%9F%E8%AE%A1%E8%BF%9E%E7%BB%AD%E8%B6%85%E8%BF%873%E5%A4%A9%E6%8F%90%E4%BA%A4%E4%BA%86%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%94%A8%E6%88%B7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/04/20/MySQL5.7%E7%BB%9F%E8%AE%A1%E8%BF%9E%E7%BB%AD%E8%B6%85%E8%BF%873%E5%A4%A9%E6%8F%90%E4%BA%A4%E4%BA%86%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%94%A8%E6%88%B7/" class="post-title-link" itemprop="url">MySQL5.7统计连续超过3天提交了任务的用户</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-20 20:23:56" itemprop="dateCreated datePublished" datetime="2021-04-20T20:23:56+08:00">2021-04-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>需求：统计表中连续超过3天都提交了任务的用户名</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">SELECT rn AS &#39;连续提交任务天数&#39;, submit_creator AS &#39;提交人&#39; FROM
+(
+    SELECT
+        @rn:&#x3D; CASE
+            -- 当前记录的用户名等于上一条记录的用户名 AND 当前记录的日期与上一条记录的日期之差为1
+            WHEN @pre_submit_creator&#x3D;creator AND DATEDIFF(@pre_submit_date,submit_date) &#x3D; 1
+            THEN @rn + 1
+            ELSE 1 END AS rn,
+        @pre_submit_date:&#x3D;submit_date AS submit_date,
+        @pre_submit_creator:&#x3D;creator AS submit_creator
+    FROM
+        (
+            -- 日期降序并去重
+            SELECT DISTINCT DATE(gmt_create) AS submit_date, creator FROM task_log
+            ORDER BY DATE(gmt_create) DESC
+        )    AS log,
+    (SELECT @rn&#x3D;0, @submit_creator&#x3D;null, @submit_date&#x3D;null) AS b
+) log
+where rn &gt;&#x3D; 3;</code></pre>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -977,77 +1061,6 @@ skip-grant-tables</code></pre>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/03/20/%E5%A6%82%E4%BD%95%E9%87%8D%E6%9E%84%E2%80%9C%E7%AE%AD%E5%A4%B4%E5%9E%8B%E2%80%9D%E4%BB%A3%E7%A0%81/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/03/19/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/03/19/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/" class="post-title-link" itemprop="url">记一次重装系统</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-03-19 14:46:15" itemprop="dateCreated datePublished" datetime="2021-03-19T14:46:15+08:00">2021-03-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>这次重装系统（为何要重装有兴趣的可翻看上上篇）我是一万个不愿意的，因为我知道系统重装的成本有多大。就单纯装个系统来说可能只需要十几分钟，但是装系统前的准备工作（主要是备份和制作安装启动 U 盘）以及系统装完后的恢复备份、软件安装调试、系统设置等，要想完全恢复之前的使用环境，差不多得需要一天的时间。现在是晚上的 10:42，先记录下该做的一些工作，按步骤来就不会出错。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/03/19/%E8%AE%B0%E4%B8%80%E6%AC%A1%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

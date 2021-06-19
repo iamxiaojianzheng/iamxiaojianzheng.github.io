@@ -1185,6 +1185,32 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
       </tags>
   </entry>
   <entry>
+    <title>Vue依赖包清单</title>
+    <url>/2021/06/19/Vue%E4%BE%9D%E8%B5%96%E5%8C%85%E6%B8%85%E5%8D%95/</url>
+    <content><![CDATA[<h1 id="axios"><a href="#axios" class="headerlink" title="axios"></a>axios</h1><p>Axios 是一个基于 Promise 的 HTTP 客户端，用于 node.js 和浏览器。它是<a href="https://www.lullabot.com/articles/what-is-an-isomorphic-application">同构</a>的（意思是它可以在具有相同代码库的浏览器和 nodejs 中运行）。在服务器端它使用原生 node.js http 模块，而在客户端（浏览器）它使用 XMLHttpRequests。</p>
+<p>学习文档 <a href="https://axios-http.com/docs/intro">https://axios-http.com/docs/intro</a></p>
+<p>项目地址 <a href="https://github.com/axios/axios">https://github.com/axios/axios</a></p>
+<h1 id="ckeditor4"><a href="#ckeditor4" class="headerlink" title="ckeditor4"></a>ckeditor4</h1><p>可视化文本编辑器</p>
+<p>官网 <a href="https://ckeditor.com/ckeditor-4/">https://ckeditor.com/ckeditor-4/</a></p>
+<p>文档 <a href="https://ckeditor.com/docs/ckeditor4/latest/guide/index.html">https://ckeditor.com/docs/ckeditor4/latest/guide/index.html</a></p>
+<h1 id="v-viewer"><a href="#v-viewer" class="headerlink" title="v-viewer"></a>v-viewer</h1><p>vue的图片查看器组件，支持旋转、缩放、缩放等，基于viewer.js</p>
+<p>官方 <a href="https://mirari.cc/v-viewer/">https://mirari.cc/v-viewer/</a></p>
+<p>项目地址 <a href="https://github.com/mirari/v-viewer">https://github.com/mirari/v-viewer</a></p>
+<h1 id="Viewer-js"><a href="#Viewer-js" class="headerlink" title="Viewer.js"></a>Viewer.js</h1><p>图片浏览</p>
+<p>项目地址 <a href="https://github.com/fengyuanchen/viewerjs">https://github.com/fengyuanchen/viewerjs</a></p>
+<h1 id="lodash"><a href="#lodash" class="headerlink" title="lodash"></a>lodash</h1><p>一个意在提高开发者效率,提高JS原生方法性能的JS库</p>
+<p>学习文档 <a href="https://lodash.com.cn/">https://lodash.com.cn/</a></p>
+<p>项目地址 <a href="https://github.com/lodash/lodash">https://github.com/lodash/lodash</a></p>
+<h1 id="JavaScript-Standard-Style"><a href="#JavaScript-Standard-Style" class="headerlink" title="JavaScript Standard Style"></a>JavaScript Standard Style</h1><p>JavaScript 代码规范，自带 linter &amp; 代码自动修正</p>
+<p>学习文档 <a href="https://standardjs.com/readme-zhcn.html">https://standardjs.com/readme-zhcn.html</a></p>
+<p>项目地址 <a href="https://github.com/standard/standard">https://github.com/standard/standard</a></p>
+]]></content>
+      <tags>
+        <tag>Vue</tag>
+        <tag>依赖包</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Windows10常用快捷键</title>
     <url>/2021/02/05/Windows10%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
     <content><![CDATA[<h1 id="窗口相关"><a href="#窗口相关" class="headerlink" title="窗口相关"></a>窗口相关</h1><h1 id="虚拟桌面"><a href="#虚拟桌面" class="headerlink" title="虚拟桌面"></a>虚拟桌面</h1><p><code>Ctrl + Win + d</code>    新建桌面<br><code>Ctrl + Win + ←/→</code>  左右切换桌面</p>
