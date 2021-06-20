@@ -1751,6 +1751,8 @@ OK</code></pre>
 </blockquote>
 <h2 id="使用-nvm-管理不同版本的-node-与-npm"><a href="#使用-nvm-管理不同版本的-node-与-npm" class="headerlink" title="使用 nvm 管理不同版本的 node 与 npm"></a>使用 nvm 管理不同版本的 node 与 npm</h2><p>在我们的日常开发中经常会遇到这种情况：手上有好几个项目，每个项目的需求不同，进而不同项目必须依赖不同版的 NodeJS 运行环境。如果没有一个合适的工具，这个问题将非常棘手。</p>
 <p><a href="https://github.com/creationix/nvm">nvm</a> 应运而生，nvm 是 Mac 下的 node 管理工具，有点类似管理 Ruby 的 rvm，如果需要管理 Windows 下的 node，官方推荐使用 <a href="https://github.com/hakobera/nvmw">nvmw</a> 或 <a href="https://github.com/coreybutler/nvm-windows">nvm-windows</a>。不过，nvm-windows 并不是 nvm 的简单移植，他们也没有任何关系。但下面介绍的所有命令，都可以在 nvm-windows 中运行。</p>
+<span id="more"></span>
+
 <h2 id="nvm-与-n-的区别"><a href="#nvm-与-n-的区别" class="headerlink" title="nvm 与 n 的区别"></a>nvm 与 n 的区别</h2><p>node 版本管理工具还有一个是 TJ 大神的 <a href="https://github.com/tj/n">n</a> 命令，n 命令是作为一个 node 的模块而存在，而 nvm 是一个独立于 node/npm 的外部 shell 脚本，因此 n 命令相比 nvm 更加局限。</p>
 <p>由于 npm 安装的模块路径均为 /usr/local/lib/node_modules，当使用 n 切换不同的 node 版本时，实际上会共用全局的 node/npm 目录。 因此不能很好的满足『按不同 node 版本使用不同全局 node 模块』的需求。</p>
 <h2 id="卸载全局安装的-node-npm"><a href="#卸载全局安装的-node-npm" class="headerlink" title="卸载全局安装的 node/npm"></a>卸载全局安装的 node/npm</h2><p>在官网下载的 node 安装包，运行后会自动安装在全局目录，使用过程中经常会遇到一些<strong>权限问题</strong>，所以推荐按照以下方法卸载全局安装的 node/npm。</p>

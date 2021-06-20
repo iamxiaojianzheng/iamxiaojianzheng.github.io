@@ -419,112 +419,14 @@ echo &quot;alias vim&#x3D;&#39;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;vim&#39; &quot
 </blockquote>
 <h2 id="使用-nvm-管理不同版本的-node-与-npm"><a href="#使用-nvm-管理不同版本的-node-与-npm" class="headerlink" title="使用 nvm 管理不同版本的 node 与 npm"></a>使用 nvm 管理不同版本的 node 与 npm</h2><p>在我们的日常开发中经常会遇到这种情况：手上有好几个项目，每个项目的需求不同，进而不同项目必须依赖不同版的 NodeJS 运行环境。如果没有一个合适的工具，这个问题将非常棘手。</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/creationix/nvm">nvm</a> 应运而生，nvm 是 Mac 下的 node 管理工具，有点类似管理 Ruby 的 rvm，如果需要管理 Windows 下的 node，官方推荐使用 <a target="_blank" rel="noopener" href="https://github.com/hakobera/nvmw">nvmw</a> 或 <a target="_blank" rel="noopener" href="https://github.com/coreybutler/nvm-windows">nvm-windows</a>。不过，nvm-windows 并不是 nvm 的简单移植，他们也没有任何关系。但下面介绍的所有命令，都可以在 nvm-windows 中运行。</p>
-<h2 id="nvm-与-n-的区别"><a href="#nvm-与-n-的区别" class="headerlink" title="nvm 与 n 的区别"></a>nvm 与 n 的区别</h2><p>node 版本管理工具还有一个是 TJ 大神的 <a target="_blank" rel="noopener" href="https://github.com/tj/n">n</a> 命令，n 命令是作为一个 node 的模块而存在，而 nvm 是一个独立于 node/npm 的外部 shell 脚本，因此 n 命令相比 nvm 更加局限。</p>
-<p>由于 npm 安装的模块路径均为 /usr/local/lib/node_modules，当使用 n 切换不同的 node 版本时，实际上会共用全局的 node/npm 目录。 因此不能很好的满足『按不同 node 版本使用不同全局 node 模块』的需求。</p>
-<h2 id="卸载全局安装的-node-npm"><a href="#卸载全局安装的-node-npm" class="headerlink" title="卸载全局安装的 node/npm"></a>卸载全局安装的 node/npm</h2><p>在官网下载的 node 安装包，运行后会自动安装在全局目录，使用过程中经常会遇到一些<strong>权限问题</strong>，所以推荐按照以下方法卸载全局安装的 node/npm。</p>
-<p>首先，打开你 Finder，按 shift+command+G，打开前往文件夹的窗口，分别输入下列目录进去之后删除 node 和 node_modules 相关的文件和文件夹:</p>
-<ul>
-<li>  打开 /usr/local/lib，删除 node 和 node_modules 相关的文件和文件夹</li>
-<li>  打开 /usr/local/include，删除 node 和 node_modules 相关的文件和文件夹</li>
-<li>  如果你是使用的 brew install node 安装的 NodeJS，那么你还需要在终端中执行 brew uninstall node 命令来卸载</li>
-<li>  检查你的个人主文件夹下面的所有的 local、lib 以及 include 文件夹，并且删除所有与 node 和 node_modules 相关的文件以及文件夹</li>
-<li>  打开 /usr/local/bin 并删除 node 可执行文件</li>
-</ul>
-<p>你可能还需要在你的终端中输入一些额外的指令：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">sudo rm &#x2F;usr&#x2F;local&#x2F;bin&#x2F;npm
-sudo rm &#x2F;usr&#x2F;local&#x2F;share&#x2F;man&#x2F;man1&#x2F;node.1
-sudo rm &#x2F;usr&#x2F;local&#x2F;lib&#x2F;dtrace&#x2F;node.d
-sudo rm -rf ~&#x2F;.npm
-sudo rm -rf ~&#x2F;.node-gyp
-sudo rm &#x2F;opt&#x2F;local&#x2F;bin&#x2F;node
-sudo rm &#x2F;opt&#x2F;local&#x2F;include&#x2F;node
-sudo rm -rf &#x2F;opt&#x2F;local&#x2F;lib&#x2F;node_modules</code></pre>
-
-<h2 id="Windows-安装"><a href="#Windows-安装" class="headerlink" title="Windows 安装"></a>Windows 安装</h2><p>首先最重要的是：一定要卸载已安装的 NodeJS，否则会发生冲突。然后下载 <a target="_blank" rel="noopener" href="https://github.com/coreybutler/nvm-windows/releases">nvm-windows</a> 最新安装包，直接安装即可。</p>
-<h2 id="OS-X-Linux-安装"><a href="#OS-X-Linux-安装" class="headerlink" title="OS X/Linux 安装"></a>OS X/Linux 安装</h2><p>与 Windows 不同，我们并不一定要先卸载原有的 NodeJS。当然我们推荐还是先卸载掉比较好。另外，你还需要 C++ 编译器，Linux 发行版一般不用担心，像 Ubuntu 都可以直接用 build-essential 套件，OS X 的话，可以用 X-Code 的命令行工具。运行这个命令即可：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">xcode-select --install</code></pre>
-
-<p>在 Linux 中：（如果是 Debian 发行版）</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">sudo apt-get install build-essential</code></pre>
-
-<p>然后我们可以使用</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;creationix&#x2F;nvm&#x2F;v0.33.0&#x2F;install.sh | bash</code></pre>
-
-<p>或者</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">wget -qO- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;creationix&#x2F;nvm&#x2F;v0.33.0&#x2F;install.sh | bash</code></pre>
-
-<p>从远程下载 install.sh 脚本并执行。注意这个版本年数字 v0.33.0 会随着项目开发而变化。随时通过<a target="_blank" rel="noopener" href="https://github.com/creationix/nvm#install-script">官方最新安装命令</a>来检查最新安装版本是有好处的。</p>
-<h2 id="安装多版本-node-npm"><a href="#安装多版本-node-npm" class="headerlink" title="安装多版本 node/npm"></a>安装多版本 node/npm</h2><p>例如，我们要安装 4.2.2 版本，可以用如下命令：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm install 4.2.2</code></pre>
-
-<p>nvm 遵守<a target="_blank" rel="noopener" href="http://semver.org/lang/zh-CN/">语义化版本</a>命名规则。例如，你想安装最新的 4.2 系列的最新的一个版本的话，可以运行：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm install 4.2</code></pre>
-
-<p>nvm 会寻找 4.2.x 中最高的版本来安装。</p>
-<p>你可以通过以下命令来列出远程服务器上所有的可用版本：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm ls-remote</code></pre>
-
-<p>Windows 的话，就是：</p>
-<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm ls available</code></pre>
-
-<h2 id="在不同版本间切换"><a href="#在不同版本间切换" class="headerlink" title="在不同版本间切换"></a>在不同版本间切换</h2><p>每当我们安装了一个新版本 Node 后，全局环境会自动把这个新版本设置为默认。</p>
-<p>nvm 提供了 nvm use 命令。这个命令的使用方法和 install 命令类似。</p>
-<p>例如，切换到 4.2.2：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use 4.2.2</code></pre>
-
-<p>切换到最新的 4.2.x：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use 4.2</code></pre>
-
-<p>切换到 iojs：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use iojs-v3.2.0</code></pre>
-
-<p>切换到最新版：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use node</code></pre>
-
-<p>每次执行切换的时候，系统都会把 node 的可执行文件链接放到特定版本的文件上。</p>
-<p>我们还可以用 nvm 给不同的版本号设置别名：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm alias awesome-version 4.2.2</code></pre>
-
-<p>我们给 4.2.2 这个版本号起了一个名字叫做 awesome-version，然后我们可以运行：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use awesome-version</code></pre>
-
-<p>下面这个命令可以取消别名：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm unalias awesome-version</code></pre>
-
-<p>另外，你还可以设置 default 这个特殊别名：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm alias default node</code></pre>
-
-<h2 id="列出已安装实例"><a href="#列出已安装实例" class="headerlink" title="列出已安装实例"></a>列出已安装实例</h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm ls</code></pre>
-
-<p><img data-src="https://www.runoob.com/wp-content/uploads/2018/04/nvm-ls.png"></p>
-<p>上面绿色箭头是当前正在使用的版本，下面列出的还有设置过的别名。</p>
-<h2 id="在项目中使用不同版本的-Node"><a href="#在项目中使用不同版本的-Node" class="headerlink" title="在项目中使用不同版本的 Node"></a>在项目中使用不同版本的 Node</h2><p>我们可以通过创建项目目录中的 .nvmrc 文件来指定要使用的 Node 版本。之后在项目目录中执行 nvm use 即可。.nvmrc 文件内容只需要遵守上文提到的语义化版本规则即可。另外还有个工具叫做 <a target="_blank" rel="noopener" href="https://github.com/wbyoung/avn">avn</a>，可以自动化这个过程。</p>
-<h2 id="在多环境中，npm-该如何使用呢？"><a href="#在多环境中，npm-该如何使用呢？" class="headerlink" title="在多环境中，npm 该如何使用呢？"></a>在多环境中，npm 该如何使用呢？</h2><p>每个版本的 Node 都会自带一个不同版本的 npm，可以用 npm -v 来查看 npm 的版本。全局安装的 npm 包并不会在不同的 Node 环境中共享，因为这会引起兼容问题。它们被放在了不同版本的目录下，例如 ~/.nvm/versions/node/<version>/lib/node_modules</version> 这样的目录。这刚好也省去我们在 Linux 中使用 sudo 的功夫了。因为这是用户的主文件夹，并不会引起权限问题。</p>
-<p>但问题来了，我们安装过的 npm 包，都要重新再装一次？幸运的是，我们有个办法来解决我们的问题，运行下面这个命令，可以从特定版本导入到我们将要安装的新版本 Node：</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm install v5.0.0 --reinstall-packages-from&#x3D;4.2</code></pre>
-
-<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><p>直接运行特定版本的 Node</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm run 4.2.2 --version</code></pre>
-
-<p>在当前终端的子进程中运行特定版本的 Node</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm exec 4.2.2 node --version</code></pre>
-
-<p>确认某个版本 Node 的路径</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm which 4.2.2</code></pre>
-
-<p>安装 Node 的其他实现，例如 iojs（一个基于 ES6 的 Node 实现，现在已经和 Node 合并）</p>
-<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm install iojs-v3.2.0</code></pre>
-
-<p>快捷命令：</p>
-<ul>
-<li>  nvm install node 安装最新版 Node</li>
-<li>  nvm install iojs 安装最新版 iojs</li>
-<li>  nvm install unstable 安装最新不稳定版本的 Node</li>
-</ul>
-<blockquote>
-<p>原文链接：<a target="_blank" rel="noopener" href="http://bubkoo.com/2017/01/08/quick-tip-multiple-versions-node-nvm/">http://bubkoo.com/2017/01/08/quick-tip-multiple-versions-node-nvm/</a></p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/20/%E4%BD%BF%E7%94%A8nvm%E7%AE%A1%E7%90%86%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84node%E4%B8%8Enpm/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
