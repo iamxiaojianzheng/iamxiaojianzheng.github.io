@@ -243,13 +243,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -282,6 +282,265 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/20/CentOS7%E4%B8%ADVim7%E5%8D%87%E7%BA%A7Vim8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/20/CentOS7%E4%B8%ADVim7%E5%8D%87%E7%BA%A7Vim8/" class="post-title-link" itemprop="url">CentOS7中Vim7升级Vim8</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-20 13:13:05" itemprop="dateCreated datePublished" datetime="2021-06-20T13:13:05+08:00">2021-06-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="yum安装"><a href="#yum安装" class="headerlink" title="yum安装"></a>yum安装</h1><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#rpm -Uvh http:&#x2F;&#x2F;mirror.ghettoforge.org&#x2F;distributions&#x2F;gf&#x2F;gf-release-latest.gf.el7.noarch.rpm
+#rpm --import http:&#x2F;&#x2F;mirror.ghettoforge.org&#x2F;distributions&#x2F;gf&#x2F;RPM-GPG-KEY-gf.el7
+wget -P &#x2F;etc&#x2F;yum.repos.d&#x2F;  https:&#x2F;&#x2F;copr.fedorainfracloud.org&#x2F;coprs&#x2F;lbiaggi&#x2F;vim80-ligatures&#x2F;repo&#x2F;epel-7&#x2F;lbiaggi-vim80-ligatures-epel-7.repo
+yum -y remove vim-minimal vim-common vim-enhanced sudo
+#yum -y --enablerepo&#x3D;gf-plus install vim-enhanced sudo
+yum  install vim-enhanced sudo -y</code></pre>
+
+<h1 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h1><h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p>1、首先，到 <a target="_blank" rel="noopener" href="https://github.com/vim/vim">Vim 官网</a>上下载包 Vim Release 版本在这个步骤的时候，我找了很久的 tar.gz(因为是新人程序猿，对这个不太懂），看网上的教程甚至让把整个项目 clone 下来。最后在终于找到了。<br><img data-src="https://img-blog.csdnimg.cn/20190816183612491.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3OTAzOTYz,size_16,color_FFFFFF,t_70"><br>点击 “<a target="_blank" rel="noopener" href="https://github.com/vim/vim/releases">archive</a>” 即可进入。（链接 “<a target="_blank" rel="noopener" href="https://github.com/vim/vim/releases">https://github.com/vim/vim/releases</a>”）之后选择版本下载即可。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">wget https:&#x2F;&#x2F;github.com&#x2F;vim&#x2F;vim&#x2F;archive&#x2F;v8.1.1766.tar.gz</code></pre>
+
+<p>2、解压。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">tar -zxvf  v8.1.1766.tar.gz</code></pre>
+
+<p>3、进行安装，通过 configure 配置安装路径<br>  我是直接放在了 &quot;/usr/local&quot; 下面。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cd vim-8.1.1766&#x2F;
+.&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&amp;&amp;make &amp;&amp; make install</code></pre>
+
+<p>4、利用 alias 将 vim 指令定向到刚刚安装的 vim8，同时修改. bashrc 确保之后一直能生效</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">alias vim&#x3D;&#39;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;vim&#39;
+echo &quot;alias vim&#x3D;&#39;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;vim&#39; &quot; &gt;&gt; ~&#x2F;.bashrc</code></pre>
+
+<p>5、最后检查安装是否成功</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vim -version</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/20/%E4%BD%BF%E7%94%A8nvm%E7%AE%A1%E7%90%86%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84node%E4%B8%8Enpm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/20/%E4%BD%BF%E7%94%A8nvm%E7%AE%A1%E7%90%86%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC%E7%9A%84node%E4%B8%8Enpm/" class="post-title-link" itemprop="url">使用nvm管理不同版本的node与npm</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-20 10:02:00" itemprop="dateCreated datePublished" datetime="2021-06-20T10:02:00+08:00">2021-06-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>在我们的日常开发中经常会遇到这种情况：手上有好几个项目，每个项目的需求不同，进而不同项目必须依赖不同版的 NodeJS 运行环境。</p>
+</blockquote>
+<h2 id="使用-nvm-管理不同版本的-node-与-npm"><a href="#使用-nvm-管理不同版本的-node-与-npm" class="headerlink" title="使用 nvm 管理不同版本的 node 与 npm"></a>使用 nvm 管理不同版本的 node 与 npm</h2><p>在我们的日常开发中经常会遇到这种情况：手上有好几个项目，每个项目的需求不同，进而不同项目必须依赖不同版的 NodeJS 运行环境。如果没有一个合适的工具，这个问题将非常棘手。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/creationix/nvm">nvm</a> 应运而生，nvm 是 Mac 下的 node 管理工具，有点类似管理 Ruby 的 rvm，如果需要管理 Windows 下的 node，官方推荐使用 <a target="_blank" rel="noopener" href="https://github.com/hakobera/nvmw">nvmw</a> 或 <a target="_blank" rel="noopener" href="https://github.com/coreybutler/nvm-windows">nvm-windows</a>。不过，nvm-windows 并不是 nvm 的简单移植，他们也没有任何关系。但下面介绍的所有命令，都可以在 nvm-windows 中运行。</p>
+<h2 id="nvm-与-n-的区别"><a href="#nvm-与-n-的区别" class="headerlink" title="nvm 与 n 的区别"></a>nvm 与 n 的区别</h2><p>node 版本管理工具还有一个是 TJ 大神的 <a target="_blank" rel="noopener" href="https://github.com/tj/n">n</a> 命令，n 命令是作为一个 node 的模块而存在，而 nvm 是一个独立于 node/npm 的外部 shell 脚本，因此 n 命令相比 nvm 更加局限。</p>
+<p>由于 npm 安装的模块路径均为 /usr/local/lib/node_modules，当使用 n 切换不同的 node 版本时，实际上会共用全局的 node/npm 目录。 因此不能很好的满足『按不同 node 版本使用不同全局 node 模块』的需求。</p>
+<h2 id="卸载全局安装的-node-npm"><a href="#卸载全局安装的-node-npm" class="headerlink" title="卸载全局安装的 node/npm"></a>卸载全局安装的 node/npm</h2><p>在官网下载的 node 安装包，运行后会自动安装在全局目录，使用过程中经常会遇到一些<strong>权限问题</strong>，所以推荐按照以下方法卸载全局安装的 node/npm。</p>
+<p>首先，打开你 Finder，按 shift+command+G，打开前往文件夹的窗口，分别输入下列目录进去之后删除 node 和 node_modules 相关的文件和文件夹:</p>
+<ul>
+<li>  打开 /usr/local/lib，删除 node 和 node_modules 相关的文件和文件夹</li>
+<li>  打开 /usr/local/include，删除 node 和 node_modules 相关的文件和文件夹</li>
+<li>  如果你是使用的 brew install node 安装的 NodeJS，那么你还需要在终端中执行 brew uninstall node 命令来卸载</li>
+<li>  检查你的个人主文件夹下面的所有的 local、lib 以及 include 文件夹，并且删除所有与 node 和 node_modules 相关的文件以及文件夹</li>
+<li>  打开 /usr/local/bin 并删除 node 可执行文件</li>
+</ul>
+<p>你可能还需要在你的终端中输入一些额外的指令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">sudo rm &#x2F;usr&#x2F;local&#x2F;bin&#x2F;npm
+sudo rm &#x2F;usr&#x2F;local&#x2F;share&#x2F;man&#x2F;man1&#x2F;node.1
+sudo rm &#x2F;usr&#x2F;local&#x2F;lib&#x2F;dtrace&#x2F;node.d
+sudo rm -rf ~&#x2F;.npm
+sudo rm -rf ~&#x2F;.node-gyp
+sudo rm &#x2F;opt&#x2F;local&#x2F;bin&#x2F;node
+sudo rm &#x2F;opt&#x2F;local&#x2F;include&#x2F;node
+sudo rm -rf &#x2F;opt&#x2F;local&#x2F;lib&#x2F;node_modules</code></pre>
+
+<h2 id="Windows-安装"><a href="#Windows-安装" class="headerlink" title="Windows 安装"></a>Windows 安装</h2><p>首先最重要的是：一定要卸载已安装的 NodeJS，否则会发生冲突。然后下载 <a target="_blank" rel="noopener" href="https://github.com/coreybutler/nvm-windows/releases">nvm-windows</a> 最新安装包，直接安装即可。</p>
+<h2 id="OS-X-Linux-安装"><a href="#OS-X-Linux-安装" class="headerlink" title="OS X/Linux 安装"></a>OS X/Linux 安装</h2><p>与 Windows 不同，我们并不一定要先卸载原有的 NodeJS。当然我们推荐还是先卸载掉比较好。另外，你还需要 C++ 编译器，Linux 发行版一般不用担心，像 Ubuntu 都可以直接用 build-essential 套件，OS X 的话，可以用 X-Code 的命令行工具。运行这个命令即可：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">xcode-select --install</code></pre>
+
+<p>在 Linux 中：（如果是 Debian 发行版）</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">sudo apt-get install build-essential</code></pre>
+
+<p>然后我们可以使用</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">curl -o- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;creationix&#x2F;nvm&#x2F;v0.33.0&#x2F;install.sh | bash</code></pre>
+
+<p>或者</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">wget -qO- https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;creationix&#x2F;nvm&#x2F;v0.33.0&#x2F;install.sh | bash</code></pre>
+
+<p>从远程下载 install.sh 脚本并执行。注意这个版本年数字 v0.33.0 会随着项目开发而变化。随时通过<a target="_blank" rel="noopener" href="https://github.com/creationix/nvm#install-script">官方最新安装命令</a>来检查最新安装版本是有好处的。</p>
+<h2 id="安装多版本-node-npm"><a href="#安装多版本-node-npm" class="headerlink" title="安装多版本 node/npm"></a>安装多版本 node/npm</h2><p>例如，我们要安装 4.2.2 版本，可以用如下命令：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm install 4.2.2</code></pre>
+
+<p>nvm 遵守<a target="_blank" rel="noopener" href="http://semver.org/lang/zh-CN/">语义化版本</a>命名规则。例如，你想安装最新的 4.2 系列的最新的一个版本的话，可以运行：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm install 4.2</code></pre>
+
+<p>nvm 会寻找 4.2.x 中最高的版本来安装。</p>
+<p>你可以通过以下命令来列出远程服务器上所有的可用版本：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm ls-remote</code></pre>
+
+<p>Windows 的话，就是：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">nvm ls available</code></pre>
+
+<h2 id="在不同版本间切换"><a href="#在不同版本间切换" class="headerlink" title="在不同版本间切换"></a>在不同版本间切换</h2><p>每当我们安装了一个新版本 Node 后，全局环境会自动把这个新版本设置为默认。</p>
+<p>nvm 提供了 nvm use 命令。这个命令的使用方法和 install 命令类似。</p>
+<p>例如，切换到 4.2.2：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use 4.2.2</code></pre>
+
+<p>切换到最新的 4.2.x：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use 4.2</code></pre>
+
+<p>切换到 iojs：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use iojs-v3.2.0</code></pre>
+
+<p>切换到最新版：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use node</code></pre>
+
+<p>每次执行切换的时候，系统都会把 node 的可执行文件链接放到特定版本的文件上。</p>
+<p>我们还可以用 nvm 给不同的版本号设置别名：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm alias awesome-version 4.2.2</code></pre>
+
+<p>我们给 4.2.2 这个版本号起了一个名字叫做 awesome-version，然后我们可以运行：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm use awesome-version</code></pre>
+
+<p>下面这个命令可以取消别名：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm unalias awesome-version</code></pre>
+
+<p>另外，你还可以设置 default 这个特殊别名：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm alias default node</code></pre>
+
+<h2 id="列出已安装实例"><a href="#列出已安装实例" class="headerlink" title="列出已安装实例"></a>列出已安装实例</h2><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm ls</code></pre>
+
+<p><img data-src="https://www.runoob.com/wp-content/uploads/2018/04/nvm-ls.png"></p>
+<p>上面绿色箭头是当前正在使用的版本，下面列出的还有设置过的别名。</p>
+<h2 id="在项目中使用不同版本的-Node"><a href="#在项目中使用不同版本的-Node" class="headerlink" title="在项目中使用不同版本的 Node"></a>在项目中使用不同版本的 Node</h2><p>我们可以通过创建项目目录中的 .nvmrc 文件来指定要使用的 Node 版本。之后在项目目录中执行 nvm use 即可。.nvmrc 文件内容只需要遵守上文提到的语义化版本规则即可。另外还有个工具叫做 <a target="_blank" rel="noopener" href="https://github.com/wbyoung/avn">avn</a>，可以自动化这个过程。</p>
+<h2 id="在多环境中，npm-该如何使用呢？"><a href="#在多环境中，npm-该如何使用呢？" class="headerlink" title="在多环境中，npm 该如何使用呢？"></a>在多环境中，npm 该如何使用呢？</h2><p>每个版本的 Node 都会自带一个不同版本的 npm，可以用 npm -v 来查看 npm 的版本。全局安装的 npm 包并不会在不同的 Node 环境中共享，因为这会引起兼容问题。它们被放在了不同版本的目录下，例如 ~/.nvm/versions/node/<version>/lib/node_modules</version> 这样的目录。这刚好也省去我们在 Linux 中使用 sudo 的功夫了。因为这是用户的主文件夹，并不会引起权限问题。</p>
+<p>但问题来了，我们安装过的 npm 包，都要重新再装一次？幸运的是，我们有个办法来解决我们的问题，运行下面这个命令，可以从特定版本导入到我们将要安装的新版本 Node：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm install v5.0.0 --reinstall-packages-from&#x3D;4.2</code></pre>
+
+<h2 id="其他命令"><a href="#其他命令" class="headerlink" title="其他命令"></a>其他命令</h2><p>直接运行特定版本的 Node</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm run 4.2.2 --version</code></pre>
+
+<p>在当前终端的子进程中运行特定版本的 Node</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm exec 4.2.2 node --version</code></pre>
+
+<p>确认某个版本 Node 的路径</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm which 4.2.2</code></pre>
+
+<p>安装 Node 的其他实现，例如 iojs（一个基于 ES6 的 Node 实现，现在已经和 Node 合并）</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nvm install iojs-v3.2.0</code></pre>
+
+<p>快捷命令：</p>
+<ul>
+<li>  nvm install node 安装最新版 Node</li>
+<li>  nvm install iojs 安装最新版 iojs</li>
+<li>  nvm install unstable 安装最新不稳定版本的 Node</li>
+</ul>
+<blockquote>
+<p>原文链接：<a target="_blank" rel="noopener" href="http://bubkoo.com/2017/01/08/quick-tip-multiple-versions-node-nvm/">http://bubkoo.com/2017/01/08/quick-tip-multiple-versions-node-nvm/</a></p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1049,162 +1308,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2021/05/10/SpringCloud%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%9B%BE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/05/10/Kafka%E5%85%A5%E9%97%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/10/Kafka%E5%85%A5%E9%97%A8/" class="post-title-link" itemprop="url">Kafka入门</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-05-10 09:27:24" itemprop="dateCreated datePublished" datetime="2021-05-10T09:27:24+08:00">2021-05-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="初识-Kafka"><a href="#初识-Kafka" class="headerlink" title="初识 Kafka"></a><strong>初识 Kafka</strong></h2><h3 id="什么是-Kafka"><a href="#什么是-Kafka" class="headerlink" title="什么是 Kafka"></a><strong>什么是 Kafka</strong></h3><p>Kafka 是由 Linkedin 公司开发的，它是一个分布式的，支持多分区、多副本，基于 Zookeeper 的分布式消息流平台，它同时也是一款开源的基于发布订阅模式的消息引擎系统。</p>
-<h3 id="Kafka-的基本术语"><a href="#Kafka-的基本术语" class="headerlink" title="Kafka 的基本术语"></a><strong>Kafka 的基本术语</strong></h3><p><strong>消息</strong>：Kafka 中的数据单元被称为消息，也被称为记录，可以把它看作数据库表中某一行的记录。</p>
-<p><strong>批次</strong>：为了提高效率， 消息会分批次写入 Kafka，批次就代指的是一组消息。</p>
-<p><strong>主题</strong>：消息的种类称为 主题（Topic）, 可以说一个主题代表了一类消息。相当于是对消息进行分类。主题就像是数据库中的表。</p>
-<p><strong>分区</strong>：主题可以被分为若干个分区（partition），同一个主题中的分区可以不在一个机器上，有可能会部署在多个机器上，由此来实现 kafka 的伸缩性，单一主题中的分区有序，但是无法保证主题中所有的分区有序</p>
-<p><img data-src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy9sYUVtaWJIRnhGdzdoYVJsUVBhRmN4RFJnSTUxTWRmMjd4ZjBXcmxuNVhVNG02Y0JGOUxpYlpIWXRpYXNPMEpMN1YxZjdibG9GSGhldVh4RWpBeWs2N2YyQS82NDA_d3hfZm10PXBuZw?x-oss-process=image/format,png"></p>
-<p><strong>生产者</strong>：向主题发布消息的客户端应用程序称为生产者（Producer），生产者用于持续不断的向某个主题发送消息。</p>
-<p><strong>消费者</strong>：订阅主题消息的客户端程序称为消费者（Consumer），消费者用于处理生产者产生的消息。</p>
-<p><strong>消费者群组</strong>：生产者与消费者的关系就如同餐厅中的厨师和顾客之间的关系一样，一个厨师对应多个顾客，也就是一个生产者对应多个消费者，消费者群组（Consumer Group）指的就是由一个或多个消费者组成的群体。</p>
-<p><img data-src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy9sYUVtaWJIRnhGdzdoYVJsUVBhRmN4RFJnSTUxTWRmMjdSVnJMZnNvSmJ4WG1KNEF1WEF4eno3MVJ6RnF6SktRZGtKUXU2NGdrZUdoM2RGMlJWR3MxY2cvNjQwP3d4X2ZtdD1wbmc?x-oss-process=image/format,png"></p>
-<p><strong>偏移量</strong>：偏移量（Consumer Offset）是一种元数据，它是一个不断递增的整数值，用来记录消费者发生重平衡时的位置，以便用来恢复数据。</p>
-<p><strong>broker</strong>: 一个独立的 Kafka 服务器就被称为 broker，broker 接收来自生产者的消息，为消息设置偏移量，并提交消息到磁盘保存。</p>
-<p><strong>broker集群</strong>：broker 是集群 的组成部分，broker 集群由一个或多个 broker 组成，每个集群都有一个 broker 同时充当了集群控制器的角色（自动从集群的活跃成员中选举出来）。</p>
-<p><strong>副本</strong>：Kafka 中消息的备份又叫做 副本（Replica），副本的数量是可以配置的，Kafka 定义了两类副本：领导者副本（Leader Replica） 和 追随者副本（Follower Replica），前者对外提供服务，后者只是被动跟随。</p>
-<p><strong>重平衡</strong>：Rebalance。消费者组内某个消费者实例挂掉后，其他消费者实例自动重新分配订阅主题分区的过程。Rebalance 是 Kafka 消费者端实现高可用的重要手段。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/10/Kafka%E5%85%A5%E9%97%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SQL%E6%B3%A8%E5%85%A5%E4%B8%8E%E9%A2%84%E7%BC%96%E8%AF%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SQL%E6%B3%A8%E5%85%A5%E4%B8%8E%E9%A2%84%E7%BC%96%E8%AF%91/" class="post-title-link" itemprop="url">深入理解SQL注入与预编译</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-04-23 15:26:34" itemprop="dateCreated datePublished" datetime="2021-04-23T15:26:34+08:00">2021-04-23</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>SQL注入是Web安全界地位很高的一个漏洞，它把矛头对准网站最为重要的数据库，利用成本低而危害巨大。若说一个普通开发人员有那么点儿安全意识，那一定和SQL注入有关。如今随着Web安全逐渐被重视，大家安全意识提升，同时各种预编译框架、ORM层出不穷，SQL注入已不像10年前那么泛滥，那么SQL注入的前世今生是怎样的？在这个预编译时代，SQL注入为何仍未销声匿迹？而预编译的底层又有哪些细节需要安全工程师知晓？这将是本文所重点探究之处。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/04/23/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3SQL%E6%B3%A8%E5%85%A5%E4%B8%8E%E9%A2%84%E7%BC%96%E8%AF%91/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
