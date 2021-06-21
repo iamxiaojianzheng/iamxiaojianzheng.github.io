@@ -543,6 +543,25 @@ public static void decompress(String srcPath, String dest) throws Exception &#12
       </tags>
   </entry>
   <entry>
+    <title>Jenkins-Pipeline使用总结</title>
+    <url>/2021/06/20/Jenkins-Pipeline%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<p>声明该模块下的语句进程终止后，不关闭子进程</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">withEnv([&#39;JENKINS_NODE_COOKIE&#x3D;dontkillme&#39;]) &#123;
+    &#x2F;&#x2F; do something
+&#125;</code></pre>
+
+<p>配置Maven环境</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">withMaven(jdk: &#39;jdk8u292-b10&#39;, maven: &#39;apache-maven-3.8.1&#39;, mavenSettingsConfig: &#39;maven_haigui_settings&#39;) &#123;
+    &#x2F;&#x2F; some block
+    &#125;</code></pre>
+
+]]></content>
+      <tags>
+        <tag>pipeline</tag>
+        <tag>jenkins</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL5.7统计连续超过3天提交了任务的用户</title>
     <url>/2021/04/20/MySQL5.7%E7%BB%9F%E8%AE%A1%E8%BF%9E%E7%BB%AD%E8%B6%85%E8%BF%873%E5%A4%A9%E6%8F%90%E4%BA%A4%E4%BA%86%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%94%A8%E6%88%B7/</url>
     <content><![CDATA[<p>需求：统计表中连续超过3天都提交了任务的用户名</p>
@@ -2156,6 +2175,24 @@ netsh interface portproxy show all
         <tag>VMware</tag>
         <tag>VirutalBox</tag>
         <tag>代理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>记一次JS中解决浮点数计算问题</title>
+    <url>/2021/06/21/%E8%AE%B0%E4%B8%80%E6%AC%A1JS%E4%B8%AD%E8%A7%A3%E5%86%B3%E6%B5%AE%E7%82%B9%E6%95%B0%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>问题：1.2 - 1.1 = 0.09999999999999987</p>
+<blockquote>
+<p>为什么结果如此就不赘述了，浮点数在计算机中存储原理了解一下。</p>
+</blockquote>
+<p>解决办法：使用第三方类库</p>
+<ul>
+<li><a href="http://mikemcl.github.io/big.js">big.js</a></li>
+<li><a href="https://mikemcl.github.io/decimal.js/#">decimal.js</a></li>
+</ul>
+<p>原理了解：<a href="https://juejin.cn/post/6900567809038745608">https://juejin.cn/post/6900567809038745608</a></p>
+]]></content>
+      <tags>
+        <tag>JS</tag>
       </tags>
   </entry>
   <entry>
