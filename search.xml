@@ -1528,7 +1528,7 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
   <entry>
     <title>Vim查找替换&amp;正则表达式</title>
     <url>/2021/06/24/Vim%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2&amp;%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
-    <content><![CDATA[<h3 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h3><p><code>:[range]s/&#123;pattern&#125;/&#123;string&#125;/[flags]</code></p>
+    <content><![CDATA[<h1 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h1><p><code>:[range]s/&#123;pattern&#125;/&#123;string&#125;/[flags]</code></p>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">:1,10s&#x2F;from&#x2F;to&#x2F; 表示在第1到第10行（包含第1，第10行）之间搜索替换
 :10s&#x2F;from&#x2F;to&#x2F; 	表示只在第10行搜索替换
 :%s&#x2F;from&#x2F;to&#x2F; 	表示在所有行中搜索替换
@@ -1542,7 +1542,9 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 <li><code>i</code>        ignore，忽略大小写</li>
 <li>这些选项可以合并使用，如 cgi 表示不区分大小写，整行替换，替换前询问</li>
 </ul>
-<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><h5 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h5><p>匹配任意字符</p>
+<span id="more"></span>
+
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><h3 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h3><p>匹配任意字符</p>
 <ul>
 <li>[abc] 匹配方括号中的任意一个字符，可用-表示字符范围。如<code>[a-z0-9]</code>匹配小写字母和数字<code>[^abc]</code> 匹配除方括号中字符之外的任意字符</li>
 <li>\d 匹配阿拉伯数字，等同于[0-9]</li>
@@ -1559,7 +1561,7 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 <li>\s 匹配空白字符，等同于[\t]</li>
 <li>\S 匹配非空白字符，等同于<code>[^\t]</code></li>
 </ul>
-<h5 id="普通字符需转义"><a href="#普通字符需转义" class="headerlink" title="普通字符需转义"></a>普通字符需转义</h5><ul>
+<h3 id="普通字符需转义"><a href="#普通字符需转义" class="headerlink" title="普通字符需转义"></a>普通字符需转义</h3><ul>
 <li><code>\*</code>     匹配<code>*</code>字符</li>
 <li><code>\.</code>     匹配<code>.</code>字符</li>
 <li><code>\/</code>     匹配<code>/</code>字符</li>
@@ -1567,7 +1569,7 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 <li><code>\[</code>     匹配<code>[</code>字符</li>
 <li><code>\]</code>     匹配<code>]</code>字符</li>
 </ul>
-<h5 id="表示数量的元字符"><a href="#表示数量的元字符" class="headerlink" title="表示数量的元字符"></a>表示数量的元字符</h5><ul>
+<h3 id="表示数量的元字符"><a href="#表示数量的元字符" class="headerlink" title="表示数量的元字符"></a>表示数量的元字符</h3><ul>
 <li><code>\.</code>             匹配0-任意个</li>
 <li><code>\+</code>             匹配1-任意个</li>
 <li><code>\?</code>             匹配0-1个</li>
@@ -1576,35 +1578,35 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 <li><code>\&#123;n,&#125;</code>       匹配n-任意个</li>
 <li><code>\&#123;,m&#125;</code>       匹配0-m个</li>
 </ul>
-<h5 id="表示位置的元字符"><a href="#表示位置的元字符" class="headerlink" title="表示位置的元字符"></a>表示位置的元字符</h5><ul>
+<h3 id="表示位置的元字符"><a href="#表示位置的元字符" class="headerlink" title="表示位置的元字符"></a>表示位置的元字符</h3><ul>
 <li><code>$</code>        匹配行尾</li>
 <li><code>^</code>        匹配行首</li>
 <li><code>\&lt;</code>      匹配单词词首</li>
 <li><code>\&gt;</code>      匹配单词词尾</li>
 </ul>
-<h4 id="替换变量"><a href="#替换变量" class="headerlink" title="替换变量"></a>替换变量</h4><p>在正则式中以(和)括起来的正则表达式，在后面使用的时候可以用\1、\2等变量来访问(和)中的内容</p>
-<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>删除行尾空格：<code>:%s/\s+$//g</code></p>
+<h2 id="替换变量"><a href="#替换变量" class="headerlink" title="替换变量"></a>替换变量</h2><p>在正则式中以(和)括起来的正则表达式，在后面使用的时候可以用\1、\2等变量来访问(和)中的内容</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>删除行尾空格：<code>:%s/\s+$//g</code></p>
 <p>删除行首多余空格：<code>%s/^\s*// 或者 %s/^ *//</code></p>
 <p>删除沒有內容的空行：<code>%s/^$// 或者 g/^$/d</code></p>
 <p>删除包含有空格组成的空行：<code>%s/^\s*$//</code> 或者 <code>g/^\s*$/d</code></p>
 <p>删除以空格或TAB开头到结尾的空行：<code>%s/^[ |\t]*$//</code> 或者 <code>g/^[ |\t]*$/d</code></p>
 <p>把文中的所有字符串“abc……xyz”替换为“xyz……abc”可以有下列写法</p>
-<h3 id="查找替换归纳总结"><a href="#查找替换归纳总结" class="headerlink" title="查找替换归纳总结"></a>查找替换归纳总结</h3><h4 id="简单替换表达式"><a href="#简单替换表达式" class="headerlink" title="简单替换表达式"></a>简单替换表达式</h4><p>替换命令可以在全文中用一个单词替换另一个单词：<code>:%s/four/4/g</code></p>
+<h1 id="查找替换归纳总结"><a href="#查找替换归纳总结" class="headerlink" title="查找替换归纳总结"></a>查找替换归纳总结</h1><h2 id="简单替换表达式"><a href="#简单替换表达式" class="headerlink" title="简单替换表达式"></a>简单替换表达式</h2><p>替换命令可以在全文中用一个单词替换另一个单词：<code>:%s/four/4/g</code></p>
 <p><code>&quot;%&quot;</code> 范围前缀表示在所有行中执行替换。最后的<code> &quot;g&quot;</code> 标记表示替换行中的所有匹配点。如果仅仅对当前行进行操作，那么只要去掉<code>%</code>即可。</p>
 <p>如果你有一个象 &quot;thirtyfour&quot; 这样的单词，上面的命令会出错。这种情况下，这个单词会被替换成&quot;thirty4&quot;。要解决这个问题，用 <code>&quot;\&lt;&quot;</code> 来指定匹配单词开头：<code>:%s/\&lt;four/4/g</code></p>
 <p>显然，这样在处理 &quot;fourty&quot; 的时候还是会出错。用 <code>&quot;\&gt;&quot;</code> 来解决这个问题：<code>:%s/\&lt;four\&gt;/4/g</code></p>
 <p>如果你在编码，你可能只想替换注释中的 &quot;four&quot;，而保留代码中的。由于这很难指定，可以在替换命令中加一个 <code>&quot;c&quot;</code> 标记，这样，Vim 会在每次替换前提示你：<code>:%s/\&lt;four\&gt;/4/gc</code></p>
-<h4 id="删除多余的空格"><a href="#删除多余的空格" class="headerlink" title="删除多余的空格"></a>删除多余的空格</h4><p>要删除这些每行后面多余的空格，可以执行如下命令：<code>:%s/\s\+$//</code></p>
+<h2 id="删除多余的空格"><a href="#删除多余的空格" class="headerlink" title="删除多余的空格"></a>删除多余的空格</h2><p>要删除这些每行后面多余的空格，可以执行如下命令：<code>:%s/\s\+$//</code></p>
 <p>命令前面指明范围是 <code>&quot;%&quot;</code>，所以这会作用于整个文件。<code>&quot;substitute&quot;</code> 命令的匹配模式是<code>&quot;\s\+$&quot;</code>。</p>
 <p>这表示行末（$）前的一个或者多个（+）空格（\s）。</p>
 <p>替换命令的 <code>&quot;to&quot;</code> 部分是空的：<code>&quot;//&quot;</code>。这样就会删除那些匹配的空白字符。</p>
-<h4 id="匹配重复性模式"><a href="#匹配重复性模式" class="headerlink" title="匹配重复性模式"></a>匹配重复性模式</h4><p>星号项 <code>*</code> 规定在它前面的项可以重复任意次。</p>
+<h2 id="匹配重复性模式"><a href="#匹配重复性模式" class="headerlink" title="匹配重复性模式"></a>匹配重复性模式</h2><p>星号项 <code>*</code> 规定在它前面的项可以重复任意次。</p>
 <p>因此：<code>/a*</code>匹配 <code>&quot;a&quot;</code>，<code>&quot;aa&quot;</code>，<code>&quot;aaa&quot;</code>，等等。但也匹配 <code>&quot;&quot;</code> (空字串)，因为零次也包含在内。星号<code>&quot;*&quot;</code>仅仅应用于那个紧邻在它前面的项。</p>
 <p>因此 <code>&quot;ab*&quot;</code> 匹配 <code>&quot;a&quot;</code>，<code>&quot;ab&quot;</code>，<code>&quot;abb&quot;</code>,<code>&quot;abbb&quot;</code>，等等。如要多次重复整个字符串，那么该字符串必须被组成一个项。组成一项的方法就是在它前面加 &quot;(&quot;，后面加 &quot;)&quot;。</p>
 <p>因此这个命令：<code>/\(ab\)*</code>匹配: &quot;ab&quot;，&quot;abab&quot;，&quot;ababab&quot;，等等。而且也匹配 &quot;&quot;。要避免匹配空字串，使用 &quot;+&quot;。这表示前面一项可以被匹配一次或多次。</p>
 <p><code>/ab\+</code>匹配 &quot;ab&quot;，&quot;abb&quot;，&quot;abbb&quot;，等等。它不匹配 后面没有跟随 &quot;b&quot; 的 &quot;a&quot;。</p>
 <p>要匹配一个可选项，用 &quot;=&quot;。 例如：<code>/folders\=</code>匹配 <code>&quot;folder&quot;</code> 和 <code>&quot;folders&quot;</code>。</p>
-<h4 id="指定重复次数"><a href="#指定重复次数" class="headerlink" title="指定重复次数"></a>指定重复次数</h4><p>要匹配某一项的特定次数重复，使用 &quot;{n,m}&quot; 这样的形式。其中 &quot;n&quot; 和 &quot;m&quot; 都是数字。在它前面的那个项将被重复 &quot;n&quot; 到 &quot;m&quot; 次 (|inclusive| 包含 &quot;n&quot; 和 &quot;m&quot;)。</p>
+<h2 id="指定重复次数"><a href="#指定重复次数" class="headerlink" title="指定重复次数"></a>指定重复次数</h2><p>要匹配某一项的特定次数重复，使用 &quot;{n,m}&quot; 这样的形式。其中 &quot;n&quot; 和 &quot;m&quot; 都是数字。在它前面的那个项将被重复 &quot;n&quot; 到 &quot;m&quot; 次 (|inclusive| 包含 &quot;n&quot; 和 &quot;m&quot;)。</p>
 <p>例如：<code>/ab\&#123;3,5&#125;</code>匹配 <code>&quot;abbb&quot;</code>，<code>&quot;abbbb&quot;</code> 以及 <code>&quot;abbbbb&quot;</code>。</p>
 <p>当 &quot;n&quot; 省略时，被默认为零。当 &quot;m&quot; 省略时，被默认为无限大。当 &quot;,m&quot; 省略时，就表示重复正好 &quot;n&quot; 次。例如:</p>
 <pre class="line-numbers language-json" data-language="json"><code class="language-json">模式			匹配次数
@@ -1616,7 +1618,7 @@ autocmd BufWritePost $MYVIMRC source $MYVIMRC
 \&#123;3&#125;         3</code></pre>
 
 
-<h4 id="多选一匹配"><a href="#多选一匹配" class="headerlink" title="多选一匹配"></a>多选一匹配</h4><p>在一个查找模式中，&quot;或&quot; 运算符是 <code>&quot;\|&quot;</code>。</p>
+<h2 id="多选一匹配"><a href="#多选一匹配" class="headerlink" title="多选一匹配"></a>多选一匹配</h2><p>在一个查找模式中，&quot;或&quot; 运算符是 <code>&quot;\|&quot;</code>。</p>
 <p>例如：<code>/foo\|bar</code>这个命令匹配了 &quot;foo&quot; 或 &quot;bar&quot;。</p>
 <p>更多的抉择可以连在后面：<code>/one\|two\|three</code>匹配<code> &quot;one&quot;</code>，<code>&quot;two&quot;</code> 或 <code>&quot;three&quot;</code>。</p>
 <p>如要匹配其多次重复，那么整个抉择结构须置于 &quot;(&quot; 和 &quot;)&quot; 之间：<code>/\(foo\|bar\)\+</code>这个命令匹配 <code>&quot;foo&quot;</code>，<code>&quot;foobar&quot;</code>，<code>&quot;foofoo&quot;</code>，<code>&quot;barfoobar&quot;</code>，等等。</p>
