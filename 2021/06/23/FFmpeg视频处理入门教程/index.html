@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;xiaojianzheng.cn&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.5.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:true,&quot;bookmark&quot;:{&quot;enable&quot;:true,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:true,&quot;pangu&quot;:true,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:false,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:true,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;},&quot;path&quot;:&quot;&#x2F;search.xml&quot;,&quot;localsearch&quot;:{&quot;enable&quot;:true,&quot;trigger&quot;:&quot;auto&quot;,&quot;top_n_per_article&quot;:1,&quot;unescape&quot;:false,&quot;preload&quot;:true}}</script><script src="/js/config.js"></script>
+<meta name="description" content="FFmpeg 是视频处理最常用的开源软件。 它功能强大，用途广泛，大量用于视频网站和商业软件（比如 Youtube 和 iTunes），也是许多音频和视频格式的标准编码 &#x2F; 解码实现。 FFmpeg 本身是一个庞大的项目，包含许多组件和库文件，最常用的是它的命令行工具。本文介绍 FFmpeg 命令行如何处理视频，比桌面视频处理软件更简洁高效。 如果你还没安装，可以根据官方文档 先完成安装。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg视频处理入门教程">
+<meta property="og:url" content="https://xiaojianzheng.cn/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="JIAHE">
+<meta property="og:description" content="FFmpeg 是视频处理最常用的开源软件。 它功能强大，用途广泛，大量用于视频网站和商业软件（比如 Youtube 和 iTunes），也是许多音频和视频格式的标准编码 &#x2F; 解码实现。 FFmpeg 本身是一个庞大的项目，包含许多组件和库文件，最常用的是它的命令行工具。本文介绍 FFmpeg 命令行如何处理视频，比桌面视频处理软件更简洁高效。 如果你还没安装，可以根据官方文档 先完成安装。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-23T07:04:05.000Z">
+<meta property="article:modified_time" content="2021-06-23T07:04:05.000Z">
+<meta property="article:author" content="JIAHE">
+<meta property="article:tag" content="ffmpeg">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://xiaojianzheng.cn/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;https:&#x2F;&#x2F;xiaojianzheng.cn&#x2F;2021&#x2F;06&#x2F;23&#x2F;FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;06&#x2F;23&#x2F;FFmpeg视频处理入门教程&#x2F;&quot;,&quot;title&quot;:&quot;FFmpeg视频处理入门教程&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>FFmpeg视频处理入门教程 | JIAHE</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">JIAHE</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-navigation"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>navigation</a></li>
+        <li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li>
+        
+            
+  <li class="menu-item menu-item-java"><a href="/java/" rel="section"><i class="fa fa-code fa-fw"></i>Java</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-spring全家桶"><a href="/spring-framework/" rel="section"><i class="fa fa-code fa-fw"></i>Spring全家桶</a></li>
+
+
+      
+        <li class="menu-item menu-item-代码可读性"><a href="/code-easy-read/" rel="section"><i class="far fa-file-code fa-fw"></i>代码可读性</a></li>
+        
+            
+  <li class="menu-item menu-item-数据库"><a href="/database/" rel="section"><i class="fas fa-database fa-fw"></i>数据库</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-计算机网络"><a href="/network/" rel="section"><i class="fas fa-network-wired fa-fw"></i>计算机网络</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-操作系统基础"><a href="/os/" rel="section"><i class="fas fa-laptop fa-fw"></i>操作系统基础</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-基础概念"><a href="/basic-concepts/" rel="section"><i class="fas fa-star fa-fw"></i>基础概念</a></li>
+
+
+      
+        
+            
+  <li class="menu-item menu-item-数据结构与算法"><a href="/data-structure/" rel="section"><i class="fas fa-poll fa-fw"></i>数据结构与算法</a></li>
+
+
+      
+        <li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li>
+        <li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li>
+        <li class="menu-item menu-item-常用软件"><a href="/windows-software-cheat-sheet/" rel="section"><i class="fab fa-windows fa-fw"></i>常用软件</a></li>
+        <li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li>
+        <li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li>
+        <li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">编码格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">编码器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FFmpeg-%E4%BD%BF%E7%94%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">FFmpeg 使用格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">常用命令行参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">查看文件信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%8F%AF%E7%94%A8%E8%AE%BE%E5%A4%87"><span class="nav-number">4.2.</span> <span class="nav-text">查看可用设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%AE%BE%E5%A4%87%E4%BD%BF%E7%94%A8%E5%8F%AF%E9%80%89%E9%A1%B9"><span class="nav-number">4.3.</span> <span class="nav-text">查看设备使用可选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%95%E5%88%B6%E8%A7%86%E9%A2%91"><span class="nav-number">4.4.</span> <span class="nav-text">录制视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%95%E5%88%B6%E9%9F%B3%E9%A2%91"><span class="nav-number">4.5.</span> <span class="nav-text">录制音频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%95%E5%88%B6%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="nav-number">4.6.</span> <span class="nav-text">录制音视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.7.</span> <span class="nav-text">转换编码格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%AE%B9%E5%99%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.8.</span> <span class="nav-text">转换容器格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E7%A0%81%E7%8E%87"><span class="nav-number">4.9.</span> <span class="nav-text">调整码率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E5%88%86%E8%BE%A8%E7%8E%87"><span class="nav-number">4.10.</span> <span class="nav-text">调整分辨率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E6%95%B4%E5%B8%A7%E7%8E%87"><span class="nav-number">4.11.</span> <span class="nav-text">调整帧率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E8%A7%86%E9%A2%91"><span class="nav-number">4.12.</span> <span class="nav-text">提取视频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E9%9F%B3%E9%A2%91"><span class="nav-number">4.13.</span> <span class="nav-text">提取音频</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E9%9F%B3%E8%BD%A8"><span class="nav-number">4.14.</span> <span class="nav-text">添加音轨</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%AA%E5%9B%BE"><span class="nav-number">4.15.</span> <span class="nav-text">截图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A3%81%E5%89%AA"><span class="nav-number">4.16.</span> <span class="nav-text">裁剪</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E9%9F%B3%E9%A2%91%E6%B7%BB%E5%8A%A0%E5%B0%81%E9%9D%A2"><span class="nav-number">4.17.</span> <span class="nav-text">为音频添加封面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">JIAHE</p>
+  <div class="site-description" itemprop="description">Collection & Reuse</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FFmpeg视频处理入门教程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-23 15:04:05" itemprop="dateCreated datePublished" datetime="2021-06-23T15:04:05+08:00">2021-06-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><a target="_blank" rel="noopener" href="https://www.ffmpeg.org/">FFmpeg</a> 是视频处理最常用的开源软件。</p>
+<p>它功能强大，用途广泛，大量用于视频网站和商业软件（比如 Youtube 和 iTunes），也是许多音频和视频格式的标准编码 / 解码实现。</p>
+<p><code>FFmpeg</code> 本身是一个庞大的项目，包含许多组件和库文件，最常用的是它的命令行工具。本文介绍 <code>FFmpeg</code> 命令行如何处理视频，比桌面视频处理软件更简洁高效。</p>
+<p>如果你还没安装，可以根据<a target="_blank" rel="noopener" href="https://www.ffmpeg.org/download.html">官方文档</a> 先完成安装。</p>
+<span id="more"></span>
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>介绍 FFmpeg 用法之前，需要了解一些视频处理的基本概念。</p>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><p>视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。</p>
+<p>常见的容器格式有以下几种。一般来说，视频文件的后缀名反映了它的容器格式。</p>
+<ul>
+<li>  MP4</li>
+<li>  MKV</li>
+<li>  WebM</li>
+<li>  AVI</li>
+</ul>
+<p>下面的命令查看 <code>FFmpeg</code> 支持的容器。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -formats</code></pre>
+
+<h3 id="编码格式"><a href="#编码格式" class="headerlink" title="编码格式"></a>编码格式</h3><p>视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。</p>
+<p>常用的视频编码格式如下。</p>
+<ul>
+<li>  H.262</li>
+<li>  H.264</li>
+<li>  H.265</li>
+</ul>
+<p>上面的编码格式都是有版权的，但是可以免费使用。此外，还有几种无版权的视频编码格式。</p>
+<ul>
+<li>  VP8</li>
+<li>  VP9</li>
+<li>  AV1</li>
+</ul>
+<p>常用的音频编码格式如下。</p>
+<ul>
+<li>  MP3</li>
+<li>  AAC</li>
+</ul>
+<p>上面所有这些都是有损的编码格式，编码后会损失一些细节，以换取压缩后较小的文件体积。无损的编码格式压缩出来的文件体积较大，这里就不介绍了。</p>
+<p>下面的命令可以查看 <code>FFmpeg</code> 支持的编码格式，视频编码和音频编码都在内。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -codecs</code></pre>
+
+<h3 id="编码器"><a href="#编码器" class="headerlink" title="编码器"></a>编码器</h3><p>编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频 / 音频的编码和解码。</p>
+<p>以下是一些 <code>FFmpeg</code> 内置的视频编码器。</p>
+<ul>
+<li>  libx264：最流行的开源 H.264 编码器</li>
+<li>  NVENC：基于 NVIDIA GPU 的 H.264 编码器</li>
+<li>  libx265：开源的 HEVC 编码器</li>
+<li>  libvpx：谷歌的 VP8 和 VP9 编码器</li>
+<li>  libaom：AV1 编码器</li>
+</ul>
+<p>音频编码器如下。</p>
+<ul>
+<li>  libfdk-aac</li>
+<li>  aac</li>
+</ul>
+<p>下面的命令可以查看 <code>FFmpeg</code> 已安装的编码器。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -encoders</code></pre>
+
+<h2 id="FFmpeg-使用格式"><a href="#FFmpeg-使用格式" class="headerlink" title="FFmpeg 使用格式"></a><code>FFmpeg</code> 使用格式</h2><p><code>FFmpeg</code> 的命令行参数非常多，可以分成五个部分。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;</code></pre>
+
+<p>上面命令中，五个部分的参数依次如下。</p>
+<ol>
+<li> 全局参数</li>
+<li> 输入文件参数</li>
+<li> 输入文件</li>
+<li> 输出文件参数</li>
+<li> 输出文件</li>
+</ol>
+<p>参数太多的时候，为了便于查看，<code>FFmpeg</code> 命令可以写成多行。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+[全局参数] \
+[输入文件参数] \
+-i [输入文件] \
+[输出文件参数] \
+[输出文件]</code></pre>
+
+<p>下面是一个例子。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-y \ # 全局参数
+-c:a libfdk_aac -c:v libx264 \ # 输入文件参数
+-i input.mp4 \ # 输入文件
+-c:v libvpx-vp9 -c:a libvorbis \ # 输出文件参数
+output.webm # 输出文件</code></pre>
+
+<p>上面的命令将 mp4 文件转成 webm 文件，这两个都是容器格式。输入的 mp4 文件的音频编码格式是 aac，视频编码格式是 H.264；输出的 webm 文件的视频编码格式是 VP9，音频格式是 Vorbis。</p>
+<p>如果不指明编码格式，<code>FFmpeg</code> 会自己判断输入文件的编码。因此，上面的命令可以简单写成下面的样子。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -i input.avi output.mp4</code></pre>
+
+<h2 id="常用命令行参数"><a href="#常用命令行参数" class="headerlink" title="常用命令行参数"></a>常用命令行参数</h2><p><code>FFmpeg</code> 常用的命令行参数如下。</p>
+<ul>
+<li>  <code>-c</code>：指定编码器</li>
+<li>  <code>-c copy</code>：直接复制，不经过重新编码（这样比较快）</li>
+<li>  <code>-c:v</code>：指定视频编码器</li>
+<li>  <code>-c:a</code>：指定音频编码器</li>
+<li>  <code>-i</code>：指定输入文件</li>
+<li>  <code>-an</code>：去除音频流</li>
+<li>  <code>-vn</code>：去除视频流</li>
+<li>  <code>-r</code>：视频帧率</li>
+<li>  <code>-preset</code>：指定输出的视频质量，会影响文件的生成速度，有以下几个可用的值 <code>ultrafast</code>, <code>superfast</code>, <code>veryfast</code>, <code>faster</code>, <code>fast</code>, <code>medium</code>, <code>slow</code>, <code>slower</code>, <code>veryslow</code>。</li>
+<li>  <code>-y</code>：不经过确认，输出时直接覆盖同名文件。</li>
+</ul>
+<h2 id="常见用法"><a href="#常见用法" class="headerlink" title="常见用法"></a>常见用法</h2><p>下面介绍 <code>FFmpeg</code> 几种常见用法。</p>
+<h3 id="查看文件信息"><a href="#查看文件信息" class="headerlink" title="查看文件信息"></a>查看文件信息</h3><p>查看视频文件的元信息，比如编码格式和比特率，可以只使用<code>-i</code>参数。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -i input.mp4</code></pre>
+
+<p>上面命令会输出很多冗余信息，加上<code>-hide_banner</code>参数，可以只显示元信息。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -i input.mp4 -hide_banner</code></pre>
+
+<h3 id="查看可用设备"><a href="#查看可用设备" class="headerlink" title="查看可用设备"></a>查看可用设备</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -list_devices true -f dshow -i dummy
+[dshow @ 000001d3da482240] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 000001d3da482240]  &quot;Integrated Camera&quot;
+[dshow @ 000001d3da482240]     Alternative name &quot;@device_pnp_\\?\usb#vid_04ca&amp;pid_7070&amp;mi_00#6&amp;2102d5ea&amp;0&amp;0000#&#123;65e8773d-8f56-11d0-a3b9-00a0c9223196&#125;\global&quot;
+[dshow @ 000001d3da482240] DirectShow audio devices
+[dshow @ 000001d3da482240]  &quot;麦克风阵列 (Realtek(R) Audio)&quot;
+[dshow @ 000001d3da482240]     Alternative name &quot;@device_cm_&#123;33D9A762-90C8-11D0-BD43-00A0C911CE86&#125;\wave_&#123;BE0CB07D-AB72-4606-86E9-5F102ACAEF89&#125;&quot;
+dummy: Immediate exit requested</code></pre>
+
+<h3 id="查看设备使用可选项"><a href="#查看设备使用可选项" class="headerlink" title="查看设备使用可选项"></a>查看设备使用可选项</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -list_options true -f dshow -i video&#x3D;&quot;Integrated Camera&quot;
+[dshow @ 000001751d612280] DirectShow video device options (from video devices)
+[dshow @ 000001751d612280]  Pin &quot;捕获&quot; (alternative pin name &quot;捕获&quot;)
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;1280x720 fps&#x3D;30 max s&#x3D;1280x720 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;848x480 fps&#x3D;30 max s&#x3D;848x480 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;960x540 fps&#x3D;30 max s&#x3D;960x540 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;1280x720 fps&#x3D;10 max s&#x3D;1280x720 fps&#x3D;10
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;1280x720 fps&#x3D;10 max s&#x3D;1280x720 fps&#x3D;10
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;848x480 fps&#x3D;20 max s&#x3D;848x480 fps&#x3D;20
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;848x480 fps&#x3D;20 max s&#x3D;848x480 fps&#x3D;20
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;960x540 fps&#x3D;15 max s&#x3D;960x540 fps&#x3D;15
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;960x540 fps&#x3D;15 max s&#x3D;960x540 fps&#x3D;15</code></pre>
+
+<h3 id="录制视频"><a href="#录制视频" class="headerlink" title="录制视频"></a>录制视频</h3><p>安装 <a target="_blank" rel="noopener" href="https://github.com/rdp/screen-capture-recorder-to-video-windows-free">https://github.com/rdp/screen-capture-recorder-to-video-windows-free</a></p>
+<p>摄像头</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 实时录制摄像头画面 - Windows适用
+$ ffplay -f dshow \
+-i video&#x3D;&quot;摄像头设备名称&quot; \
+-r 30 \
+-vcodec libx264</code></pre>
+
+<p>桌面</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 实时录制桌面画面 - Windows适用
+$ ffmpeg -f gdigrab \
+-i desktop \
+-f mp4 \
+-preset ultrafast \
+screen_capture.mp4</code></pre>
+
+<h3 id="录制音频"><a href="#录制音频" class="headerlink" title="录制音频"></a>录制音频</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># Windows适用
+$ ffmpeg -f dshow \
+-i audio&#x3D;&quot;音频设备名称&quot; \
+audio.aac</code></pre>
+
+<h3 id="录制音视频"><a href="#录制音视频" class="headerlink" title="录制音视频"></a>录制音视频</h3><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -f gdigrab -t 30 -framerate 15 -i desktop -f dshow -i audio&#x3D;&quot;音频设备名称&quot; \ 
+ -b:v 3M -pixel_format yuv420p -vcodec libx264 -s 1366x768 -y # 可选，非必须
+ video.flv</code></pre>
+
+<ul>
+<li><p><code>-f</code> 指定采集数据方式，一般为<code>dshow</code>或<code>gdigrab</code>。</p>
+<ul>
+<li><code>gdigrab</code>为系统自带，只能录屏幕，没声音；</li>
+<li><code>dshow</code>需装<code>directX</code>，优点是可以指定多个输入，比如下载安装screen capture recorder后，可将其作为<code>dshow</code>模式下的视频输入，可将virtual-audio-capturer作为<code>dshow</code>模式下的音频输入，实现录屏的同时录音。</li>
+</ul>
+</li>
+<li><p><code>-i</code> 指定输入，desktop表示<code>gdigrab</code>采集模式输入全部桌面。<code>dshow</code>模式下自己指定，如：<code>-i video=&quot;screen-capture-recorder&quot; -i audio=&quot;virtual-audio-capturer&quot;</code></p>
+</li>
+<li><p><code>-t</code> 表示录屏时间，缺省则没有录屏时间限制，会一直录，录到手动停止或强制关闭</p>
+</li>
+<li><p><code>-framerate</code> 表示帧率。对屏幕录制来说，一般15帧就够了，太大的话会很占资源，cpu占用率、内存、存储空间占用等都会很高。</p>
+</li>
+<li><p><code>-s</code> 表示分辨率</p>
+</li>
+<li><p><code>-b:v</code> 表示码率，如：-b:v 3M。大一点清楚，但是占资源，自己权衡吧。</p>
+</li>
+<li><p><code>-pixel_format</code> 表示像素格式，如yuv420p等，注意选择不同的像素格式会影响资源占用率和视频质量，自己研究吧。</p>
+</li>
+<li><p><code>-vcodec</code> 表示编码方式。libx264表示软编码，编码器的库为x264。你可以选择其他的，不同的编码方式也会影响资源占用率和视频质量，自己研究吧。此外可以用硬件加速，硬编解码有3种常见的方式，例如：-vcodec h264_qsv，即使用集显加速；例如： -vcodec h264_nvenc，即使用N卡加速；例如： -vcodec h264_amf，即使用A卡加速。开启硬件加速的情况下可大大降低CPU的占用率</p>
+</li>
+<li><p><code>-y</code> 表示覆盖同名文件</p>
+</li>
+<li><p>video.flv为输出文件名，格式虽然mp4较为常见，但我建议用flv格式，因为如果中间有录制损坏，mp4整个就播放不了了，但flv能。</p>
+</li>
+</ul>
+<h3 id="转换编码格式"><a href="#转换编码格式" class="headerlink" title="转换编码格式"></a>转换编码格式</h3><p>转换编码格式（transcoding）指的是， 将视频文件从一种编码转成另一种编码。比如转成 H.264 编码，一般使用编码器<code>libx264</code>，所以只需指定输出文件的视频编码器即可。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -i [input.file] -c:v libx264 output.mp4</code></pre>
+
+<p>下面是转成 H.265 编码的写法。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -i [input.file] -c:v libx265 output.mp4</code></pre>
+
+<h3 id="转换容器格式"><a href="#转换容器格式" class="headerlink" title="转换容器格式"></a>转换容器格式</h3><p>转换容器格式（transmuxing）指的是，将视频文件从一种容器转到另一种容器。下面是 mp4 转 webm 的写法。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -i input.mp4 -c copy output.webm</code></pre>
+
+<p>上面例子中，只是转一下容器，内部的编码格式不变，所以使用<code>-c copy</code>指定直接拷贝，不经过转码，这样比较快。</p>
+<h3 id="调整码率"><a href="#调整码率" class="headerlink" title="调整码率"></a>调整码率</h3><blockquote>
+<p>码率，即波特率。值越小，转换后的视频越小。</p>
+<p>码率就是数据传输时单位时间传送的数据位数,一般我们用的单位是kbps即千位每秒。</p>
+<p>码率与体积成正比：码率越大，体积越大；码率越小，体积越小。由于文件体积与取样率是成正比的，所以几乎所有的编码格式都想用最低的码率达到最少的失真，“码率”就是失真度，码率越高越清晰，反之则画面粗糙而且马赛克多。</p>
+</blockquote>
+<p>下面的例子指定码率最小为 964K，最大为 3856K，缓冲区大小为 2000K。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-i input.mp4 \
+-minrate 964K -maxrate 3856K -bufsize 2000K \
+output.mp4</code></pre>
+
+<p><code>-b</code> 输出文件的码率（<code>ffmpeg.exe -i test.MP4 -b 600k output.mp4</code>）</p>
+<h3 id="调整分辨率"><a href="#调整分辨率" class="headerlink" title="调整分辨率"></a>调整分辨率</h3><blockquote>
+<p>指的是视频的分辨率，常见的分辨率有4096<em>2304,1920</em>1080,720*576等。</p>
+</blockquote>
+<p>下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-i input.mp4 \
+-vf scale&#x3D;480:-1 \
+output.mp4</code></pre>
+
+<p><code>-s</code> 输出文件的分别率（<code>ffmpeg.exe -i test.MP4 -s 1920*1080 output.mp4</code>）</p>
+<h3 id="调整帧率"><a href="#调整帧率" class="headerlink" title="调整帧率"></a>调整帧率</h3><blockquote>
+<p>帧率（即视频更新率），就是每秒编码进视频文件的帧数目，是用于测量显示帧数的量度。</p>
+<p>测量单位为“每秒显示帧数”（Frame Per Second，FPS，帧率）或“赫兹”，单位用FPS用来描述视频每秒播放多少帧，而单位用赫兹用来描述显示器的画面每秒更新多少次。</p>
+<p>常见的帖率有25、30，高清电视有50、60帧。</p>
+<p>一般帧率越高，视频画面越流畅。但是人类的眼睛需要每秒至少15帧才能将图像连贯在一起~</p>
+</blockquote>
+<p>下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-i input.mp4 \
+-vf scale&#x3D;480:-1 \
+output.mp4</code></pre>
+
+<p><code>-s</code> 输出文件的分别率（<code>ffmpeg.exe -i test.MP4 -s 1920*1080 output.mp4</code>）</p>
+<h3 id="提取视频"><a href="#提取视频" class="headerlink" title="提取视频"></a>提取视频</h3><p>有时，需要从音视频里面提取视频（demuxing），可以像下面这样写。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-i input.mp4 \
+-an -c:v copy \
+output.mp4</code></pre>
+
+<p>上面例子中，<code>-vn</code>表示去掉视频，<code>-c:a copy</code>表示不改变音频编码，直接拷贝。</p>
+<h3 id="提取音频"><a href="#提取音频" class="headerlink" title="提取音频"></a>提取音频</h3><p>有时，需要从音视频里面提取音频（demuxing），可以像下面这样写。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-i input.mp4 \
+-vn -c:a copy \
+output.aac</code></pre>
+
+<p>上面例子中，<code>-vn</code>表示去掉视频，<code>-c:a copy</code>表示不改变音频编码，直接拷贝。</p>
+<h3 id="添加音轨"><a href="#添加音轨" class="headerlink" title="添加音轨"></a>添加音轨</h3><p>添加音轨（muxing）指的是，将外部音频加入视频，比如添加背景音乐或旁白。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-i input.aac -i input.mp4 \
+output.mp4</code></pre>
+
+<p>上面例子中，有音频和视频两个输入文件，<code>FFmpeg</code> 会将它们合成为一个文件。</p>
+<h3 id="截图"><a href="#截图" class="headerlink" title="截图"></a>截图</h3><p>下面的例子是从指定时间开始，连续对 1 秒钟的视频进行截图。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-y \
+-i input.mp4 \
+-ss 00:01:24 -t 00:00:01 \
+output_%3d.jpg</code></pre>
+
+<p>如果只需要截一张图，可以指定只截取一帧。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-ss 01:23:45 \
+-i input \
+-vframes 1 \
+-q:v 2 \
+output.jpg</code></pre>
+
+<p>上面例子中，<code>-vframes 1</code>指定只截取一帧，<code>-q:v 2</code>表示输出的图片质量，一般是 1 到 5 之间（1 为质量最高）。</p>
+<h3 id="裁剪"><a href="#裁剪" class="headerlink" title="裁剪"></a>裁剪</h3><p>裁剪（cutting）指的是，截取原始视频里面的一个片段，输出为一个新视频。可以指定开始时间（start）和持续时间（duration），也可以指定结束时间（end）。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -ss [start] -i [input] -t [duration] -c copy [output]
+$ ffmpeg -ss [start] -i [input] -to [end] -c copy [output]</code></pre>
+
+<p>下面是实际的例子。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg -ss 00:01:50 -i [input] -t 10.5 -c copy [output]
+$ ffmpeg -ss 2.5 -i [input] -to 10 -c copy [output]</code></pre>
+
+<p>上面例子中，<code>-c copy</code>表示不改变音频和视频的编码格式，直接拷贝，这样会快很多。</p>
+<h3 id="为音频添加封面"><a href="#为音频添加封面" class="headerlink" title="为音频添加封面"></a>为音频添加封面</h3><p>有些视频网站只允许上传视频文件。如果要上传音频文件，必须为音频添加封面，将其转为视频，然后上传。</p>
+<p>下面命令可以将音频文件，转为带封面的视频文件。</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ ffmpeg \
+-loop 1 \
+-i cover.jpg -i input.mp3 \
+-c:v libx264 -c:a aac -b:a 192k -shortest \
+output.mp4</code></pre>
+
+<p>上面命令中，有两个输入文件，一个是封面图片<code>cover.jpg</code>，另一个是音频文件<code>input.mp3</code>。<code>-loop 1</code>参数表示图片无限循环，<code>-shortest</code>参数表示音频文件结束，输出视频就结束。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li>  <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2020/01/ffmpeg.html">http://www.ruanyifeng.com/blog/2020/01/ffmpeg.html</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://www.cnblogs.com/kybs0/p/12771572.html">https://www.cnblogs.com/kybs0/p/12771572.html</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://blog.csdn.net/awangdea99/article/details/114555743">https://blog.csdn.net/awangdea99/article/details/114555743</a></li>
+<li>  <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/145312133">https://zhuanlan.zhihu.com/p/145312133</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ffmpeg/" rel="tag"># ffmpeg</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/22/Invalid-Host-header-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/" rel="prev" title="Invalid Host header 服务器域名访问出现的问题">
+                  <i class="fa fa-chevron-left"></i> Invalid Host header 服务器域名访问出现的问题
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/24/Vim%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2&%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" rel="next" title="Vim查找替换&正则表达式">
+                  Vim查找替换&正则表达式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JIAHE</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js" integrity="sha256-2N+3bVl+vOCJyZ9ZbH9Eb99XKT/53oT5V8eRbB8bFcA=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-33Qw0lN3qo7tLZL4c7vDLCapRUs+gNtQRaVIOHk4Ors=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha256-jWSJB6Iusw1nLB+Iqwk0dp9T2jSn5bRzLXJCE1VmOIU=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script>
+
+  
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script class="next-config" data-name="pdf" type="application/json">{&quot;object_url&quot;:{&quot;url&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;pdfobject@2.2.5&#x2F;pdfobject.min.js&quot;,&quot;integrity&quot;:&quot;sha256-YuNlP9i6s&#x2F;WH7EaU2kErloo9Vc85C3WVqhoMDgsEVpY&#x3D;&quot;},&quot;url&quot;:&quot;&#x2F;lib&#x2F;pdf&#x2F;web&#x2F;viewer.html&quot;}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+
+
+  
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/quicklink@2.1.0/dist/quicklink.umd.js" integrity="sha256-KK3rvmDcW72MSl9jzzNZWlQjZNrRzAuGhAQ+0SFOg7Q=" crossorigin="anonymous"></script>
+  <script class="next-config" data-name="quicklink" type="application/json">{&quot;enable&quot;:true,&quot;home&quot;:true,&quot;archive&quot;:true,&quot;delay&quot;:true,&quot;timeout&quot;:3000,&quot;priority&quot;:true,&quot;ignores&quot;:null,&quot;url&quot;:&quot;https:&#x2F;&#x2F;xiaojianzheng.cn&#x2F;2021&#x2F;06&#x2F;23&#x2F;FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B&#x2F;&quot;}</script>
+  <script src="/js/third-party/quicklink.js"></script>
+
+</body>
+</html>
