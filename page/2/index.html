@@ -208,7 +208,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">55</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -247,6 +247,406 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/24/git%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E6%93%8D%E4%BD%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/24/git%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">git仓库目录迁移操作</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-24 15:15:00" itemprop="dateCreated datePublished" datetime="2021-06-24T15:15:00+08:00">2021-06-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="多个目录迁移到同一个新的仓库"><a href="#多个目录迁移到同一个新的仓库" class="headerlink" title="多个目录迁移到同一个新的仓库"></a>多个目录迁移到同一个新的仓库</h2><p>1、克隆需要迁移的项目代码</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git clone git@gitlab.alibaba-inc.com:maru&#x2F;maru.git</code></pre>
+
+<p>2、同步所有分支信息</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git branch -r | grep -v &#39;\-&gt;&#39; | while read remote; do git branch --track &quot;$&#123;remote#origin&#x2F;&#125;&quot; &quot;$remote&quot;; done</code></pre>
+
+<p>3、筛选出需要保留的目录</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git filter-branch --index-filter &#39;git rm --cached -qr --ignore-unmatch -- . &amp;&amp; git reset -q $GIT_COMMIT -- src public&#39; --prune-empty -- --all</code></pre>
+
+<p>4、清理 <code>.git</code> 的 <code>object</code></p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git reset --hard
+git for-each-ref --format&#x3D;&quot;%(refname)&quot; refs&#x2F;original&#x2F; |xargs -n 1 git update-ref -d
+git reflog expire --expire&#x3D;now --all
+git gc --aggressive --prune&#x3D;now</code></pre>
+
+<p>5、设置 origin</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git remote rm origin
+git remote add origin xxx.git</code></pre>
+
+<p>6、推送</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git push --all</code></pre>
+
+<h2 id="单个目录迁移到新仓库"><a href="#单个目录迁移到新仓库" class="headerlink" title="单个目录迁移到新仓库"></a>单个目录迁移到新仓库</h2><p>只需要将上面的第三步改为下面的这条命令即可：</p>
+<pre class="line-numbers language-sh" data-language="sh"><code class="language-sh">git filter-branch --tag-name-filter cat --prune-empty --subdirectory-filter src -- --all</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/24/Vim%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2&%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/24/Vim%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2&%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="post-title-link" itemprop="url">Vim查找替换&正则表达式</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-24 11:08:00" itemprop="dateCreated datePublished" datetime="2021-06-24T11:08:00+08:00">2021-06-24</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="查找替换"><a href="#查找替换" class="headerlink" title="查找替换"></a>查找替换</h1><p><code>:[range]s/&#123;pattern&#125;/&#123;string&#125;/[flags]</code></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">:1,10s&#x2F;from&#x2F;to&#x2F; 表示在第1到第10行（包含第1，第10行）之间搜索替换
+:10s&#x2F;from&#x2F;to&#x2F; 	表示只在第10行搜索替换
+:%s&#x2F;from&#x2F;to&#x2F; 	表示在所有行中搜索替换
+1,$s&#x2F;from&#x2F;to&#x2F; 	同上</code></pre>
+
+<p><strong>flags 有如下四个选项</strong></p>
+<ul>
+<li><code>c</code>        confirm，每次替换前询问；</li>
+<li><code>e</code>        error， 不显示错误；</li>
+<li><code>g</code>        globle，不询问，整行替换。如果不加 g 选项，则只替换每行的第一个匹配到的字符串；</li>
+<li><code>i</code>        ignore，忽略大小写</li>
+<li>这些选项可以合并使用，如 cgi 表示不区分大小写，整行替换，替换前询问</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/24/Vim%E6%9F%A5%E6%89%BE%E6%9B%BF%E6%8D%A2&%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" class="post-title-link" itemprop="url">FFmpeg视频处理入门教程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-23 15:04:05" itemprop="dateCreated datePublished" datetime="2021-06-23T15:04:05+08:00">2021-06-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><a target="_blank" rel="noopener" href="https://www.ffmpeg.org/">FFmpeg</a> 是视频处理最常用的开源软件。</p>
+<p>它功能强大，用途广泛，大量用于视频网站和商业软件（比如 Youtube 和 iTunes），也是许多音频和视频格式的标准编码 / 解码实现。</p>
+<p><code>FFmpeg</code> 本身是一个庞大的项目，包含许多组件和库文件，最常用的是它的命令行工具。本文介绍 <code>FFmpeg</code> 命令行如何处理视频，比桌面视频处理软件更简洁高效。</p>
+<p>如果你还没安装，可以根据<a target="_blank" rel="noopener" href="https://www.ffmpeg.org/download.html">官方文档</a> 先完成安装。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/22/Invalid-Host-header-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/22/Invalid-Host-header-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%9F%9F%E5%90%8D%E8%AE%BF%E9%97%AE%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">Invalid Host header 服务器域名访问出现的问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-22 17:13:52" itemprop="dateCreated datePublished" datetime="2021-06-22T17:13:52+08:00">2021-06-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ol>
+<li>关闭host检查</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+module.exports &#x3D; &#123;
+    devServer: &#123;
+        &#x2F;&#x2F; https:&#x2F;&#x2F;webpack.docschina.org&#x2F;configuration&#x2F;dev-server&#x2F;#devserverdisablehostcheck
+        disableHostCheck: true,
+    &#125;
+&#125;</code></pre>
+
+<ol start="2">
+<li>修改host为对一个的域名</li>
+</ol>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">
+module.exports &#x3D; &#123;
+    host: &#39;xxx.com&#39;,
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/21/%E8%AE%B0%E4%B8%80%E6%AC%A1JS%E4%B8%AD%E8%A7%A3%E5%86%B3%E6%B5%AE%E7%82%B9%E6%95%B0%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="JIAHE">
+      <meta itemprop="description" content="Collection & Reuse">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JIAHE">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/06/21/%E8%AE%B0%E4%B8%80%E6%AC%A1JS%E4%B8%AD%E8%A7%A3%E5%86%B3%E6%B5%AE%E7%82%B9%E6%95%B0%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98/" class="post-title-link" itemprop="url">记一次JS中解决浮点数计算问题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-21 14:38:13" itemprop="dateCreated datePublished" datetime="2021-06-21T14:38:13+08:00">2021-06-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>问题：1.2 - 1.1 = 0.09999999999999987</p>
+<blockquote>
+<p>为什么结果如此就不赘述了，浮点数在计算机中存储原理了解一下。</p>
+</blockquote>
+<p>解决办法：使用第三方类库</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://mikemcl.github.io/big.js">big.js</a></li>
+<li><a target="_blank" rel="noopener" href="https://mikemcl.github.io/decimal.js/#">decimal.js</a></li>
+</ul>
+<p>原理了解：<a target="_blank" rel="noopener" href="https://juejin.cn/post/6900567809038745608">https://juejin.cn/post/6900567809038745608</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -797,410 +1197,8 @@ echo &quot;alias vim&#x3D;&#39;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;vim&#39; &quot
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/10/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88SSO%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/10/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88SSO%EF%BC%89/" class="post-title-link" itemprop="url">单点登录（SSO）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-06-10 20:34:00" itemprop="dateCreated datePublished" datetime="2021-06-10T20:34:00+08:00">2021-06-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="产生背景"><a href="#产生背景" class="headerlink" title="产生背景"></a>产生背景</h1><p>在企业发展初期，企业使用的系统很少，通常一个或者两个，每个系统都有自己的登录模块，运营人员每天用自己的账号登录，很方便。 但随着企业的发展，用到的系统随之增多，运营人员在操作不同的系统时，需要多次登录，而且每个系统的账号都不一样，这对于运营人员来说，很不方便。于是，就想到是不是可以在一个系统登录，其他系统就不用登录了呢？这就是单点登录要解决的问题。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/06/10/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95%EF%BC%88SSO%EF%BC%89/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/05/24/SpringCloud%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/24/SpringCloud%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">SpringCloud基础介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-05-25 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-25T00:00:00+08:00">2021-05-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>毫无疑问，Spring Cloud 是目前微服务架构领域的翘楚，无数的书籍博客都在讲解这个技术。不过大多数讲解还停留在对 Spring Cloud 功能使用的层面，其底层的很多原理，很多人可能并不知晓。<strong>因此本文将通过大量的手绘图</strong>，给大家谈谈 Spring Cloud 微服务架构的底层原理。</p>
-<p>实际上，Spring Cloud 是一个全家桶式的技术栈，包含了很多组件。本文先从其最核心的几个组件入手，来剖析一下其底层的工作原理。<strong>也就是 Eureka、Ribbon、Feign、Hystrix、Zuul 这几个组件。</strong></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/24/SpringCloud%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/05/24/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%E8%AF%A6%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/24/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%E8%AF%A6%E8%A7%A3/" class="post-title-link" itemprop="url">Spring事务传播机制</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-05-25 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-25T00:00:00+08:00">2021-05-25</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Spring 在 TransactionDefinition 接口中规定了 7 种类型的事务传播行为。事务传播行为是 Spring 框架独有的事务增强特性，他不属于的事务实际提供方数据库行为。这是 Spring 为我们提供的强大的工具箱，使用事务传播行可以为我们的开发工作提供许多便利。但是人们对他的误解也颇多，你一定也听过 “service 方法事务最好不要嵌套” 的传言。要想正确的使用工具首先需要了解工具。本文对七种事务传播行为做详细介绍，内容主要代码示例的方式呈现。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/24/Spring%E4%BA%8B%E5%8A%A1%E4%BC%A0%E6%92%AD%E8%A1%8C%E4%B8%BA%E8%AF%A6%E8%A7%A3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/05/10/%E4%B8%8D%E5%8F%AF%E4%B8%8D%E8%AF%B4%E7%9A%84Java%E2%80%9C%E9%94%81%E2%80%9D%E4%BA%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/10/%E4%B8%8D%E5%8F%AF%E4%B8%8D%E8%AF%B4%E7%9A%84Java%E2%80%9C%E9%94%81%E2%80%9D%E4%BA%8B/" class="post-title-link" itemprop="url">不可不说的Java“锁”事</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-11T00:00:00+08:00">2021-05-11</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Java 提供了种类丰富的锁，每种锁因其特性的不同，在适当的场景下能够展现出非常高的效率。本文旨在对锁相关源码（本文中的源码来自 JDK 8 和 Netty 3.10.6）、使用场景进行举例，为读者介绍主流锁的知识点，以及不同的锁的适用场景。</p>
-<p>Java 中往往是按照是否含有某一特性来定义锁，我们通过特性将锁进行分组归类，再使用对比的方式进行介绍，帮助大家更快捷的理解相关知识。下面给出本文内容的总体分类目录：</p>
-<p><img data-src="https://awps-assets.meituan.net/mit-x/blog-images-bundle-2018b/7f749fc8.png"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/10/%E4%B8%8D%E5%8F%AF%E4%B8%8D%E8%AF%B4%E7%9A%84Java%E2%80%9C%E9%94%81%E2%80%9D%E4%BA%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="JIAHE">
-      <meta itemprop="description" content="Collection & Reuse">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JIAHE">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/" class="post-title-link" itemprop="url">SpringBoot集成RabbitMQ入门使用</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-05-10 09:27:24" itemprop="dateCreated datePublished" datetime="2021-05-10T09:27:24+08:00">2021-05-10</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h1><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;dependency&gt;
-  &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;
-  &lt;artifactId&gt;spring-boot-starter-amqp&lt;&#x2F;artifactId&gt;
-&lt;dependency&gt;</code></pre>
-
-<h1 id="配置信息"><a href="#配置信息" class="headerlink" title="配置信息"></a>配置信息</h1><table>
-<thead>
-<tr>
-<th>属性</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>spring.rabbitmq.addresses</td>
-<td>逗号分隔的RabbitMQ代理地址列表</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.host</td>
-<td>代理的主机（默认为localhost）</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.port</td>
-<td>代理的端口（默认为5672）</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.username</td>
-<td>访问代理所使用的用户名（可选）</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.password</td>
-<td>访问代理所使用的密码（可选）</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.template.exchange</td>
-<td>设置默认的Exchange（可选）</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.template.routing-key</td>
-<td>设置默认的Routing-Key（可选）</td>
-</tr>
-<tr>
-<td>spring.rabbitmq.template.receive-timeout</td>
-<td>设置默认超时时间（可选）</td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/05/10/SpringBoot%E9%9B%86%E6%88%90RabbitMQ%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
