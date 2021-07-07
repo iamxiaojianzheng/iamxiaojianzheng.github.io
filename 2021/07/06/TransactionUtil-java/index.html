@@ -210,13 +210,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-count">56</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -312,80 +312,84 @@ import java.util.concurrent.Callable;
 @Service
 public class TransactionUtil &#123;
 
-   @Autowired
-   private DataSourceTransactionManager dataSourceTransactionManager;
+    private static Logger log &#x3D; LoggerFactory.getLogger(TransactionUtil.class);
 
-   private static Logger log &#x3D; LoggerFactory.getLogger(TransactionUtil.class);
+    @Autowired
+    private DataSourceTransactionManager dataSourceTransactionManager;
 
-   public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job, Runnable rollback) &#123;
+    public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job, Runnable rollback) &#123;
+        DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
+        try &#123;
+            T t &#x3D; job.call();
+            dataSourceTransactionManager.commit(status);
+            return t;
+        &#125; catch (Exception e) &#123;
+            dataSourceTransactionManager.rollback(status);
+            if (rollback !&#x3D; null) &#123;
+                rollback.run();
+            &#125;
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        &#125;
+    &#125;
 
-      DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
-      def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-      TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
-      try &#123;
-         T t &#x3D; job.call();
-         dataSourceTransactionManager.commit(status);
+    public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job) &#123;
+        return doTransaction(job, null);
+    &#125;
 
-         return t;
-      &#125; catch (Exception e) &#123;
-         dataSourceTransactionManager.rollback(status);
-         if (rollback !&#x3D; null) &#123;
-            rollback.run();
-         &#125;
-         log.error(e.getMessage(), e);
-         throw new RuntimeException(e);
-      &#125;
-   &#125;
-
-   public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job) &#123;
-      return doTransaction(job, null);
-   &#125;
-
-   &#x2F;**
+    &#x2F;**
     * 开启事务(PROPAGATION_REQUIRED)
     *&#x2F;
-   public TransactionStatus begin() &#123;
-      return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
-   &#125;
+    public TransactionStatus begin() &#123;
+        return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
+    &#125;
 
-   &#x2F;**
+    &#x2F;**
     * 开启事务(PROPAGATION_REQUIRES_NEW)
     *&#x2F;
-   public TransactionStatus beginNew() &#123;
-      return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-   &#125;
+    public TransactionStatus beginNew() &#123;
+        return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    &#125;
 
-   private TransactionStatus getTransactionStatus(int propagationRequiresNew) &#123;
-      DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
-      def.setPropagationBehavior(propagationRequiresNew);
-      TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
-      return status;
-   &#125;
+    &#x2F;**
+    * 事务提交
+    *&#x2F;
+    public void commit(TransactionStatus status) &#123;
+        dataSourceTransactionManager.commit(status);
+    &#125;
 
-   public void commit(TransactionStatus status) &#123;
-      dataSourceTransactionManager.commit(status);
-   &#125;
+    &#x2F;**
+    * 事务回滚
+    *&#x2F;
+    public void rollback(TransactionStatus status) &#123;
+        dataSourceTransactionManager.rollback(status);
+    &#125;
 
-   public void rollback(TransactionStatus status) &#123;
-      dataSourceTransactionManager.rollback(status);
-   &#125;
+    private TransactionStatus getTransactionStatus(int propagationRequiresNew) &#123;
+        DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
+        def.setPropagationBehavior(propagationRequiresNew);
+        TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
+        return status;
+    &#125;
 
-   &#x2F;**
+    &#x2F;**
     * 判断当前线程是否处于事物中，是就等事物提交后再执行，否则直接执行
     * @param runnable 线程任务
     *&#x2F;
-   public static void executeAfterCommit(Runnable runnable) &#123;
-      if (TransactionSynchronizationManager.isActualTransactionActive()) &#123;
-         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() &#123;
-            @Override
-            public void afterCommit() &#123;
-               runnable.run();
-            &#125;
-         &#125;);
-      &#125;else&#123;
-         runnable.run();
-      &#125;
-   &#125;
+    public static void executeAfterCommit(Runnable runnable) &#123;
+        if (TransactionSynchronizationManager.isActualTransactionActive()) &#123;
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() &#123;
+                @Override
+                public void afterCommit() &#123;
+                    runnable.run();
+                &#125;
+            &#125;);
+        &#125;else&#123;
+            runnable.run();
+        &#125;
+    &#125;
 
 &#125;</code></pre>
 
@@ -406,6 +410,9 @@ public class TransactionUtil &#123;
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/07/07/Nginx%E6%9C%80%E5%85%A8%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" rel="next" title="Nginx最全操作总结">
+                  Nginx最全操作总结 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

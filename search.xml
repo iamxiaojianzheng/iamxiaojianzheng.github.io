@@ -2183,80 +2183,84 @@ import java.util.concurrent.Callable;
 @Service
 public class TransactionUtil &#123;
 
-   @Autowired
-   private DataSourceTransactionManager dataSourceTransactionManager;
+    private static Logger log &#x3D; LoggerFactory.getLogger(TransactionUtil.class);
 
-   private static Logger log &#x3D; LoggerFactory.getLogger(TransactionUtil.class);
+    @Autowired
+    private DataSourceTransactionManager dataSourceTransactionManager;
 
-   public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job, Runnable rollback) &#123;
+    public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job, Runnable rollback) &#123;
+        DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
+        try &#123;
+            T t &#x3D; job.call();
+            dataSourceTransactionManager.commit(status);
+            return t;
+        &#125; catch (Exception e) &#123;
+            dataSourceTransactionManager.rollback(status);
+            if (rollback !&#x3D; null) &#123;
+                rollback.run();
+            &#125;
+            log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        &#125;
+    &#125;
 
-      DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
-      def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-      TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
-      try &#123;
-         T t &#x3D; job.call();
-         dataSourceTransactionManager.commit(status);
+    public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job) &#123;
+        return doTransaction(job, null);
+    &#125;
 
-         return t;
-      &#125; catch (Exception e) &#123;
-         dataSourceTransactionManager.rollback(status);
-         if (rollback !&#x3D; null) &#123;
-            rollback.run();
-         &#125;
-         log.error(e.getMessage(), e);
-         throw new RuntimeException(e);
-      &#125;
-   &#125;
-
-   public &lt;T&gt; T doTransaction(Callable&lt;T&gt; job) &#123;
-      return doTransaction(job, null);
-   &#125;
-
-   &#x2F;**
+    &#x2F;**
     * 开启事务(PROPAGATION_REQUIRED)
     *&#x2F;
-   public TransactionStatus begin() &#123;
-      return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
-   &#125;
+    public TransactionStatus begin() &#123;
+        return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
+    &#125;
 
-   &#x2F;**
+    &#x2F;**
     * 开启事务(PROPAGATION_REQUIRES_NEW)
     *&#x2F;
-   public TransactionStatus beginNew() &#123;
-      return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-   &#125;
+    public TransactionStatus beginNew() &#123;
+        return getTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+    &#125;
 
-   private TransactionStatus getTransactionStatus(int propagationRequiresNew) &#123;
-      DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
-      def.setPropagationBehavior(propagationRequiresNew);
-      TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
-      return status;
-   &#125;
+    &#x2F;**
+    * 事务提交
+    *&#x2F;
+    public void commit(TransactionStatus status) &#123;
+        dataSourceTransactionManager.commit(status);
+    &#125;
 
-   public void commit(TransactionStatus status) &#123;
-      dataSourceTransactionManager.commit(status);
-   &#125;
+    &#x2F;**
+    * 事务回滚
+    *&#x2F;
+    public void rollback(TransactionStatus status) &#123;
+        dataSourceTransactionManager.rollback(status);
+    &#125;
 
-   public void rollback(TransactionStatus status) &#123;
-      dataSourceTransactionManager.rollback(status);
-   &#125;
+    private TransactionStatus getTransactionStatus(int propagationRequiresNew) &#123;
+        DefaultTransactionDefinition def &#x3D; new DefaultTransactionDefinition();
+        def.setPropagationBehavior(propagationRequiresNew);
+        TransactionStatus status &#x3D; dataSourceTransactionManager.getTransaction(def);
+        return status;
+    &#125;
 
-   &#x2F;**
+    &#x2F;**
     * 判断当前线程是否处于事物中，是就等事物提交后再执行，否则直接执行
     * @param runnable 线程任务
     *&#x2F;
-   public static void executeAfterCommit(Runnable runnable) &#123;
-      if (TransactionSynchronizationManager.isActualTransactionActive()) &#123;
-         TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() &#123;
-            @Override
-            public void afterCommit() &#123;
-               runnable.run();
-            &#125;
-         &#125;);
-      &#125;else&#123;
-         runnable.run();
-      &#125;
-   &#125;
+    public static void executeAfterCommit(Runnable runnable) &#123;
+        if (TransactionSynchronizationManager.isActualTransactionActive()) &#123;
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() &#123;
+                @Override
+                public void afterCommit() &#123;
+                    runnable.run();
+                &#125;
+            &#125;);
+        &#125;else&#123;
+            runnable.run();
+        &#125;
+    &#125;
 
 &#125;</code></pre>
 ]]></content>
@@ -5569,6 +5573,950 @@ jobDetail.addJobListener(&quot;My Listener&quot;); &#x2F;&#x2F; listener 的名�
         <tag>任务调度</tag>
         <tag>Java</tag>
         <tag>Quartz</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Nginx最全操作总结</title>
+    <url>/2021/07/07/Nginx%E6%9C%80%E5%85%A8%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<blockquote>
+<p>原文地址：<a href="https://zhuanlan.zhihu.com/p/384752564">https://zhuanlan.zhihu.com/p/384752564</a></p>
+</blockquote>
+<p>作者：chrootliu，腾讯 QQ 音乐前端开发工程师</p>
+<blockquote>
+<p>本文将会从：安装 -&gt; 全局配置 -&gt; 常用的各种配置 来书写，其中常用配置写的炒鸡详细，需要的童鞋可以直接滑倒相应的位置查看。</p>
+</blockquote>
+<h1 id="安装-nginx"><a href="#安装-nginx" class="headerlink" title="安装 nginx"></a>安装 nginx</h1><p><strong>下载 nginx 的压缩包文件到根目录，官网下载地址：<a href="https://link.zhihu.com/?target=http://nginx.org/download/nginx-x.xx.xx.tar.gz">http://nginx.org/download/nginx-x.xx.xx.tar.gz</a></strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">yum update #更新系统软件
+cd &#x2F;
+wget nginx.org&#x2F;download&#x2F;nginx-1.17.2.tar.gz</code></pre>
+
+<p><strong>解压 tar.gz 压缩包文件，进去 nginx-1.17.2</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">tar -xzvf nginx-1.17.2.tar.gz
+cd nginx-1.17.2</code></pre>
+
+<p><strong>进入文件夹后进行配置检查</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">.&#x2F;configure</code></pre>
+
+<p><strong>通过安装前的配置检查，发现有报错。检查中发现一些依赖库没有找到，这时候需要先安装 nginx 的一些依赖库</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">yum -y install pcre* #安装使nginx支持rewrite
+yum -y install gcc-c++
+yum -y install zlib*
+yum -y install openssl openssl-devel</code></pre>
+
+<p><strong>再次进行检查操作 ./configure 没发现报错显示，接下来进行编译并安装的操作</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># 检查模块支持
+.&#x2F;configure  --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx  --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-mail --with-mail_ssl_module --with-stream --with-stream_ssl_module --with-stream_realip_module --with-stream_ssl_preread_module --with-threads --user&#x3D;www --group&#x3D;www</code></pre>
+
+<p>这里得特别注意下，你以后需要用到的功能模块是否存在，不然以后添加新的包会比较麻烦。</p>
+<p><strong>查看默认安装的模块支持</strong></p>
+<p>命令 <code>ls nginx-1.17.2</code> 查看 nginx 的文件列表，可以发现里面有一个 auto 的目录。</p>
+<p>在这个 auto 目录中有一个 options 文件，这个文件里面保存的就是 nginx 编译过程中的所有选项配置。</p>
+<p>通过命令：<code>cat nginx-1.17.2/auto/options | grep YES</code>就可以查看</p>
+<p><strong><a href="https://link.zhihu.com/?target=https://jingyan.baidu.com/article/454316ab354edcf7a7c03a81.html">nginx 编译安装时，怎么查看安装模块</a></strong></p>
+<p><strong>编译并安装</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">make &amp;&amp; make install</code></pre>
+
+<p>这里需要注意，模块的支持跟后续的 nginx 配置有关，比如 SSL，gzip 压缩等等，编译安装前最好检查需要配置的模块存不存在。</p>
+<p><strong>查看 nginx 安装后在的目录，可以看到已经安装到 /usr/local/nginx 目录了</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">whereis nginx
+$nginx: &#x2F;usr&#x2F;local&#x2F;nginx</code></pre>
+
+<p><strong>启动 nginx 服务</strong></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">cd &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;
+.&#x2F;nginx</code></pre>
+
+<p>服务启动的时候报错了：<code>nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)</code> ，通过命令查看本机网络地址和端口等一些信息，找到被占用的 80 端口 <code>netstat -ntpl</code> 的 tcp 连接，并杀死进程 (kill 进程 pid)</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">netstat -ntpl
+kill 进程PID</code></pre>
+
+<p>继续启动 nginx 服务，启动成功</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">.&#x2F;nginx</code></pre>
+
+<p>在浏览器直接访问 ip 地址，页面出现 Welcome to Nginx! 则安装成功。</p>
+<h1 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h1><h1 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h1><pre class="line-numbers language-none"><code class="language-none">main        # 全局配置，对全局生效
+├── events  # 配置影响 nginx 服务器或与用户的网络连接
+├── http    # 配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置
+│   ├── upstream # 配置后端服务器具体地址，负载均衡配置不可或缺的部分
+│   ├── server   # 配置虚拟主机的相关参数，一个 http 块中可以有多个 server 块
+│   ├── server
+│   │   ├── location  # server 块可以包含多个 location 块，location 指令用于匹配 uri
+│   │   ├── location
+│   │   └── ...
+│   └── ...
+└── ...</code></pre>
+
+<h1 id="主要配置含义"><a href="#主要配置含义" class="headerlink" title="主要配置含义"></a>主要配置含义</h1><ul>
+<li>  main:nginx 的全局配置，对全局生效。</li>
+<li>  events: 配置影响 nginx 服务器或与用户的网络连接。</li>
+<li>  http：可以嵌套多个 server，配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置。</li>
+<li>  server：配置虚拟主机的相关参数，一个 http 中可以有多个 server。</li>
+<li>  location：配置请求的路由，以及各种页面的处理情况。</li>
+<li>  upstream：配置后端服务器具体地址，负载均衡配置不可或缺的部分。</li>
+</ul>
+<h1 id="nginx-conf-配置文件的语法规则"><a href="#nginx-conf-配置文件的语法规则" class="headerlink" title="nginx.conf 配置文件的语法规则"></a>nginx.conf 配置文件的语法规则</h1><ol>
+<li> 配置文件由指令与指令块构成</li>
+<li> 每条指令以 “;” 分号结尾，指令与参数间以空格符号分隔</li>
+<li> 指令块以 {} 大括号将多条指令组织在一起</li>
+<li> include 语句允许组合多个配置文件以提升可维护性</li>
+<li> 通过 # 符号添加注释，提高可读性</li>
+<li> 通过 $ 符号使用变量</li>
+<li> 部分指令的参数支持正则表达式，例如常用的 location 指令</li>
+</ol>
+<h3 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h3><p>nginx 常用的内置全局变量，你可以在配置中随意使用：</p>
+<table>
+<thead>
+<tr>
+<th>TCP</th>
+<th>UDP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$host</td>
+<td>请求信息中的 Host，如果请求中没有Host行，则等于设置的服务器名</td>
+</tr>
+<tr>
+<td>$request_method</td>
+<td>客户端请求类型,如 GET、POST</td>
+</tr>
+<tr>
+<td>$remote_addr</td>
+<td>客户端的 IP 地址</td>
+</tr>
+<tr>
+<td>$args</td>
+<td>请求中的参数</td>
+</tr>
+<tr>
+<td>$content_length</td>
+<td>请求头中的 Content-length 字段</td>
+</tr>
+<tr>
+<td>$http_user_agent</td>
+<td>客户端 agent 信</td>
+</tr>
+<tr>
+<td>$httpcookie</td>
+<td>客户端 cookie 信息</td>
+</tr>
+<tr>
+<td>$remote_port</td>
+<td>客户端的端口</td>
+</tr>
+<tr>
+<td>$server_protoco</td>
+<td>请求使用的协议，如HTTP/1.1</td>
+</tr>
+<tr>
+<td>$server_addr</td>
+<td>服务器地址</td>
+</tr>
+<tr>
+<td>$server_name</td>
+<td>服务器名称</td>
+</tr>
+<tr>
+<td>$server_port</td>
+<td>服务器的端口号</td>
+</tr>
+</tbody></table>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>这里列举几个常用的命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">nginx -s reload  # 向主进程发送信号，重新加载配置文件，热重启
+nginx -s reopen  # 重启 Nginx
+nginx -s stop    # 快速关闭
+nginx -s quit    # 等待工作进程处理完成后关闭
+nginx -T         # 查看当前 Nginx 最终的配置
+nginx -t -c &lt;配置路径&gt;  # 检查配置是否有问题，如果已经在配置目录，则不需要 -c</code></pre>
+
+<p>以上命令通过 <code>nginx -h</code> 就可以查看到，还有其它不常用这里未列出。</p>
+<p>Linux 系统应用管理工具 systemd 关于 nginx 的常用命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">systemctl start nginx    # 启动 Nginx
+systemctl stop nginx     # 停止 Nginx
+systemctl restart nginx  # 重启 Nginx
+systemctl reload nginx   # 重新加载 Nginx，用于修改配置后
+systemctl enable nginx   # 设置开机启动 Nginx
+systemctl disable nginx  # 关闭开机启动 Nginx
+systemctl status nginx   # 查看 Nginx 运行状态</code></pre>
+
+<h3 id="配置-nginx-开机自启"><a href="#配置-nginx-开机自启" class="headerlink" title="配置 nginx 开机自启"></a>配置 nginx 开机自启</h3><p><strong>利用 systemctl 命令</strong>：</p>
+<p>如果用 yum install 命令安装的 nginx，yum 命令会自动创建 nginx.service 文件，直接用命令:</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">systemctl enable nginx   # 设置开机启动 Nginx
+systemctl disable nginx  # 关闭开机启动 Nginx</code></pre>
+
+<p>就可以设置开机自启，否则需要在系统服务目录里创建 nginx.service 文件。</p>
+<p>创建并打开 nginx.service 文件：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vi &#x2F;lib&#x2F;systemd&#x2F;system&#x2F;nginx.service</code></pre>
+
+<p>内容如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">[Unit]
+Description&#x3D;nginx
+After&#x3D;network.target
+
+[Service]
+Type&#x3D;forking
+ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx
+ExecReload&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -s reload
+ExecStop&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -s quit
+PrivateTmp&#x3D;true
+
+[Install]
+WantedBy&#x3D;multi-user.target</code></pre>
+
+<p><code>:wq</code> 保存退出，运行 <code>systemctl daemon-reload</code> 使文件生效。</p>
+<p>这样便可以通过以下命令操作 nginx 了：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">systemctl start nginx.service # 启动nginx服务
+systemctl enable nginx.service # 设置开机启动
+systemctl disable nginx.service # 停止开机自启动
+systemctl status nginx.service # 查看服务当前状态
+systemctl restart nginx.service # 重新启动服务
+systemctl is-enabled nginx.service #查询服务是否开机启动</code></pre>
+
+<p><strong>通过开机启动命令脚本实现开机自启</strong></p>
+<p>创建开机启动命令脚本文件：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vi &#x2F;etc&#x2F;init.d&#x2F;nginx</code></pre>
+
+<p>在这个 nginx 文件中插入一下启动脚本代码，启动脚本代码来源网络复制，实测有效：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#! &#x2F;bin&#x2F;bash
+# chkconfig: - 85 15
+PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;nginx
+DESC&#x3D;&quot;nginx daemon&quot;
+NAME&#x3D;nginx
+DAEMON&#x3D;$PATH&#x2F;sbin&#x2F;$NAME
+CONFIGFILE&#x3D;$PATH&#x2F;conf&#x2F;$NAME.conf
+PIDFILE&#x3D;$PATH&#x2F;logs&#x2F;$NAME.pid
+scriptNAME&#x3D;&#x2F;etc&#x2F;init.d&#x2F;$NAME
+set -e
+[ -x &quot;$DAEMON&quot; ] || exit 0
+do_start() &#123;
+$DAEMON -c $CONFIGFILE || echo -n &quot;nginx already running&quot;
+&#125;
+do_stop() &#123;
+$DAEMON -s stop || echo -n &quot;nginx not running&quot;
+&#125;
+do_reload() &#123;
+$DAEMON -s reload || echo -n &quot;nginx can&#39;t reload&quot;
+&#125;
+case &quot;$1&quot; in
+start)
+echo -n &quot;Starting $DESC: $NAME&quot;
+do_start
+echo &quot;.&quot;
+;;
+stop)
+echo -n &quot;Stopping $DESC: $NAME&quot;
+do_stop
+echo &quot;.&quot;
+;;
+reload|graceful)
+echo -n &quot;Reloading $DESC configuration...&quot;
+do_reload
+echo &quot;.&quot;
+;;
+restart)
+echo -n &quot;Restarting $DESC: $NAME&quot;
+do_stop
+do_start
+echo &quot;.&quot;
+;;
+*)
+echo &quot;Usage: $scriptNAME &#123;start|stop|reload|restart&#125;&quot; &gt;&amp;2
+exit 3
+;;
+esac
+exit 0</code></pre>
+
+<p>设置所有人都有对这个启动脚本 nginx 文件的执行权限：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">chmod a+x &#x2F;etc&#x2F;init.d&#x2F;nginx</code></pre>
+
+<p>把 nginx 加入系统服务中：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">chkconfig --add nginx</code></pre>
+
+<p>把服务设置为开机启动：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">chkconfig nginx on</code></pre>
+
+<p>reboot 重启系统生效，可以使用上面 systemctl 方法相同的命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">systemctl start nginx.service # 启动nginx服务
+systemctl enable nginx.service # 设置开机启动
+systemctl disable nginx.service # 停止开机自启动
+systemctl status nginx.service # 查看服务当前状态
+systemctl restart nginx.service # 重新启动服务
+systemctl is-enabled nginx.service #查询服务是否开机启动</code></pre>
+
+<p>如果服务启动的时候出现 <code>Restarting nginx daemon: nginxnginx: [error] open() &quot;/usr/local/nginx/logs/nginx.pid&quot; failed (2: No such file or directory) nginx not running</code> 的错误，通过 nginx -c 参数指定配置文件即可解决</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin&#x2F;nginx -c &#x2F;usr&#x2F;local&#x2F;nginx&#x2F;conf&#x2F;nginx.conf</code></pre>
+
+<p>如果服务启动中出现 <code>nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address already in use)</code> 的错误，可以先通过 <code>service nginx stop</code> 停止服务，再启动就好。</p>
+<h1 id="配置-nginx-全局可用"><a href="#配置-nginx-全局可用" class="headerlink" title="配置 nginx 全局可用"></a>配置 nginx 全局可用</h1><p>当你每次改了 <code>nginx.conf</code> 配置文件的内容都需要重新到 nginx 启动目录去执行命令，或者通过 -p 参数指向特定目录，会不会感觉很麻烦？</p>
+<p>例如： 直接执行 <code>nginx -s reload</code> 会报错 <code>-bash: nginx: command not found</code>，需要到 <code>/usr/local/nginx/sbin</code> 目录下面去执行，并且是执行 <code>./nginx -s reload</code>。</p>
+<p>这里有两种方式可以解决，一种是通过脚本对 nginx 命令包装，这里介绍另外一种比较简单：通过把 nginx 配置到环境变量里，用 nginx 执行指令即可。步骤如下：</p>
+<p>1、编辑 /etc/profile</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">vi &#x2F;etc&#x2F;profile</code></pre>
+
+<p>2、在最后一行添加配置，:wq 保存</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">export PATH&#x3D;$PATH:&#x2F;usr&#x2F;local&#x2F;nginx&#x2F;sbin</code></pre>
+
+<p>3、使配置立即生效</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">source &#x2F;etc&#x2F;profile</code></pre>
+
+<p>这样就可以愉快的直接在全局使用 nginx 命令了。</p>
+<h1 id="nginx-常用功能"><a href="#nginx-常用功能" class="headerlink" title="nginx 常用功能"></a>nginx 常用功能</h1><h1 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h1><p>我们最常说的反向代理的是通过反向代理解决跨域问题。</p>
+<p>其实反向代理还可以用来控制缓存（代理缓存 proxy cache），进行访问控制等等，以及后面说的负载均衡其实都是通过反向代理来实现的。</p>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen    8080;
+        # 用户访问 ip:8080&#x2F;test 下的所有路径代理到 github
+        location &#x2F;test &#123;
+         proxy_pass   https:&#x2F;&#x2F;github.com;
+        &#125;
+
+        # 所有 &#x2F;api 下的接口访问都代理到本地的 8888 端口
+        # 例如你本地运行的 java 服务的端口是 8888，接口都是以 &#x2F;api 开头
+        location &#x2F;api &#123;
+            proxy_pass   http:&#x2F;&#x2F;127.0.0.1:8888;
+        &#125;
+
+&#125;</code></pre>
+
+<h1 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h1><pre class="line-numbers language-none"><code class="language-none">server &#123;
+   location ~ ^&#x2F;index.html &#123;
+       # 匹配 index.html 页面 除了 127.0.0.1 以外都可以访问
+       deny 192.168.1.1;
+       deny 192.168.1.2;
+       allow all;
+ &#125;
+&#125;</code></pre>
+
+<p>上面的命令表示禁止 192.168.1.1 和 192.168.1.2 两个 ip 访问，其它全部允许。从上到下的顺序，匹配到了便跳出，可以按你的需求设置。</p>
+<h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><p>通过负载均衡充利用服务器资源，nginx 目前支持自带 4 种负载均衡策略，还有 2 种常用的第三方策略。</p>
+<p><strong>轮询策略（默认）</strong></p>
+<p>每个请求按时间顺序逐一分配到不同的后端服务器，如果有后端服务器挂掉，能自动剔除。但是如果其中某一台服务器压力太大，出现延迟，会影响所有分配在这台服务器下的用户。</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    upstream test.com &#123;
+        server 192.168.1.12:8887;
+        server 192.168.1.13:8888;
+    &#125;
+    server &#123;
+        location &#x2F;api &#123;
+            proxy_pass  http:&#x2F;&#x2F;test.com;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>根据服务器权重</strong></p>
+<p>例如要配置：10 次请求中大概 1 次访问到 8888 端口，9 次访问到 8887 端口：</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    upstream test.com &#123;
+        server 192.168.1.12:8887 weight&#x3D;9;
+        server 192.168.1.13:8888 weight&#x3D;1;
+    &#125;
+    server &#123;
+        location &#x2F;api &#123;
+            proxy_pass  http:&#x2F;&#x2F;test.com;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>客户端 ip 绑定（ip_hash）</strong></p>
+<p>来自同一个 ip 的请求永远只分配一台服务器，有效解决了动态网页存在的 session 共享问题。例如：比如把登录信息保存到了 session 中，那么跳转到另外一台服务器的时候就需要重新登录了。</p>
+<p>所以很多时候我们需要一个客户只访问一个服务器，那么就需要用 ip_hash 了。</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    upstream test.com &#123;
+     ip_hash;
+        server 192.168.1.12:8887;
+        server 192.168.1.13:8888;
+    &#125;
+    server &#123;
+        location &#x2F;api &#123;
+            proxy_pass  http:&#x2F;&#x2F;test.com;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>最小连接数策略</strong></p>
+<p>将请求优先分配给压力较小的服务器，它可以平衡每个队列的长度，并避免向压力大的服务器添加更多的请求。</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    upstream test.com &#123;
+     least_conn;
+        server 192.168.1.12:8887;
+        server 192.168.1.13:8888;
+    &#125;
+    server &#123;
+        location &#x2F;api &#123;
+            proxy_pass  http:&#x2F;&#x2F;test.com;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>最快响应时间策略（依赖于第三方 NGINX Plus）</strong></p>
+<p>依赖于 NGINX Plus，优先分配给响应时间最短的服务器。</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    upstream test.com &#123;
+     fair;
+        server 192.168.1.12:8887;
+        server 192.168.1.13:8888;
+    &#125;
+    server &#123;
+        location &#x2F;api &#123;
+            proxy_pass  http:&#x2F;&#x2F;test.com;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p><strong>按访问 url 的 hash 结果（第三方）</strong></p>
+<p>按访问 url 的 hash 结果来分配请求，使每个 url 定向到同一个后端服务器，后端服务器为缓存时比较有效。 在 upstream 中加入 hash 语句，server 语句中不能写入 weight 等其他的参数，hash_method 是使用的 hash 算法</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    upstream test.com &#123;
+     hash $request_uri;
+     hash_method crc32;
+     server 192.168.1.12:8887;
+     server 192.168.1.13:8888;
+    &#125;
+    server &#123;
+        location &#x2F;api &#123;
+            proxy_pass  http:&#x2F;&#x2F;test.com;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p>采用 HAproxy 的 loadbalance uri 或者 nginx 的 upstream_hash 模块，都可以做到针对 url 进行哈希算法式的负载均衡转发。</p>
+<h3 id="gzip-压缩"><a href="#gzip-压缩" class="headerlink" title="gzip 压缩"></a>gzip 压缩</h3><p>开启 gzip 压缩可以大幅减少 http 传输过程中文件的大小，可以极大的提高网站的访问速度，基本是必不可少的优化操作：</p>
+<pre class="line-numbers language-none"><code class="language-none">gzip  on; # 开启gzip 压缩
+# gzip_types
+# gzip_static on;
+# gzip_proxied expired no-cache no-store private auth;
+# gzip_buffers 16 8k;
+gzip_min_length 1k;
+gzip_comp_level 4;
+gzip_http_version 1.0;
+gzip_vary off;
+gzip_disable &quot;MSIE [1-6]\.&quot;;</code></pre>
+
+<p>解释一下：</p>
+<ol>
+<li> gzip_types：要采用 gzip 压缩的 MIME 文件类型，其中 text/html 被系统强制启用；</li>
+<li> gzip_static：默认 off，该模块启用后，Nginx 首先检查是否存在请求静态文件的 gz 结尾的文件，如果有则直接返回该 .gz 文件内容；</li>
+<li> gzip_proxied：默认 off，nginx 做为反向代理时启用，用于设置启用或禁用从代理服务器上收到相应内容 gzip 压缩；</li>
+<li> gzip_buffers：获取多少内存用于缓存压缩结果，16 8k 表示以 8k*16 为单位获得；</li>
+<li> gzip_min_length：允许压缩的页面最小字节数，页面字节数从 header 头中的 Content-Length 中进行获取。默认值是 0，不管页面多大都压缩。建议设置成大于 1k 的字节数，小于 1k 可能会越压越大；</li>
+<li> gzip_comp_level：gzip 压缩比，压缩级别是 1-9，1 压缩级别最低，9 最高，级别越高压缩率越大，压缩时间越长，建议 4-6；</li>
+<li> gzip_http_version：默认 1.1，启用 gzip 所需的 HTTP 最低版本；</li>
+<li> gzip_vary：用于在响应消息头中添加 Vary：Accept-Encoding，使代理服务器根据请求头中的 Accept-Encoding 识别是否启用 gzip 压缩；</li>
+<li> gzip_disable 指定哪些不需要 gzip 压缩的浏览器</li>
+</ol>
+<p>其中第 2 点，普遍是结合前端打包的时候打包成 gzip 文件后部署到服务器上，这样服务器就可以直接使用 gzip 的文件了，并且可以把压缩比例提高，这样 nginx 就不用压缩，也就不会影响速度。一般不追求极致的情况下，前端不用做任何配置就可以使用啦~</p>
+<p>附前端 webpack 开启 gzip 压缩配置，在 vue-cli3 的 vue.config.js 配置文件中：</p>
+<pre class="line-numbers language-none"><code class="language-none">const CompressionWebpackPlugin &#x3D; require(&#39;compression-webpack-plugin&#39;)
+
+module.exports &#x3D; &#123;
+  &#x2F;&#x2F; gzip 配置
+  configureWebpack: config &#x3D;&gt; &#123;
+    if (process.env.NODE_ENV &#x3D;&#x3D;&#x3D; &#39;production&#39;) &#123;
+      &#x2F;&#x2F; 生产环境
+      return &#123;
+        plugins: [new CompressionWebpackPlugin(&#123;
+          test: &#x2F;\.js$|\.html$|\.css&#x2F;,    &#x2F;&#x2F; 匹配文件名
+          threshold: 1024,               &#x2F;&#x2F; 文件压缩阈值，对超过 1k 的进行压缩
+          deleteOriginalAssets: false     &#x2F;&#x2F; 是否删除源文件
+        &#125;)]
+      &#125;
+    &#125;
+  &#125;,
+  ...
+&#125;</code></pre>
+
+<h3 id="HTTP-服务器"><a href="#HTTP-服务器" class="headerlink" title="HTTP 服务器"></a>HTTP 服务器</h3><p>nginx 本身也是一个静态资源的服务器，当只有静态资源的时候，就可以使用 nginx 来做服务器：</p>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;
+  listen       80;
+  server_name  localhost;
+
+  location &#x2F; &#123;
+      root   &#x2F;usr&#x2F;local&#x2F;app;
+      index  index.html;
+  &#125;
+&#125;</code></pre>
+
+<p>这样如果访问 <a href="https://link.zhihu.com/?target=http://ip">http://ip</a> 就会默认访问到 /usr/local/app 目录下面的 index.html，如果一个网站只是静态页面的话，那么就可以通过这种方式来实现部署，比如一个静态官网。</p>
+<h1 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h1><p>就是把动态和静态的请求分开。方式主要有两种：</p>
+<ul>
+<li>  一种是纯粹把静态文件独立成单独的域名，放在独立的服务器上，也是目前主流推崇的方案</li>
+<li>  一种方法就是动态跟静态文件混合在一起发布， 通过 nginx 配置来分开</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none"># 所有静态请求都由nginx处理，存放目录为 html
+location ~ \.(gif|jpg|jpeg|png|bmp|swf|css|js)$ &#123;
+    root    &#x2F;usr&#x2F;local&#x2F;resource;
+    expires     10h; # 设置过期时间为10小时
+&#125;
+
+# 所有动态请求都转发给 tomcat 处理
+location ~ \.(jsp|do)$ &#123;
+    proxy_pass  127.0.0.1:8888;
+&#125;</code></pre>
+
+<p>注意上面设置了 expires，当 nginx 设置了 expires 后，例如设置为：expires 10d; 那么，所在的 location 或 if 的内容，用户在 10 天内请求的时候，都只会访问浏览器中的缓存，而不会去请求 nginx 。</p>
+<h1 id="请求限制"><a href="#请求限制" class="headerlink" title="请求限制"></a>请求限制</h1><p>对于大流量恶意的访问，会造成带宽的浪费，给服务器增加压力。可以通过 nginx 对于同一 IP 的连接数以及并发数进行限制。合理的控制还可以用来防止 DDos 和 CC 攻击。</p>
+<p>关于请求限制主要使用 nginx 默认集成的 2 个模块：</p>
+<ul>
+<li>  limit_conn_module 连接频率限制模块</li>
+<li>  limit_req_module 请求频率限制模块</li>
+</ul>
+<p>涉及到的配置主要是：</p>
+<ul>
+<li>  limit_req_zone 限制请求数</li>
+<li>  limit_conn_zone 限制并发连接数</li>
+</ul>
+<p><strong>通过 limit_req_zone 限制请求数</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">http&#123;    limit_conn_zone $binary_remote_addrzone&#x3D;limit:10m; &#x2F;&#x2F; 设置共享内存空间大    server&#123;     location &#x2F;&#123;            limit_conn addr 5; # 同一用户地址同一时间只允许有5个连接。        &#125;    &#125;&#125;</code></pre>
+
+<p>如果共享内存空间被耗尽，服务器将会对后续所有的请求返回 503 (Service Temporarily Unavailable) 错误。</p>
+<p>当多个 limit_conn_zone 指令被配置时，所有的连接数限制都会生效。比如，下面配置不仅会限制单一 IP 来源的连接数，同时也会限制单一虚拟服务器的总连接数：</p>
+<pre class="line-numbers language-none"><code class="language-none">limit_conn_zone $binary_remote_addr zone&#x3D;perip:10m;limit_conn_zone $server_name zone&#x3D;perserver:10m;server &#123;    limit_conn perip 10; # 限制每个 ip 连接到服务器的数量    limit_conn perserver 2000; # 限制连接到服务器的总数&#125;</code></pre>
+
+<p><strong>通过 limit_conn_zone 限制并发连接数</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">limit_req_zone $binary_remote_addr zone&#x3D;creq:10 mrate&#x3D;10r&#x2F;s;server&#123;    location &#x2F;&#123;        limit_req zone&#x3D;creq burst&#x3D;5;    &#125;&#125;</code></pre>
+
+<p>限制平均每秒不超过一个请求，同时允许超过频率限制的请求数不多于 5 个。 如果不希望超过的请求被延迟，可以用 nodelay 参数, 如：</p>
+<p><code>limit_req zone=creq burst=5 nodelay;</code></p>
+<p>这里只是简单讲讲，让大家有这个概念，配置的时候可以深入去找找资料。</p>
+<h1 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h1><p>正向代理，意思是一个位于客户端和原始服务器 (origin server) 之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。客户端才能使用正向代理，比如我们使用的 VPN 服务就是正向代理，直观区别（图片来源于 **<a href="https://link.zhihu.com/?target=https://juejin.im/post/6844903793918738440">前端开发者必备的 Nginx 知识</a>**）：</p>
+<p><img data-src="https://pic1.zhimg.com/v2-0667d0978874e27df93a00cb29e49018_r.jpg"></p>
+<p>配置正向代理：</p>
+<pre class="line-numbers language-none"><code class="language-none">resolver 8.8.8.8 # 谷歌的域名解析地址
+server &#123;
+    resolver_timeout 5s; &#x2F;&#x2F; 设超时时间
+    location &#x2F; &#123;
+        # 当客户端请求我的时候，我会把请求转发给它
+        # $host 要访问的主机名 $request_uri 请求路径
+        proxy_pass http:&#x2F;&#x2F;$host$request_uri;
+    &#125;
+&#125;</code></pre>
+
+<p>正向代理的对象是客户端，服务器端看不到真正的客户端。</p>
+<h1 id="图片防盗链"><a href="#图片防盗链" class="headerlink" title="图片防盗链"></a>图片防盗链</h1><pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen       80;
+    server_name  *.test;
+
+    # 图片防盗链
+    location ~* \.(gif|jpg|jpeg|png|bmp|swf)$ &#123;
+        valid_referers none blocked server_names ~\.google\. ~\.baidu\. *.qq.com;  # 只允许本机 IP 外链引用，将百度和谷歌也加入白名单有利于 SEO
+        if ($invalid_referer)&#123;
+            return 403;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p>以上设置就能防止其它网站利用外链访问我们的图片，有利于节省流量</p>
+<h1 id="适配-PC-或移动设备"><a href="#适配-PC-或移动设备" class="headerlink" title="适配 PC 或移动设备"></a>适配 PC 或移动设备</h1><p>根据用户设备不同返回不同样式的站点，以前经常使用的是纯前端的自适应布局，但是复杂的网站并不适合响应式，无论是复杂性和易用性上面还是不如分开编写的好，比如我们常见的淘宝、京东。</p>
+<p>根据用户请求的 user-agent 来判断是返回 PC 还是 H5 站点：</p>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen 80;
+    server_name test.com;
+
+    location &#x2F; &#123;
+     root  &#x2F;usr&#x2F;local&#x2F;app&#x2F;pc; # pc 的 html 路径
+        if ($http_user_agent ~* &#39;(Android|webOS|iPhone|iPod|BlackBerry)&#39;) &#123;
+            root &#x2F;usr&#x2F;local&#x2F;app&#x2F;mobile; # mobile 的 html 路径
+        &#125;
+        index index.html;
+    &#125;
+&#125;</code></pre>
+
+<h1 id="设置二级域名"><a href="#设置二级域名" class="headerlink" title="设置二级域名"></a>设置二级域名</h1><p>新建一个 server 即可：</p>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen 80;
+    server_name admin.test.com; &#x2F;&#x2F; 二级域名
+
+    location &#x2F; &#123;
+        root  &#x2F;usr&#x2F;local&#x2F;app&#x2F;admin; # 二级域名的 html 路径
+        index index.html;
+    &#125;
+&#125;</code></pre>
+
+<h1 id="配置-HTTPS"><a href="#配置-HTTPS" class="headerlink" title="配置 HTTPS"></a>配置 HTTPS</h1><p>这里我使用的是 certbot 免费证书，但申请一次有效期只有 3 个月（好像可以用 crontab 尝试配置自动续期，我暂时没试过）：</p>
+<p>先安装 certbot</p>
+<pre class="line-numbers language-none"><code class="language-none">wget https:&#x2F;&#x2F;dl.eff.org&#x2F;certbot-auto
+chmod a+x certbot-auto</code></pre>
+
+<p>申请证书（注意：需要把要申请证书的域名先解析到这台服务器上，才能申请）:</p>
+<pre class="line-numbers language-none"><code class="language-none">sudo .&#x2F;certbot-auto certonly --standalone --email admin@abc.com -d test.com -d www.test.com</code></pre>
+
+<p>执行上面指令，按提示操作。</p>
+<p>Certbot 会启动一个临时服务器来完成验证（会占用 80 端口或 443 端口，因此需要暂时关闭 Web 服务器），然后 Certbot 会把证书以文件的形式保存，包括完整的证书链文件和私钥文件。</p>
+<p>文件保存在 /etc/letsencrypt/live/ 下面的域名目录下。</p>
+<p>修改 nginx 配置：</p>
+<pre class="line-numbers language-none"><code class="language-none">server&#123;
+    listen 443 ssl http2; &#x2F;&#x2F; 这里还启用了 http&#x2F;2.0
+
+    ssl_certificate &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;test.com&#x2F;fullchain.pem; # 证书文件地址
+    ssl_certificate_key &#x2F;etc&#x2F;letsencrypt&#x2F;live&#x2F;test.com&#x2F;privkey.pem; # 私钥文件地址
+
+    server_name test.com www.test.com; &#x2F;&#x2F; 证书绑定的域名
+&#125;</code></pre>
+
+<h1 id="配置-HTTP-转-HTTPS"><a href="#配置-HTTP-转-HTTPS" class="headerlink" title="配置 HTTP 转 HTTPS"></a>配置 HTTP 转 HTTPS</h1><pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen      80;
+    server_name test.com www.test.com;
+
+    # 单域名重定向
+    if ($host &#x3D; &#39;www.sherlocked93.club&#39;)&#123;
+        return 301 https:&#x2F;&#x2F;www.sherlocked93.club$request_uri;
+    &#125;
+
+    # 全局非 https 协议时重定向
+    if ($scheme !&#x3D; &#39;https&#39;) &#123;
+        return 301 https:&#x2F;&#x2F;$server_name$request_uri;
+    &#125;
+
+    # 或者全部重定向
+    return 301 https:&#x2F;&#x2F;$server_name$request_uri;
+&#125;</code></pre>
+
+<p>以上配置选择自己需要的一条即可，不用全部加。</p>
+<h1 id="单页面项目-history-路由配置"><a href="#单页面项目-history-路由配置" class="headerlink" title="单页面项目 history 路由配置"></a>单页面项目 history 路由配置</h1><pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen       80;
+    server_name  fe.sherlocked93.club;
+
+    location &#x2F; &#123;
+        root       &#x2F;usr&#x2F;local&#x2F;app&#x2F;dist;  # vue 打包后的文件夹
+        index      index.html index.htm;
+        try_files  $uri $uri&#x2F; &#x2F;index.html @rewrites; # 默认目录下的 index.html，如果都不存在则重定向
+
+        expires -1;                          # 首页一般没有强制缓存
+        add_header Cache-Control no-cache;
+    &#125;
+
+    location @rewrites &#123; &#x2F;&#x2F; 重定向设置
+        rewrite ^(.+)$ &#x2F;index.html break;
+    &#125;
+&#125;</code></pre>
+
+<p><strong><a href="https://link.zhihu.com/?target=https://router.vuejs.org/zh/guide/essentials/history-mode.html%23%25E5%2590%258E%25E7%25AB%25AF%25E9%2585%258D%25E7%25BD%25AE%25E4%25BE%258B%25E5%25AD%2590">vue-router</a></strong> 官网只有一句话 <code>try_files $uri $uri/ /index.html;</code>，而上面做了一些重定向处理。</p>
+<h1 id="配置高可用集群（双机热备）"><a href="#配置高可用集群（双机热备）" class="headerlink" title="配置高可用集群（双机热备）"></a>配置高可用集群（双机热备）</h1><p>当主 nginx 服务器宕机之后，切换到备份的 nginx 服务器</p>
+<p>首先安装 keepalived:</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">yum install keepalived -y</code></pre>
+
+<p>然后编辑 <code>/etc/keepalived/keepalived.conf</code> 配置文件，并在配置文件中增加 <code>vrrp_script</code> 定义一个外围检测机制，并在 <code>vrrp_instance</code> 中通过定义 <code>track_script</code> 来追踪脚本执行过程，实现节点转移：</p>
+<pre class="line-numbers language-none"><code class="language-none">global_defs&#123;
+   notification_email &#123;
+        cchroot@gmail.com
+   &#125;
+   notification_email_from test@firewall.loc
+   smtp_server 127.0.0.1
+   smtp_connect_timeout 30 &#x2F;&#x2F; 上面都是邮件配置
+   router_id LVS_DEVEL     &#x2F;&#x2F; 当前服务器名字，用 hostname 命令来查看
+&#125;
+vrrp_script chk_maintainace &#123; &#x2F;&#x2F; 检测机制的脚本名称为chk_maintainace
+    script &quot;[[ -e&#x2F;etc&#x2F;keepalived&#x2F;down ]] &amp;&amp; exit 1 || exit 0&quot; &#x2F;&#x2F; 可以是脚本路径或脚本命令
+    &#x2F;&#x2F; script &quot;&#x2F;etc&#x2F;keepalived&#x2F;nginx_check.sh&quot;    &#x2F;&#x2F; 比如这样的脚本路径
+    interval 2  &#x2F;&#x2F; 每隔2秒检测一次
+    weight -20  &#x2F;&#x2F; 当脚本执行成立，那么把当前服务器优先级改为-20
+&#125;
+vrrp_instanceVI_1 &#123;   &#x2F;&#x2F; 每一个vrrp_instance就是定义一个虚拟路由器
+    state MASTER      &#x2F;&#x2F; 主机为MASTER，备用机为BACKUP
+    interface eth0    &#x2F;&#x2F; 网卡名字，可以从ifconfig中查找
+    virtual_router_id 51 &#x2F;&#x2F; 虚拟路由的id号，一般小于255，主备机id需要一样
+    priority 100      &#x2F;&#x2F; 优先级，master的优先级比backup的大
+    advert_int 1      &#x2F;&#x2F; 默认心跳间隔
+    authentication &#123;  &#x2F;&#x2F; 认证机制
+        auth_type PASS
+        auth_pass 1111   &#x2F;&#x2F; 密码
+    &#125;
+    virtual_ipaddress &#123;  &#x2F;&#x2F; 虚拟地址vip
+       172.16.2.8
+    &#125;
+&#125;</code></pre>
+
+<p>其中检测脚本 <code>nginx_check.sh</code>，这里提供一个：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">#!&#x2F;bin&#x2F;bash
+A&#x3D;&#96;ps -C nginx --no-header | wc -l&#96;
+if [ $A -eq 0 ];then
+    &#x2F;usr&#x2F;sbin&#x2F;nginx # 尝试重新启动nginx
+    sleep 2         # 睡眠2秒
+    if [ &#96;ps -C nginx --no-header | wc -l&#96; -eq 0 ];then
+        killall keepalived # 启动失败，将keepalived服务杀死。将vip漂移到其它备份节点
+    fi
+fi</code></pre>
+
+<p>复制一份到备份服务器，备份 nginx 的配置要将 <code>state</code> 后改为 <code>BACKUP</code>，<code>priority</code> 改为比主机小。 设置完毕后各自 <code>service keepalived start</code> 启动，经过访问成功之后，可以把 Master 机的 keepalived 停掉，此时 Master 机就不再是主机了 <code>service keepalived stop</code>，看访问虚拟 IP 时是否能够自动切换到备机 ip addr。</p>
+<p>再次启动 Master 的 keepalived，此时 vip 又变到了主机上。</p>
+<p>配置高可用集群的内容来源于：**<a href="https://link.zhihu.com/?target=https://juejin.im/post/6844904144235413512%23heading-11">Nginx 从入门到实践，万字详解！</a>**</p>
+<h1 id="其它功能和技巧"><a href="#其它功能和技巧" class="headerlink" title="其它功能和技巧"></a>其它功能和技巧</h1><h1 id="代理缓存"><a href="#代理缓存" class="headerlink" title="代理缓存"></a>代理缓存</h1><p>nginx 的 http_proxy 模块，提供类似于 Squid 的缓存功能，使用 proxy_cache_path 来配置。</p>
+<p>nginx 可以对访问过的内容在 nginx 服务器本地建立副本，这样在一段时间内再次访问该数据，就不需要通过 nginx 服务器再次向后端服务器发出请求，减小数据传输延迟，提高访问速度：</p>
+<pre class="line-numbers language-none"><code class="language-none">proxy_cache_path usr&#x2F;local&#x2F;cache levels&#x3D;1:2 keys_zone&#x3D;my_cache:10m;
+
+server &#123;
+  listen       80;
+  server_name  test.com;
+
+  location &#x2F; &#123;
+      proxy_cache my_cache;
+      proxy_pass http:&#x2F;&#x2F;127.0.0.1:8888;
+      proxy_set_header Host $host;
+  &#125;
+&#125;</code></pre>
+
+<p>上面的配置表示： nginx 提供一块 10 M 的内存用于缓存，名字为 my_cache, levels 等级为 1:2，缓存存放的路径为 <code>usr/local/cache</code>。</p>
+<h1 id="访问日志"><a href="#访问日志" class="headerlink" title="访问日志"></a>访问日志</h1><p>访问日志默认是注释的状态，需要可以打开和进行更详细的配置，一下是 nginx 的默认配置：</p>
+<pre class="line-numbers language-none"><code class="language-none">http &#123;
+    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;
+                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;
+                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;
+
+    access_log  logs&#x2F;access.log  main;
+&#125;</code></pre>
+
+<h1 id="错误日志"><a href="#错误日志" class="headerlink" title="错误日志"></a>错误日志</h1><p>错误日志放在 main 全局区块中，童鞋们打开 nginx.conf 就可以看见在配置文件中和下面一样的代码了：</p>
+<pre class="line-numbers language-none"><code class="language-none">#error_log  logs&#x2F;error.log;
+#error_log  logs&#x2F;error.log  notice;
+#error_log  logs&#x2F;error.log  info;</code></pre>
+
+<p>nginx 错误日志默认配置为：</p>
+<p><code>error_log logs/error.log error;</code></p>
+<h1 id="静态资源服务器"><a href="#静态资源服务器" class="headerlink" title="静态资源服务器"></a>静态资源服务器</h1><pre class="line-numbers language-none"><code class="language-none">server &#123;
+    listen       80;
+    server_name  static.bin;
+    charset utf-8;    # 防止中文文件名乱码
+
+    location &#x2F;download &#123;
+        alias           &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;static;  # 静态资源目录
+
+        autoindex               on;    # 开启静态资源列目录，浏览目录权限
+        autoindex_exact_size    off;   # on(默认)显示文件的确切大小，单位是byte；off显示文件大概大小，单位KB、MB、GB
+        autoindex_localtime     off;   # off(默认)时显示的文件时间为GMT时间；on显示的文件时间为服务器时间
+    &#125;
+&#125;</code></pre>
+
+<h1 id="禁止指定-user-agent"><a href="#禁止指定-user-agent" class="headerlink" title="禁止指定 user_agent"></a>禁止指定 user_agent</h1><p>nginx 可以禁止指定的浏览器和爬虫框架访问：</p>
+<pre class="line-numbers language-none"><code class="language-none"># http_user_agent 为浏览器标识
+# 禁止 user_agent 为baidu、360和sohu，~*表示不区分大小写匹配
+if ($http_user_agent ~* &#39;baidu|360|sohu&#39;) &#123;
+    return 404;
+&#125;
+
+# 禁止 Scrapy 等工具的抓取
+if ($http_user_agent ~* (Scrapy|Curl|HttpClient)) &#123;
+    return 403;</code></pre>
+
+<h1 id="请求过滤"><a href="#请求过滤" class="headerlink" title="请求过滤"></a>请求过滤</h1><p><strong>根据请求类型过滤</strong></p>
+<pre class="line-numbers language-none"><code class="language-none"># 非指定请求全返回 403
+if ( $request_method !~ ^(GET|POST|HEAD)$ ) &#123;
+    return 403;
+&#125;</code></pre>
+
+<p><strong>根据状态码过滤</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">error_page 502 503 &#x2F;50x.html;
+location &#x3D; &#x2F;50x.html &#123;
+    root &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html;
+&#125;</code></pre>
+
+<p>这样实际上是一个内部跳转，当访问出现 502、503 的时候就能返回 50x.html 中的内容，这里需要注意是否可以找到 50x.html 页面，所以加了个 location 保证找到你自定义的 50x 页面。</p>
+<p><strong>根据 URL 名称过滤</strong></p>
+<pre class="line-numbers language-none"><code class="language-none">if ($host &#x3D; zy.com&#39; ) &#123;     #其中 $1是取自regex部分()里的内容,匹配成功后跳转到的URL。     rewrite ^&#x2F;(.*)$  http:&#x2F;&#x2F;www.zy.com&#x2F;$1  permanent；&#125;location &#x2F;test &#123;    &#x2F;&#x2F; &#x2F;test 全部重定向到首页    rewrite  ^(.*)$ &#x2F;index.html  redirect;&#125;</code></pre>
+
+<h1 id="ab-命令"><a href="#ab-命令" class="headerlink" title="ab 命令"></a>ab 命令</h1><p>ab 命令全称为：Apache bench，是 Apache 自带的压力测试工具，也可以测试 Nginx、IIS 等其他 Web 服务器:</p>
+<ul>
+<li>  -n 总共的请求数</li>
+<li>  -c 并发的请求数</li>
+<li>  -t 测试所进行的最大秒数，默认值 为 50000</li>
+<li>  -p 包含了需要的 POST 的数据文件</li>
+<li>  -T POST 数据所使用的 Content-type 头信息</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">ab -n 1000 -c 5000 http:&#x2F;&#x2F;127.0.0.1&#x2F; # 每次发送1000并发的请求数，请求数总数为5000。</code></pre>
+
+<p>测试前需要安装 httpd-tools： <code>yum install httpd-tools</code></p>
+<h1 id="泛域名路径分离"><a href="#泛域名路径分离" class="headerlink" title="泛域名路径分离"></a>泛域名路径分离</h1><p>这是一个非常实用的技能，经常有时候我们可能需要配置一些二级或者三级域名，希望通过 nginx 自动指向对应目录，比如：</p>
+<ol>
+<li> test1.doc.test.club 自动指向 /usr/local/html/doc/test1 服务器地址；</li>
+<li> test2.doc.test.club 自动指向 /usr/local/html/doc/test2 服务器地址；</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;    listen       80;    server_name  ~^([\w-]+)\.doc\.test\.club$;    root &#x2F;usr&#x2F;local&#x2F;html&#x2F;doc&#x2F;$1;&#125;</code></pre>
+
+<h1 id="泛域名转发"><a href="#泛域名转发" class="headerlink" title="泛域名转发"></a>泛域名转发</h1><p>和之前的功能类似，有时候我们希望把二级或者三级域名链接重写到我们希望的路径，让后端就可以根据路由解析不同的规则：</p>
+<ol>
+<li> test1.serv.test.club/api?name=a 自动转发到 127.0.0.1:8080/test1/api?name=a</li>
+<li> test2.serv.test.club/api?name=a 自动转发到 127.0.0.1:8080/test2/api?name=a</li>
+</ol>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;    listen       80;    server_name ~^([\w-]+)\.serv\.test\.club$;    location &#x2F; &#123;        proxy_set_header        X-Real-IP $remote_addr;        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;        proxy_set_header        Host $http_host;        proxy_set_header        X-NginX-Proxy true;        proxy_pass              http:&#x2F;&#x2F;127.0.0.1:8080&#x2F;$1$request_uri;    &#125;&#125;</code></pre>
+
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><h1 id="nginx-中怎么设置变量"><a href="#nginx-中怎么设置变量" class="headerlink" title="nginx 中怎么设置变量"></a>nginx 中怎么设置变量</h1><p>或许你不知道，nginx 的配置文件使用的是一门微型的编程语言。既然是编程语言，一般也就少不了 “变量” 这种东西，但是在 nginx 配置中，变量只能存放一种类型的值，因为也只存在一种类型的值，那就是字符串。</p>
+<p>例如我们在 nginx.conf 中有这样一行配置：</p>
+<pre class="line-numbers language-none"><code class="language-none">set $name &quot;chroot&quot;;</code></pre>
+
+<p>上面使用了 set 配置指令对变量 <code>$name</code>进行了赋值操作，把 &quot;chroot&quot; 赋值给了 <code>$name</code>。nginx 变量名前面有一个 <code>$</code> 符号，这是记法上的要求。所有的 Nginx 变量在 Nginx 配置文件中引用时都须带上 <code>$</code> 前缀。这种表示方法和 Perl、PHP 这些语言是相似的。</p>
+<p>这种表示方法的用处在哪里呢，那就是可以直接把变量嵌入到字符串常量中以构造出新的字符串，例如你需要进行一个字符串拼接：</p>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;
+  listen       80;
+  server_name  test.com;
+
+  location &#x2F; &#123;
+     set $temp hello;
+     return &quot;$temp world&quot;;
+  &#125;
+&#125;</code></pre>
+
+<p>以上当匹配成功的时候就会返回字符串 &quot;hello world&quot; 了。需要注意的是，当引用的变量名之后紧跟着变量名的构成字符时（比如后跟字母、数字以及下划线），我们就需要使用特别的记法来消除歧义，例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">server &#123;
+  listen       80;
+  server_name  test.com;
+
+  location &#x2F; &#123;
+     set $temp &quot;hello &quot;;
+     return &quot;$&#123;temp&#125;world&quot;;
+  &#125;
+&#125;</code></pre>
+
+<p>这里，我们在配置指令的参数值中引用变量 <code>$temp</code> 的时候，后面紧跟着 <code>world</code> 这个单词，所以如果直接写作 <code>&quot;$tempworld&quot;</code> 则 nginx 的计算引擎会将之识别为引用了变量 <code>$tempworld</code>. 为了解决这个问题，nginx 的字符串支持使用花括号在 <code>$</code> 之后把变量名围起来，比如这里的 <code>$&#123;temp&#125;</code>，所以 上面这个例子返回的还是 &quot;hello world&quot;：</p>
+<pre class="line-numbers language-none"><code class="language-none">$ curl &#39;http:&#x2F;&#x2F;test.com&#x2F;&#39;
+    hello world</code></pre>
+
+<p>还需要注意的是，若是想输出 <code>$</code> 符号本身，可以这样做：</p>
+<pre class="line-numbers language-none"><code class="language-none">geo $dollar &#123;
+    default &quot;$&quot;;
+&#125;
+server &#123;
+    listen       80;
+    server_name  test.com;
+
+    location &#x2F; &#123;
+        set $temp &quot;hello &quot;;
+        return &quot;$&#123;temp&#125;world: $dollar&quot;;
+    &#125;
+&#125;</code></pre>
+
+<p>上面用到了标准模块 ngx_geo 提供的配置指令 geo 来为变量 <code>$dollar</code> 赋予字符串 <code>&quot;$&quot;</code> ，这样，这里的返回值就是 &quot;hello world: $&quot; 了。</p>
+<h1 id="附-nginx-内置预定义变量"><a href="#附-nginx-内置预定义变量" class="headerlink" title="附 nginx 内置预定义变量"></a>附 nginx 内置预定义变量</h1><p>按字母顺序，变量名与对应定义：</p>
+<ul>
+<li>  <code>$arg_PARAMETER</code> #GET 请求中变量名 PARAMETER 参数的值</li>
+<li>  <code>$args</code> #这个变量等于 GET 请求中的参数，例如，foo=123&amp;bar=blahblah; 这个变量可以被修改</li>
+<li>  <code>$binary_remote_addr</code> #二进制码形式的客户端地址</li>
+<li>  <code>$body_bytes_sent</code> #传送页面的字节数</li>
+<li>  <code>$content_length</code> #请求头中的 Content-length 字段</li>
+<li>  <code>$content_type</code> #请求头中的 Content-Type 字段</li>
+<li>  <code>$cookie_COOKIE</code> #cookie COOKIE 的值</li>
+<li>  <code>$document_root</code> #当前请求在 root 指令中指定的值</li>
+<li>  <code>$document_uri</code> #与 $uri 相同</li>
+<li>  <code>$host</code> #请求中的主机头 (Host) 字段，如果请求中的主机头不可用或者空，则为处理请求的 server 名称(处理请求的 server 的 server_name 指令的值)。值为小写，不包含端口</li>
+<li>  <code>$hostname</code> #机器名使用 gethostname 系统调用的值</li>
+<li>  <code>$http_HEADER</code> #HTTP 请求头中的内容，HEADER 为 HTTP 请求中的内容转为小写，- 变为_(破折号变为下划线)，例如：$http_user_agent(Uaer-Agent 的值)</li>
+<li>  <code>$sent_http_HEADER</code> #HTTP 响应头中的内容，HEADER 为 HTTP 响应中的内容转为小写，- 变为_(破折号变为下划线)，例如：<img data-src="https://www.zhihu.com/equation?tex=sent_http_cache_control%E3%80%81">sent_http_content_type…</li>
+<li>  <code>$is_args</code> #如果 $args 设置，值为 &quot;?&quot;，否则为 &quot;&quot;</li>
+<li>  <code>$limit_rate</code> #这个变量可以限制连接速率</li>
+<li>  <code>$nginx_version</code> #当前运行的 nginx 版本号</li>
+<li>  <code>$query_string</code> #与 $args 相同</li>
+<li>  <code>$remote_addr</code> #客户端的 IP 地址</li>
+<li>  <code>$remote_port</code> #客户端的端口</li>
+<li>  <code>$remote_port</code> #已经经过 Auth Basic Module 验证的用户名</li>
+<li>  <code>$request_filename</code> #当前连接请求的文件路径，由 root 或 alias 指令与 URI 请求生成</li>
+<li>  <code>$request_body</code> #这个变量（0.7.58+）包含请求的主要信息。在使用 proxy_pass 或 fastcgi_pass 指令的 location 中比较有意义</li>
+<li>  <code>$request_body_file</code> #客户端请求主体信息的临时文件名</li>
+<li>  <code>$request_completion</code> #如果请求成功，设为 &quot;OK&quot;；如果请求未完成或者不是一系列请求中最后一部分则设为空</li>
+<li>  <code>$request_method</code> #这个变量是客户端请求的动作，通常为 GET 或 POST。包括 0.8.20 及之前的版本中，这个变量总为 main request 中的动作，如果当前请求是一个子请求，并不使用这个当前请求的动作</li>
+<li>  <code>$request_uri</code> #这个变量等于包含一些客户端请求参数的原始 URI，它无法修改，请查看 $uri 更改或重写 URI</li>
+<li>  <code>$scheme</code> #所用的协议，例如 http 或者是 https，例如 <code>rewrite ^(.+)$$scheme://example.com$1 redirect</code></li>
+<li>  <code>$server_addr</code> #服务器地址，在完成一次系统调用后可以确定这个值，如果要绕开系统调用，则必须在 listen 中指定地址并且使用 bind 参数</li>
+<li>  <code>$server_name</code> #服务器名称</li>
+<li>  <code>$server_port</code> #请求到达服务器的端口号</li>
+<li>  <code>$server_protocol</code> #请求使用的协议，通常是 HTTP/1.0、HTTP/1.1 或 HTTP/2</li>
+<li>  <code>$uri</code> #请求中的当前 URI(不带请求参数，参数位于 args) ， 不 同 于 浏 览 器 传 递 的 args)，不同于浏览器传递的 args)，不同于浏览器传递的 request_uri 的值，它可以通过内部重定向，或者使用 index 指令进行修改。不包括协议和主机名，例如 /foo/bar.html</li>
+</ul>
+<h1 id="附-nginx-模块"><a href="#附-nginx-模块" class="headerlink" title="附 nginx 模块"></a>附 nginx 模块</h1><h1 id="nginx-模块分类"><a href="#nginx-模块分类" class="headerlink" title="nginx 模块分类"></a>nginx 模块分类</h1><ul>
+<li>  核心模块：nginx 最基本最核心的服务，如进程管理、权限控制、日志记录；</li>
+<li>  标准 HTTP 模块：nginx 服务器的标准 HTTP 功能；</li>
+<li>  可选 HTTP 模块：处理特殊的 HTTP 请求</li>
+<li>  邮件服务模块：邮件服务</li>
+<li>  第三方模块：作为扩展，完成特殊功能</li>
+</ul>
+<h1 id="模块清单"><a href="#模块清单" class="headerlink" title="模块清单"></a>模块清单</h1><p><strong>核心模块</strong>：</p>
+<ul>
+<li>  ngx_core</li>
+<li>  ngx_errlog</li>
+<li>  ngx_conf</li>
+<li>  ngx_events</li>
+<li>  ngx_event_core</li>
+<li>  ngx_epll</li>
+<li>  ngx_regex</li>
+</ul>
+<p><strong>标准 HTTP 模块</strong>：</p>
+<ul>
+<li>  ngx_http</li>
+<li>  ngx_http_core #配置端口，URI 分析，服务器相应错误处理，别名控制 (alias) 等</li>
+<li>  ngx_http_log #自定义 access 日志</li>
+<li>  ngx_http_upstream #定义一组服务器，可以接受来自 proxy, Fastcgi,Memcache 的重定向；主要用作负载均衡</li>
+<li>  ngx_http_static</li>
+<li>  ngx_http_autoindex #自动生成目录列表</li>
+<li>  ngx_http_index #处理以 / 结尾的请求，如果没有找到 index 页，则看是否开启了 random_index；如开启，则用之，否则用 autoindex</li>
+<li>  ngx_http_auth_basic #基于 http 的身份认证 (auth_basic)</li>
+<li>  ngx_http_access #基于 IP 地址的访问控制 (deny,allow)</li>
+<li>  ngx_http_limit_conn #限制来自客户端的连接的响应和处理速率</li>
+<li>  ngx_http_limit_req #限制来自客户端的请求的响应和处理速率</li>
+<li>  ngx_http_geo</li>
+<li>  ngx_http_map #创建任意的键值对变量</li>
+<li>  ngx_http_split_clients</li>
+<li>  ngx_http_referer #过滤 HTTP 头中 Referer 为空的对象</li>
+<li>  ngx_http_rewrite #通过正则表达式重定向请求</li>
+<li>  ngx_http_proxy</li>
+<li>  ngx_http_fastcgi #支持 fastcgi</li>
+<li>  ngx_http_uwsgi</li>
+<li>  ngx_http_scgi</li>
+<li>  ngx_http_memcached</li>
+<li>  ngx_http_empty_gif #从内存创建一个 1×1 的透明 gif 图片，可以快速调用</li>
+<li>  ngx_http_browser #解析 http 请求头部的 User-Agent 值</li>
+<li>  ngx_http_charset #指定网页编码</li>
+<li>  ngx_http_upstream_ip_hash</li>
+<li>  ngx_http_upstream_least_conn</li>
+<li>  ngx_http_upstream_keepalive</li>
+<li>  ngx_http_write_filter</li>
+<li>  ngx_http_header_filter</li>
+<li>  ngx_http_chunked_filter</li>
+<li>  ngx_http_range_header</li>
+<li>  ngx_http_gzip_filter</li>
+<li>  ngx_http_postpone_filter</li>
+<li>  ngx_http_ssi_filter</li>
+<li>  ngx_http_charset_filter</li>
+<li>  ngx_http_userid_filter</li>
+<li>  ngx_http_headers_filter #设置 http 响应头</li>
+<li>  ngx_http_copy_filter</li>
+<li>  ngx_http_range_body_filter</li>
+<li>  ngx_http_not_modified_filter</li>
+</ul>
+<p><strong>可选 HTTP 模块</strong>:</p>
+<ul>
+<li>  ngx_http_addition #在响应请求的页面开始或者结尾添加文本信息</li>
+<li>  ngx_http_degradation #在低内存的情况下允许服务器返回 444 或者 204 错误</li>
+<li>  ngx_http_perl</li>
+<li>  ngx_http_flv #支持将 Flash 多媒体信息按照流文件传输，可以根据客户端指定的开始位置返回 Flash</li>
+<li>  ngx_http_geoip #支持解析基于 GeoIP 数据库的客户端请求</li>
+<li>  ngx_google_perftools</li>
+<li>  ngx_http_gzip #gzip 压缩请求的响应</li>
+<li>  ngx_http_gzip_static #搜索并使用预压缩的以. gz 为后缀的文件代替一般文件响应客户端请求</li>
+<li>  ngx_http_image_filter #支持改变 png，jpeg，gif 图片的尺寸和旋转方向</li>
+<li>  ngx_http_mp4 #支持. mp4,.m4v,.m4a 等多媒体信息按照流文件传输，常与 ngx_http_flv 一起使用</li>
+<li>  ngx_http_random_index #当收到 / 结尾的请求时，在指定目录下随机选择一个文件作为 index</li>
+<li>  ngx_http_secure_link #支持对请求链接的有效性检查</li>
+<li>  ngx_http_ssl #支持 https</li>
+<li>  ngx_http_stub_status</li>
+<li>  ngx_http_sub_module #使用指定的字符串替换响应中的信息</li>
+<li>  ngx_http_dav #支持 HTTP 和 WebDAV 协议中的 PUT/DELETE/MKCOL/COPY/MOVE 方法</li>
+<li>  ngx_http_xslt #将 XML 响应信息使用 XSLT 进行转换</li>
+</ul>
+<p><strong>邮件服务模块</strong>:</p>
+<ul>
+<li>  ngx_mail_core</li>
+<li>  ngx_mail_pop3</li>
+<li>  ngx_mail_imap</li>
+<li>  ngx_mail_smtp</li>
+<li>  ngx_mail_auth_http</li>
+<li>  ngx_mail_proxy</li>
+<li>  ngx_mail_ssl</li>
+</ul>
+<p><strong>第三方模块</strong>：</p>
+<ul>
+<li>  echo-nginx-module #支持在 nginx 配置文件中使用 echo/sleep/time/exec 等类 Shell 命令</li>
+<li>  memc-nginx-module</li>
+<li>  rds-json-nginx-module #使 nginx 支持 json 数据的处理</li>
+<li>  lua-nginx-module</li>
+</ul>
+<p>感谢阅读~</p>
+]]></content>
+      <tags>
+        <tag>nginx</tag>
       </tags>
   </entry>
   <entry>
