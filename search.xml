@@ -5633,6 +5633,8 @@ kill 进程PID</code></pre>
 <pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">.&#x2F;nginx</code></pre>
 
 <p>在浏览器直接访问 ip 地址，页面出现 Welcome to Nginx! 则安装成功。</p>
+<span id="more"></span>
+
 <h1 id="nginx-配置"><a href="#nginx-配置" class="headerlink" title="nginx 配置"></a>nginx 配置</h1><h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><pre class="line-numbers language-none"><code class="language-none">main        # 全局配置，对全局生效
 ├── events  # 配置影响 nginx 服务器或与用户的网络连接
 ├── http    # 配置代理，缓存，日志定义等绝大多数功能和第三方模块的配置
@@ -5861,27 +5863,29 @@ systemctl is-enabled nginx.service #查询服务是否开机启动</code></pre>
 <h1 id="nginx-常用功能"><a href="#nginx-常用功能" class="headerlink" title="nginx 常用功能"></a>nginx 常用功能</h1><h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>我们最常说的反向代理的是通过反向代理解决跨域问题。</p>
 <p>其实反向代理还可以用来控制缓存（代理缓存 proxy cache），进行访问控制等等，以及后面说的负载均衡其实都是通过反向代理来实现的。</p>
 <pre class="line-numbers language-none"><code class="language-none">server &#123;
-    listen    8080;
-        # 用户访问 ip:8080&#x2F;test 下的所有路径代理到 github
-        location &#x2F;test &#123;
-         proxy_pass   https:&#x2F;&#x2F;github.com;
-        &#125;
 
-        # 所有 &#x2F;api 下的接口访问都代理到本地的 8888 端口
-        # 例如你本地运行的 java 服务的端口是 8888，接口都是以 &#x2F;api 开头
-        location &#x2F;api &#123;
-            proxy_pass   http:&#x2F;&#x2F;127.0.0.1:8888;
-        &#125;
+    listen    8080;
+
+    # 用户访问 ip:8080&#x2F;test 下的所有路径代理到 github
+    location &#x2F;test &#123;
+     proxy_pass   https:&#x2F;&#x2F;github.com;
+    &#125;
+
+    # 所有 &#x2F;api 下的接口访问都代理到本地的 8888 端口
+    # 例如你本地运行的 java 服务的端口是 8888，接口都是以 &#x2F;api 开头
+    location &#x2F;api &#123;
+        proxy_pass   http:&#x2F;&#x2F;127.0.0.1:8888;
+    &#125;
 
 &#125;</code></pre>
 
 <h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><pre class="line-numbers language-none"><code class="language-none">server &#123;
-   location ~ ^&#x2F;index.html &#123;
-       # 匹配 index.html 页面 除了 127.0.0.1 以外都可以访问
-       deny 192.168.1.1;
-       deny 192.168.1.2;
-       allow all;
- &#125;
+    location ~ ^&#x2F;index.html &#123;
+        # 匹配 index.html 页面 除了 127.0.0.1 以外都可以访问
+        deny 192.168.1.1;
+        deny 192.168.1.2;
+        allow all;
+    &#125;
 &#125;</code></pre>
 
 <p>上面的命令表示禁止 192.168.1.1 和 192.168.1.2 两个 ip 访问，其它全部允许。从上到下的顺序，匹配到了便跳出，可以按你的需求设置。</p>
@@ -5997,7 +6001,7 @@ gzip_disable &quot;MSIE [1-6]\.&quot;;</code></pre>
 </ol>
 <p>其中第 2 点，普遍是结合前端打包的时候打包成 gzip 文件后部署到服务器上，这样服务器就可以直接使用 gzip 的文件了，并且可以把压缩比例提高，这样 nginx 就不用压缩，也就不会影响速度。一般不追求极致的情况下，前端不用做任何配置就可以使用啦~</p>
 <p>附前端 webpack 开启 gzip 压缩配置，在 vue-cli3 的 vue.config.js 配置文件中：</p>
-<pre class="line-numbers language-none"><code class="language-none">const CompressionWebpackPlugin &#x3D; require(&#39;compression-webpack-plugin&#39;)
+<pre class="line-numbers language-js" data-language="js"><code class="language-js">const CompressionWebpackPlugin &#x3D; require(&#39;compression-webpack-plugin&#39;)
 
 module.exports &#x3D; &#123;
   &#x2F;&#x2F; gzip 配置
