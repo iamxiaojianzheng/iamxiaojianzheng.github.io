@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous"><script class="next-config" data-name="main" type="application/json">{"hostname":"xiaojianzheng.cn","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script><meta name="description" content="原文地址 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;idea360&#x2F;p&#x2F;12391416.html  概述接上一篇 Docker 实战之 MySQL 主从复制, 这里是 Docker 实战系列的第二篇，主要进行 Redis-Cluster 集群环境的快速搭建。Redis 作为基于键值对的 NoSQL 数据库，具有高性能、丰富的数据结构、持久化、高可用、分布式等特性，同时 Redis 本身非"><meta property="og:type" content="article"><meta property="og:title" content="Docker实战之Redis-Cluster集群"><meta property="og:url" content="https://xiaojianzheng.cn/2021/06/29/Docker%E5%AE%9E%E6%88%98%E4%B9%8BRedis-Cluster%E9%9B%86%E7%BE%A4/index.html"><meta property="og:site_name" content="JIAHE"><meta property="og:description" content="原文地址 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;idea360&#x2F;p&#x2F;12391416.html  概述接上一篇 Docker 实战之 MySQL 主从复制, 这里是 Docker 实战系列的第二篇，主要进行 Redis-Cluster 集群环境的快速搭建。Redis 作为基于键值对的 NoSQL 数据库，具有高性能、丰富的数据结构、持久化、高可用、分布式等特性，同时 Redis 本身非"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934674357-1624934674349.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934702679-1624934702675.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934720190-1624934720184.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934823424-1624934823420.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934851037-1624934851027.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934924225-1624934924219.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934941869-1624934941864.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934980010-1624934980007.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934999188-1624934999186.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935046172-1624935046170.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935090996-1624935090993.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935110457-1624935110454.png"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935124455-1624935124452.png"><meta property="article:published_time" content="2021-06-29T02:36:00.000Z"><meta property="article:modified_time" content="2021-06-29T02:36:00.000Z"><meta property="article:author" content="JIAHE"><meta property="article:tag" content="Docker"><meta property="article:tag" content="Redis"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934674357-1624934674349.png"><link rel="canonical" href="https://xiaojianzheng.cn/2021/06/29/Docker%E5%AE%9E%E6%88%98%E4%B9%8BRedis-Cluster%E9%9B%86%E7%BE%A4/"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://xiaojianzheng.cn/2021/06/29/Docker%E5%AE%9E%E6%88%98%E4%B9%8BRedis-Cluster%E9%9B%86%E7%BE%A4/","path":"2021/06/29/Docker实战之Redis-Cluster集群/","title":"Docker实战之Redis-Cluster集群"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>Docker实战之Redis-Cluster集群 | JIAHE</title><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span><span class="toggle-line"></span><span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><h1 class="site-title">JIAHE</h1><i class="logo-line"></i></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-导航"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li><li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li><li class="menu-item menu-item-java"><a href="/java/" rel="section"><i class="fa fa-code fa-fw"></i>Java</a></li><li class="menu-item menu-item-spring全家桶"><a href="/spring-framework/" rel="section"><i class="fa fa-code fa-fw"></i>Spring全家桶</a></li><li class="menu-item menu-item-mybatis官方教程"><a href="/mybatis/" rel="section"><i class="fa fa-code fa-fw"></i>Mybatis官方教程</a></li><li class="menu-item menu-item-代码可读性"><a href="/code-easy-read/" rel="section"><i class="far fa-file-code fa-fw"></i>代码可读性</a></li><li class="menu-item menu-item-数据库"><a href="/database/" rel="section"><i class="fas fa-database fa-fw"></i>数据库</a></li><li class="menu-item menu-item-计算机网络"><a href="/network/" rel="section"><i class="fas fa-network-wired fa-fw"></i>计算机网络</a></li><li class="menu-item menu-item-操作系统基础"><a href="/os/" rel="section"><i class="fas fa-laptop fa-fw"></i>操作系统基础</a></li><li class="menu-item menu-item-基础概念"><a href="/basic-concepts/" rel="section"><i class="fas fa-star fa-fw"></i>基础概念</a></li><li class="menu-item menu-item-数据结构与算法"><a href="/data-structure/" rel="section"><i class="fas fa-poll fa-fw"></i>数据结构与算法</a></li><li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li><li class="menu-item menu-item-vim-cheat-sheet"><a href="/vim-cheat-sheet/" rel="section"><i class="fab fa-vimeo-square fa-fw"></i>Vim Cheat Sheet</a></li><li class="menu-item menu-item-软件安装部署"><a href="/software-install-and-deploy/" rel="section"><i class="fab fa-windows fa-fw"></i>软件安装部署</a></li><li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li><li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li><li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i> 搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"> <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container no-result"><div class="search-result-icon"><i class="fa fa-spinner fa-pulse fa-5x"></i></div></div></div></div></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span><span class="toggle-line"></span><span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc"> 文章目录</li><li class="sidebar-nav-overview"> 站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E6%96%B9%E6%A1%88%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-number">2.</span> <span class="nav-text">集群方案的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">主从复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">哨兵机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-Cluster"><span class="nav-number">2.3.</span> <span class="nav-text">Redis-Cluster</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92"><span class="nav-number">3.</span> <span class="nav-text">网络规划</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">Redis 配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">5.</span> <span class="nav-text">Docker 环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">集群配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95"><span class="nav-number">7.</span> <span class="nav-text">集群测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%B9%E7%81%BE%E6%BC%94%E7%BB%83"><span class="nav-number">8.</span> <span class="nav-text">容灾演练</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringBoot-%E9%85%8D%E7%BD%AE-Redis-%E9%9B%86%E7%BE%A4"><span class="nav-number">9.</span> <span class="nav-text">SpringBoot 配置 Redis 集群</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"><p class="site-author-name" itemprop="name">JIAHE</p><div class="site-description" itemprop="description">Collection & Reuse</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">56</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/"><span class="site-state-item-count">66</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="cc-license site-overview-item animated" itemprop="license"> <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a></div></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><a role="button" class="book-mark-link book-mark-link-fixed"></a><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner post posts-expand"><div class="post-block"><article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://xiaojianzheng.cn/2021/06/29/Docker%E5%AE%9E%E6%88%98%E4%B9%8BRedis-Cluster%E9%9B%86%E7%BE%A4/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="/images/avatar.gif"><meta itemprop="name" content="JIAHE"><meta itemprop="description" content="Collection & Reuse"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="JIAHE"></span><header class="post-header"><h1 class="post-title" itemprop="name headline"> Docker实战之Redis-Cluster集群</h1><div class="post-meta-container"><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建时间：2021-06-29 10:36:00" itemprop="dateCreated datePublished" datetime="2021-06-29T10:36:00+08:00">2021-06-29</time></span></div></div></header><div class="post-body" itemprop="articleBody"><blockquote><p>原文地址 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/idea360/p/12391416.html">https://www.cnblogs.com/idea360/p/12391416.html</a></p></blockquote><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>接上一篇 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/3FbY6jT-PdgUHsRwHBSWBw">Docker 实战之 MySQL 主从复制</a>, 这里是 Docker 实战系列的第二篇，主要进行 Redis-Cluster 集群环境的快速搭建。Redis 作为基于键值对的 NoSQL 数据库，具有高性能、丰富的数据结构、持久化、高可用、分布式等特性，同时 Redis 本身非常稳定，已经得到业界的广泛认可和使用。</p><p>在 Redis 中，集群的解决方案有三种</p><ol><li> 主从复制</li><li> 哨兵机制</li><li> Cluster</li></ol><p>Redis Cluster 是 Redis 的分布式解决方案，在 3.0 版本正式推出。</p><span id="more"></span><h1 id="集群方案的对比"><a href="#集群方案的对比" class="headerlink" title="集群方案的对比"></a>集群方案的对比</h1><h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p>同 Mysql 主从复制的原因一样，Redis 虽然读取写入的速度都特别快，但是也会产生读压力特别大的情况。为了分担读压力，Redis 支持主从复制，读写分离。一个 Master 可以有多个 Slaves。</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934674357-1624934674349.png"></p><p>优点</p><ul><li> 数据备份</li><li> 读写分离，提高服务器性能</li></ul><p>缺点</p><ul><li> 不能自动故障恢复, RedisHA 系统（需要开发）</li><li> 无法实现动态扩容</li></ul><h2 id="哨兵机制"><a href="#哨兵机制" class="headerlink" title="哨兵机制"></a>哨兵机制</h2><p>Redis Sentinel 是社区版本推出的原生<code>高可用</code>解决方案，其部署架构主要包括两部分：Redis Sentinel 集群和 Redis 数据集群。</p><p>其中 Redis Sentinel 集群是由若干 Sentinel 节点组成的分布式集群，可以实现故障发现、故障自动转移、配置中心和客户端通知。Redis Sentinel 的节点数量要满足 2n+1（n&gt;=1）的奇数个。</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934702679-1624934702675.png"></p><p>优点</p><ul><li> 自动化故障恢复</li></ul><p>缺点</p><ul><li> Redis 数据节点中 slave 节点作为备份节点不提供服务</li><li> 无法实现动态扩容</li></ul><h2 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis-Cluster"></a>Redis-Cluster</h2><p>Redis Cluster 是社区版推出的 Redis 分布式集群解决方案，主要解决 Redis 分布式方面的需求，比如，当遇到单机内存，并发和流量等瓶颈的时候，Redis Cluster 能起到很好的负载均衡的目的。</p><p>Redis Cluster 着眼于<code>提高并发量</code>。</p><p>群集至少需要 3 主 3 从，且每个实例使用不同的配置文件。</p><p>在 redis-cluster 架构中，<code>redis-master节点一般用于接收读写，而redis-slave节点则一般只用于备份</code>， 其与对应的 master 拥有相同的 slot 集合，若某个 redis-master 意外失效，则再将其对应的 slave 进行升级为临时 redis-master。</p><p>在 redis 的官方文档中，对 redis-cluster 架构上，有这样的说明：在 cluster 架构下，默认的，一般 redis-master 用于接收读写，而 redis-slave 则用于备份，<code>当有请求是在向slave发起时，会直接重定向到对应key所在的master来处理</code>。 但如果不介意读取的是 redis-cluster 中有可能过期的数据并且对写请求不感兴趣时，则亦可通过<code>readonly</code>命令，将 slave 设置成可读，然后通过 slave 获取相关的 key，达到读写分离。具体可以参阅 redis <a target="_blank" rel="noopener" href="https://redis.io/commands/readonly">官方文档</a>等相关内容</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934720190-1624934720184.png"></p><p>优点</p><ul><li> 解决分布式负载均衡的问题。具体解决方案是分片 / 虚拟槽 slot。</li><li> 可实现动态扩容</li><li> P2P 模式，无中心化</li></ul><p>缺点</p><ul><li> 为了性能提升，客户端需要缓存路由表信息</li><li> Slave 在集群中充当 “冷备”，不能缓解读压力</li></ul><h1 id="网络规划"><a href="#网络规划" class="headerlink" title="网络规划"></a>网络规划</h1><p>这里没有搭建虚拟机环境，全部在本地部署。本机的 ip 为 <code>192.168.124.5</code></p><table><thead><tr><th>ip</th><th>port</th></tr></thead><tbody><tr><td>192.168.124.5</td><td>7001</td></tr><tr><td>192.168.124.5</td><td>7002</td></tr><tr><td>192.168.124.5</td><td>7003</td></tr><tr><td>192.168.124.5</td><td>7004</td></tr><tr><td>192.168.124.5</td><td>7005</td></tr><tr><td>192.168.124.5</td><td>7006</td></tr></tbody></table><h1 id="Redis-配置文件"><a href="#Redis-配置文件" class="headerlink" title="Redis 配置文件"></a>Redis 配置文件</h1><p>在 docker 环境中，配置文件映射宿主机的时候，(宿主机) 必须有配置文件。<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/antirez/redis/5.0.7/redis.conf">附件</a>在这里。大家可以根据自己的需求定制配置文件。</p><p>下边是我的配置文件 <code>redis-cluster.tmpl</code></p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"># redis端口
+port $&#123;PORT&#125;
+# 关闭保护模式
+protected-mode no
+# 开启集群
+cluster-enabled yes
+# 集群节点配置
+cluster-config-file nodes.conf
+# 超时
+cluster-node-timeout 5000
+# 集群节点IP host模式为宿主机IP
+cluster-announce-ip 192.168.124.5
+# 集群节点端口 7001 - 7006
+cluster-announce-port $&#123;PORT&#125;
+cluster-announce-bus-port 1$&#123;PORT&#125;
+# 开启 appendonly 备份模式
+appendonly yes
+# 每秒钟备份
+appendfsync everysec
+# 对aof文件进行压缩时，是否执行同步操作
+no-appendfsync-on-rewrite no
+# 当目前aof文件大小超过上一次重写时的aof文件大小的100%时会再次进行重写
+auto-aof-rewrite-percentage 100
+# 重写前AOF文件的大小最小值 默认 64mb
+auto-aof-rewrite-min-size 64mb</code></pre><p>由于节点 IP 相同，只有端口上的差别，现在通过脚本 <code>redis-cluster-config.sh</code> 批量生成配置文件</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">for port in &#96;seq 7001 7006&#96;; do \
+  mkdir -p .&#x2F;redis-cluster&#x2F;$&#123;port&#125;&#x2F;conf \
+  &amp;&amp; PORT&#x3D;$&#123;port&#125; envsubst &lt; .&#x2F;redis-cluster.tmpl &gt; .&#x2F;redis-cluster&#x2F;$&#123;port&#125;&#x2F;conf&#x2F;redis.conf \
+  &amp;&amp; mkdir -p .&#x2F;redis-cluster&#x2F;$&#123;port&#125;&#x2F;data; \
+done</code></pre><p>生成的配置文件如下图</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934823424-1624934823420.png"></p><h1 id="Docker-环境搭建"><a href="#Docker-环境搭建" class="headerlink" title="Docker 环境搭建"></a>Docker 环境搭建</h1><p>这里还是通过 docker-compose 进行测试环境的 docker 编排。</p><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">version: &#39;3.7&#39;
+
+services:
+  redis7001:
+    image: &#39;redis&#39;
+    container_name: redis7001
+    command:
+      [&quot;redis-server&quot;, &quot;&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf&quot;]
+    volumes:
+      - .&#x2F;redis-cluster&#x2F;7001&#x2F;conf&#x2F;redis.conf:&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf
+      - .&#x2F;redis-cluster&#x2F;7001&#x2F;data:&#x2F;data
+    ports:
+      - &quot;7001:7001&quot;
+      - &quot;17001:17001&quot;
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ&#x3D;Asia&#x2F;Shanghai
+
+
+  redis7002:
+    image: &#39;redis&#39;
+    container_name: redis7002
+    command:
+      [&quot;redis-server&quot;, &quot;&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf&quot;]
+    volumes:
+      - .&#x2F;redis-cluster&#x2F;7002&#x2F;conf&#x2F;redis.conf:&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf
+      - .&#x2F;redis-cluster&#x2F;7002&#x2F;data:&#x2F;data
+    ports:
+      - &quot;7002:7002&quot;
+      - &quot;17002:17002&quot;
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ&#x3D;Asia&#x2F;Shanghai
+
+
+  redis7003:
+    image: &#39;redis&#39;
+    container_name: redis7003
+    command:
+      [&quot;redis-server&quot;, &quot;&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf&quot;]
+    volumes:
+      - .&#x2F;redis-cluster&#x2F;7003&#x2F;conf&#x2F;redis.conf:&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf
+      - .&#x2F;redis-cluster&#x2F;7003&#x2F;data:&#x2F;data
+    ports:
+      - &quot;7003:7003&quot;
+      - &quot;17003:17003&quot;
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ&#x3D;Asia&#x2F;Shanghai
+
+
+  redis7004:
+    image: &#39;redis&#39;
+    container_name: redis7004
+    command:
+      [&quot;redis-server&quot;, &quot;&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf&quot;]
+    volumes:
+      - .&#x2F;redis-cluster&#x2F;7004&#x2F;conf&#x2F;redis.conf:&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf
+      - .&#x2F;redis-cluster&#x2F;7004&#x2F;data:&#x2F;data
+    ports:
+      - &quot;7004:7004&quot;
+      - &quot;17004:17004&quot;
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ&#x3D;Asia&#x2F;Shanghai
+
+
+  redis7005:
+    image: &#39;redis&#39;
+    container_name: redis7005
+    command:
+      [&quot;redis-server&quot;, &quot;&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf&quot;]
+    volumes:
+      - .&#x2F;redis-cluster&#x2F;7005&#x2F;conf&#x2F;redis.conf:&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf
+      - .&#x2F;redis-cluster&#x2F;7005&#x2F;data:&#x2F;data
+    ports:
+      - &quot;7005:7005&quot;
+      - &quot;17005:17005&quot;
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ&#x3D;Asia&#x2F;Shanghai
+
+
+  redis7006:
+    image: &#39;redis&#39;
+    container_name: redis7006
+    command:
+      [&quot;redis-server&quot;, &quot;&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf&quot;]
+    volumes:
+      - .&#x2F;redis-cluster&#x2F;7006&#x2F;conf&#x2F;redis.conf:&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis&#x2F;redis.conf
+      - .&#x2F;redis-cluster&#x2F;7006&#x2F;data:&#x2F;data
+    ports:
+      - &quot;7006:7006&quot;
+      - &quot;17006:17006&quot;
+    environment:
+      # 设置时区为上海，否则时间会有问题
+      - TZ&#x3D;Asia&#x2F;Shanghai</code></pre><p>启动结果如图</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934851037-1624934851027.png"></p><h1 id="集群配置"><a href="#集群配置" class="headerlink" title="集群配置"></a>集群配置</h1><p>redis 集群官方提供了配置脚本，4.x 和 5.x 略有不同，具体可参见<a target="_blank" rel="noopener" href="https://redis.io/topics/cluster-tutorial">集群配置</a></p><p>下边是我自己的环境</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">docker exec -it redis7001 redis-cli -p 7001 -a 123456 --cluster create 192.168.124.5:7001 192.168.124.5:7002 192.168.124.5:7003 192.168.124.5:7004 192.168.124.5:7005 192.168.124.5:7006 --cluster-replicas 1</code></pre><p>看到如下结果说明集群配置成功</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934924225-1624934924219.png"></p><h1 id="集群测试"><a href="#集群测试" class="headerlink" title="集群测试"></a>集群测试</h1><p>接下来进行一些集群的基本测试</p><p><strong>1. 查看集群通信是否正常</strong></p><p>redis7001 主节点对它的副本节点 redis7005 进行 ping 操作。</p><blockquote><p>-h host -p port -a pwd</p></blockquote><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ docker docker exec -it redis7001 redis-cli -h 192.168.124.5 -p 7005 -a 123456 ping
+
+Warning: Using a password with &#39;-a&#39; or &#39;-u&#39; option on the command line interface may not be safe.
+PONG</code></pre><p><strong>2. 测试简单存储</strong></p><p>redis7001 主节点客户端操作 redis7003 主节点</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ docker docker exec -it redis7001 redis-cli -h 192.168.124.5 -p 7003 -a 123456
+
+Warning: Using a password with &#39;-a&#39; or &#39;-u&#39; option on the command line interface may not be safe.
+192.168.124.5:7003&gt; set name admin
+(error) MOVED 5798 192.168.124.5:7002</code></pre><p>由于 Redis Cluster 会根据 key 进行 hash 运算，然后将 key 分散到不同 slots，name 的 hash 运算结果在 redis7002 节点上的 slots 中。所以我们操作 redis7003 写操作会自动路由到 7002。然而 error 提示无法路由？没关系，差一个 <code>-c</code> 参数而已。</p><p>再次运行查看结果如下:</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ docker docker exec -it redis7001 redis-cli -h 192.168.124.5 -p 7003 -a 123456 -c
+
+Warning: Using a password with &#39;-a&#39; or &#39;-u&#39; option on the command line interface may not be safe.
+192.168.124.5:7003&gt; set name admin
+-&gt; Redirected to slot [5798] located at 192.168.124.5:7002
+OK
+192.168.124.5:7002&gt; get name
+&quot;admin&quot;
+192.168.124.5:7002&gt;</code></pre><p><strong>3. 查看集群状态</strong></p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934941869-1624934941864.png"></p><p><strong>4. 查看 slots 分片</strong></p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934980010-1624934980007.png"></p><p><strong>5. 查看集群信息</strong></p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624934999188-1624934999186.png"></p><p><strong>6. 测试读写分离</strong></p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935046172-1624935046170.png"></p><p>试试看，发现读不到，原来在 redis cluster 中，如果你要在 slave 读取数据，那么需要带先执行 <code>readonly</code> 指令，然后 <code>get key</code></p><p><strong>7. 简单压测</strong></p><table><thead><tr><th>选项</th><th>描述</th></tr></thead><tbody><tr><td>-t</td><td>指定命令</td></tr><tr><td>-c</td><td>客户端连接数</td></tr><tr><td>-n</td><td>总请求数</td></tr><tr><td>-d</td><td>set、get 的 value 大小 (单位 byte)</td></tr></tbody></table><p>测试如下</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ docker docker exec -it redis7001 bash
+root@cbc6e76a3ed2:&#x2F;data# redis-benchmark -h 192.168.124.5 -p 7001 -t set -c 100 -n 50000 -d 20
+&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; SET &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+  50000 requests completed in 10.65 seconds
+  100 parallel clients
+  20 bytes payload
+  keep alive: 1
+
+0.00% &lt;&#x3D; 2 milliseconds
+0.01% &lt;&#x3D; 3 milliseconds
+...
+100.00% &lt;&#x3D; 48 milliseconds
+100.00% &lt;&#x3D; 49 milliseconds
+4692.63 requests per second</code></pre><p>这里没啥实际意义，在工作业务上大家可以根据 QPS 和主机配置进行压测，计算规划出节点数量。</p><h1 id="容灾演练"><a href="#容灾演练" class="headerlink" title="容灾演练"></a>容灾演练</h1><p>现在我们杀掉主节点 redis7001，看从节点 redis7005 是否会接替它的位置。</p><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">$ docker stop redis7001</code></pre><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935090996-1624935090993.png"></p><p>再试着启动 7001，它将自动作为 slave 挂载到 7005</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935110457-1624935110454.png"></p><h1 id="SpringBoot-配置-Redis-集群"><a href="#SpringBoot-配置-Redis-集群" class="headerlink" title="SpringBoot 配置 Redis 集群"></a>SpringBoot 配置 Redis 集群</h1><p>在 SpringBoot2.x 版本中，redis 默认的连接池已经更换为 Lettuce，而不再是 jedis。</p><ol><li> 在 pom.xml 中引入相关依赖</li></ol><pre class="line-numbers language-xml" data-language="xml"><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;&#x2F;artifactId&gt;
+&lt;&#x2F;dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.commons&lt;&#x2F;groupId&gt;
+    &lt;artifactId&gt;commons-pool2&lt;&#x2F;artifactId&gt;
+&lt;&#x2F;dependency&gt;</code></pre><ol start="2"><li> application.yml</li></ol><pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">spring:
+  redis:
+    timeout: 6000
+    password: 123456
+    cluster:
+      max-redirects: 3 # 获取失败 最大重定向次数 
+      nodes:
+        - 192.168.124.5:7001
+        - 192.168.124.5:7002
+        - 192.168.124.5:7003
+        - 192.168.124.5:7004
+        - 192.168.124.5:7005
+        - 192.168.124.5:7006
+    lettuce:
+      pool:
+        max-active: 1000 #连接池最大连接数（使用负值表示没有限制）
+        max-idle: 10 # 连接池中的最大空闲连接
+        min-idle: 5 # 连接池中的最小空闲连接
+        max-wait: -1 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+  cache:
+    jcache:
+      config: classpath:ehcache.xml</code></pre><ol start="3"><li> redis 配置</li></ol><pre class="line-numbers language-java" data-language="java"><code class="language-java">@Configuration
+@AutoConfigureAfter(RedisAutoConfiguration.class)
+public class RedisConfig &#123;
+    @Bean
+    public RedisTemplate&lt;String, Object&gt; redisCacheTemplate(LettuceConnectionFactory redisConnectionFactory) &#123;
+        RedisTemplate&lt;String, Object&gt; template &#x3D; new RedisTemplate&lt;&gt;();
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        template.setConnectionFactory(redisConnectionFactory);
+        return template;
+    &#125;
+&#125;</code></pre><ol start="4"><li> 基本测试</li></ol><pre class="line-numbers language-java" data-language="java"><code class="language-java">@SpringBootTest
+public class RedisTest &#123;
+
+    @Autowired
+    private RedisTemplate&lt;String, String&gt; redisTemplate;
+
+    @Test
+    public void test() &#123;
+        redisTemplate.opsForValue().set(&quot;name&quot;, &quot;admin&quot;);
+        String name &#x3D; redisTemplate.opsForValue().get(&quot;name&quot;);
+        System.out.println(name); &#x2F;&#x2F;输出admin
+    &#125;
+&#125;</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过以上演示，基本上可以在本地环境下用我们的 Redis Cluster 集群了。最后再上一张本地映射文件的最终样子，帮助大家了解 Redis 持久化及集群相关的东西。感兴趣的小伙伴可以自行测试并查看其中的内容。</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1624935124455-1624935124452.png"></p><p>内容如有错漏，还望大家不吝赐教，同时，欢迎大家关注公众号【当我遇上你】, 你们的支持就是我写作的最大动力。</p><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul><li> <a target="_blank" rel="noopener" href="https://redis.io/topics/cluster-tutorial">https://redis.io/topics/cluster-tutorial</a></li></ul></div><footer class="post-footer"><div class="post-tags"> <a href="/tags/Docker/" rel="tag"># Docker</a> <a href="/tags/Redis/" rel="tag"># Redis</a></div><div class="post-nav"><div class="post-nav-item"><a href="/2021/06/24/%E5%89%8D%E7%AB%AF%E8%AF%B7%E6%B1%82%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%E7%9A%84%E6%96%B9%E5%BC%8F/" rel="prev" title="前端请求下载文件的方式"><i class="fa fa-chevron-left"></i> 前端请求下载文件的方式</a></div><div class="post-nav-item"> <a href="/2021/07/03/zookeeper%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/" rel="next" title="zookeeper未授权访问漏洞">zookeeper未授权访问漏洞<i class="fa fa-chevron-right"></i></a></div></div></footer></article></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright"> &copy; <span itemprop="copyrightYear">2021</span><span class="with-love"><i class="fa fa-heart"></i></span> <span class="author" itemprop="copyrightHolder">JIAHE</span></div><div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动</div></div></footer><script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.0/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha256-K837BwIyiXo5k/9fCYgqUyA14bN4/Ve9P2SIT0KmZD0=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/third-party/search/local-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.5/pdfobject.min.js","integrity":"sha256-YuNlP9i6s/WH7EaU2kErloo9Vc85C3WVqhoMDgsEVpY="},"url":"/lib/pdf/web/viewer.html"}</script><script src="/js/third-party/tags/pdf.js"></script><script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"https://xiaojianzheng.cn/2021/06/29/Docker%E5%AE%9E%E6%88%98%E4%B9%8BRedis-Cluster%E9%9B%86%E7%BE%A4/"}</script><script src="/js/third-party/quicklink.js"></script></body></html>
