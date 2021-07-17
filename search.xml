@@ -743,6 +743,70 @@ Git基础教程 - 江南一点雨，基础的不能再基础了，想提高的�
       </tags>
   </entry>
   <entry>
+    <title>Groovy: java.lang.StackOverflowError When Implementing equals()</title>
+    <url>/2021/07/16/Groovy-java-lang-StackOverflowError-When-Implementing-equals/</url>
+    <content><![CDATA[PROBLEMWhile migrating a portion of my Java code to Groovy code, I got bitten by the Groovy operator loading feature that I should have known better… and my pride hurts, but hey, I admit I write shitty code.
+Consider this simple POGO with custom equals() and hashCode(), both implemented using Google Guava libraries:-
+@Canonical
+class Person &#123;
+    String firstName
+    String lastName
+    String email
+
+    @Override
+    boolean equals(Object o) &#123;
+        if (this &#x3D;&#x3D; o) &#123;
+            return true
+        &#125;
+        if (o &#x3D;&#x3D; null || getClass() !&#x3D; o.getClass()) &#123;
+            return false
+        &#125;
+
+        final Person other &#x3D; (Person) o
+
+        return Objects.equal(email, other.email)
+    &#125;
+
+    @Override
+    int hashCode() &#123;
+        return Objects.hashCode(email)
+    &#125;
+&#125;
+
+What is wrong with the above code? Well, if you are mostly a Java developer like me, this look pretty much correct. However, when I perform an equality check, I get java.lang.StackOverflowError exception. I tend to see this exception when I write my too-smart-for-production recursion API that couldn’t seem find its way to end the recursion, causing the JVM stack to blow up.
+SOLUTIONThe reason we are getting java.lang.StackOverflowError exception is because Groovy overloads == with equals(). So, if (this == o) { ... } becomes if (this.equals(o)) { ... }. When we perform an equality check, it will call itself again and again until it chokes itself and dies.
+To fix this, we have to use if (this.is(o)) { ... } to perform an identity check:-
+@Canonical
+class Person &#123;
+    String firstName
+    String lastName
+    String email
+
+    @Override
+    boolean equals(Object o) &#123;
+        if (this.is(o)) &#123;
+            return true
+        &#125;
+        if (o &#x3D;&#x3D; null || getClass() !&#x3D; o.getClass()) &#123;
+            return false
+        &#125;
+
+        final Person other &#x3D; (Person) o
+
+        return Objects.equal(email, other.email)
+    &#125;
+
+    @Override
+    int hashCode() &#123;
+        return Objects.hashCode(email)
+    &#125;
+&#125;
+]]></content>
+      <tags>
+        <tag>Grrovy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP压测工具之wrk</title>
     <url>/2021/03/30/HTTP%E5%8E%8B%E6%B5%8B%E5%B7%A5%E5%85%B7%E4%B9%8Bwrk/</url>
     <content><![CDATA[
