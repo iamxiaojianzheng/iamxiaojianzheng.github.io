@@ -419,318 +419,6 @@ public class RedisTest &#123;
       </tags>
   </entry>
   <entry>
-    <title>FFmpeg视频处理入门教程</title>
-    <url>/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
-    <content><![CDATA[FFmpeg 是视频处理最常用的开源软件。
-它功能强大，用途广泛，大量用于视频网站和商业软件（比如 Youtube 和 iTunes），也是许多音频和视频格式的标准编码 / 解码实现。
-FFmpeg 本身是一个庞大的项目，包含许多组件和库文件，最常用的是它的命令行工具。本文介绍 FFmpeg 命令行如何处理视频，比桌面视频处理软件更简洁高效。
-如果你还没安装，可以根据官方文档 先完成安装。
-
-
-概念介绍 FFmpeg 用法之前，需要了解一些视频处理的基本概念。
-容器视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。
-常见的容器格式有以下几种。一般来说，视频文件的后缀名反映了它的容器格式。
-
-  MP4
-  MKV
-  WebM
-  AVI
-
-下面的命令查看 FFmpeg 支持的容器。
-$ ffmpeg -formats
-
-编码格式视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。
-常用的视频编码格式如下。
-
-  H.262
-  H.264
-  H.265
-
-上面的编码格式都是有版权的，但是可以免费使用。此外，还有几种无版权的视频编码格式。
-
-  VP8
-  VP9
-  AV1
-
-常用的音频编码格式如下。
-
-  MP3
-  AAC
-
-上面所有这些都是有损的编码格式，编码后会损失一些细节，以换取压缩后较小的文件体积。无损的编码格式压缩出来的文件体积较大，这里就不介绍了。
-下面的命令可以查看 FFmpeg 支持的编码格式，视频编码和音频编码都在内。
-$ ffmpeg -codecs
-
-编码器编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频 / 音频的编码和解码。
-以下是一些 FFmpeg 内置的视频编码器。
-
-  libx264：最流行的开源 H.264 编码器
-  NVENC：基于 NVIDIA GPU 的 H.264 编码器
-  libx265：开源的 HEVC 编码器
-  libvpx：谷歌的 VP8 和 VP9 编码器
-  libaom：AV1 编码器
-
-音频编码器如下。
-
-  libfdk-aac
-  aac
-
-下面的命令可以查看 FFmpeg 已安装的编码器。
-$ ffmpeg -encoders
-
-FFmpeg 使用格式FFmpeg 的命令行参数非常多，可以分成五个部分。
-$ ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;
-
-上面命令中，五个部分的参数依次如下。
-
- 全局参数
- 输入文件参数
- 输入文件
- 输出文件参数
- 输出文件
-
-参数太多的时候，为了便于查看，FFmpeg 命令可以写成多行。
-$ ffmpeg \
-[全局参数] \
-[输入文件参数] \
--i [输入文件] \
-[输出文件参数] \
-[输出文件]
-
-下面是一个例子。
-$ ffmpeg \
--y \ # 全局参数
--c:a libfdk_aac -c:v libx264 \ # 输入文件参数
--i input.mp4 \ # 输入文件
--c:v libvpx-vp9 -c:a libvorbis \ # 输出文件参数
-output.webm # 输出文件
-
-上面的命令将 mp4 文件转成 webm 文件，这两个都是容器格式。输入的 mp4 文件的音频编码格式是 aac，视频编码格式是 H.264；输出的 webm 文件的视频编码格式是 VP9，音频格式是 Vorbis。
-如果不指明编码格式，FFmpeg 会自己判断输入文件的编码。因此，上面的命令可以简单写成下面的样子。
-$ ffmpeg -i input.avi output.mp4
-
-常用命令行参数FFmpeg 常用的命令行参数如下。
-
-  -c：指定编码器
-  -c copy：直接复制，不经过重新编码（这样比较快）
-  -c:v：指定视频编码器
-  -c:a：指定音频编码器
-  -i：指定输入文件
-  -an：去除音频流
-  -vn：去除视频流
-  -r：视频帧率
-  -preset：指定输出的视频质量，会影响文件的生成速度，有以下几个可用的值 ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow。
-  -y：不经过确认，输出时直接覆盖同名文件。
-
-常见用法下面介绍 FFmpeg 几种常见用法。
-查看文件信息查看视频文件的元信息，比如编码格式和比特率，可以只使用-i参数。
-$ ffmpeg -i input.mp4
-
-上面命令会输出很多冗余信息，加上-hide_banner参数，可以只显示元信息。
-$ ffmpeg -i input.mp4 -hide_banner
-
-查看可用设备$ ffmpeg -list_devices true -f dshow -i dummy
-[dshow @ 000001d3da482240] DirectShow video devices (some may be both video and audio devices)
-[dshow @ 000001d3da482240]  &quot;Integrated Camera&quot;
-[dshow @ 000001d3da482240]     Alternative name &quot;@device_pnp_\\?\usb#vid_04ca&amp;pid_7070&amp;mi_00#6&amp;2102d5ea&amp;0&amp;0000#&#123;65e8773d-8f56-11d0-a3b9-00a0c9223196&#125;\global&quot;
-[dshow @ 000001d3da482240] DirectShow audio devices
-[dshow @ 000001d3da482240]  &quot;麦克风阵列 (Realtek(R) Audio)&quot;
-[dshow @ 000001d3da482240]     Alternative name &quot;@device_cm_&#123;33D9A762-90C8-11D0-BD43-00A0C911CE86&#125;\wave_&#123;BE0CB07D-AB72-4606-86E9-5F102ACAEF89&#125;&quot;
-dummy: Immediate exit requested
-
-查看设备使用可选项$ ffmpeg -list_options true -f dshow -i video&#x3D;&quot;Integrated Camera&quot;
-[dshow @ 000001751d612280] DirectShow video device options (from video devices)
-[dshow @ 000001751d612280]  Pin &quot;捕获&quot; (alternative pin name &quot;捕获&quot;)
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;1280x720 fps&#x3D;30 max s&#x3D;1280x720 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;848x480 fps&#x3D;30 max s&#x3D;848x480 fps&#x3D;30
-[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;960x540 fps&#x3D;30 max s&#x3D;960x540 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;1280x720 fps&#x3D;10 max s&#x3D;1280x720 fps&#x3D;10
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;1280x720 fps&#x3D;10 max s&#x3D;1280x720 fps&#x3D;10
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;848x480 fps&#x3D;20 max s&#x3D;848x480 fps&#x3D;20
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;848x480 fps&#x3D;20 max s&#x3D;848x480 fps&#x3D;20
-[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;960x540 fps&#x3D;15 max s&#x3D;960x540 fps&#x3D;15
-[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;960x540 fps&#x3D;15 max s&#x3D;960x540 fps&#x3D;15
-
-录制视频安装 https://github.com/rdp/screen-capture-recorder-to-video-windows-free
-摄像头
-# 实时录制摄像头画面 - Windows适用
-$ ffplay -f dshow \
--i video&#x3D;&quot;摄像头设备名称&quot; \
--r 30 \
--vcodec libx264
-
-桌面
-# 实时录制桌面画面 - Windows适用
-$ ffmpeg -f gdigrab \
--i desktop \
--f mp4 \
--preset ultrafast \
-screen_capture.mp4
-
-录制音频# Windows适用
-$ ffmpeg -f dshow \
--i audio&#x3D;&quot;音频设备名称&quot; \
-audio.aac
-
-录制音视频$ ffmpeg -f gdigrab -t 30 -framerate 15 -i desktop -f dshow -i audio&#x3D;&quot;音频设备名称&quot; \ 
- -b:v 3M -pixel_format yuv420p -vcodec libx264 -s 1366x768 -y # 可选，非必须
- video.flv
-
-
--f 指定采集数据方式，一般为dshow或gdigrab。
-
-gdigrab为系统自带，只能录屏幕，没声音；
-dshow需装directX，优点是可以指定多个输入，比如下载安装screen capture recorder后，可将其作为dshow模式下的视频输入，可将virtual-audio-capturer作为dshow模式下的音频输入，实现录屏的同时录音。
-
-
--i 指定输入，desktop表示gdigrab采集模式输入全部桌面。dshow模式下自己指定，如：-i video=&quot;screen-capture-recorder&quot; -i audio=&quot;virtual-audio-capturer&quot;
-
--t 表示录屏时间，缺省则没有录屏时间限制，会一直录，录到手动停止或强制关闭
-
--framerate 表示帧率。对屏幕录制来说，一般15帧就够了，太大的话会很占资源，cpu占用率、内存、存储空间占用等都会很高。
-
--s 表示分辨率
-
--b:v 表示码率，如：-b:v 3M。大一点清楚，但是占资源，自己权衡吧。
-
--pixel_format 表示像素格式，如yuv420p等，注意选择不同的像素格式会影响资源占用率和视频质量，自己研究吧。
-
--vcodec 表示编码方式。libx264表示软编码，编码器的库为x264。你可以选择其他的，不同的编码方式也会影响资源占用率和视频质量，自己研究吧。此外可以用硬件加速，硬编解码有3种常见的方式，例如：-vcodec h264_qsv，即使用集显加速；例如： -vcodec h264_nvenc，即使用N卡加速；例如： -vcodec h264_amf，即使用A卡加速。开启硬件加速的情况下可大大降低CPU的占用率
-
--y 表示覆盖同名文件
-
-video.flv为输出文件名，格式虽然mp4较为常见，但我建议用flv格式，因为如果中间有录制损坏，mp4整个就播放不了了，但flv能。
-
-
-转换编码格式转换编码格式（transcoding）指的是， 将视频文件从一种编码转成另一种编码。比如转成 H.264 编码，一般使用编码器libx264，所以只需指定输出文件的视频编码器即可。
-$ ffmpeg -i [input.file] -c:v libx264 output.mp4
-
-下面是转成 H.265 编码的写法。
-$ ffmpeg -i [input.file] -c:v libx265 output.mp4
-
-转换容器格式转换容器格式（transmuxing）指的是，将视频文件从一种容器转到另一种容器。下面是 mp4 转 webm 的写法。
-$ ffmpeg -i input.mp4 -c copy output.webm
-
-上面例子中，只是转一下容器，内部的编码格式不变，所以使用-c copy指定直接拷贝，不经过转码，这样比较快。
-调整码率
-码率，即波特率。值越小，转换后的视频越小。
-码率就是数据传输时单位时间传送的数据位数,一般我们用的单位是kbps即千位每秒。
-码率与体积成正比：码率越大，体积越大；码率越小，体积越小。由于文件体积与取样率是成正比的，所以几乎所有的编码格式都想用最低的码率达到最少的失真，“码率”就是失真度，码率越高越清晰，反之则画面粗糙而且马赛克多。
-
-下面的例子指定码率最小为 964K，最大为 3856K，缓冲区大小为 2000K。
-$ ffmpeg \
--i input.mp4 \
--minrate 964K -maxrate 3856K -bufsize 2000K \
-output.mp4
-
--b 输出文件的码率（ffmpeg.exe -i test.MP4 -b 600k output.mp4）
-调整分辨率
-指的是视频的分辨率，常见的分辨率有40962304,19201080,720*576等。
-
-下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。
-$ ffmpeg \
--i input.mp4 \
--vf scale&#x3D;480:-1 \
-output.mp4
-
--s 输出文件的分别率（ffmpeg.exe -i test.MP4 -s 1920*1080 output.mp4）
-调整帧率
-帧率（即视频更新率），就是每秒编码进视频文件的帧数目，是用于测量显示帧数的量度。
-测量单位为“每秒显示帧数”（Frame Per Second，FPS，帧率）或“赫兹”，单位用FPS用来描述视频每秒播放多少帧，而单位用赫兹用来描述显示器的画面每秒更新多少次。
-常见的帖率有25、30，高清电视有50、60帧。
-一般帧率越高，视频画面越流畅。但是人类的眼睛需要每秒至少15帧才能将图像连贯在一起~
-
-下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。
-$ ffmpeg \
--i input.mp4 \
--vf scale&#x3D;480:-1 \
-output.mp4
-
--s 输出文件的分别率（ffmpeg.exe -i test.MP4 -s 1920*1080 output.mp4）
-提取视频有时，需要从音视频里面提取视频（demuxing），可以像下面这样写。
-$ ffmpeg \
--i input.mp4 \
--an -c:v copy \
-output.mp4
-
-上面例子中，-vn表示去掉视频，-c:a copy表示不改变音频编码，直接拷贝。
-提取音频有时，需要从音视频里面提取音频（demuxing），可以像下面这样写。
-$ ffmpeg \
--i input.mp4 \
--vn -c:a copy \
-output.aac
-
-上面例子中，-vn表示去掉视频，-c:a copy表示不改变音频编码，直接拷贝。
-添加音轨添加音轨（muxing）指的是，将外部音频加入视频，比如添加背景音乐或旁白。
-$ ffmpeg \
--i input.aac -i input.mp4 \
-output.mp4
-
-上面例子中，有音频和视频两个输入文件，FFmpeg 会将它们合成为一个文件。
-截图下面的例子是从指定时间开始，连续对 1 秒钟的视频进行截图。
-$ ffmpeg \
--y \
--i input.mp4 \
--ss 00:01:24 -t 00:00:01 \
-output_%3d.jpg
-
-如果只需要截一张图，可以指定只截取一帧。
-$ ffmpeg \
--ss 01:23:45 \
--i input \
--vframes 1 \
--q:v 2 \
-output.jpg
-
-上面例子中，-vframes 1指定只截取一帧，-q:v 2表示输出的图片质量，一般是 1 到 5 之间（1 为质量最高）。
-裁剪裁剪（cutting）指的是，截取原始视频里面的一个片段，输出为一个新视频。可以指定开始时间（start）和持续时间（duration），也可以指定结束时间（end）。
-$ ffmpeg -ss [start] -i [input] -t [duration] -c copy [output]
-$ ffmpeg -ss [start] -i [input] -to [end] -c copy [output]
-
-下面是实际的例子。
-$ ffmpeg -ss 00:01:50 -i [input] -t 10.5 -c copy [output]
-$ ffmpeg -ss 2.5 -i [input] -to 10 -c copy [output]
-
-上面例子中，-c copy表示不改变音频和视频的编码格式，直接拷贝，这样会快很多。
-为音频添加封面有些视频网站只允许上传视频文件。如果要上传音频文件，必须为音频添加封面，将其转为视频，然后上传。
-下面命令可以将音频文件，转为带封面的视频文件。
-$ ffmpeg \
--loop 1 \
--i cover.jpg -i input.mp3 \
--c:v libx264 -c:a aac -b:a 192k -shortest \
-output.mp4
-
-上面命令中，有两个输入文件，一个是封面图片cover.jpg，另一个是音频文件input.mp3。-loop 1参数表示图片无限循环，-shortest参数表示音频文件结束，输出视频就结束。
-参考链接
-  http://www.ruanyifeng.com/blog/2020/01/ffmpeg.html
-  https://www.cnblogs.com/kybs0/p/12771572.html
-  https://blog.csdn.net/awangdea99/article/details/114555743
-  https://zhuanlan.zhihu.com/p/145312133
-
-]]></content>
-      <tags>
-        <tag>ffmpeg</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git学习区</title>
     <url>/2021/03/13/Git%E5%AD%A6%E4%B9%A0%E5%8C%BA/</url>
     <content><![CDATA[
@@ -976,7 +664,10 @@ thread 4 made 2573 requests and got 2548 responses
   <entry>
     <title>HttpUtil-java</title>
     <url>/2021/07/06/HttpUtil-java/</url>
-    <content><![CDATA[import org.slf4j.Logger;
+    <content><![CDATA[Http请求工具类
+
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
@@ -1612,7 +1303,10 @@ where rn &gt;&#x3D; 3;
   <entry>
     <title>NumberToCn-java</title>
     <url>/2021/07/06/NumberToCn-java/</url>
-    <content><![CDATA[import java.math.BigDecimal;
+    <content><![CDATA[数字转换为汉语中文的大写
+
+
+import java.math.BigDecimal;
 
 &#x2F;**
  * 数字转换为汉语中人民币的大写
@@ -2231,7 +1925,10 @@ SpringBoot 自动配置工作原理
   <entry>
     <title>TransactionUtil-java</title>
     <url>/2021/07/06/TransactionUtil-java/</url>
-    <content><![CDATA[import org.slf4j.Logger;
+    <content><![CDATA[事务工具类
+
+
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -2330,9 +2027,490 @@ public class TransactionUtil &#123;
 ]]></content>
   </entry>
   <entry>
+    <title>TypeScript入门手册</title>
+    <url>/2021/07/03/TypeScript%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C/</url>
+    <content><![CDATA[基础类型
+https://www.tslang.cn/docs/handbook/basic-types.html
+
+布尔值let isDone: boolean &#x3D; false;
+
+数字let decLiteral: number &#x3D; 6;
+let hexLiteral: number &#x3D; 0xf00d;
+let binaryLiteral: number &#x3D; 0b1010;
+let octalLiteral: number &#x3D; 0o744;
+
+字符串let name: string &#x3D; &quot;bob&quot;;
+
+let name: string &#x3D; &#96;Gene&#96;;
+let age: number &#x3D; 37;
+let sentence: string &#x3D; &#96;Hello, my name is $&#123; name &#125;.
+I&#39;ll be $&#123; age + 1 &#125; years old next month.&#96;;
+
+
+数组let list: number[] &#x3D; [1, 2, 3];
+let list: Array&lt;number&gt; &#x3D; [1, 2, 3];
+
+元组 Tuple
+元组类型允许表示一个已知元素数量和类型的数组，各元素的类型不必相同。 比如，你可以定义一对值分别为 string和number类型的元组。
+
+&#x2F;&#x2F; Declare a tuple type
+let x: [string, number];
+&#x2F;&#x2F; Initialize it
+x &#x3D; [&#39;hello&#39;, 10]; &#x2F;&#x2F; OK
+&#x2F;&#x2F; Initialize it incorrectly
+x &#x3D; [10, &#39;hello&#39;]; &#x2F;&#x2F; Error
+
+console.log(x[0].substr(1)); &#x2F;&#x2F; OK
+console.log(x[1].substr(1)); &#x2F;&#x2F; Error, &#39;number&#39; does not have &#39;substr&#39;
+
+x[3] &#x3D; &#39;world&#39;; &#x2F;&#x2F; OK, 字符串可以赋值给(string | number)类型
+
+console.log(x[5].toString()); &#x2F;&#x2F; OK, &#39;string&#39; 和 &#39;number&#39; 都有 toString
+
+x[6] &#x3D; true; &#x2F;&#x2F; Error, 布尔不是(string | number)类型
+
+枚举enum Color &#123;Red, Green, Blue&#125; &#x2F;&#x2F; Red 默认为 0
+let c: Color &#x3D; Color.Green;
+
+enum Color &#123;Red &#x3D; 1, Green, Blue&#125; &#x2F;&#x2F; Green -&gt; 2 一次类推
+let c: Color &#x3D; Color.Green;
+console.log(colorName);  &#x2F;&#x2F; 显示&#39;Green&#39;因为上面代码里它的值是2
+
+enum Color &#123;Red &#x3D; 1, Green &#x3D; 2, Blue &#x3D; 4&#125; &#x2F;&#x2F; 手动赋值
+let c: Color &#x3D; Color.Green;
+
+Anylet notSure: any &#x3D; 4;
+notSure &#x3D; &quot;maybe a string instead&quot;;
+notSure &#x3D; false; &#x2F;&#x2F; okay, definitely a boolean
+
+let notSure: any &#x3D; 4;
+notSure.ifItExists(); &#x2F;&#x2F; okay, ifItExists might exist at runtime
+notSure.toFixed(); &#x2F;&#x2F; okay, toFixed exists (but the compiler doesn&#39;t check)
+
+let prettySure: Object &#x3D; 4;
+prettySure.toFixed(); &#x2F;&#x2F; Error: Property &#39;toFixed&#39; doesn&#39;t exist on type &#39;Object&#39;.
+
+let list: any[] &#x3D; [1, true, &quot;free&quot;];
+list[1] &#x3D; 100;
+
+Voidfunction warnUser(): void &#123;
+    console.log(&quot;This is my warning message&quot;);
+&#125;
+
+let unusable: void &#x3D; undefined;
+
+Null 和 Undefined&#x2F;&#x2F; Not much else we can assign to these variables!
+let u: undefined &#x3D; undefined;
+let n: null &#x3D; null;
+
+Never&#x2F;&#x2F; 返回never的函数必须存在无法达到的终点
+function error(message: string): never &#123;
+    throw new Error(message);
+&#125;
+
+&#x2F;&#x2F; 推断的返回值类型为never
+function fail() &#123;
+    return error(&quot;Something failed&quot;);
+&#125;
+
+&#x2F;&#x2F; 返回never的函数必须存在无法达到的终点
+function infiniteLoop(): never &#123;
+    while (true) &#123;
+    &#125;
+&#125;
+
+Objectdeclare function create(o: object | null): void;
+
+create(&#123; prop: 0 &#125;); &#x2F;&#x2F; OK
+create(null); &#x2F;&#x2F; OK
+
+create(42); &#x2F;&#x2F; Error
+create(&quot;string&quot;); &#x2F;&#x2F; Error
+create(false); &#x2F;&#x2F; Error
+create(undefined); &#x2F;&#x2F; Error
+
+类型断言let someValue: any &#x3D; &quot;this is a string&quot;;
+let strLength: number &#x3D; (&lt;string&gt;someValue).length;
+
+let someValue: any &#x3D; &quot;this is a string&quot;;
+let strLength: number &#x3D; (someValue as string).length;
+
+变量声明
+https://www.tslang.cn/docs/handbook/variable-declarations.html
+
+var a &#x3D; 10;
+
+let hello &#x3D; &quot;Hello!&quot;;
+
+const numLivesForCat &#x3D; 9;
+
+解构解构数组let input &#x3D; [1, 2];
+let [first, second] &#x3D; input;
+console.log(first); &#x2F;&#x2F; outputs 1
+console.log(second); &#x2F;&#x2F; outputs 2
+
+&#x2F;&#x2F; swap variables
+[first, second] &#x3D; [second, first];
+
+function f([first, second]: [number, number]) &#123;
+    console.log(first);
+    console.log(second);
+&#125;
+f(input);
+
+let [first, ...rest] &#x3D; [1, 2, 3, 4];
+console.log(first); &#x2F;&#x2F; outputs 1
+console.log(rest); &#x2F;&#x2F; outputs [ 2, 3, 4 ]
+
+let [first] &#x3D; [1, 2, 3, 4];
+console.log(first); &#x2F;&#x2F; outputs 1
+
+let [, second, , fourth] &#x3D; [1, 2, 3, 4];
+
+对象解构let o &#x3D; &#123;
+    a: &quot;foo&quot;,
+    b: 12,
+    c: &quot;bar&quot;
+&#125;;
+let &#123; a, b &#125; &#x3D; o;
+
+(&#123; a, b &#125; &#x3D; &#123; a: &quot;baz&quot;, b: 101 &#125;);
+
+let &#123; a, ...passthrough &#125; &#x3D; o;
+let total &#x3D; passthrough.b + passthrough.c.length;
+
+属性重命名let &#123; a: newName1, b: newName2 &#125; &#x3D; o;
+&#x2F;&#x2F; &#x3D;&#x3D;&#x3D; 等价 &#x3D;&#x3D;&#x3D;
+let newName1 &#x3D; o.a;
+let newName2 &#x3D; o.b;
+
+let &#123;a, b&#125;: &#123;a: string, b: number&#125; &#x3D; o;
+
+默认值function keepWholeObject(wholeObject: &#123; a: string, b?: number &#125;) &#123;
+    let &#123; a, b &#x3D; 1001 &#125; &#x3D; wholeObject;
+&#125;
+
+函数声明type C &#x3D; &#123; a: string, b?: number &#125;
+function f(&#123; a, b &#125;: C): void &#123;
+    &#x2F;&#x2F; ...
+&#125;
+
+function f(&#123; a&#x3D;&quot;&quot;, b&#x3D;0 &#125; &#x3D; &#123;&#125;): void &#123;
+    &#x2F;&#x2F; ...
+&#125;
+f();
+
+function f(&#123; a, b &#x3D; 0 &#125; &#x3D; &#123; a: &quot;&quot; &#125;): void &#123;
+    &#x2F;&#x2F; ...
+&#125;
+f(&#123; a: &quot;yes&quot; &#125;); &#x2F;&#x2F; ok, default b &#x3D; 0
+f(); &#x2F;&#x2F; ok, default to &#123;a: &quot;&quot;&#125;, which then defaults b &#x3D; 0
+f(&#123;&#125;); &#x2F;&#x2F; error, &#39;a&#39; is required if you supply an argument
+
+展开let first &#x3D; [1, 2];
+let second &#x3D; [3, 4];
+let bothPlus &#x3D; [0, ...first, ...second, 5]; &#x2F;&#x2F; [0, 1, 2, 3, 4, 5]
+
+let defaults &#x3D; &#123; food: &quot;spicy&quot;, price: &quot;$$&quot;, ambiance: &quot;noisy&quot; &#125;;
+let search &#x3D; &#123; ...defaults, food: &quot;rich&quot; &#125;; &#x2F;&#x2F; &#123; food: &quot;rich&quot;, price: &quot;$$&quot;, ambiance: &quot;noisy&quot; &#125;
+
+let defaults &#x3D; &#123; food: &quot;spicy&quot;, price: &quot;$$&quot;, ambiance: &quot;noisy&quot; &#125;;
+let search &#x3D; &#123; food: &quot;rich&quot;, ...defaults &#125;; &#x2F;&#x2F; defaults里的food属性会重写food: &quot;rich&quot;
+
+对象展开还有其它一些意想不到的限制。 首先，它仅包含对象 自身的可枚举属性。 大体上是说当你展开一个对象实例时，你会丢失其方法：
+class C &#123;
+  p &#x3D; 12;
+  m() &#123;
+  &#125;
+&#125;
+let c &#x3D; new C();
+let clone &#x3D; &#123; ...c &#125;;
+clone.p; &#x2F;&#x2F; ok
+clone.m(); &#x2F;&#x2F; error!
+
+接口
+https://www.tslang.cn/docs/handbook/interfaces.html
+
+TypeScript的核心原则之一是对值所具有的结构进行类型检查。 它有时被称做“鸭式辨型法”或“结构性子类型化”。 在TypeScript里，接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约。
+function printLabel(labelledObj: &#123; label: string &#125;) &#123;
+  console.log(labelledObj.label);
+&#125;
+
+let myObj &#x3D; &#123; size: 10, label: &quot;Size 10 Object&quot; &#125;;
+printLabel(myObj);
+
+变形
+interface LabelledValue &#123;
+  label: string;
+&#125;
+
+function printLabel(labelledObj: LabelledValue) &#123;
+  console.log(labelledObj.label);
+&#125;
+
+let myObj &#x3D; &#123;size: 10, label: &quot;Size 10 Object&quot;&#125;;
+printLabel(myObj);
+
+可选属性interface SquareConfig &#123;
+  color?: string; &#x2F;&#x2F; 带有可选属性的接口与普通的接口定义差不多，只是在可选属性名字定义的后面加一个?符号。
+  width?: number;
+&#125;
+
+&#x2F;*
+可选属性的优势
+    一、可以对可能存在的属性进行预定义
+    二、可以捕获引用了不存在的属性时的错误。 
+比如，我们故意将 createSquare里的color属性名拼错，就会得到一个错误提示
+*&#x2F;
+function createSquare(config: SquareConfig): &#123;color: string; area: number&#125; &#123;
+  let newSquare &#x3D; &#123;color: &quot;white&quot;, area: 100&#125;;
+  if (config.clor) &#123;
+    &#x2F;&#x2F; Error: Property &#39;clor&#39; does not exist on type &#39;SquareConfig&#39;
+    newSquare.color &#x3D; config.clor;
+  &#125;
+  if (config.width) &#123;
+    newSquare.area &#x3D; config.width * config.width;
+  &#125;
+  return newSquare;
+&#125;
+
+let mySquare &#x3D; createSquare(&#123;color: &quot;black&quot;&#125;);
+
+只读属性interface Point &#123;
+    &#x2F;*
+    一些对象属性只能在对象刚刚创建的时候修改其值。
+    你可以在属性名前用 readonly来指定只读属性
+    *&#x2F;
+    readonly x: number;
+    readonly y: number;
+&#125;
+
+&#x2F;&#x2F; TypeScript具有ReadonlyArray&lt;T&gt;类型，它与Array&lt;T&gt;相似，只是把所有可变方法去掉了，因此可以确保数组创建后再也不能被修改
+let a: number[] &#x3D; [1, 2, 3, 4];
+let ro: ReadonlyArray&lt;number&gt; &#x3D; a;
+ro[0] &#x3D; 12; &#x2F;&#x2F; error!
+ro.push(5); &#x2F;&#x2F; error!
+ro.length &#x3D; 100; &#x2F;&#x2F; error!
+a &#x3D; ro; &#x2F;&#x2F; error!
+a &#x3D; ro as number[]; &#x2F;&#x2F; ok
+
+额外的属性检查函数类型interface SearchFunc &#123;
+  (source: string, subString: string): boolean;
+&#125;
+
+let mySearch: SearchFunc;
+&#x2F;&#x2F; 函数的参数名不需要与接口里定义的名字相匹配
+&#x2F;&#x2F; mySearch &#x3D; function(source: string, subString: string) &#123;
+mySearch &#x3D; function(src: string, sub: string): boolean &#123;
+  let result &#x3D; src.search(sub);
+  return result &gt; -1;
+&#125;
+
+可索引的类型class Animal &#123;
+    name: string;
+&#125;
+class Dog extends Animal &#123;
+    breed: string;
+&#125;
+
+&#x2F;&#x2F; 错误：使用数值型的字符串索引，有时会得到完全不同的Animal!
+interface NotOkay &#123;
+    &#x2F;&#x2F; TypeScript支持两种索引签名：字符串和数字。
+    &#x2F;&#x2F; 可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型。
+    [x: number]: Animal;
+    [x: string]: Dog;
+&#125;
+
+interface ReadonlyStringArray &#123;
+    &#x2F;&#x2F; 可以将索引签名设置为只读，这样就防止了给索引赋值。
+    readonly [index: number]: string;
+&#125;
+let myArray: ReadonlyStringArray &#x3D; [&quot;Alice&quot;, &quot;Bob&quot;];
+myArray[2] &#x3D; &quot;Mallory&quot;; &#x2F;&#x2F; error!
+
+类类型实现接口interface ClockInterface &#123;
+    currentTime: Date;
+    setTime(d: Date);
+&#125;
+
+&#x2F;&#x2F; 接口描述了类的公共部分，而不是公共和私有两部分。 它不会帮你检查类是否具有某些私有成员。
+class Clock implements ClockInterface &#123;
+    currentTime: Date;
+    setTime(d: Date) &#123;
+        this.currentTime &#x3D; d;
+    &#125;
+    constructor(h: number, m: number) &#123; &#125;
+&#125;
+
+类静态部分与实例部分的区别&#x2F;&#x2F; 定义了两个接口， ClockConstructor为构造函数所用和ClockInterface为实例方法所用。 
+interface ClockConstructor &#123;
+    new (hour: number, minute: number): ClockInterface; &#x2F;&#x2F; 静态部分
+&#125;
+interface ClockInterface &#123;
+    tick(); &#x2F;&#x2F; 实例部分
+&#125;
+&#x2F;&#x2F; 定义一个构造函数 createClock，它用传入的类型创建实例。
+function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface &#123;
+    return new ctor(hour, minute);
+&#125;
+
+class DigitalClock implements ClockInterface &#123;
+    &#x2F;&#x2F; 因为当一个类实现了一个接口时，只对其实例部分进行类型检查。
+    constructor(h: number, m: number) &#123; &#125;
+    tick() &#123;
+        console.log(&quot;beep beep&quot;);
+    &#125;
+&#125;
+class AnalogClock implements ClockInterface &#123;
+    constructor(h: number, m: number) &#123; &#125;
+    tick() &#123;
+        console.log(&quot;tick tock&quot;);
+    &#125;
+&#125;
+&#x2F;&#x2F; 因为createClock的第一个参数是ClockConstructor类型，在createClock(AnalogClock, 7, 32)里，会检查AnalogClock是否符合构造函数签名。
+let digital &#x3D; createClock(DigitalClock, 12, 17);
+let analog &#x3D; createClock(AnalogClock, 7, 32);
+
+继承接口interface Shape &#123;
+    color: string;
+&#125;
+
+interface PenStroke &#123;
+    penWidth: number;
+&#125;
+
+interface Square extends Shape, PenStroke &#123;
+    sideLength: number;
+&#125;
+
+let square &#x3D; &lt;Square&gt;&#123;&#125;;
+square.color &#x3D; &quot;blue&quot;;
+square.sideLength &#x3D; 10;
+square.penWidth &#x3D; 5.0;
+
+混合类型interface Counter &#123;
+    (start: number): string;
+    interval: number;
+    reset(): void;
+&#125;
+
+function getCounter(): Counter &#123;
+    let counter &#x3D; &lt;Counter&gt;function (start: number) &#123; &#125;;
+    counter.interval &#x3D; 123;
+    counter.reset &#x3D; function () &#123; &#125;;
+    return counter;
+&#125;
+
+&#x2F;&#x2F; 一个对象可以同时做为函数和对象使用，并带有额外的属性。
+let c &#x3D; getCounter();
+c(10);
+c.reset();
+c.interval &#x3D; 5.0;
+
+接口继承类
+当接口继承了一个类类型时，它会继承类的成员但不包括其实现。
+ 接口同样会继承到类的private和protected成员。
+这意味着当你创建了一个接口继承了一个拥有私有或受保护的成员的类时，这个接口类型只能被这个类或其子类所实现（implement）。
+
+class Control &#123;
+    private state: any;
+&#125;
+
+interface SelectableControl extends Control &#123;
+    select(): void;
+&#125;
+
+class Button extends Control implements SelectableControl &#123;
+    select() &#123; &#125;
+&#125;
+
+class TextBox extends Control &#123;
+    select() &#123; &#125;
+&#125;
+
+&#x2F;&#x2F; 错误：“Image”类型缺少“state”属性。
+class Image implements SelectableControl &#123;
+    select() &#123; &#125;
+&#125;
+
+class Location &#123;
+&#125;
+
+类作用域关键字
+
+public 无限制访问（默认）
+private 仅在本类中访问
+protected 在派生类中仍然可以访问
+
+&#x2F;&#x2F; 抽象类
+abstract class Department &#123;
+	
+    constructor(public name: string) &#123;
+    &#125;
+
+    printName(): void &#123;
+        console.log(&#39;Department name: &#39; + this.name);
+    &#125;
+
+    abstract printMeeting(): void; &#x2F;&#x2F; 必须在派生类中实现
+&#125;
+
+&#x2F;&#x2F; 继承
+class AccountingDepartment extends Department &#123;
+    &#x2F;&#x2F; 静态属性，可以通过AccountingDepartment.test来访问
+	static test &#x3D; &#39;test&#39;;
+    
+    private _departmentName: string;
+    
+    &#x2F;&#x2F; 只读属性必须在声明时或构造函数里被初始化
+    protected readonly departmentLogo: string &#x3D; &quot;★&quot;;
+    
+    constructor() &#123;
+        super(&#39;Accounting and Auditing&#39;); &#x2F;&#x2F; 在派生类的构造函数中必须调用 super()
+    &#125;
+    
+    &#x2F;&#x2F; 参数属性test2
+    constructor(private readonly test2: string) &#123;
+        super(&#39;Accounting and Auditing&#39;);
+    &#125;
+    
+    &#x2F;&#x2F; 存取器
+    get departmentName(): string &#123;
+        return this._departmentName
+    &#125;
+    set departmentName(newName: string) &#123;
+        this._departmentName &#x3D; newName;
+    &#125;
+
+    &#x2F;&#x2F; 实现抽象方法
+    printMeeting(): void &#123;
+        console.log(&#39;The Accounting Department meets each Monday at 10am.&#39;);
+    &#125;
+
+    generateReports(): void &#123;
+        console.log(&#39;Generating accounting reports...&#39;);
+    &#125;
+&#125;
+
+let department: Department; &#x2F;&#x2F; 允许创建一个对抽象类型的引用
+department &#x3D; new Department(); &#x2F;&#x2F; 错误: 不能创建一个抽象类的实例
+department &#x3D; new AccountingDepartment(); &#x2F;&#x2F; 允许对一个抽象子类进行实例化和赋值
+department.printName();
+department.printMeeting();
+department.generateReports(); &#x2F;&#x2F; 错误: 方法在声明的抽象类中不存在
+
+]]></content>
+      <tags>
+        <tag>TypeScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UUIDShort-java</title>
     <url>/2021/07/06/UUIDShort-java/</url>
-    <content><![CDATA[import java.security.SecureRandom;
+    <content><![CDATA[UUID工具类
+
+
+import java.security.SecureRandom;
 import java.util.UUID;
 
 &#x2F;**
@@ -2686,6 +2864,120 @@ JavaScript Standard StyleJavaScript 代码规范，自带 linter &amp; 代码自
       </tags>
   </entry>
   <entry>
+    <title>echarts案例汇总</title>
+    <url>/2021/07/02/echarts%E6%A1%88%E4%BE%8B%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[同心圆
+测试地址：https://echarts.apache.org/examples/zh/editor.html?c=pie-simple
+var data &#x3D; [&#123;
+        name: &quot;博士及以上&quot;,
+        value: 0.2
+    &#125;,
+    &#123;
+        name: &quot;硕士及以上&quot;,
+        value: 0.3
+    &#125;,
+    &#123;
+        name: &quot;本科及以上&quot;,
+        value: 1
+    &#125;,
+    &#123;
+        name: &quot;高中&quot;,
+        value: 0.1
+    &#125;,
+    &#123;
+        name: &quot;初中及以下&quot;,
+        value: 0.1
+    &#125;,
+    &#123;
+        name: &quot;其他&quot;,
+        value: 0.8
+    &#125;
+];
+var dataStyle &#x3D; &#123; 
+    normal: &#123;
+        label: &#123;show:false&#125;,
+        labelLine: &#123;show:false&#125;,
+        shadowBlur: 40,
+        shadowColor: &#39;rgba(40, 40, 40, 0.5)&#39;,
+    &#125;
+&#125;;
+var placeHolderStyle &#x3D; &#123;
+    normal : &#123;
+        color: &#39;rgba(0,0,0,0)&#39;,
+        label: &#123;show:false&#125;,
+        labelLine: &#123;show:false&#125;
+    &#125;,
+    emphasis : &#123;
+        color: &#39;rgba(0,0,0,0)&#39;
+    &#125;
+&#125;;
+var legendData&#x3D;[];
+function getData(data) &#123;
+    var sortData&#x3D;data.sort((a,b)&#x3D;&gt;&#123;
+        return b.value-a.value
+    &#125;);
+    var res &#x3D; [];
+    for (let i &#x3D; 0; i &lt; sortData.length; i++) &#123;
+        legendData.push(sortData[i].name);
+        res.push(&#123;
+            type: &#39;pie&#39;,
+            clockWise: false, &#x2F;&#x2F;顺时加载
+            hoverAnimation: false, &#x2F;&#x2F;鼠标移入变大
+            radius: [200 - i * 20, 220 - i * 20],　　　　　　　&#x2F;&#x2F;radius: [65 - i * 15 + &#39;%&#39;, 57 - i * 15 + &#39;%&#39;],
+            itemStyle: dataStyle,
+            data: [&#123;
+                value: sortData[i].value,
+                name: sortData[i].name
+            &#125;, &#123;
+                value: 1 - sortData[i].value,
+                name:&#39;invisible&#39;,
+                itemStyle: placeHolderStyle,
+            &#125;]
+        &#125;);
+    &#125;
+    return res;
+&#125;
+option &#x3D; &#123;
+   backgroundColor: &#39;#f4f2e3&#39;,
+    color: [&#39;#85b6b2&#39;, &#39;#6d4f8d&#39;,&#39;#cd5e7e&#39;, &#39;#e38980&#39;,&#39;#f7db88&#39;],
+    tooltip : &#123;
+        show: true,
+        formatter: &quot;&#123;b&#125; : &#123;c&#125; (&#123;d&#125;%)&quot;
+    &#125;,
+    legend: &#123;
+        data:legendData,
+        type: &#39;scroll&#39;,
+        orient: &#39;vertical&#39;,
+        align: &#39;left&#39;, &#x2F;&#x2F; 图例标记对其方式
+        y: &#39;center&#39;,    &#x2F;&#x2F;延Y轴居中
+        x: &#39;right&#39;, &#x2F;&#x2F;居右显示
+        padding: 10, &#x2F;&#x2F;调节legend的位置
+        formatter:  function(name)&#123;
+            let total &#x3D; 0;
+            let target;
+            for (let i &#x3D; 0, l &#x3D; data.length; i &lt; l; i++) &#123;
+            total +&#x3D; data[i].value;
+            if (data[i].name &#x3D;&#x3D; name) &#123;
+                target &#x3D; data[i].value;
+                &#125;
+            &#125;
+            return name + &#39; &#39; + ((target&#x2F;total)*100).toFixed(0) + &#39;%&#39;;
+        &#125;
+    &#125;,
+    toolbox: &#123;
+        show : true,
+        feature : &#123;
+            saveAsImage : &#123;show: true&#125;
+        &#125;
+    &#125;,
+    series : getData(data)
+&#125;;
+]]></content>
+      <tags>
+        <tag>echarts</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>git仓库目录迁移操作</title>
     <url>/2021/06/24/git%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E8%BF%81%E7%A7%BB%E6%93%8D%E4%BD%9C/</url>
     <content><![CDATA[多个目录迁移到同一个新的仓库1、克隆需要迁移的项目代码
@@ -2715,6 +3007,88 @@ git filter-branch --tag-name-filter cat --prune-empty --subdirectory-filter src 
 ]]></content>
       <tags>
         <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>linux下的/etc/profile、/etc/bashrc、~/.bash_profile、~/.bashrc文件</title>
+    <url>/2021/07/31/linux%E4%B8%8B%E7%9A%84profile%E3%80%81bashrc%E3%80%81bash_profile%E3%80%81bashrc%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[一、介绍/etc/profile此文件为系统的每个用户设置环境信息，当用户第一次登录时，该文件被执行。并从 /etc/profile.d 目录的配置文件中收集 shell 的设置。如果你有对 /etc/profile 有修改的话必须得 source 一下你的修改才会生效，此修改对每个用户都生效。
+/etc/bashrc（ubuntu为 /etc/bash.bashrc）为每一个运行 bash shell 的用户执行此文件。当 bash shell 被打开时，该文件被读取。如果你想对所有的使用 bash 的用户修改某个配置并在以后打开的 bash 都生效的话可以修改这个文件，修改这个文件不用重启，重新打开一个 bash 即可生效。 Ubuntu没有此文件，与之对应的是/ect/bash.bashrc。
+~/.bash_profile（ubuntu为 ~/.profile）每个用户都可使用该文件输入专用于自己使用的 shell 信息，当用户登录时，该文件仅仅执行一次！默认情况下,它设置一些环境变量，执行用户的~/ .bashrc 文件。 此文件类似于 /etc/profile，也是需要需要 source 才会生效，/etc/profile 对所有用户生效，~/.bash_profile 只对当前用户生效。~/.profile(由Bourne Shell和Korn Shell使用)和.login(由C Shell使用)两个文件是.bash_profile的同义词，目的是为了兼容其它Shell。
+
+
+
+
+Linux的Shell种类众多，常见的有： Bourne Shell（/usr/bin/sh或/bin/sh）、 Bourne Again Shell（/bin/bash）、 C Shell（/usr/bin/csh）、 K Shell（/usr/bin/ksh）、 Shell for Root（/sbin/sh）等等。
+不同的Shell语言的语法有所不同，所以不能交换使用。每种Shell都有其特色之处，基本上，掌握其中任何一种 就足够了。在本文中，我们关注的重点是Bash，也就是Bourne Again Shell，由于易用和免费，Bash在日常工作中被广泛使用；同时，Bash也是大多数Linux系统默认的Shell。
+在一般情况下，人们并不区分 Bourne Shell和Bourne Again Shell，所以，在下面的文字中，我们可以看到#!/bin/sh，它同样也可以改为#!/bin/bash。
+
+
+~/.bashrc该文件包含专用于你的 bash shell 的 bash 信息，当登录时以及每次打开新的 shell 时，该文件被读取。（每个用户都有一个 ~/.bashrc 文件，在用户目录下） 此文件类似于 /etc/bashrc，不需要重启就可以生效，重新打开一个 bash 即可生效，/etc/bashrc 对所有用户新打开的 bash 都生效，但 ~/.bashrc 只对当前用户新打开的 bash 生效。~/.bashrc 文件会在bash shell调用另一个bash shell时读取，也就是在shell中再键入bash命令启动一个新shell时就会去读该文件。这样可有效分离登录和子shell所需的环境。但一般 来说都会在/.bash_profile里调用~/.bashrc脚本以便统一配置用户环境。
+~/.bash_logout:当每次退出系统(退出 bash shell)时，执行该文件。可把一些清理工作的命令放到这文件中。
+二、区别和联系
+在 /etc目录是系统级（全局）的配置文件，当在用户主目录下找不到 ~/.bash_profile 和~/.bashrc时，就会读取这两个文件。
+/etc/profile 中设定的变量(全局)的可以作用于任何用户，而 ~/.bashrc 中设定的变量(局部)只能继承 /etc/profile 中的变量，他们是“父子”关系。
+~/.bash_profile 是交互式、login 方式进入 bash 运行的； ~/.bashrc 是交互式 non-login 方式进入 bash 运行的。通常二者设置大致相同，所以通常前者会调用后者。设置生效：可以重启生效，也可以使用命令：source。
+~/.bash_history 是bash shell的历史记录文件，里面记录了你在bash shell中输入的所有命令。可通过HISSIZE环境变量设置在历史记录文件里保存记录的条数。
+
+三、执行顺序关于登录linux时，/etc/profile、~/.bash_profile等几个文件的执行过程。
+① 在刚登录Linux时，
+首先启动 /etc/profile 文件，
+然后再启动用户目录下的 ~/.bash_profile、 ~/.bash_login 或 ~/.profile 文件中 的其中一个，执行的顺序为：~/.bash_profile、~/.bash_login、~/.profile
+
+
+其中 ~/.bash_profile、~/.bash_login 和 ~/.profile 文件往往只存在一个，这与Linux的发行版本有关。centos中为 ~/.bash_profile，ubuntu则为 ~/.profile。
+
+
+以上两个文件会在用户登录时执行。
+
+② 下面开始执行用户的bash设置如果 ~/.bash_profile 文件存在的话，一般会以这样的方式执行用户的 ~/.bashrc 文件。 在 ~/.bash_profile 文件中一般会有下面的代码：
+# .bash_profile
+# Get the aliases and functions
+if [ -f ~&#x2F;.bashrc ]; then
+        . ~&#x2F;.bashrc
+fi
+# User specific environment and startup programs
+PATH&#x3D;$PATH:$HOME&#x2F;bin
+export PATH
+
+同样 ~/.bashrc 中，一般还会在文件的前面有以下代码，来执行 /etc/bashrc。
+# .bashrc
+# User specific aliases and functions
+alias rm&#x3D;&#39;rm -i&#39;
+alias cp&#x3D;&#39;cp -i&#39;
+alias mv&#x3D;&#39;mv -i&#39;
+# Source global definitions
+if [ -f &#x2F;etc&#x2F;bashrc ]; then
+        . &#x2F;etc&#x2F;bashrc
+fi
+
+所以，~/.bashrc 会调用 /etc/bashrc 文件。最后，在退出shell时，还会执行 ~/.bash_logout 文件。
+
+执行顺序为:
+
+/etc/profile
+~/.bash_profile | ~/.bash_login | ~/.profile
+~/.bashrc
+/etc/bashrc
+~/.bash_logout
+
+
+四、其他
+图形模式登录时，顺序读取：/etc/profile和~/.profile
+图形模式登录后，打开终端时，顺序读取：/etc/bash.bashrc和~/.bashrc
+文本模式登录时，顺序读取：/etc/bash.bashrc，/etc/profile和~/.bash_profile
+从其它用户su到该用户，则分两种情况： （1）如果带-l参数（或-参数，–login参数），如：su -l username，则bash是lonin的，它将顺序读取以下配置文件：/etc/bash.bashrc，/etc/profile和~ /.bash_profile。 （2）如果没有带-l参数，则bash是non-login的，它将顺序读取：/etc/bash.bashrc和~/.bashrc
+注销时，或退出su登录的用户，如果是longin方式，那么bash会读取：~/.bash_logout
+执行自定义的shell文件时，若使用“bash -l a.sh”的方式，则bash会读取行：/etc/profile和~/.bash_profile，若使用其它方式，如：bash a.sh， ./a.sh，sh a.sh（这个不属于bash shell），则不会读取上面的任何文件。
+
+
+转载：https://www.jianshu.com/p/6d32b166f47d
+
+]]></content>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -3290,6 +3664,21 @@ OK
       </tags>
   </entry>
   <entry>
+    <title>vscode插件</title>
+    <url>/2021/07/03/vscode%E6%8F%92%E4%BB%B6/</url>
+    <content><![CDATA[VSCodeVimmarketplace https://marketplace.visualstudio.com/items?itemName=vscodevim.vimgithub      https://github.com/VSCodeVim/Vim
+]]></content>
+      <tags>
+        <tag>vscode</tag>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue页面开发思路</title>
+    <url>/2021/06/26/vue%E9%A1%B5%E9%9D%A2%E5%BC%80%E5%8F%91%E6%80%9D%E8%B7%AF/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>zookeeper未授权访问漏洞</title>
     <url>/2021/07/03/zookeeper%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E6%BC%8F%E6%B4%9E/</url>
     <content><![CDATA[
@@ -3810,6 +4199,15 @@ Cookie 的问题解决了，我们再来看看 session 的问题。我们在 sso
       </tags>
   </entry>
   <entry>
+    <title>好用的Linux命令</title>
+    <url>/2021/07/03/%E5%A5%BD%E7%94%A8%E7%9A%84Linux%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[ripgrep 是一个面向行的搜索工具英文原版   https://github.com/BurntSushi/ripgrep中文fork版 https://github.com/chinanf-boy/ripgrep-zh
+]]></content>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>虚拟机走主机代理</title>
     <url>/2021/03/26/%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%B5%B0%E4%B8%BB%E6%9C%BA%E4%BB%A3%E7%90%86/</url>
     <content><![CDATA[情况1 代理软件开放代理端口，虚拟机通过该端口进行代理
@@ -4014,6 +4412,325 @@ Linux操作顺序一致，无需安装git环境，不过需要确保ssh和scp命
       <tags>
         <tag>linux</tag>
         <tag>ssh</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>FFmpeg视频处理入门教程</title>
+    <url>/2021/06/23/FFmpeg%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/</url>
+    <content><![CDATA[FFmpeg 是视频处理最常用的开源软件。
+它功能强大，用途广泛，大量用于视频网站和商业软件（比如 Youtube 和 iTunes），也是许多音频和视频格式的标准编码 / 解码实现。
+FFmpeg 本身是一个庞大的项目，包含许多组件和库文件，最常用的是它的命令行工具。本文介绍 FFmpeg 命令行如何处理视频，比桌面视频处理软件更简洁高效。
+如果你还没安装，可以根据官方文档 先完成安装。
+
+
+概念介绍 FFmpeg 用法之前，需要了解一些视频处理的基本概念。
+容器视频文件本身其实是一个容器（container），里面包括了视频和音频，也可能有字幕等其他内容。
+常见的容器格式有以下几种。一般来说，视频文件的后缀名反映了它的容器格式。
+
+  MP4
+  MKV
+  WebM
+  AVI
+
+下面的命令查看 FFmpeg 支持的容器。
+$ ffmpeg -formats
+
+编码格式视频和音频都需要经过编码，才能保存成文件。不同的编码格式（CODEC），有不同的压缩率，会导致文件大小和清晰度的差异。
+常用的视频编码格式如下。
+
+  H.262
+  H.264
+  H.265
+
+上面的编码格式都是有版权的，但是可以免费使用。此外，还有几种无版权的视频编码格式。
+
+  VP8
+  VP9
+  AV1
+
+常用的音频编码格式如下。
+
+  MP3
+  AAC
+
+上面所有这些都是有损的编码格式，编码后会损失一些细节，以换取压缩后较小的文件体积。无损的编码格式压缩出来的文件体积较大，这里就不介绍了。
+下面的命令可以查看 FFmpeg 支持的编码格式，视频编码和音频编码都在内。
+$ ffmpeg -codecs
+
+编码器编码器（encoders）是实现某种编码格式的库文件。只有安装了某种格式的编码器，才能实现该格式视频 / 音频的编码和解码。
+以下是一些 FFmpeg 内置的视频编码器。
+
+  libx264：最流行的开源 H.264 编码器
+  NVENC：基于 NVIDIA GPU 的 H.264 编码器
+  libx265：开源的 HEVC 编码器
+  libvpx：谷歌的 VP8 和 VP9 编码器
+  libaom：AV1 编码器
+
+音频编码器如下。
+
+  libfdk-aac
+  aac
+
+下面的命令可以查看 FFmpeg 已安装的编码器。
+$ ffmpeg -encoders
+
+FFmpeg 使用格式FFmpeg 的命令行参数非常多，可以分成五个部分。
+$ ffmpeg &#123;1&#125; &#123;2&#125; -i &#123;3&#125; &#123;4&#125; &#123;5&#125;
+
+上面命令中，五个部分的参数依次如下。
+
+ 全局参数
+ 输入文件参数
+ 输入文件
+ 输出文件参数
+ 输出文件
+
+参数太多的时候，为了便于查看，FFmpeg 命令可以写成多行。
+$ ffmpeg \
+[全局参数] \
+[输入文件参数] \
+-i [输入文件] \
+[输出文件参数] \
+[输出文件]
+
+下面是一个例子。
+$ ffmpeg \
+-y \ # 全局参数
+-c:a libfdk_aac -c:v libx264 \ # 输入文件参数
+-i input.mp4 \ # 输入文件
+-c:v libvpx-vp9 -c:a libvorbis \ # 输出文件参数
+output.webm # 输出文件
+
+上面的命令将 mp4 文件转成 webm 文件，这两个都是容器格式。输入的 mp4 文件的音频编码格式是 aac，视频编码格式是 H.264；输出的 webm 文件的视频编码格式是 VP9，音频格式是 Vorbis。
+如果不指明编码格式，FFmpeg 会自己判断输入文件的编码。因此，上面的命令可以简单写成下面的样子。
+$ ffmpeg -i input.avi output.mp4
+
+常用命令行参数FFmpeg 常用的命令行参数如下。
+
+  -c：指定编码器
+  -c copy：直接复制，不经过重新编码（这样比较快）
+  -c:v：指定视频编码器
+  -c:a：指定音频编码器
+  -i：指定输入文件
+  -an：去除音频流
+  -vn：去除视频流
+  -r：视频帧率
+  -preset：指定输出的视频质量，会影响文件的生成速度，有以下几个可用的值 ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow。
+  -y：不经过确认，输出时直接覆盖同名文件。
+
+常见用法下面介绍 FFmpeg 几种常见用法。
+查看文件信息查看视频文件的元信息，比如编码格式和比特率，可以只使用-i参数。
+$ ffmpeg -i input.mp4
+
+上面命令会输出很多冗余信息，加上-hide_banner参数，可以只显示元信息。
+$ ffmpeg -i input.mp4 -hide_banner
+
+查看可用设备$ ffmpeg -list_devices true -f dshow -i dummy
+[dshow @ 000001d3da482240] DirectShow video devices (some may be both video and audio devices)
+[dshow @ 000001d3da482240]  &quot;Integrated Camera&quot;
+[dshow @ 000001d3da482240]     Alternative name &quot;@device_pnp_\\?\usb#vid_04ca&amp;pid_7070&amp;mi_00#6&amp;2102d5ea&amp;0&amp;0000#&#123;65e8773d-8f56-11d0-a3b9-00a0c9223196&#125;\global&quot;
+[dshow @ 000001d3da482240] DirectShow audio devices
+[dshow @ 000001d3da482240]  &quot;麦克风阵列 (Realtek(R) Audio)&quot;
+[dshow @ 000001d3da482240]     Alternative name &quot;@device_cm_&#123;33D9A762-90C8-11D0-BD43-00A0C911CE86&#125;\wave_&#123;BE0CB07D-AB72-4606-86E9-5F102ACAEF89&#125;&quot;
+dummy: Immediate exit requested
+
+查看设备使用可选项$ ffmpeg -list_options true -f dshow -i video&#x3D;&quot;Integrated Camera&quot;
+[dshow @ 000001751d612280] DirectShow video device options (from video devices)
+[dshow @ 000001751d612280]  Pin &quot;捕获&quot; (alternative pin name &quot;捕获&quot;)
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;1280x720 fps&#x3D;30 max s&#x3D;1280x720 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;848x480 fps&#x3D;30 max s&#x3D;848x480 fps&#x3D;30
+[dshow @ 000001751d612280]   vcodec&#x3D;mjpeg  min s&#x3D;960x540 fps&#x3D;30 max s&#x3D;960x540 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;1280x720 fps&#x3D;10 max s&#x3D;1280x720 fps&#x3D;10
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;1280x720 fps&#x3D;10 max s&#x3D;1280x720 fps&#x3D;10
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;320x180 fps&#x3D;30 max s&#x3D;320x180 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;320x240 fps&#x3D;30 max s&#x3D;320x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;352x288 fps&#x3D;30 max s&#x3D;352x288 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;424x240 fps&#x3D;30 max s&#x3D;424x240 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;640x360 fps&#x3D;30 max s&#x3D;640x360 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;640x480 fps&#x3D;30 max s&#x3D;640x480 fps&#x3D;30
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;848x480 fps&#x3D;20 max s&#x3D;848x480 fps&#x3D;20
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;848x480 fps&#x3D;20 max s&#x3D;848x480 fps&#x3D;20
+[dshow @ 000001751d612280]   pixel_format&#x3D;yuyv422  min s&#x3D;960x540 fps&#x3D;15 max s&#x3D;960x540 fps&#x3D;15
+[dshow @ 000001751d612280]   pixel_format&#x3D;bgr24  min s&#x3D;960x540 fps&#x3D;15 max s&#x3D;960x540 fps&#x3D;15
+
+录制视频安装 https://github.com/rdp/screen-capture-recorder-to-video-windows-free
+摄像头
+# 实时录制摄像头画面 - Windows适用
+$ ffplay -f dshow \
+-i video&#x3D;&quot;摄像头设备名称&quot; \
+-r 30 \
+-vcodec libx264
+
+桌面
+# 实时录制桌面画面 - Windows适用
+$ ffmpeg -f gdigrab \
+-i desktop \
+-f mp4 \
+-preset ultrafast \
+screen_capture.mp4
+
+录制音频# Windows适用
+$ ffmpeg -f dshow \
+-i audio&#x3D;&quot;音频设备名称&quot; \
+audio.aac
+
+录制音视频$ ffmpeg -f gdigrab -t 30 -framerate 15 -i desktop -f dshow -i audio&#x3D;&quot;音频设备名称&quot; \ 
+ -b:v 3M -pixel_format yuv420p -vcodec libx264 -s 1366x768 -y # 可选，非必须
+ video.flv
+
+
+-f 指定采集数据方式，一般为dshow或gdigrab。
+
+gdigrab为系统自带，只能录屏幕，没声音；
+dshow需装directX，优点是可以指定多个输入，比如下载安装screen capture recorder后，可将其作为dshow模式下的视频输入，可将virtual-audio-capturer作为dshow模式下的音频输入，实现录屏的同时录音。
+
+
+-i 指定输入，desktop表示gdigrab采集模式输入全部桌面。dshow模式下自己指定，如：-i video=&quot;screen-capture-recorder&quot; -i audio=&quot;virtual-audio-capturer&quot;
+
+-t 表示录屏时间，缺省则没有录屏时间限制，会一直录，录到手动停止或强制关闭
+
+-framerate 表示帧率。对屏幕录制来说，一般15帧就够了，太大的话会很占资源，cpu占用率、内存、存储空间占用等都会很高。
+
+-s 表示分辨率
+
+-b:v 表示码率，如：-b:v 3M。大一点清楚，但是占资源，自己权衡吧。
+
+-pixel_format 表示像素格式，如yuv420p等，注意选择不同的像素格式会影响资源占用率和视频质量，自己研究吧。
+
+-vcodec 表示编码方式。libx264表示软编码，编码器的库为x264。你可以选择其他的，不同的编码方式也会影响资源占用率和视频质量，自己研究吧。此外可以用硬件加速，硬编解码有3种常见的方式，例如：-vcodec h264_qsv，即使用集显加速；例如： -vcodec h264_nvenc，即使用N卡加速；例如： -vcodec h264_amf，即使用A卡加速。开启硬件加速的情况下可大大降低CPU的占用率
+
+-y 表示覆盖同名文件
+
+video.flv为输出文件名，格式虽然mp4较为常见，但我建议用flv格式，因为如果中间有录制损坏，mp4整个就播放不了了，但flv能。
+
+
+转换编码格式转换编码格式（transcoding）指的是， 将视频文件从一种编码转成另一种编码。比如转成 H.264 编码，一般使用编码器libx264，所以只需指定输出文件的视频编码器即可。
+$ ffmpeg -i [input.file] -c:v libx264 output.mp4
+
+下面是转成 H.265 编码的写法。
+$ ffmpeg -i [input.file] -c:v libx265 output.mp4
+
+转换容器格式转换容器格式（transmuxing）指的是，将视频文件从一种容器转到另一种容器。下面是 mp4 转 webm 的写法。
+$ ffmpeg -i input.mp4 -c copy output.webm
+
+上面例子中，只是转一下容器，内部的编码格式不变，所以使用-c copy指定直接拷贝，不经过转码，这样比较快。
+调整码率
+码率，即波特率。值越小，转换后的视频越小。
+码率就是数据传输时单位时间传送的数据位数,一般我们用的单位是kbps即千位每秒。
+码率与体积成正比：码率越大，体积越大；码率越小，体积越小。由于文件体积与取样率是成正比的，所以几乎所有的编码格式都想用最低的码率达到最少的失真，“码率”就是失真度，码率越高越清晰，反之则画面粗糙而且马赛克多。
+
+下面的例子指定码率最小为 964K，最大为 3856K，缓冲区大小为 2000K。
+$ ffmpeg \
+-i input.mp4 \
+-minrate 964K -maxrate 3856K -bufsize 2000K \
+output.mp4
+
+-b 输出文件的码率（ffmpeg.exe -i test.MP4 -b 600k output.mp4）
+调整分辨率
+指的是视频的分辨率，常见的分辨率有40962304,19201080,720*576等。
+
+下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。
+$ ffmpeg \
+-i input.mp4 \
+-vf scale&#x3D;480:-1 \
+output.mp4
+
+-s 输出文件的分别率（ffmpeg.exe -i test.MP4 -s 1920*1080 output.mp4）
+调整帧率
+帧率（即视频更新率），就是每秒编码进视频文件的帧数目，是用于测量显示帧数的量度。
+测量单位为“每秒显示帧数”（Frame Per Second，FPS，帧率）或“赫兹”，单位用FPS用来描述视频每秒播放多少帧，而单位用赫兹用来描述显示器的画面每秒更新多少次。
+常见的帖率有25、30，高清电视有50、60帧。
+一般帧率越高，视频画面越流畅。但是人类的眼睛需要每秒至少15帧才能将图像连贯在一起~
+
+下面是改变视频分辨率（transsizing）的例子，从 1080p 转为 480p 。
+$ ffmpeg \
+-i input.mp4 \
+-vf scale&#x3D;480:-1 \
+output.mp4
+
+-s 输出文件的分别率（ffmpeg.exe -i test.MP4 -s 1920*1080 output.mp4）
+提取视频有时，需要从音视频里面提取视频（demuxing），可以像下面这样写。
+$ ffmpeg \
+-i input.mp4 \
+-an -c:v copy \
+output.mp4
+
+上面例子中，-vn表示去掉视频，-c:a copy表示不改变音频编码，直接拷贝。
+提取音频有时，需要从音视频里面提取音频（demuxing），可以像下面这样写。
+$ ffmpeg \
+-i input.mp4 \
+-vn -c:a copy \
+output.aac
+
+上面例子中，-vn表示去掉视频，-c:a copy表示不改变音频编码，直接拷贝。
+添加音轨添加音轨（muxing）指的是，将外部音频加入视频，比如添加背景音乐或旁白。
+$ ffmpeg \
+-i input.aac -i input.mp4 \
+output.mp4
+
+上面例子中，有音频和视频两个输入文件，FFmpeg 会将它们合成为一个文件。
+截图下面的例子是从指定时间开始，连续对 1 秒钟的视频进行截图。
+$ ffmpeg \
+-y \
+-i input.mp4 \
+-ss 00:01:24 -t 00:00:01 \
+output_%3d.jpg
+
+如果只需要截一张图，可以指定只截取一帧。
+$ ffmpeg \
+-ss 01:23:45 \
+-i input \
+-vframes 1 \
+-q:v 2 \
+output.jpg
+
+上面例子中，-vframes 1指定只截取一帧，-q:v 2表示输出的图片质量，一般是 1 到 5 之间（1 为质量最高）。
+裁剪裁剪（cutting）指的是，截取原始视频里面的一个片段，输出为一个新视频。可以指定开始时间（start）和持续时间（duration），也可以指定结束时间（end）。
+$ ffmpeg -ss [start] -i [input] -t [duration] -c copy [output]
+$ ffmpeg -ss [start] -i [input] -to [end] -c copy [output]
+
+下面是实际的例子。
+$ ffmpeg -ss 00:01:50 -i [input] -t 10.5 -c copy [output]
+$ ffmpeg -ss 2.5 -i [input] -to 10 -c copy [output]
+
+上面例子中，-c copy表示不改变音频和视频的编码格式，直接拷贝，这样会快很多。
+为音频添加封面有些视频网站只允许上传视频文件。如果要上传音频文件，必须为音频添加封面，将其转为视频，然后上传。
+下面命令可以将音频文件，转为带封面的视频文件。
+$ ffmpeg \
+-loop 1 \
+-i cover.jpg -i input.mp3 \
+-c:v libx264 -c:a aac -b:a 192k -shortest \
+output.mp4
+
+上面命令中，有两个输入文件，一个是封面图片cover.jpg，另一个是音频文件input.mp3。-loop 1参数表示图片无限循环，-shortest参数表示音频文件结束，输出视频就结束。
+字幕格式转换ffmpeg -i test_1280x720_3.srt test_1280x720_3_1.vtt
+ffmpeg -i test_1280x720_3.srt test_1280x720_3_1.ass
+
+添加硬字幕ffmpeg -i test_1280x720_3.mkv -vf subtitles&#x3D;test_1280x720_3.srt out.mp4
+
+添加软字幕ffmpeg -i test_1280x720_3.mp4 -i test_1280x720_3.srt -c copy output.mkv
+
+参考链接
+  http://www.ruanyifeng.com/blog/2020/01/ffmpeg.html
+  https://www.cnblogs.com/kybs0/p/12771572.html
+  https://blog.csdn.net/awangdea99/article/details/114555743
+  https://zhuanlan.zhihu.com/p/145312133
+
+]]></content>
+      <tags>
+        <tag>ffmpeg</tag>
       </tags>
   </entry>
   <entry>
@@ -5637,6 +6354,200 @@ sched.addGlobalJobListener(new MyListener());
         <tag>任务调度</tag>
         <tag>Java</tag>
         <tag>Quartz</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>微服务架构-入门理解</title>
+    <url>/2021/04/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-%E5%85%A5%E9%97%A8%E7%90%86%E8%A7%A3/</url>
+    <content><![CDATA[本文将介绍微服务架构和相关的组件，介绍他们是什么以及为什么要使用微服务架构和这些组件。本文侧重于简明地表达微服务架构的全局图景，因此不会涉及具体如何使用组件等细节。
+要理解微服务，首先要先理解不是微服务的那些。通常跟微服务相对的是单体应用，即将所有功能都打包成在一个独立单元的应用程序。从单体应用到微服务并不是一蹴而就的，这是一个逐渐演变的过程。本文将以一个网上超市应用为例来说明这一过程。
+
+
+最初的需求几年前，小明和小皮一起创业做网上超市。小明负责程序开发，小皮负责其他事宜。当时互联网还不发达，网上超市还是蓝海。只要功能实现了就能随便赚钱。所以他们的需求很简单，只需要一个网站挂在公网，用户能够在这个网站上浏览商品、购买商品；另外还需一个管理后台，可以管理商品、用户、以及订单数据。
+我们整理一下功能清单：
+
+网站
+  用户注册、登录功能
+  商品展示
+  下单
+
+
+管理后台
+  用户管理
+  商品管理
+  订单管理
+
+
+
+由于需求简单，小明左手右手一个慢动作，网站就做好了。管理后台出于安全考虑，不和网站做在一起，小明右手左手慢动作重播，管理网站也做好了。总体架构图如下：
+
+小明挥一挥手，找了家云服务部署上去，网站就上线了。上线后好评如潮，深受各类肥宅喜爱。小明小皮美滋滋地开始躺着收钱。
+随着业务发展……好景不长，没过几天，各类网上超市紧跟着拔地而起，对小明小皮造成了强烈的冲击。
+在竞争的压力下，小明小皮决定开展一些营销手段：
+
+  开展促销活动。比如元旦全场打折，春节买二送一，情人节狗粮优惠券等等。
+  拓展渠道，新增移动端营销。除了网站外，还需要开发移动端 APP，微信小程序等。
+  精准营销。利用历史数据对用户进行分析，提供个性化服务。
+  ……
+
+这些活动都需要程序开发的支持。小明拉了同学小红加入团队。小红负责数据分析以及移动端相关开发。小明负责促销活动相关功能的开发。
+因为开发任务比较紧迫，小明小红没有好好规划整个系统的架构，随便拍了拍脑袋，决定把促销管理和数据分析放在管理后台里，微信和移动端 APP 另外搭建。通宵了几天后，新功能和新应用基本完工。这时架构图如下：
+
+这一阶段存在很多不合理的地方：
+
+  网站和移动端应用有很多相同业务逻辑的重复代码。
+  数据有时候通过数据库共享，有时候通过接口调用传输。接口调用关系杂乱。
+  单个应用为了给其他应用提供接口，渐渐地越改越大，包含了很多本来就不属于它的逻辑。应用边界模糊，功能归属混乱。
+  管理后台在一开始的设计中保障级别较低。加入数据分析和促销管理相关功能后出现性能瓶颈，影响了其他应用。
+  数据库表结构被多个应用依赖，无法重构和优化。
+  所有应用都在一个数据库上操作，数据库出现性能瓶颈。特别是数据分析跑起来的时候，数据库性能急剧下降。
+  开发、测试、部署、维护愈发困难。即使只改动一个小功能，也需要整个应用一起发布。有时候发布会不小心带上了一些未经测试的代码，或者修改了一个功能后，另一个意想不到的地方出错了。为了减轻发布可能产生的问题的影响和线上业务停顿的影响，所有应用都要在凌晨三四点执行发布。发布后为了验证应用正常运行，还得盯到第二天白天的用户高峰期……
+  团队出现推诿扯皮现象。关于一些公用的功能应该建设在哪个应用上的问题常常要争论很久，最后要么干脆各做各的，或者随便放个地方但是都不维护。
+
+尽管有着诸多问题，但也不能否认这一阶段的成果：快速地根据业务变化建设了系统。不过紧迫且繁重的任务容易使人陷入局部、短浅的思维方式，从而做出妥协式的决策。在这种架构中，每个人都只关注在自己的一亩三分地，缺乏全局的、长远的设计。长此以往，系统建设将会越来越困难，甚至陷入不断推翻、重建的循环。
+是时候做出改变了幸好小明和小红是有追求有理想的好青年。意识到问题后，小明和小红从琐碎的业务需求中腾出了一部分精力，开始梳理整体架构，针对问题准备着手改造。
+
+要做改造，首先你需要有足够的精力和资源。如果你的需求方（业务人员、项目经理、上司等）很强势地一心追求需求进度，以致于你无法挪出额外的精力和资源的话，那么你可能无法做任何事……
+
+在编程的世界中，最重要的便是抽象能力。微服务改造的过程实际上也是个抽象的过程。小明和小红整理了网上超市的业务逻辑，抽象出公用的业务能力，做成几个公共服务：
+
+  用户服务
+  商品服务
+  促销服务
+  订单服务
+  数据分析服务
+
+各个应用后台只需从这些服务获取所需的数据，从而删去了大量冗余的代码，就剩个轻薄的控制层和前端。这一阶段的架构如下：
+
+这个阶段只是将服务分开了，数据库依然是共用的，所以一些烟囱式系统的缺点仍然存在：
+
+ 数据库成为性能瓶颈，并且有单点故障的风险。
+ 数据管理趋向混乱。即使一开始有良好的模块化设计，随着时间推移，总会有一个服务直接从数据库取另一个服务的数据的现象。
+ 数据库表结构可能被多个服务依赖，牵一发而动全身，很难调整。
+
+如果一直保持共用数据库的模式，则整个架构会越来越僵化，失去了微服务架构的意义。因此小明和小红一鼓作气，把数据库也拆分了。所有持久化层相互隔离，由各个服务自己负责。另外，为了提高系统的实时性，加入了消息队列机制。架构如下：
+
+完全拆分后各个服务可以采用异构的技术。比如数据分析服务可以使用数据仓库作为持久化层，以便于高效地做一些统计计算；商品服务和促销服务访问频率比较大，因此加入了缓存机制等。
+
+还有一种抽象出公共逻辑的方法是把这些公共逻辑做成公共的框架库。这种方法可以减少服务调用的性能损耗。但是这种方法的管理成本非常高昂，很难保证所有应用版本的一致性。
+
+
+数据库拆分也有一些问题和挑战：比如说跨库级联的需求，通过服务查询数据颗粒度的粗细问题等。但是这些问题可以通过合理的设计来解决。总体来说，数据库拆分是一个利大于弊的。
+
+微服务架构还有一个技术外的好处，它使整个系统的分工更加明确，责任更加清晰，每个人专心负责为其他人提供更好的服务。在单体应用的时代，公共的业务功能经常没有明确的归属。最后要么各做各的，每个人都重新实现了一遍；要么是随机一个人（一般是能力比较强或者比较热心的人）做到他负责的应用里面。在后者的情况下，这个人在负责自己应用之外，还要额外负责给别人提供这些公共的功能——而这个功能本来是无人负责的，仅仅因为他能力较强 / 比较热心，就莫名地背锅（这种情况还被美其名曰能者多劳）。结果最后大家都不愿意提供公共的功能。长此以往，团队里的人渐渐变得各自为政，不再关心全局的架构设计。
+从这个角度上看，使用微服务架构同时也需要组织结构做相应的调整。所以说做微服务改造需要管理者的支持。
+改造完成后，小明和小红分清楚各自的锅。两人十分满意，一切就像是麦克斯韦方程组一样漂亮完美。
+然而……
+没有银弹春天来了，万物复苏，又到了一年一度的购物狂欢节。眼看着日订单数量蹭蹭地上涨，小皮小明小红喜笑颜开。可惜好景不长，乐极生悲，突然嘣的一下，系统挂了。
+以往单体应用，排查问题通常是看一下日志，研究错误信息和调用堆栈。而微服务架构整个应用分散成多个服务，定位故障点非常困难。小明一个台机器一台机器地查看日志，一个服务一个服务地手工调用。经过十几分钟的查找，小明终于定位到故障点：促销服务由于接收的请求量太大而停止响应了。其他服务都直接或间接地会调用促销服务，于是也跟着宕机了。在微服务架构中，一个服务故障可能会产生雪崩效用，导致整个系统故障。其实在节前，小明和小红是有做过请求量评估的。按照预计，服务器资源是足以支持节日的请求量的，所以肯定是哪里出了问题。不过形势紧急，随着每一分每一秒流逝的都是白花花的银子，因此小明也没时间排查问题，当机立断在云上新建了几台虚拟机，然后一台一台地部署新的促销服务节点。几分钟的操作后，系统总算是勉强恢复正常了。整个故障时间内估计损失了几十万的销售额，三人的心在滴血……
+事后，小明简单写了个日志分析工具（量太大了，文本编辑器几乎打不开，打开了肉眼也看不过来），统计了促销服务的访问日志，发现在故障期间，商品服务由于代码问题，在某些场景下会对促销服务发起大量请求。这个问题并不复杂，小明手指抖一抖，修复了这个价值几十万的 Bug。
+问题是解决了，但谁也无法保证不会再发生类似的其他问题。微服务架构虽然逻辑设计上看是完美的，但就像积木搭建的华丽宫殿一样，经不起风吹草动。微服务架构虽然解决了旧问题，也引入了新的问题：
+
+  微服务架构整个应用分散成多个服务，定位故障点非常困难。
+  稳定性下降。服务数量变多导致其中一个服务出现故障的概率增大，并且一个服务故障可能导致整个系统挂掉。事实上，在大访问量的生产场景下，故障总是会出现的。
+  服务数量非常多，部署、管理的工作量很大。
+  开发方面：如何保证各个服务在持续开发的情况下仍然保持协同合作。
+  测试方面：服务拆分后，几乎所有功能都会涉及多个服务。原本单个程序的测试变为服务间调用的测试。测试变得更加复杂。
+
+小明小红痛定思痛，决心好好解决这些问题。对故障的处理一般从两方面入手，一方面尽量减少故障发生的概率，另一方面降低故障造成的影响。
+
+监控 - 发现故障的征兆在高并发分布式的场景下，故障经常是突然间就雪崩式爆发。所以必须建立完善的监控体系，尽可能发现故障的征兆。
+微服务架构中组件繁多，各个组件所需要监控的指标不同。比如 Redis 缓存一般监控占用内存值、网络流量，数据库监控连接数、磁盘空间，业务服务监控并发数、响应延迟、错误率等。因此如果做一个大而全的监控系统来监控各个组件是不大现实的，而且扩展性会很差。一般的做法是让各个组件提供报告自己当前状态的接口（metrics 接口），这个接口输出的数据格式应该是一致的。然后部署一个指标采集器组件，定时从这些接口获取并保持组件状态，同时提供查询服务。最后还需要一个 UI，从指标采集器查询各项指标，绘制监控界面或者根据阈值发出告警。
+大部分组件都不需要自己动手开发，网络上有开源组件。小明下载了 RedisExporter 和 MySQLExporter，这两个组件分别提供了 Redis 缓存和 MySQL 数据库的指标接口。微服务则根据各个服务的业务逻辑实现自定义的指标接口。然后小明采用 Prometheus 作为指标采集器，Grafana 配置监控界面和邮件告警。这样一套微服务监控系统就搭建起来了：
+
+定位问题 - 链路跟踪在微服务架构下，一个用户的请求往往涉及多个内部服务调用。为了方便定位问题，需要能够记录每个用户请求时，微服务内部产生了多少服务调用，及其调用关系。这个叫做链路跟踪。
+我们用一个 Istio 文档里的链路跟踪例子来看看效果：
+
+
+图片来自 Istio 文档
+
+从图中可以看到，这是一个用户访问 productpage 页面的请求。在请求过程中，productpage 服务顺序调用了 details 和 reviews 服务的接口。而 reviews 服务在响应过程中又调用了 ratings 的接口。整个链路跟踪的记录是一棵树：
+
+要实现链路跟踪，每次服务调用会在 HTTP 的 HEADERS 中记录至少记录四项数据：
+
+  traceId：traceId 标识一个用户请求的调用链路。具有相同 traceId 的调用属于同一条链路。
+  spanId：标识一次服务调用的 ID，即链路跟踪的节点 ID。
+  parentId：父节点的 spanId。
+  requestTime &amp; responseTime：请求时间和响应时间。
+
+另外，还需要调用日志收集与存储的组件，以及展示链路调用的 UI 组件。
+
+以上只是一个极简的说明，关于链路跟踪的理论依据可详见 Google 的 Dapper
+了解了理论基础后，小明选用了 Dapper 的一个开源实现 Zipkin。然后手指一抖，写了个 HTTP 请求的拦截器，在每次 HTTP 请求时生成这些数据注入到 HEADERS，同时异步发送调用日志到 Zipkin 的日志收集器中。这里额外提一下，HTTP 请求的拦截器，可以在微服务的代码中实现，也可以使用一个网络代理组件来实现（不过这样子每个微服务都需要加一层代理）。
+链路跟踪只能定位到哪个服务出现问题，不能提供具体的错误信息。查找具体的错误信息的能力则需要由日志分析组件来提供。
+分析问题 - 日志分析日志分析组件应该在微服务兴起之前就被广泛使用了。即使单体应用架构，当访问数变大、或服务器规模增多时，日志文件的大小会膨胀到难以用文本编辑器进行访问，更糟的是它们分散在多台服务器上面。排查一个问题，需要登录到各台服务器去获取日志文件，一个一个地查找（而且打开、查找都很慢）想要的日志信息。
+因此，在应用规模变大时，我们需要一个日志的 “搜索引擎”。以便于能准确的找到想要的日志。另外，数据源一侧还需要收集日志的组件和展示结果的 UI 组件：
+
+小明调查了一下，使用了大名鼎鼎地 ELK 日志分析组件。ELK 是 Elasticsearch、Logstash 和 Kibana 三个组件的缩写。
+
+  Elasticsearch：搜索引擎，同时也是日志的存储。
+  Logstash：日志采集器，它接收日志输入，对日志进行一些预处理，然后输出到 Elasticsearch。
+  Kibana：UI 组件，通过 Elasticsearch 的 API 查找数据并展示给用户。
+
+最后还有一个小问题是如何将日志发送到 Logstash。一种方案是在日志输出的时候直接调用 Logstash 接口将日志发送过去。这样一来又（咦，为啥要用 “又”）要修改代码…… 于是小明选用了另一种方案：日志仍然输出到文件，每个服务里再部署个 Agent 扫描日志文件然后输出给 Logstash。
+网关 - 权限控制，服务治理拆分成微服务后，出现大量的服务，大量的接口，使得整个调用关系乱糟糟的。经常在开发过程中，写着写着，忽然想不起某个数据应该调用哪个服务。或者写歪了，调用了不该调用的服务，本来一个只读的功能结果修改了数据……
+为了应对这些情况，微服务的调用需要一个把关的东西，也就是网关。在调用者和被调用者中间加一层网关，每次调用时进行权限校验。另外，网关也可以作为一个提供服务接口文档的平台。
+使用网关有一个问题就是要决定在多大粒度上使用：最粗粒度的方案是整个微服务一个网关，微服务外部通过网关访问微服务，微服务内部则直接调用；最细粒度则是所有调用，不管是微服务内部调用或者来自外部的调用，都必须通过网关。折中的方案是按照业务领域将微服务分成几个区，区内直接调用，区间通过网关调用。
+由于整个网上超市的服务数量还不算特别多，小明采用的最粗粒度的方案：
+
+服务注册于发现 - 动态扩容前面的组件，都是旨在降低故障发生的可能性。然而故障总是会发生的，所以另一个需要研究的是如何降低故障产生的影响。
+最粗暴的（也是最常用的）故障处理策略就是冗余。一般来说，一个服务都会部署多个实例，这样一来能够分担压力提高性能，二来即使一个实例挂了其他实例还能响应。
+冗余的一个问题是使用几个冗余？这个问题在时间轴上并没有一个切确的答案。根据服务功能、时间段的不同，需要不同数量的实例。比如在平日里，可能 4 个实例已经够用；而在促销活动时，流量大增，可能需要 40 个实例。因此冗余数量并不是一个固定的值，而是根据需要实时调整的。
+一般来说新增实例的操作为：
+
+ 部署新实例
+ 将新实例注册到负载均衡或 DNS 上
+
+操作只有两步，但如果注册到负载均衡或 DNS 的操作为人工操作的话，那事情就不简单了。想想新增 40 个实例后，要手工输入 40 个 IP 的感觉……
+解决这个问题的方案是服务自动注册与发现。首先，需要部署一个服务发现服务，它提供所有已注册服务的地址信息的服务。DNS 也算是一种服务发现服务。然后各个应用服务在启动时自动将自己注册到服务发现服务上。并且应用服务启动后会实时（定期）从服务发现服务同步各个应用服务的地址列表到本地。服务发现服务也会定期检查应用服务的健康状态，去掉不健康的实例地址。这样新增实例时只需要部署新实例，实例下线时直接关停服务即可，服务发现会自动检查服务实例的增减。
+
+服务发现还会跟客户端负载均衡配合使用。由于应用服务已经同步服务地址列表在本地了，所以访问微服务时，可以自己决定负载策略。甚至可以在服务注册时加入一些元数据（服务版本等信息），客户端负载则根据这些元数据进行流量控制，实现 A/B 测试、蓝绿发布等功能。
+服务发现有很多组件可以选择，比如说 Zookeeper 、Eureka、Consul、Etcd 等。不过小明觉得自己水平不错，想炫技，于是基于 Redis 自己写了一个……
+熔断、服务降级、限流熔断当一个服务因为各种原因停止响应时，调用方通常会等待一段时间，然后超时或者收到错误返回。如果调用链路比较长，可能会导致请求堆积，整条链路占用大量资源一直在等待下游响应。所以当多次访问一个服务失败时，应熔断，标记该服务已停止工作，直接返回错误。直至该服务恢复正常后再重新建立连接。
+
+
+图片来自《微服务设计》
+
+服务降级当下游服务停止工作后，如果该服务并非核心业务，则上游服务应该降级，以保证核心业务不中断。比如网上超市下单界面有一个推荐商品凑单的功能，当推荐模块挂了后，下单功能不能一起挂掉，只需要暂时关闭推荐功能即可。
+限流一个服务挂掉后，上游服务或者用户一般会习惯性地重试访问。这导致一旦服务恢复正常，很可能因为瞬间网络流量过大又立刻挂掉，在棺材里重复着仰卧起坐。因此服务需要能够自我保护——限流。限流策略有很多，最简单的比如当单位时间内请求数过多时，丢弃多余的请求。另外，也可以考虑分区限流。仅拒绝来自产生大量请求的服务的请求。例如商品服务和订单服务都需要访问促销服务，商品服务由于代码问题发起了大量请求，促销服务则只限制来自商品服务的请求，来自订单服务的请求则正常响应。
+
+测试微服务架构下，测试分为三个层次：
+
+ 端到端测试：覆盖整个系统，一般在用户界面机型测试。
+ 服务测试：针对服务接口进行测试。
+ 单元测试：针对代码单元进行测试。
+
+三种测试从上到下实施的容易程度递增，但是测试效果递减。端到端测试最费时费力，但是通过测试后我们对系统最有信心。单元测试最容易实施，效率也最高，但是测试后不能保证整个系统没有问题。
+
+由于端到端测试实施难度较大，一般只对核心功能做端到端测试。一旦端到端测试失败，则需要将其分解到单元测试：则分析失败原因，然后编写单元测试来重现这个问题，这样未来我们便可以更快地捕获同样的错误。
+服务测试的难度在于服务会经常依赖一些其他服务。这个问题可以通过 Mock Server 解决：
+
+单元测试大家都很熟悉了。我们一般会编写大量的单元测试（包括回归测试）尽量覆盖所有代码。
+微服务框架指标接口、链路跟踪注入、日志引流、服务注册发现、路由规则等组件以及熔断、限流等功能都需要在应用服务上添加一些对接代码。如果让每个应用服务自己实现是非常耗时耗力的。基于 DRY 的原则，小明开发了一套微服务框架，将与各个组件对接的代码和另外一些公共代码抽离到框架中，所有的应用服务都统一使用这套框架进行开发。
+使用微服务框架可以实现很多自定义的功能。甚至可以将程序调用堆栈信息注入到链路跟踪，实现代码级别的链路跟踪。或者输出线程池、连接池的状态信息，实时监控服务底层状态。
+使用统一的微服务框架有一个比较严重的问题：框架更新成本很高。每次框架升级，都需要所有应用服务配合升级。当然，一般会使用兼容方案，留出一段并行时间等待所有应用服务升级。但是如果应用服务非常多时，升级时间可能会非常漫长。并且有一些很稳定几乎不更新的应用服务，其负责人可能会拒绝升级…… 因此，使用统一微服务框架需要完善的版本管理方法和开发管理规范。
+另一条路 - Service Mesh另一种抽象公共代码的方法是直接将这些代码抽象到一个反向代理组件。每个服务都额外部署这个代理组件，所有出站入站的流量都通过该组件进行处理和转发。这个组件被称为 Sidecar。
+
+Sidecar 不会产生额外网络成本。Sidecar 会和微服务节点部署在同一台主机上并且共用相同的虚拟网卡。所以 sidecar 和微服务节点的通信实际上都只是通过内存拷贝实现的。
+
+
+
+图片来自：Pattern: Service Mesh
+
+Sidecar 只负责网络通信。还需要有个组件来统一管理所有 sidecar 的配置。在 Service Mesh 中，负责网络通信的部分叫数据平面（data plane），负责配置管理的部分叫控制平面（control plane）。数据平面和控制平面构成了 Service Mesh 的基本架构。
+
+
+图片来自：Pattern: Service Mesh
+
+Sevice Mesh 相比于微服务框架的优点在于它不侵入代码，升级和维护更方便。它经常被诟病的则是性能问题。即使回环网络不会产生实际的网络请求，但仍然有内存拷贝的额外成本。另外有一些集中式的流量处理也会影响性能。
+结束、也是开始微服务不是架构演变的终点。往细走还有 Serverless、FaaS 等方向。另一方面也有人在唱合久必分分久必合，重新发现单体架构……
+不管怎样，微服务架构的改造暂时告一段落了。小明满足地摸了摸日益光滑的脑袋，打算这个周末休息一下约小红喝杯咖啡。
+
+原文链接：https://www.cnblogs.com/skabyy/p/11396571.html
+
+]]></content>
+      <tags>
+        <tag>微服务架构</tag>
       </tags>
   </entry>
   <entry>
@@ -8300,7 +9211,10 @@ commitSync() 将会提交由poll()返回的最新偏移量，如果处理完所�
   <entry>
     <title>MimeType.java</title>
     <url>/2021/07/06/MimeType-java/</url>
-    <content><![CDATA[import java.util.HashMap;
+    <content><![CDATA[文件类型的种类
+
+
+import java.util.HashMap;
 
 public class MimeTypes &#123;
 
@@ -11892,200 +12806,6 @@ Task-Level ParallelismFinally, we reach what most people think of as parallelism
       <tags>
         <tag>代理</tag>
         <tag>Nginx</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>微服务架构-入门理解</title>
-    <url>/2021/04/09/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-%E5%85%A5%E9%97%A8%E7%90%86%E8%A7%A3/</url>
-    <content><![CDATA[本文将介绍微服务架构和相关的组件，介绍他们是什么以及为什么要使用微服务架构和这些组件。本文侧重于简明地表达微服务架构的全局图景，因此不会涉及具体如何使用组件等细节。
-要理解微服务，首先要先理解不是微服务的那些。通常跟微服务相对的是单体应用，即将所有功能都打包成在一个独立单元的应用程序。从单体应用到微服务并不是一蹴而就的，这是一个逐渐演变的过程。本文将以一个网上超市应用为例来说明这一过程。
-
-
-最初的需求几年前，小明和小皮一起创业做网上超市。小明负责程序开发，小皮负责其他事宜。当时互联网还不发达，网上超市还是蓝海。只要功能实现了就能随便赚钱。所以他们的需求很简单，只需要一个网站挂在公网，用户能够在这个网站上浏览商品、购买商品；另外还需一个管理后台，可以管理商品、用户、以及订单数据。
-我们整理一下功能清单：
-
-网站
-  用户注册、登录功能
-  商品展示
-  下单
-
-
-管理后台
-  用户管理
-  商品管理
-  订单管理
-
-
-
-由于需求简单，小明左手右手一个慢动作，网站就做好了。管理后台出于安全考虑，不和网站做在一起，小明右手左手慢动作重播，管理网站也做好了。总体架构图如下：
-
-小明挥一挥手，找了家云服务部署上去，网站就上线了。上线后好评如潮，深受各类肥宅喜爱。小明小皮美滋滋地开始躺着收钱。
-随着业务发展……好景不长，没过几天，各类网上超市紧跟着拔地而起，对小明小皮造成了强烈的冲击。
-在竞争的压力下，小明小皮决定开展一些营销手段：
-
-  开展促销活动。比如元旦全场打折，春节买二送一，情人节狗粮优惠券等等。
-  拓展渠道，新增移动端营销。除了网站外，还需要开发移动端 APP，微信小程序等。
-  精准营销。利用历史数据对用户进行分析，提供个性化服务。
-  ……
-
-这些活动都需要程序开发的支持。小明拉了同学小红加入团队。小红负责数据分析以及移动端相关开发。小明负责促销活动相关功能的开发。
-因为开发任务比较紧迫，小明小红没有好好规划整个系统的架构，随便拍了拍脑袋，决定把促销管理和数据分析放在管理后台里，微信和移动端 APP 另外搭建。通宵了几天后，新功能和新应用基本完工。这时架构图如下：
-
-这一阶段存在很多不合理的地方：
-
-  网站和移动端应用有很多相同业务逻辑的重复代码。
-  数据有时候通过数据库共享，有时候通过接口调用传输。接口调用关系杂乱。
-  单个应用为了给其他应用提供接口，渐渐地越改越大，包含了很多本来就不属于它的逻辑。应用边界模糊，功能归属混乱。
-  管理后台在一开始的设计中保障级别较低。加入数据分析和促销管理相关功能后出现性能瓶颈，影响了其他应用。
-  数据库表结构被多个应用依赖，无法重构和优化。
-  所有应用都在一个数据库上操作，数据库出现性能瓶颈。特别是数据分析跑起来的时候，数据库性能急剧下降。
-  开发、测试、部署、维护愈发困难。即使只改动一个小功能，也需要整个应用一起发布。有时候发布会不小心带上了一些未经测试的代码，或者修改了一个功能后，另一个意想不到的地方出错了。为了减轻发布可能产生的问题的影响和线上业务停顿的影响，所有应用都要在凌晨三四点执行发布。发布后为了验证应用正常运行，还得盯到第二天白天的用户高峰期……
-  团队出现推诿扯皮现象。关于一些公用的功能应该建设在哪个应用上的问题常常要争论很久，最后要么干脆各做各的，或者随便放个地方但是都不维护。
-
-尽管有着诸多问题，但也不能否认这一阶段的成果：快速地根据业务变化建设了系统。不过紧迫且繁重的任务容易使人陷入局部、短浅的思维方式，从而做出妥协式的决策。在这种架构中，每个人都只关注在自己的一亩三分地，缺乏全局的、长远的设计。长此以往，系统建设将会越来越困难，甚至陷入不断推翻、重建的循环。
-是时候做出改变了幸好小明和小红是有追求有理想的好青年。意识到问题后，小明和小红从琐碎的业务需求中腾出了一部分精力，开始梳理整体架构，针对问题准备着手改造。
-
-要做改造，首先你需要有足够的精力和资源。如果你的需求方（业务人员、项目经理、上司等）很强势地一心追求需求进度，以致于你无法挪出额外的精力和资源的话，那么你可能无法做任何事……
-
-在编程的世界中，最重要的便是抽象能力。微服务改造的过程实际上也是个抽象的过程。小明和小红整理了网上超市的业务逻辑，抽象出公用的业务能力，做成几个公共服务：
-
-  用户服务
-  商品服务
-  促销服务
-  订单服务
-  数据分析服务
-
-各个应用后台只需从这些服务获取所需的数据，从而删去了大量冗余的代码，就剩个轻薄的控制层和前端。这一阶段的架构如下：
-
-这个阶段只是将服务分开了，数据库依然是共用的，所以一些烟囱式系统的缺点仍然存在：
-
- 数据库成为性能瓶颈，并且有单点故障的风险。
- 数据管理趋向混乱。即使一开始有良好的模块化设计，随着时间推移，总会有一个服务直接从数据库取另一个服务的数据的现象。
- 数据库表结构可能被多个服务依赖，牵一发而动全身，很难调整。
-
-如果一直保持共用数据库的模式，则整个架构会越来越僵化，失去了微服务架构的意义。因此小明和小红一鼓作气，把数据库也拆分了。所有持久化层相互隔离，由各个服务自己负责。另外，为了提高系统的实时性，加入了消息队列机制。架构如下：
-
-完全拆分后各个服务可以采用异构的技术。比如数据分析服务可以使用数据仓库作为持久化层，以便于高效地做一些统计计算；商品服务和促销服务访问频率比较大，因此加入了缓存机制等。
-
-还有一种抽象出公共逻辑的方法是把这些公共逻辑做成公共的框架库。这种方法可以减少服务调用的性能损耗。但是这种方法的管理成本非常高昂，很难保证所有应用版本的一致性。
-
-
-数据库拆分也有一些问题和挑战：比如说跨库级联的需求，通过服务查询数据颗粒度的粗细问题等。但是这些问题可以通过合理的设计来解决。总体来说，数据库拆分是一个利大于弊的。
-
-微服务架构还有一个技术外的好处，它使整个系统的分工更加明确，责任更加清晰，每个人专心负责为其他人提供更好的服务。在单体应用的时代，公共的业务功能经常没有明确的归属。最后要么各做各的，每个人都重新实现了一遍；要么是随机一个人（一般是能力比较强或者比较热心的人）做到他负责的应用里面。在后者的情况下，这个人在负责自己应用之外，还要额外负责给别人提供这些公共的功能——而这个功能本来是无人负责的，仅仅因为他能力较强 / 比较热心，就莫名地背锅（这种情况还被美其名曰能者多劳）。结果最后大家都不愿意提供公共的功能。长此以往，团队里的人渐渐变得各自为政，不再关心全局的架构设计。
-从这个角度上看，使用微服务架构同时也需要组织结构做相应的调整。所以说做微服务改造需要管理者的支持。
-改造完成后，小明和小红分清楚各自的锅。两人十分满意，一切就像是麦克斯韦方程组一样漂亮完美。
-然而……
-没有银弹春天来了，万物复苏，又到了一年一度的购物狂欢节。眼看着日订单数量蹭蹭地上涨，小皮小明小红喜笑颜开。可惜好景不长，乐极生悲，突然嘣的一下，系统挂了。
-以往单体应用，排查问题通常是看一下日志，研究错误信息和调用堆栈。而微服务架构整个应用分散成多个服务，定位故障点非常困难。小明一个台机器一台机器地查看日志，一个服务一个服务地手工调用。经过十几分钟的查找，小明终于定位到故障点：促销服务由于接收的请求量太大而停止响应了。其他服务都直接或间接地会调用促销服务，于是也跟着宕机了。在微服务架构中，一个服务故障可能会产生雪崩效用，导致整个系统故障。其实在节前，小明和小红是有做过请求量评估的。按照预计，服务器资源是足以支持节日的请求量的，所以肯定是哪里出了问题。不过形势紧急，随着每一分每一秒流逝的都是白花花的银子，因此小明也没时间排查问题，当机立断在云上新建了几台虚拟机，然后一台一台地部署新的促销服务节点。几分钟的操作后，系统总算是勉强恢复正常了。整个故障时间内估计损失了几十万的销售额，三人的心在滴血……
-事后，小明简单写了个日志分析工具（量太大了，文本编辑器几乎打不开，打开了肉眼也看不过来），统计了促销服务的访问日志，发现在故障期间，商品服务由于代码问题，在某些场景下会对促销服务发起大量请求。这个问题并不复杂，小明手指抖一抖，修复了这个价值几十万的 Bug。
-问题是解决了，但谁也无法保证不会再发生类似的其他问题。微服务架构虽然逻辑设计上看是完美的，但就像积木搭建的华丽宫殿一样，经不起风吹草动。微服务架构虽然解决了旧问题，也引入了新的问题：
-
-  微服务架构整个应用分散成多个服务，定位故障点非常困难。
-  稳定性下降。服务数量变多导致其中一个服务出现故障的概率增大，并且一个服务故障可能导致整个系统挂掉。事实上，在大访问量的生产场景下，故障总是会出现的。
-  服务数量非常多，部署、管理的工作量很大。
-  开发方面：如何保证各个服务在持续开发的情况下仍然保持协同合作。
-  测试方面：服务拆分后，几乎所有功能都会涉及多个服务。原本单个程序的测试变为服务间调用的测试。测试变得更加复杂。
-
-小明小红痛定思痛，决心好好解决这些问题。对故障的处理一般从两方面入手，一方面尽量减少故障发生的概率，另一方面降低故障造成的影响。
-
-监控 - 发现故障的征兆在高并发分布式的场景下，故障经常是突然间就雪崩式爆发。所以必须建立完善的监控体系，尽可能发现故障的征兆。
-微服务架构中组件繁多，各个组件所需要监控的指标不同。比如 Redis 缓存一般监控占用内存值、网络流量，数据库监控连接数、磁盘空间，业务服务监控并发数、响应延迟、错误率等。因此如果做一个大而全的监控系统来监控各个组件是不大现实的，而且扩展性会很差。一般的做法是让各个组件提供报告自己当前状态的接口（metrics 接口），这个接口输出的数据格式应该是一致的。然后部署一个指标采集器组件，定时从这些接口获取并保持组件状态，同时提供查询服务。最后还需要一个 UI，从指标采集器查询各项指标，绘制监控界面或者根据阈值发出告警。
-大部分组件都不需要自己动手开发，网络上有开源组件。小明下载了 RedisExporter 和 MySQLExporter，这两个组件分别提供了 Redis 缓存和 MySQL 数据库的指标接口。微服务则根据各个服务的业务逻辑实现自定义的指标接口。然后小明采用 Prometheus 作为指标采集器，Grafana 配置监控界面和邮件告警。这样一套微服务监控系统就搭建起来了：
-
-定位问题 - 链路跟踪在微服务架构下，一个用户的请求往往涉及多个内部服务调用。为了方便定位问题，需要能够记录每个用户请求时，微服务内部产生了多少服务调用，及其调用关系。这个叫做链路跟踪。
-我们用一个 Istio 文档里的链路跟踪例子来看看效果：
-
-
-图片来自 Istio 文档
-
-从图中可以看到，这是一个用户访问 productpage 页面的请求。在请求过程中，productpage 服务顺序调用了 details 和 reviews 服务的接口。而 reviews 服务在响应过程中又调用了 ratings 的接口。整个链路跟踪的记录是一棵树：
-
-要实现链路跟踪，每次服务调用会在 HTTP 的 HEADERS 中记录至少记录四项数据：
-
-  traceId：traceId 标识一个用户请求的调用链路。具有相同 traceId 的调用属于同一条链路。
-  spanId：标识一次服务调用的 ID，即链路跟踪的节点 ID。
-  parentId：父节点的 spanId。
-  requestTime &amp; responseTime：请求时间和响应时间。
-
-另外，还需要调用日志收集与存储的组件，以及展示链路调用的 UI 组件。
-
-以上只是一个极简的说明，关于链路跟踪的理论依据可详见 Google 的 Dapper
-了解了理论基础后，小明选用了 Dapper 的一个开源实现 Zipkin。然后手指一抖，写了个 HTTP 请求的拦截器，在每次 HTTP 请求时生成这些数据注入到 HEADERS，同时异步发送调用日志到 Zipkin 的日志收集器中。这里额外提一下，HTTP 请求的拦截器，可以在微服务的代码中实现，也可以使用一个网络代理组件来实现（不过这样子每个微服务都需要加一层代理）。
-链路跟踪只能定位到哪个服务出现问题，不能提供具体的错误信息。查找具体的错误信息的能力则需要由日志分析组件来提供。
-分析问题 - 日志分析日志分析组件应该在微服务兴起之前就被广泛使用了。即使单体应用架构，当访问数变大、或服务器规模增多时，日志文件的大小会膨胀到难以用文本编辑器进行访问，更糟的是它们分散在多台服务器上面。排查一个问题，需要登录到各台服务器去获取日志文件，一个一个地查找（而且打开、查找都很慢）想要的日志信息。
-因此，在应用规模变大时，我们需要一个日志的 “搜索引擎”。以便于能准确的找到想要的日志。另外，数据源一侧还需要收集日志的组件和展示结果的 UI 组件：
-
-小明调查了一下，使用了大名鼎鼎地 ELK 日志分析组件。ELK 是 Elasticsearch、Logstash 和 Kibana 三个组件的缩写。
-
-  Elasticsearch：搜索引擎，同时也是日志的存储。
-  Logstash：日志采集器，它接收日志输入，对日志进行一些预处理，然后输出到 Elasticsearch。
-  Kibana：UI 组件，通过 Elasticsearch 的 API 查找数据并展示给用户。
-
-最后还有一个小问题是如何将日志发送到 Logstash。一种方案是在日志输出的时候直接调用 Logstash 接口将日志发送过去。这样一来又（咦，为啥要用 “又”）要修改代码…… 于是小明选用了另一种方案：日志仍然输出到文件，每个服务里再部署个 Agent 扫描日志文件然后输出给 Logstash。
-网关 - 权限控制，服务治理拆分成微服务后，出现大量的服务，大量的接口，使得整个调用关系乱糟糟的。经常在开发过程中，写着写着，忽然想不起某个数据应该调用哪个服务。或者写歪了，调用了不该调用的服务，本来一个只读的功能结果修改了数据……
-为了应对这些情况，微服务的调用需要一个把关的东西，也就是网关。在调用者和被调用者中间加一层网关，每次调用时进行权限校验。另外，网关也可以作为一个提供服务接口文档的平台。
-使用网关有一个问题就是要决定在多大粒度上使用：最粗粒度的方案是整个微服务一个网关，微服务外部通过网关访问微服务，微服务内部则直接调用；最细粒度则是所有调用，不管是微服务内部调用或者来自外部的调用，都必须通过网关。折中的方案是按照业务领域将微服务分成几个区，区内直接调用，区间通过网关调用。
-由于整个网上超市的服务数量还不算特别多，小明采用的最粗粒度的方案：
-
-服务注册于发现 - 动态扩容前面的组件，都是旨在降低故障发生的可能性。然而故障总是会发生的，所以另一个需要研究的是如何降低故障产生的影响。
-最粗暴的（也是最常用的）故障处理策略就是冗余。一般来说，一个服务都会部署多个实例，这样一来能够分担压力提高性能，二来即使一个实例挂了其他实例还能响应。
-冗余的一个问题是使用几个冗余？这个问题在时间轴上并没有一个切确的答案。根据服务功能、时间段的不同，需要不同数量的实例。比如在平日里，可能 4 个实例已经够用；而在促销活动时，流量大增，可能需要 40 个实例。因此冗余数量并不是一个固定的值，而是根据需要实时调整的。
-一般来说新增实例的操作为：
-
- 部署新实例
- 将新实例注册到负载均衡或 DNS 上
-
-操作只有两步，但如果注册到负载均衡或 DNS 的操作为人工操作的话，那事情就不简单了。想想新增 40 个实例后，要手工输入 40 个 IP 的感觉……
-解决这个问题的方案是服务自动注册与发现。首先，需要部署一个服务发现服务，它提供所有已注册服务的地址信息的服务。DNS 也算是一种服务发现服务。然后各个应用服务在启动时自动将自己注册到服务发现服务上。并且应用服务启动后会实时（定期）从服务发现服务同步各个应用服务的地址列表到本地。服务发现服务也会定期检查应用服务的健康状态，去掉不健康的实例地址。这样新增实例时只需要部署新实例，实例下线时直接关停服务即可，服务发现会自动检查服务实例的增减。
-
-服务发现还会跟客户端负载均衡配合使用。由于应用服务已经同步服务地址列表在本地了，所以访问微服务时，可以自己决定负载策略。甚至可以在服务注册时加入一些元数据（服务版本等信息），客户端负载则根据这些元数据进行流量控制，实现 A/B 测试、蓝绿发布等功能。
-服务发现有很多组件可以选择，比如说 Zookeeper 、Eureka、Consul、Etcd 等。不过小明觉得自己水平不错，想炫技，于是基于 Redis 自己写了一个……
-熔断、服务降级、限流熔断当一个服务因为各种原因停止响应时，调用方通常会等待一段时间，然后超时或者收到错误返回。如果调用链路比较长，可能会导致请求堆积，整条链路占用大量资源一直在等待下游响应。所以当多次访问一个服务失败时，应熔断，标记该服务已停止工作，直接返回错误。直至该服务恢复正常后再重新建立连接。
-
-
-图片来自《微服务设计》
-
-服务降级当下游服务停止工作后，如果该服务并非核心业务，则上游服务应该降级，以保证核心业务不中断。比如网上超市下单界面有一个推荐商品凑单的功能，当推荐模块挂了后，下单功能不能一起挂掉，只需要暂时关闭推荐功能即可。
-限流一个服务挂掉后，上游服务或者用户一般会习惯性地重试访问。这导致一旦服务恢复正常，很可能因为瞬间网络流量过大又立刻挂掉，在棺材里重复着仰卧起坐。因此服务需要能够自我保护——限流。限流策略有很多，最简单的比如当单位时间内请求数过多时，丢弃多余的请求。另外，也可以考虑分区限流。仅拒绝来自产生大量请求的服务的请求。例如商品服务和订单服务都需要访问促销服务，商品服务由于代码问题发起了大量请求，促销服务则只限制来自商品服务的请求，来自订单服务的请求则正常响应。
-
-测试微服务架构下，测试分为三个层次：
-
- 端到端测试：覆盖整个系统，一般在用户界面机型测试。
- 服务测试：针对服务接口进行测试。
- 单元测试：针对代码单元进行测试。
-
-三种测试从上到下实施的容易程度递增，但是测试效果递减。端到端测试最费时费力，但是通过测试后我们对系统最有信心。单元测试最容易实施，效率也最高，但是测试后不能保证整个系统没有问题。
-
-由于端到端测试实施难度较大，一般只对核心功能做端到端测试。一旦端到端测试失败，则需要将其分解到单元测试：则分析失败原因，然后编写单元测试来重现这个问题，这样未来我们便可以更快地捕获同样的错误。
-服务测试的难度在于服务会经常依赖一些其他服务。这个问题可以通过 Mock Server 解决：
-
-单元测试大家都很熟悉了。我们一般会编写大量的单元测试（包括回归测试）尽量覆盖所有代码。
-微服务框架指标接口、链路跟踪注入、日志引流、服务注册发现、路由规则等组件以及熔断、限流等功能都需要在应用服务上添加一些对接代码。如果让每个应用服务自己实现是非常耗时耗力的。基于 DRY 的原则，小明开发了一套微服务框架，将与各个组件对接的代码和另外一些公共代码抽离到框架中，所有的应用服务都统一使用这套框架进行开发。
-使用微服务框架可以实现很多自定义的功能。甚至可以将程序调用堆栈信息注入到链路跟踪，实现代码级别的链路跟踪。或者输出线程池、连接池的状态信息，实时监控服务底层状态。
-使用统一的微服务框架有一个比较严重的问题：框架更新成本很高。每次框架升级，都需要所有应用服务配合升级。当然，一般会使用兼容方案，留出一段并行时间等待所有应用服务升级。但是如果应用服务非常多时，升级时间可能会非常漫长。并且有一些很稳定几乎不更新的应用服务，其负责人可能会拒绝升级…… 因此，使用统一微服务框架需要完善的版本管理方法和开发管理规范。
-另一条路 - Service Mesh另一种抽象公共代码的方法是直接将这些代码抽象到一个反向代理组件。每个服务都额外部署这个代理组件，所有出站入站的流量都通过该组件进行处理和转发。这个组件被称为 Sidecar。
-
-Sidecar 不会产生额外网络成本。Sidecar 会和微服务节点部署在同一台主机上并且共用相同的虚拟网卡。所以 sidecar 和微服务节点的通信实际上都只是通过内存拷贝实现的。
-
-
-
-图片来自：Pattern: Service Mesh
-
-Sidecar 只负责网络通信。还需要有个组件来统一管理所有 sidecar 的配置。在 Service Mesh 中，负责网络通信的部分叫数据平面（data plane），负责配置管理的部分叫控制平面（control plane）。数据平面和控制平面构成了 Service Mesh 的基本架构。
-
-
-图片来自：Pattern: Service Mesh
-
-Sevice Mesh 相比于微服务框架的优点在于它不侵入代码，升级和维护更方便。它经常被诟病的则是性能问题。即使回环网络不会产生实际的网络请求，但仍然有内存拷贝的额外成本。另外有一些集中式的流量处理也会影响性能。
-结束、也是开始微服务不是架构演变的终点。往细走还有 Serverless、FaaS 等方向。另一方面也有人在唱合久必分分久必合，重新发现单体架构……
-不管怎样，微服务架构的改造暂时告一段落了。小明满足地摸了摸日益光滑的脑袋，打算这个周末休息一下约小红喝杯咖啡。
-
-原文链接：https://www.cnblogs.com/skabyy/p/11396571.html
-
-]]></content>
-      <tags>
-        <tag>微服务架构</tag>
       </tags>
   </entry>
 </search>
