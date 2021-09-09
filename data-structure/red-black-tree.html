@@ -1,0 +1,823 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png"><link rel="mask-icon" href="/images/logo.svg" color="#222"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css" integrity="sha256-2H3fkXt6FEmrReK448mDVGKb3WW2ZZw35gI7vqHOE4Y=" crossorigin="anonymous"><script class="next-config" data-name="main" type="application/json">{"hostname":"www.xiaojianzheng.cn","root":"/","images":"/images","scheme":"Gemini","version":"8.6.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":true,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script><meta name="description" content="二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表…… 它的快速查找、插入和删除指定数据项的能力就丧失了。   为了能以较快的时"><meta property="og:type" content="website"><meta property="og:title" content="红黑树"><meta property="og:url" content="https://www.xiaojianzheng.cn/data-structure/red-black-tree.html"><meta property="og:site_name" content="JIAHE"><meta property="og:description" content="二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表…… 它的快速查找、插入和删除指定数据项的能力就丧失了。   为了能以较快的时"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1619098842402-1619098842396.png"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125816715.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125829122.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125840327.gif"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125851147.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125902690.gif"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125926226.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"><meta property="og:image" content="https://img-blog.csdnimg.cn/20190110125935997.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"><meta property="article:published_time" content="2021-09-09T10:32:36.736Z"><meta property="article:modified_time" content="2021-09-09T10:32:36.736Z"><meta property="article:author" content="JIAHE"><meta property="article:tag" content="JIAHE"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1619098842402-1619098842396.png"><link rel="canonical" href="https://www.xiaojianzheng.cn/data-structure/red-black-tree"><script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://www.xiaojianzheng.cn/data-structure/red-black-tree.html","path":"data-structure/red-black-tree.html","title":"红黑树"}</script><script class="next-config" data-name="calendar" type="application/json">""</script><title>红黑树 | JIAHE</title><noscript><link rel="stylesheet" href="/css/noscript.css"></noscript></head><body itemscope itemtype="http://schema.org/WebPage"><div class="headband"></div><main class="main"><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏" role="button"><span class="toggle-line"></span><span class="toggle-line"></span><span class="toggle-line"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><i class="logo-line"></i><h1 class="site-title">JIAHE</h1><i class="logo-line"></i></a></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-导航"><a href="/navigation/" rel="section"><i class="fa fa-location-arrow fa-fw"></i>导航</a></li><li class="menu-item menu-item-巨人的肩膀"><a href="/experience/" rel="section"><i class="fa fa-lightbulb fa-fw"></i>巨人的肩膀</a></li><li class="menu-item menu-item-java"><a href="/java/" rel="section"><i class="fa fa-code fa-fw"></i>Java</a></li><li class="menu-item menu-item-spring全家桶"><a href="/spring-framework/" rel="section"><i class="fa fa-code fa-fw"></i>Spring全家桶</a></li><li class="menu-item menu-item-mybatis官方教程"><a href="/mybatis/" rel="section"><i class="fa fa-code fa-fw"></i>Mybatis官方教程</a></li><li class="menu-item menu-item-代码可读性"><a href="/code-easy-read/" rel="section"><i class="far fa-file-code fa-fw"></i>代码可读性</a></li><li class="menu-item menu-item-数据库"><a href="/database/" rel="section"><i class="fas fa-database fa-fw"></i>数据库</a></li><li class="menu-item menu-item-计算机网络"><a href="/network/" rel="section"><i class="fas fa-network-wired fa-fw"></i>计算机网络</a></li><li class="menu-item menu-item-操作系统基础"><a href="/os/" rel="section"><i class="fas fa-laptop fa-fw"></i>操作系统基础</a></li><li class="menu-item menu-item-基础概念"><a href="/basic-concepts/" rel="section"><i class="fas fa-star fa-fw"></i>基础概念</a></li><li class="menu-item menu-item-数据结构与算法"><a href="/data-structure/" rel="section"><i class="fas fa-poll fa-fw"></i>数据结构与算法</a></li><li class="menu-item menu-item-git基础"><a href="/git-basics/" rel="section"><i class="fab fa-git-alt fa-fw"></i>Git基础</a></li><li class="menu-item menu-item-cheat-sheet"><a href="/cheat-sheet/" rel="section"><i class="fas fa-pen fa-fw"></i>Cheat Sheet</a></li><li class="menu-item menu-item-软件安装部署"><a href="/software-install-and-deploy/" rel="section"><i class="fab fa-windows fa-fw"></i>软件安装部署</a></li><li class="menu-item menu-item-html元素参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element" rel="noopener" target="_blank"><i class="fab fa-html5 fa-fw"></i>HTML元素参考</a></li><li class="menu-item menu-item-css-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Reference" rel="noopener" target="_blank"><i class="fab fa-css3-alt fa-fw"></i>CSS 参考</a></li><li class="menu-item menu-item-javascript-参考"><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference" rel="noopener" target="_blank"><i class="fab fa-js-square fa-fw"></i>JavaScript 参考</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i> 搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"> <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close" role="button"><i class="fa fa-times-circle"></i></span></div><div class="search-result-container no-result"><div class="search-result-icon"><i class="fa fa-spinner fa-pulse fa-5x"></i></div></div></div></div></div><div class="toggle sidebar-toggle" role="button"><span class="toggle-line"></span><span class="toggle-line"></span><span class="toggle-line"></span></div><aside class="sidebar"><div class="sidebar-inner sidebar-nav-active sidebar-toc-active"><ul class="sidebar-nav"><li class="sidebar-nav-toc"> 文章目录</li><li class="sidebar-nav-overview"> 站点概览</li></ul><div class="sidebar-panel-container"><div class="post-toc-wrap sidebar-panel"><div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-%E7%BA%A2-%E9%BB%91%E6%A0%91%E7%9A%84%E7%89%B9%E5%BE%81"><span class="nav-number">1.</span> <span class="nav-text">1. 红 - 黑树的特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-%E5%B9%B3%E8%A1%A1%E6%80%A7%E7%9A%84%E4%BF%AE%E6%AD%A3"><span class="nav-number">2.</span> <span class="nav-text">2. 平衡性的修正</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-%E5%8F%98%E8%89%B2"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 变色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-%E5%B7%A6%E6%97%8B"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 左旋</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-%E5%8F%B3%E6%97%8B"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 右旋</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-%E7%BA%A2-%E9%BB%91%E6%A0%91%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">3. 红 - 黑树的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-%E7%BA%A2-%E9%BB%91%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 红 - 黑树的节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-%E5%B7%A6%E6%97%8B%E7%9A%84%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 左旋的具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-%E5%8F%B3%E6%97%8B%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 右旋具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 插入操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B5-1"><span class="nav-number">3.4.1.</span> <span class="nav-text">情况 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B5-2"><span class="nav-number">3.4.2.</span> <span class="nav-text">情况 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B5-3"><span class="nav-number">3.4.3.</span> <span class="nav-text">情况 3</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-%E5%AE%8C%E6%95%B4%E6%BA%90%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">4. 完整源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-%E7%BA%A2-%E9%BB%91%E6%A0%91%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-number">5.</span> <span class="nav-text">5. 红 - 黑树的复杂度</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person"> <img class="site-author-image" itemprop="image" alt="JIAHE" src="/images/avatar.jpg"><p class="site-author-name" itemprop="name">JIAHE</p><div class="site-description" itemprop="description">Collection & Reuse</div></div><div class="site-state-wrap site-overview-item animated"><nav class="site-state"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">63</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/"><span class="site-state-item-count">71</span> <span class="site-state-item-name">标签</span></a></div></nav></div><div class="links-of-blogroll site-overview-item animated"><div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i> Links</div><ul class="links-of-blogroll-list"><li class="links-of-blogroll-item"> <a href="https://www.baidu.com/" title="https:&#x2F;&#x2F;www.baidu.com&#x2F;" rel="noopener" target="_blank">Baidu</a></li><li class="links-of-blogroll-item"> <a href="https://cn.bing.com/" title="https:&#x2F;&#x2F;cn.bing.com&#x2F;" rel="noopener" target="_blank">Bing</a></li><li class="links-of-blogroll-item"> <a href="https://www.google.com/%20||%20fab%20fa-google" title="https:&#x2F;&#x2F;www.google.com&#x2F; || fab fa-google" rel="noopener" target="_blank">Google</a></li></ul></div></div></div></div></div></aside><div class="sidebar-dimmer"></div></header><div class="back-to-top" role="button" aria-label="返回顶部"><i class="fa fa-arrow-up"></i> <span>0%</span></div><a role="button" class="book-mark-link book-mark-link-fixed"></a><noscript><div class="noscript-warning">Theme NexT works best with JavaScript enabled</div></noscript><div class="main-inner page posts-expand"><ul class="sub-menu menu"><li class="menu-item menu-item-红黑树"><a href="/data-structure/red-black-tree.html" rel="section">红黑树</a></li></ul><div class="post-block" lang="zh-CN"><header class="post-header"><h1 class="post-title" itemprop="name headline">红黑树</h1><div class="post-meta-container"></div></header><div class="post-body"><p>二叉搜索树是个很好的数据结构，可以快速地找到一个给定关键字的数据项，并且可以快速地插入和删除数据项。但是二叉搜索树有个很麻烦的问题，如果树中插入的是随机数据，则执行效果很好，但如果插入的是有序或者逆序的数据，那么二叉搜索树的执行速度就变得很慢。因为当插入数值有序时，二叉树就是非平衡的了，排在一条线上，其实就变成了一个链表…… 它的快速查找、插入和删除指定数据项的能力就丧失了。</p><p><img data-src="https://cdn.jsdelivr.net/gh/xiao1272209235/hexo-image@main/1619098842402-1619098842396.png"></p><p>为了能以较快的时间 O(logN) 来搜索一棵树，需要保证树总是平衡的（或者至少大部分是平衡的），这就是说对树中的每个节点在它左边的后代数目和在它右边的后代数目应该大致相等。</p><p>红 - 黑树的就是这样的一棵平衡树，对一个要插入的数据项，插入例程要检查会不会破坏树的特征，如果破坏了，程序就会进行纠正，根据需要改变树的结构，从而保持树的平衡。那么红 - 黑树都有哪些特征呢？</p><span id="more"></span><h1 id="1-红-黑树的特征"><a href="#1-红-黑树的特征" class="headerlink" title="1. 红 - 黑树的特征"></a>1. 红 - 黑树的特征</h1><p>它主要有两个特征：</p><ol><li><p>节点都有颜色；</p></li><li><p>在插入和删除的过程中，要遵循保持这些颜色的不同排列的规则。</p></li></ol><p>首先第一个特征很好解决，在节点类中添加一个数据字段，例如 Boolean 变量，以此来表示节点的颜色信息。第二个特征比较复杂，红 - 黑树有它的几个规则，如果遵循这些规则，那么树就是平衡的。</p><p>红 - 黑树的主要规则如下：</p><ol><li>每个节点不是红色就是黑色的；</li><li>根节点总是黑色的；</li><li>如果节点是红色的，则它的子节点必须是黑色的（反之不一定）；</li><li>从根节点到叶节点或空子节点的每条路径，必须包含相同数目的黑色节点（即相同的黑色高度）。</li></ol><p>在红 - 黑树中插入的节点都是红色的，这不是偶然的，因为插入一个红色节点比插入一个黑色节点违背红 - 黑规则的可能性更小。原因是：插入黑色节点总会改变黑色高度（违背规则 4），但是插入红色节点只有一半的机会会违背规则 3。</p><p>另外违背规则 3 比违背规则 4 要更容易修正。当插入一个新的节点时，可能会破坏这种平衡性，那么红 - 黑树是如何修正的呢？</p><h1 id="2-平衡性的修正"><a href="#2-平衡性的修正" class="headerlink" title="2. 平衡性的修正"></a>2. 平衡性的修正</h1><p>红 - 黑树主要通过三种方式对平衡进行修正，改变节点颜色、左旋和右旋。这看起来有点抽象，我们分别来介绍它们。</p><h2 id="2-1-变色"><a href="#2-1-变色" class="headerlink" title="2.1 变色"></a>2.1 变色</h2><p>改变节点颜色比较容易理解，因为它违背了规则 3。假设现在有个节点 E，然后插入节点 A 和节点 S，节点 A 在左子节点，S 在右子节点，目前是平衡的。如果此时再插一个节点，那么就出现了不平衡了，因为红色节点的子节点必须为黑色，但是新插的节点是红色的。所以这时候就必须改变节点颜色了。所以我们将根的两个子节点从红色变为黑色（至于为什么都要变，下面插入的时候会详细介绍），将父节点会从黑色变成红色。可以用如下示意图表示一下：</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125816715.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"></p><h2 id="2-2-左旋"><a href="#2-2-左旋" class="headerlink" title="2.2 左旋"></a>2.2 左旋</h2><p>通常左旋操作用于将一个向右倾斜的红色链接旋转为向左链接。示意图如下：</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125829122.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"></p><p>左旋有个很萌萌哒的动态示意图，可以方便理解：</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125840327.gif"></p><h2 id="2-3-右旋"><a href="#2-3-右旋" class="headerlink" title="2.3 右旋"></a>2.3 右旋</h2><p>右旋可左旋刚好相反，这里不再赘述，直接看示意图：</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125851147.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"></p><p>当然咯，右旋也有个萌萌的动态图：</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125902690.gif"></p><p>这里主要介绍了红 - 黑树对平衡的三种修正方式，大家有个感性的认识，那么什么时候该修正呢？什么时候该用哪种修正呢？这将是接下来我们要探讨的问题。</p><h1 id="3-红-黑树的操作"><a href="#3-红-黑树的操作" class="headerlink" title="3. 红 - 黑树的操作"></a>3. 红 - 黑树的操作</h1><p>红 - 黑树的基本操作是添加、删除和旋转。对红 - 黑树进行添加或删除后，可能会破坏其平衡性，会用到哪种旋转方式去修正呢？我们首先对红 - 黑树的节点做一介绍，然后分别对左旋和右旋的具体实现做一分析，最后我们探讨下红 - 黑树的具体操作。</p><h2 id="3-1-红-黑树的节点"><a href="#3-1-红-黑树的节点" class="headerlink" title="3.1 红 - 黑树的节点"></a>3.1 红 - 黑树的节点</h2><p>红 - 黑树是对二叉搜索树的改进，所以其节点与二叉搜索树是差不多的，只不过在它基础上增加了一个 boolean 型变量来表示节点的颜色，具体看 RBNode 类：</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class RBNode&lt;T extends Comparable&lt;T&gt;&gt;&#123;
+	boolean color; &#x2F;&#x2F;颜色
+	T key; &#x2F;&#x2F;关键字(键值)
+	RBNode&lt;T&gt; left; &#x2F;&#x2F;左子节点
+	RBNode&lt;T&gt; right; &#x2F;&#x2F;右子节点
+	RBNode&lt;T&gt; parent; &#x2F;&#x2F;父节点
+	
+	public RBNode(T key, boolean color, RBNode&lt;T&gt; parent, RBNode&lt;T&gt; left, RBNode&lt;T&gt; right) &#123;
+		this.key &#x3D; key;
+		this.color &#x3D; color;
+		this.parent &#x3D; parent;
+		this.left &#x3D; left;
+		this.right &#x3D; right;
+	&#125;
+	
+	public T getKey() &#123;
+		return key;
+	&#125;
+	
+	public String toString() &#123;
+		return &quot;&quot; + key + (this.color &#x3D;&#x3D; RED? &quot;R&quot; : &quot;B&quot;);
+	&#125;
+&#125;</code></pre><h2 id="3-2-左旋的具体实现"><a href="#3-2-左旋的具体实现" class="headerlink" title="3.2 左旋的具体实现"></a>3.2 左旋的具体实现</h2><p>上面对左旋的概念已经有了感性的认识了，这里就不再赘述了，我们从下面的代码中结合上面的示意图，探讨一下左旋的具体实现：</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;*************对红黑树节点x进行左旋操作 ******************&#x2F;
+&#x2F;*
+ * 左旋示意图：对节点x进行左旋
+ *     p                       p
+ *    &#x2F;                       &#x2F;
+ *   x                       y
+ *  &#x2F; \                     &#x2F; \
+ * lx  y      -----&gt;       x  ry
+ *    &#x2F; \                 &#x2F; \
+ *   ly ry               lx ly
+ * 左旋做了三件事：
+ * 1. 将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)
+ * 2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)
+ * 3. 将y的左子节点设为x，将x的父节点设为y
+ *&#x2F;
+private void leftRotate(RBNode&lt;T&gt; x) &#123;
+	&#x2F;&#x2F;1. 将y的左子节点赋给x的右子节点，并将x赋给y左子节点的父节点(y左子节点非空时)
+	RBNode&lt;T&gt; y &#x3D; x.right;
+	x.right &#x3D; y.left;
+	
+	if(y.left !&#x3D; null) 
+		y.left.parent &#x3D; x;
+	
+	&#x2F;&#x2F;2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)
+	y.parent &#x3D; x.parent;
+	
+	if(x.parent &#x3D;&#x3D; null) &#123;
+		this.root &#x3D; y; &#x2F;&#x2F;如果x的父节点为空，则将y设为父节点
+	&#125; else &#123;
+		if(x &#x3D;&#x3D; x.parent.left) &#x2F;&#x2F;如果x是左子节点
+			x.parent.left &#x3D; y; &#x2F;&#x2F;则也将y设为左子节点
+		else
+			x.parent.right &#x3D; y;&#x2F;&#x2F;否则将y设为右子节点
+	&#125;
+	
+	&#x2F;&#x2F;3. 将y的左子节点设为x，将x的父节点设为y
+	y.left &#x3D; x;
+	x.parent &#x3D; y;		
+&#125;</code></pre><h2 id="3-3-右旋具体实现"><a href="#3-3-右旋具体实现" class="headerlink" title="3.3 右旋具体实现"></a>3.3 右旋具体实现</h2><p>上面对右旋的概念已经有了感性的认识了，这里也不再赘述了，我们从下面的代码中结合上面的示意图，探讨一下右旋的具体实现：</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;*************对红黑树节点y进行右旋操作 ******************&#x2F;
+&#x2F;*
+ * 左旋示意图：对节点y进行右旋
+ *        p                   p
+ *       &#x2F;                   &#x2F;
+ *      y                   x
+ *     &#x2F; \                 &#x2F; \
+ *    x  ry   -----&gt;      lx  y
+ *   &#x2F; \                     &#x2F; \
+ * lx  rx                   rx ry
+ * 右旋做了三件事：
+ * 1. 将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)
+ * 2. 将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)
+ * 3. 将x的右子节点设为y，将y的父节点设为x
+ *&#x2F;
+private void rightRotate(RBNode&lt;T&gt; y) &#123;
+    &#x2F;&#x2F; 1. 将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)
+    RBNode&lt;T&gt; x &#x3D; y.left;
+    y.left &#x3D; x.right;
+
+    if (x.right !&#x3D; null)
+        x.right.parent &#x3D; y;
+
+    &#x2F;&#x2F; 2. 将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)
+    x.parent &#x3D; y.parent;
+
+    if (y.parent &#x3D;&#x3D; null) &#123;
+        this.root &#x3D; x;	&#x2F;&#x2F;如果y的父节点为空，则将x设为父节点
+    &#125; else &#123;
+        if (y &#x3D;&#x3D; y.parent.right)	&#x2F;&#x2F;如果y是右子节点
+            y.parent.right &#x3D; x; 	&#x2F;&#x2F;则也将x设为右子节点
+        else
+            y.parent.left &#x3D; x;		&#x2F;&#x2F;否则将x设为左子节点
+    &#125;
+
+    &#x2F;&#x2F; 3. 将x的右子节点设为y，将y的父节点设为x
+    x.right &#x3D; y;
+    y.parent &#x3D; x;
+&#125;</code></pre><h2 id="3-4-插入操作"><a href="#3-4-插入操作" class="headerlink" title="3.4 插入操作"></a>3.4 插入操作</h2><p>分析完了红 - 黑树中主要的旋转操作，接下来我们开始分析常见的插入、删除等操作了。这里先分析插入操作。 由于红 - 黑树是二叉搜索树的改进，所以插入操作的前半工作时相同的，即先找到待插入的位置，再将节点插入，先来看看插入的前半段代码：</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;*********************** 向红黑树中插入节点 **********************&#x2F;
+public void insert(T key) &#123;
+	RBNode&lt;T&gt; node &#x3D; new RBNode&lt;T&gt;(key, RED, null, null, null);
+	if(node !&#x3D; null) 
+		insert(node);
+&#125;
+ 
+&#x2F;&#x2F;将节点插入到红黑树中，这个过程与二叉搜索树是一样的
+private void insert(RBNode&lt;T&gt; node) &#123;
+	RBNode&lt;T&gt; current &#x3D; null; &#x2F;&#x2F;表示最后node的父节点
+	RBNode&lt;T&gt; x &#x3D; this.root; &#x2F;&#x2F;用来向下搜索用的
+	
+	&#x2F;&#x2F;1. 找到插入的位置
+	while(x !&#x3D; null) &#123;
+		current &#x3D; x;
+		int cmp &#x3D; node.key.compareTo(x.key);
+		if(cmp &lt; 0) 
+			x &#x3D; x.left;
+		else
+			x &#x3D; x.right;
+	&#125;
+	node.parent &#x3D; current; &#x2F;&#x2F;找到了位置，将当前current作为node的父节点
+	
+	&#x2F;&#x2F;2. 接下来判断node是插在左子节点还是右子节点
+	if(current !&#x3D; null) &#123;
+		int cmp &#x3D; node.key.compareTo(current.key);
+		if(cmp &lt; 0)
+			current.left &#x3D; node;
+		else
+			current.right &#x3D; node;
+	&#125; else &#123;
+		this.root &#x3D; node;
+	&#125;
+	
+	&#x2F;&#x2F;3. 将它重新修整为一颗红黑树
+	insertFixUp(node);
+&#125;</code></pre><p>这与二叉搜索树中实现的思路一模一样，这里不再赘述，主要看看方法里面最后一步 insertFixUp 操作。因为插入后可能会导致树的不平衡，insertFixUp 方法里主要是分情况讨论，分析何时变色，何时左旋，何时右旋。我们先从理论上分析具体的情况，然后再看 insertFixUp 方法的具体实现。</p><p>如果是第一次插入，由于原树为空，所以只会违反红 - 黑树的规则 2，所以只要把根节点涂黑即可；如果插入节点的父节点是黑色的，那不会违背红 - 黑树的规则，什么也不需要做；但是遇到如下三种情况时，我们就要开始变色和旋转了：</p><ol><li>插入节点的父节点和其叔叔节点（祖父节点的另一个子节点）均为红色的；</li><li>插入节点的父节点是红色，叔叔节点是黑色，且插入节点是其父节点的右子节点；</li><li>插入节点的父节点是红色，叔叔节点是黑色，且插入节点是其父节点的左子节点。</li></ol><p>下面我们先挨个分析这三种情况都需要如何操作，然后再给出实现代码。</p><h3 id="情况-1"><a href="#情况-1" class="headerlink" title="情况 1"></a>情况 1</h3><p><strong>插入节点的父节点和其叔叔节点（祖父节点的另一个子节点）均为红色的。</strong>此时，肯定存在祖父节点，但是不知道父节点是其左子节点还是右子节点，但是由于对称性，我们只要讨论出一边的情况，另一种情况自然也与之对应。这里考虑父节点是祖父节点的左子节点的情况，如下左图所示：</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125926226.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"></p><p>对于这种情况，我们要做的操作有：<strong>将当前节点 (4) 的父节点 (5) 和叔叔节点 (8) 涂黑，将祖父节点 (7) 涂红，变成上右图所示的情况。再将当前节点指向其祖父节点，再次从新的当前节点开始算法（具体等下看下面的程序）。</strong>这样上右图就变成了情况 2 了。</p><h3 id="情况-2"><a href="#情况-2" class="headerlink" title="情况 2"></a>情况 2</h3><p><strong>插入节点的父节点是红色，叔叔节点是黑色，且插入节点是其父节点的右子节点。</strong>我们要做的操作有：将当前节点 (7) 的父节点 (2) 作为新的节点，以新的当前节点为支点做左旋操作。完成后如左下图所示，这样左下图就变成情况 3 了。</p><p><img data-src="https://img-blog.csdnimg.cn/20190110125935997.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Vzb25fMTU=,size_16,color_FFFFFF,t_70"></p><h3 id="情况-3"><a href="#情况-3" class="headerlink" title="情况 3"></a>情况 3</h3><p><strong>插入节点的父节点是红色，叔叔节点是黑色，且插入节点是其父节点的左子节点</strong>。我们要做的操作有：将当前节点的父节点 (7) 涂黑，将祖父节点 (11) 涂红，在祖父节点为支点做右旋操作。</p><p>最后把根节点涂黑，整个红 - 黑树重新恢复了平衡，如右上图所示。至此，插入操作完成！</p><p>我们可以看出，如果是从情况 1 开始发生的，必然会走完情况 2 和 3，也就是说这是一整个流程，当然咯，实际中可能不一定会从情况 1 发生，如果从情况 2 开始发生，那再走个情况 3 即可完成调整，如果直接只要调整情况 3，那么前两种情况均不需要调整了。故变色和旋转之间的先后关系可以表示为：变色 -&gt; 左旋 -&gt; 右旋。</p><p>至此，我们完成了全部的插入操作。下面我们看看 insertFixUp 方法中的具体实现（可以结合上面的分析图，更加利与理解）：</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">private void insertFixUp(RBNode&lt;T&gt; node) &#123;  
+    RBNode&lt;T&gt; parent, gparent; &#x2F;&#x2F;定义父节点和祖父节点  
+      
+    &#x2F;&#x2F;需要修整的条件：父节点存在，且父节点的颜色是红色  
+    while(((parent &#x3D; parentOf(node)) !&#x3D; null) &amp;&amp; isRed(parent)) &#123;  
+        gparent &#x3D; parentOf(parent);&#x2F;&#x2F;获得祖父节点  
+          
+        &#x2F;&#x2F;若父节点是祖父节点的左子节点，下面else与其相反  
+        if(parent &#x3D;&#x3D; gparent.left) &#123;                  
+            RBNode&lt;T&gt; uncle &#x3D; gparent.right; &#x2F;&#x2F;获得叔叔节点  
+              
+            &#x2F;&#x2F;case1: 叔叔节点也是红色  
+            if(uncle !&#x3D; null &amp;&amp; isRed(uncle)) &#123;  
+                setBlack(parent); &#x2F;&#x2F;把父节点和叔叔节点涂黑  
+                setBlack(uncle);  
+                setRed(gparent); &#x2F;&#x2F;把祖父节点涂红  
+                node &#x3D; gparent; &#x2F;&#x2F;将位置放到祖父节点处  
+                continue; &#x2F;&#x2F;继续while，重新判断  
+            &#125;  
+              
+            &#x2F;&#x2F;case2: 叔叔节点是黑色，且当前节点是右子节点  
+            if(node &#x3D;&#x3D; parent.right) &#123;  
+                leftRotate(parent); &#x2F;&#x2F;从父节点处左旋  
+                RBNode&lt;T&gt; tmp &#x3D; parent; &#x2F;&#x2F;然后将父节点和自己调换一下，为下面右旋做准备  
+                parent &#x3D; node;  
+                node &#x3D; tmp;  
+            &#125;  
+              
+            &#x2F;&#x2F;case3: 叔叔节点是黑色，且当前节点是左子节点  
+            setBlack(parent);  
+            setRed(gparent);  
+            rightRotate(gparent);  
+        &#125; else &#123; &#x2F;&#x2F;若父节点是祖父节点的右子节点,与上面的完全相反，本质一样的  
+            RBNode&lt;T&gt; uncle &#x3D; gparent.left;  
+              
+            &#x2F;&#x2F;case1: 叔叔节点也是红色  
+            if(uncle !&#x3D; null &amp; isRed(uncle)) &#123;  
+                setBlack(parent);  
+                setBlack(uncle);  
+                setRed(gparent);  
+                node &#x3D; gparent;  
+                continue;  
+            &#125;  
+              
+            &#x2F;&#x2F;case2: 叔叔节点是黑色的，且当前节点是左子节点  
+            if(node &#x3D;&#x3D; parent.left) &#123;  
+                rightRotate(parent);  
+                RBNode&lt;T&gt; tmp &#x3D; parent;  
+                parent &#x3D; node;  
+                node &#x3D; tmp;  
+            &#125;  
+              
+            &#x2F;&#x2F;case3: 叔叔节点是黑色的，且当前节点是右子节点  
+            setBlack(parent);  
+            setRed(gparent);  
+            leftRotate(gparent);  
+        &#125;  
+    &#125;  
+      
+    &#x2F;&#x2F;将根节点设置为黑色  
+    setBlack(this.root);  
+&#125;</code></pre><h1 id="4-完整源码"><a href="#4-完整源码" class="headerlink" title="4. 完整源码"></a>4. 完整源码</h1><p>终于分析完了插入和删除操作的所有东西。另外，红 - 黑树还有一些其他操作，比如：查找特定值、遍历、返回最值、销毁树等操作我将放到源码中给大家呈现出来，详见下面红 - 黑树的完整代码。</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">package tree;
+&#x2F;**
+ * @description implementation of Red-Black Tree by Java
+ * @author eson_15
+ * @param &lt;T&gt;
+ * @date 2016-4-18 19:27:28
+ *&#x2F;
+public class RBTree&lt;T extends Comparable&lt;T&gt;&gt; &#123;
+	private RBNode&lt;T&gt; root; &#x2F;&#x2F;根节点
+	private static final boolean RED &#x3D; false; &#x2F;&#x2F;定义红黑树标志
+	private static final boolean BLACK &#x3D; true;
+	
+	&#x2F;&#x2F;内部类：节点类
+	public class RBNode&lt;T extends Comparable&lt;T&gt;&gt;&#123;
+		boolean color; &#x2F;&#x2F;颜色
+		T key; &#x2F;&#x2F;关键字(键值)
+		RBNode&lt;T&gt; left; &#x2F;&#x2F;左子节点
+		RBNode&lt;T&gt; right; &#x2F;&#x2F;右子节点
+		RBNode&lt;T&gt; parent; &#x2F;&#x2F;父节点
+		
+		public RBNode(T key, boolean color, RBNode&lt;T&gt; parent, RBNode&lt;T&gt; left, RBNode&lt;T&gt; right) &#123;
+			this.key &#x3D; key;
+			this.color &#x3D; color;
+			this.parent &#x3D; parent;
+			this.left &#x3D; left;
+			this.right &#x3D; right;
+		&#125;
+		
+		public T getKey() &#123;
+			return key;
+		&#125;
+		
+		public String toString() &#123;
+			return &quot;&quot; + key + (this.color &#x3D;&#x3D; RED? &quot;R&quot; : &quot;B&quot;);
+		&#125;
+	&#125;
+	
+	public RBTree() &#123;
+		root &#x3D; null;
+	&#125;
+	
+	public RBNode&lt;T&gt; parentOf(RBNode&lt;T&gt; node) &#123; &#x2F;&#x2F;获得父节点
+		return node !&#x3D; null? node.parent : null;
+	&#125;
+	
+	public void setParent(RBNode&lt;T&gt; node, RBNode&lt;T&gt; parent) &#123; &#x2F;&#x2F;设置父节点
+		if(node !&#x3D; null) 
+			node.parent &#x3D; parent;
+	&#125;
+	
+	public boolean colorOf(RBNode&lt;T&gt; node) &#123; &#x2F;&#x2F;获得节点的颜色
+		return node !&#x3D; null? node.color : BLACK;
+	&#125;
+	
+	public boolean isRed(RBNode&lt;T&gt; node) &#123; &#x2F;&#x2F;判断节点的颜色
+		return (node !&#x3D; null)&amp;&amp;(node.color &#x3D;&#x3D; RED)? true : false;
+	&#125;
+	
+	public boolean isBlack(RBNode&lt;T&gt; node) &#123;
+		return !isRed(node);
+	&#125;
+	
+	public void setRed(RBNode&lt;T&gt; node) &#123; &#x2F;&#x2F;设置节点的颜色
+		if(node !&#x3D; null) 
+			node.color &#x3D; RED;
+	&#125;
+	
+	public void setBlack(RBNode&lt;T&gt; node) &#123;
+		if(node !&#x3D; null) &#123;
+			node.color &#x3D; BLACK;
+		&#125;
+	&#125;
+	 
+	public void setColor(RBNode&lt;T&gt; node, boolean color) &#123;
+		if(node !&#x3D; null)
+			node.color &#x3D; color;
+	&#125;
+	 
+	&#x2F;***************** 前序遍历红黑树 *********************&#x2F;
+	public void preOrder() &#123;
+		preOrder(root);
+	&#125;
+ 
+	private void preOrder(RBNode&lt;T&gt; tree) &#123;
+		if(tree !&#x3D; null) &#123;
+			System.out.print(tree.key + &quot; &quot;);
+			preOrder(tree.left);
+			preOrder(tree.right);
+		&#125;
+	&#125;
+	 
+	&#x2F;***************** 中序遍历红黑树 *********************&#x2F;
+	public void inOrder() &#123;
+		inOrder(root);
+	&#125;
+ 
+	private void inOrder(RBNode&lt;T&gt; tree) &#123;
+		if(tree !&#x3D; null) &#123;
+			 preOrder(tree.left);
+			 System.out.print(tree.key + &quot; &quot;);
+			 preOrder(tree.right);
+		 &#125;
+	&#125;
+	
+	&#x2F;***************** 后序遍历红黑树 *********************&#x2F;
+	public void postOrder() &#123;
+		postOrder(root);
+	&#125;
+ 
+	private void postOrder(RBNode&lt;T&gt; tree) &#123;
+		if(tree !&#x3D; null) &#123;
+			 preOrder(tree.left);
+			 preOrder(tree.right);
+			 System.out.print(tree.key + &quot; &quot;);
+		 &#125;
+	&#125;
+	
+	&#x2F;**************** 查找红黑树中键值为key的节点 ***************&#x2F;
+	public RBNode&lt;T&gt; search(T key) &#123;
+		return search(root, key);
+&#x2F;&#x2F;		return search2(root, key); &#x2F;&#x2F;使用递归的方法，本质一样的
+	&#125;
+ 
+	private RBNode&lt;T&gt; search(RBNode&lt;T&gt; x, T key) &#123;
+		while(x !&#x3D; null) &#123;
+			int cmp &#x3D; key.compareTo(x.key);
+			if(cmp &lt; 0) 
+				x &#x3D; x.left;
+			else if(cmp &gt; 0) 
+				x &#x3D; x.right;
+			else 
+				return x;
+		&#125;
+		return x;
+	&#125;
+	&#x2F;&#x2F;使用递归
+	private RBNode&lt;T&gt; search2(RBNode&lt;T&gt; x, T key) &#123;
+		if(x &#x3D;&#x3D; null)
+			return x;
+		int cmp &#x3D; key.compareTo(x.key);
+		if(cmp &lt; 0)
+			return search2(x.left, key);
+		else if(cmp &gt; 0) 
+			return search2(x.right, key);
+		else
+			return x;
+	&#125;
+	
+	&#x2F;**************** 查找最小节点的值  **********************&#x2F;
+	public T minValue() &#123;
+		RBNode&lt;T&gt; node &#x3D; minNode(root);
+		if(node !&#x3D; null)
+			return node.key;
+		return null;
+	&#125;
+ 
+	private RBNode&lt;T&gt; minNode(RBNode&lt;T&gt; tree) &#123;
+		if(tree &#x3D;&#x3D; null)
+			return null;
+		while(tree.left !&#x3D; null) &#123;
+			tree &#x3D; tree.left;
+		&#125;
+		return tree;
+	&#125;
+	
+	&#x2F;******************** 查找最大节点的值 *******************&#x2F;
+	public T maxValue() &#123;
+		RBNode&lt;T&gt; node &#x3D; maxNode(root);
+		if(node !&#x3D; null)
+			return node.key;
+		return null;
+	&#125;
+ 
+	private RBNode&lt;T&gt; maxNode(RBNode&lt;T&gt; tree) &#123;
+		if(tree &#x3D;&#x3D; null)
+			return null;
+		while(tree.right !&#x3D; null)
+			tree &#x3D; tree.right;
+		return tree;
+	&#125;
+	
+	&#x2F;********* 查找节点x的后继节点,即大于节点x的最小节点 ***********&#x2F;
+	public RBNode&lt;T&gt; successor(RBNode&lt;T&gt; x) &#123;
+		&#x2F;&#x2F;如果x有右子节点，那么后继节点为“以右子节点为根的子树的最小节点”
+		if(x.right !&#x3D; null) 
+			return minNode(x.right);
+		&#x2F;&#x2F;如果x没有右子节点，会出现以下两种情况：
+		&#x2F;&#x2F;1. x是其父节点的左子节点，则x的后继节点为它的父节点
+		&#x2F;&#x2F;2. x是其父节点的右子节点，则先查找x的父节点p，然后对p再次进行这两个条件的判断
+		RBNode&lt;T&gt; p &#x3D; x.parent;
+		while((p !&#x3D; null) &amp;&amp; (x &#x3D;&#x3D; p.right)) &#123; &#x2F;&#x2F;对应情况2
+			x &#x3D; p;
+			p &#x3D; x.parent;
+		&#125;
+		return p; &#x2F;&#x2F;对应情况1
+		
+	&#125;
+	
+	&#x2F;********* 查找节点x的前驱节点，即小于节点x的最大节点 ************&#x2F;
+	public RBNode&lt;T&gt; predecessor(RBNode&lt;T&gt; x) &#123;
+		&#x2F;&#x2F;如果x有左子节点，那么前驱结点为“左子节点为根的子树的最大节点”
+		if(x.left !&#x3D; null) 
+			return maxNode(x.left);
+		&#x2F;&#x2F;如果x没有左子节点，会出现以下两种情况：
+		&#x2F;&#x2F;1. x是其父节点的右子节点，则x的前驱节点是它的父节点
+		&#x2F;&#x2F;2. x是其父节点的左子节点，则先查找x的父节点p，然后对p再次进行这两个条件的判断
+		RBNode&lt;T&gt; p &#x3D; x.parent;
+		while((p !&#x3D; null) &amp;&amp; (x &#x3D;&#x3D; p.left)) &#123; &#x2F;&#x2F;对应情况2
+			x &#x3D; p;
+			p &#x3D; x.parent;
+		&#125;
+		return p; &#x2F;&#x2F;对应情况1
+	&#125;
+	
+	&#x2F;*************对红黑树节点x进行左旋操作 ******************&#x2F;
+	&#x2F;*
+	 * 左旋示意图：对节点x进行左旋
+	 *     p                       p
+	 *    &#x2F;                       &#x2F;
+	 *   x                       y
+	 *  &#x2F; \                     &#x2F; \
+	 * lx  y      -----&gt;       x  ry
+	 *    &#x2F; \                 &#x2F; \
+	 *   ly ry               lx ly
+	 * 左旋做了三件事：
+	 * 1. 将y的左子节点赋给x的右子节点,并将x赋给y左子节点的父节点(y左子节点非空时)
+	 * 2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)
+	 * 3. 将y的左子节点设为x，将x的父节点设为y
+	 *&#x2F;
+	private void leftRotate(RBNode&lt;T&gt; x) &#123;
+		&#x2F;&#x2F;1. 将y的左子节点赋给x的右子节点，并将x赋给y左子节点的父节点(y左子节点非空时)
+		RBNode&lt;T&gt; y &#x3D; x.right;
+		x.right &#x3D; y.left;
+		
+		if(y.left !&#x3D; null) 
+			y.left.parent &#x3D; x;
+		
+		&#x2F;&#x2F;2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)
+		y.parent &#x3D; x.parent;
+		
+		if(x.parent &#x3D;&#x3D; null) &#123;
+			this.root &#x3D; y; &#x2F;&#x2F;如果x的父节点为空，则将y设为父节点
+		&#125; else &#123;
+			if(x &#x3D;&#x3D; x.parent.left) &#x2F;&#x2F;如果x是左子节点
+				x.parent.left &#x3D; y; &#x2F;&#x2F;则也将y设为左子节点
+			else
+				x.parent.right &#x3D; y;&#x2F;&#x2F;否则将y设为右子节点
+		&#125;
+		
+		&#x2F;&#x2F;3. 将y的左子节点设为x，将x的父节点设为y
+		y.left &#x3D; x;
+		x.parent &#x3D; y;		
+	&#125;
+	
+	&#x2F;*************对红黑树节点y进行右旋操作 ******************&#x2F;
+	&#x2F;*
+	 * 左旋示意图：对节点y进行右旋
+	 *        p                   p
+	 *       &#x2F;                   &#x2F;
+	 *      y                   x
+	 *     &#x2F; \                 &#x2F; \
+	 *    x  ry   -----&gt;      lx  y
+	 *   &#x2F; \                     &#x2F; \
+	 * lx  rx                   rx ry
+	 * 右旋做了三件事：
+	 * 1. 将x的右子节点赋给y的左子节点,并将y赋给x右子节点的父节点(x右子节点非空时)
+	 * 2. 将y的父节点p(非空时)赋给x的父节点，同时更新p的子节点为x(左或右)
+	 * 3. 将x的右子节点设为y，将y的父节点设为x
+	 *&#x2F;
+	private void rightRotate(RBNode&lt;T&gt; y) &#123;
+		&#x2F;&#x2F;1. 将y的左子节点赋给x的右子节点，并将x赋给y左子节点的父节点(y左子节点非空时)
+		RBNode&lt;T&gt; x &#x3D; y.left;
+		y.left &#x3D; x.right;
+		
+		if(x.right !&#x3D; null) 
+			x.right.parent &#x3D; y;
+		
+		&#x2F;&#x2F;2. 将x的父节点p(非空时)赋给y的父节点，同时更新p的子节点为y(左或右)
+		x.parent &#x3D; y.parent;
+		
+		if(y.parent &#x3D;&#x3D; null) &#123;
+			this.root &#x3D; x; &#x2F;&#x2F;如果x的父节点为空，则将y设为父节点
+		&#125; else &#123;
+			if(y &#x3D;&#x3D; y.parent.right) &#x2F;&#x2F;如果x是左子节点
+				y.parent.right &#x3D; x; &#x2F;&#x2F;则也将y设为左子节点
+			else
+				y.parent.left &#x3D; x;&#x2F;&#x2F;否则将y设为右子节点
+		&#125;
+		
+		&#x2F;&#x2F;3. 将y的左子节点设为x，将x的父节点设为y
+		x.right &#x3D; y;
+		y.parent &#x3D; x;		
+	&#125;
+	
+	&#x2F;*********************** 向红黑树中插入节点 **********************&#x2F;
+	public void insert(T key) &#123;
+		RBNode&lt;T&gt; node &#x3D; new RBNode&lt;T&gt;(key, RED, null, null, null);
+		if(node !&#x3D; null) 
+			insert(node);
+	&#125;
+	
+	&#x2F;&#x2F;将节点插入到红黑树中，这个过程与二叉搜索树是一样的
+	private void insert(RBNode&lt;T&gt; node) &#123;
+		RBNode&lt;T&gt; current &#x3D; null; &#x2F;&#x2F;表示最后node的父节点
+		RBNode&lt;T&gt; x &#x3D; this.root; &#x2F;&#x2F;用来向下搜索用的
+		
+		&#x2F;&#x2F;1. 找到插入的位置
+		while(x !&#x3D; null) &#123;
+			current &#x3D; x;
+			int cmp &#x3D; node.key.compareTo(x.key);
+			if(cmp &lt; 0) 
+				x &#x3D; x.left;
+			else
+				x &#x3D; x.right;
+		&#125;
+		node.parent &#x3D; current; &#x2F;&#x2F;找到了位置，将当前current作为node的父节点
+		
+		&#x2F;&#x2F;2. 接下来判断node是插在左子节点还是右子节点
+		if(current !&#x3D; null) &#123;
+			int cmp &#x3D; node.key.compareTo(current.key);
+			if(cmp &lt; 0)
+				current.left &#x3D; node;
+			else
+				current.right &#x3D; node;
+		&#125; else &#123;
+			this.root &#x3D; node;
+		&#125;
+		
+		&#x2F;&#x2F;3. 将它重新修整为一颗红黑树
+		insertFixUp(node);
+	&#125;
+ 
+	private void insertFixUp(RBNode&lt;T&gt; node) &#123;
+		RBNode&lt;T&gt; parent, gparent; &#x2F;&#x2F;定义父节点和祖父节点
+		
+		&#x2F;&#x2F;需要修整的条件：父节点存在，且父节点的颜色是红色
+		while(((parent &#x3D; parentOf(node)) !&#x3D; null) &amp;&amp; isRed(parent)) &#123;
+			gparent &#x3D; parentOf(parent);&#x2F;&#x2F;获得祖父节点
+			
+			&#x2F;&#x2F;若父节点是祖父节点的左子节点，下面else与其相反
+			if(parent &#x3D;&#x3D; gparent.left) &#123;				
+				RBNode&lt;T&gt; uncle &#x3D; gparent.right; &#x2F;&#x2F;获得叔叔节点
+				
+				&#x2F;&#x2F;case1: 叔叔节点也是红色
+				if(uncle !&#x3D; null &amp;&amp; isRed(uncle)) &#123;
+					setBlack(parent); &#x2F;&#x2F;把父节点和叔叔节点涂黑
+					setBlack(uncle);
+					setRed(gparent); &#x2F;&#x2F;把祖父节点涂红
+					node &#x3D; gparent; &#x2F;&#x2F;将位置放到祖父节点处
+					continue; &#x2F;&#x2F;继续while，重新判断
+				&#125;
+				
+				&#x2F;&#x2F;case2: 叔叔节点是黑色，且当前节点是右子节点
+				if(node &#x3D;&#x3D; parent.right) &#123;
+					leftRotate(parent); &#x2F;&#x2F;从父节点处左旋
+					RBNode&lt;T&gt; tmp &#x3D; parent; &#x2F;&#x2F;然后将父节点和自己调换一下，为下面右旋做准备
+					parent &#x3D; node;
+					node &#x3D; tmp;
+				&#125;
+				
+				&#x2F;&#x2F;case3: 叔叔节点是黑色，且当前节点是左子节点
+				setBlack(parent);
+				setRed(gparent);
+				rightRotate(gparent);
+			&#125; else &#123; &#x2F;&#x2F;若父节点是祖父节点的右子节点,与上面的完全相反，本质一样的
+				RBNode&lt;T&gt; uncle &#x3D; gparent.left;
+				
+				&#x2F;&#x2F;case1: 叔叔节点也是红色
+				if(uncle !&#x3D; null &amp; isRed(uncle)) &#123;
+					setBlack(parent);
+					setBlack(uncle);
+					setRed(gparent);
+					node &#x3D; gparent;
+					continue;
+				&#125;
+				
+				&#x2F;&#x2F;case2: 叔叔节点是黑色的，且当前节点是左子节点
+				if(node &#x3D;&#x3D; parent.left) &#123;
+					rightRotate(parent);
+					RBNode&lt;T&gt; tmp &#x3D; parent;
+					parent &#x3D; node;
+					node &#x3D; tmp;
+				&#125;
+				
+				&#x2F;&#x2F;case3: 叔叔节点是黑色的，且当前节点是右子节点
+				setBlack(parent);
+				setRed(gparent);
+				leftRotate(gparent);
+			&#125;
+		&#125;
+		
+		&#x2F;&#x2F;将根节点设置为黑色
+		setBlack(this.root);
+	&#125;
+	
+	&#x2F;*********************** 删除红黑树中的节点 **********************&#x2F;
+	public void remove(T key) &#123;
+		RBNode&lt;T&gt; node;
+		if((node &#x3D; search(root, key)) !&#x3D; null)
+			remove(node);
+	&#125;
+	
+	private void remove(RBNode&lt;T&gt; node) &#123;
+		RBNode&lt;T&gt; child, parent;
+		boolean color;
+		
+		&#x2F;&#x2F;1. 被删除的节点“左右子节点都不为空”的情况
+		if((node.left !&#x3D; null) &amp;&amp; (node.right !&#x3D; null)) &#123;
+			&#x2F;&#x2F;先找到被删除节点的后继节点，用它来取代被删除节点的位置
+			RBNode&lt;T&gt; replace &#x3D; node;
+			&#x2F;&#x2F;  1). 获取后继节点
+			replace &#x3D; replace.right;
+			while(replace.left !&#x3D; null) 
+				replace &#x3D; replace.left;
+			
+			&#x2F;&#x2F;  2). 处理“后继节点”和“被删除节点的父节点”之间的关系
+			if(parentOf(node) !&#x3D; null) &#123; &#x2F;&#x2F;要删除的节点不是根节点
+				if(node &#x3D;&#x3D; parentOf(node).left) 
+					parentOf(node).left &#x3D; replace;
+				else
+					parentOf(node).right &#x3D; replace;
+			&#125; else &#123; &#x2F;&#x2F;否则
+				this.root &#x3D; replace;
+			&#125;
+			
+			&#x2F;&#x2F;  3). 处理“后继节点的子节点”和“被删除节点的子节点”之间的关系
+			child &#x3D; replace.right; &#x2F;&#x2F;后继节点肯定不存在左子节点！
+			parent &#x3D; parentOf(replace);
+			color &#x3D; colorOf(replace);&#x2F;&#x2F;保存后继节点的颜色
+			if(parent &#x3D;&#x3D; node) &#123; &#x2F;&#x2F;后继节点是被删除节点的子节点
+				parent &#x3D; replace;
+			&#125; else &#123; &#x2F;&#x2F;否则
+				if(child !&#x3D; null) 
+					setParent(child, parent);
+				parent.left &#x3D; child;
+				replace.right &#x3D; node.right;
+				setParent(node.right, replace);
+			&#125;
+			replace.parent &#x3D; node.parent;
+			replace.color &#x3D; node.color; &#x2F;&#x2F;保持原来位置的颜色
+			replace.left &#x3D; node.left;
+			node.left.parent &#x3D; replace;
+			
+			if(color &#x3D;&#x3D; BLACK) &#123; &#x2F;&#x2F;4. 如果移走的后继节点颜色是黑色，重新修整红黑树
+				removeFixUp(child, parent);&#x2F;&#x2F;将后继节点的child和parent传进去
+			&#125;
+			node &#x3D; null;
+			return;
+		&#125;
+	&#125;
+	&#x2F;&#x2F;node表示待修正的节点，即后继节点的子节点（因为后继节点被挪到删除节点的位置去了）
+	private void removeFixUp(RBNode&lt;T&gt; node, RBNode&lt;T&gt; parent) &#123;
+		RBNode&lt;T&gt; other;
+		
+		while((node &#x3D;&#x3D; null || isBlack(node)) &amp;&amp; (node !&#x3D; this.root)) &#123;
+			if(parent.left &#x3D;&#x3D; node) &#123; &#x2F;&#x2F;node是左子节点，下面else与这里的刚好相反
+				other &#x3D; parent.right; &#x2F;&#x2F;node的兄弟节点
+				if(isRed(other)) &#123; &#x2F;&#x2F;case1: node的兄弟节点other是红色的
+					setBlack(other);
+					setRed(parent);
+					leftRotate(parent);
+					other &#x3D; parent.right;
+				&#125;
+				
+				&#x2F;&#x2F;case2: node的兄弟节点other是黑色的，且other的两个子节点也都是黑色的
+				if((other.left &#x3D;&#x3D; null || isBlack(other.left)) &amp;&amp; 
+						(other.right &#x3D;&#x3D; null || isBlack(other.right))) &#123;
+					setRed(other);
+					node &#x3D; parent;
+					parent &#x3D; parentOf(node);
+				&#125; else &#123;
+					&#x2F;&#x2F;case3: node的兄弟节点other是黑色的，且other的左子节点是红色，右子节点是黑色
+					if(other.right &#x3D;&#x3D; null || isBlack(other.right)) &#123;
+						setBlack(other.left);
+						setRed(other);
+						rightRotate(other);
+						other &#x3D; parent.right;
+					&#125;
+					
+					&#x2F;&#x2F;case4: node的兄弟节点other是黑色的，且other的右子节点是红色，左子节点任意颜色
+					setColor(other, colorOf(parent));
+					setBlack(parent);
+					setBlack(other.right);
+					leftRotate(parent);
+					node &#x3D; this.root;
+					break;
+				&#125;
+			&#125; else &#123; &#x2F;&#x2F;与上面的对称
+				other &#x3D; parent.left;
+				
+	            if (isRed(other)) &#123;
+	                &#x2F;&#x2F; Case 1: node的兄弟other是红色的  
+	                setBlack(other);
+	                setRed(parent);
+	                rightRotate(parent);
+	                other &#x3D; parent.left;
+	            &#125;
+ 
+	            if ((other.left&#x3D;&#x3D;null || isBlack(other.left)) &amp;&amp;
+	                (other.right&#x3D;&#x3D;null || isBlack(other.right))) &#123;
+	                &#x2F;&#x2F; Case 2: node的兄弟other是黑色，且other的俩个子节点都是黑色的  
+	                setRed(other);
+	                node &#x3D; parent;
+	                parent &#x3D; parentOf(node);
+	            &#125; else &#123;
+ 
+	                if (other.left&#x3D;&#x3D;null || isBlack(other.left)) &#123;
+	                    &#x2F;&#x2F; Case 3: node的兄弟other是黑色的，并且other的左子节点是红色，右子节点为黑色。  
+	                    setBlack(other.right);
+	                    setRed(other);
+	                    leftRotate(other);
+	                    other &#x3D; parent.left;
+	                &#125;
+ 
+	                &#x2F;&#x2F; Case 4: node的兄弟other是黑色的；并且other的左子节点是红色的，右子节点任意颜色
+	                setColor(other, colorOf(parent));
+	                setBlack(parent);
+	                setBlack(other.left);
+	                rightRotate(parent);
+	                node &#x3D; this.root;
+	                break;
+	            &#125;
+			&#125;
+		&#125;
+		if (node!&#x3D;null)
+	        setBlack(node);
+	&#125;
+	
+	&#x2F;****************** 销毁红黑树 *********************&#x2F;
+	public void clear() &#123;
+		destroy(root);
+		root &#x3D; null;
+	&#125;
+ 
+	private void destroy(RBNode&lt;T&gt; tree) &#123;
+		if(tree &#x3D;&#x3D; null) 
+			return;
+		if(tree.left !&#x3D; null) 
+			destroy(tree.left);
+		if(tree.right !&#x3D; null) 
+			destroy(tree.right);
+		tree &#x3D; null;
+	&#125;
+ 
+	&#x2F;******************* 打印红黑树 *********************&#x2F;
+	public void print() &#123;
+		if(root !&#x3D; null) &#123;
+			print(root, root.key, 0);
+		&#125;
+	&#125;
+	&#x2F;*
+	 * key---节点的键值
+	 * direction--- 0:表示该节点是根节点
+	 *              1:表示该节点是它的父节点的左子节点
+	 *              2:表示该节点是它的父节点的右子节点
+	 *&#x2F;
+	private void print(RBNode&lt;T&gt; tree, T key, int direction) &#123;
+		if(tree !&#x3D; null) &#123;
+			if(0 &#x3D;&#x3D; direction) 
+				System.out.printf(&quot;%2d(B) is root\n&quot;, tree.key);
+			else
+				System.out.printf(&quot;%2d(%s) is %2d&#39;s %6s child\n&quot;, 
+						tree.key, isRed(tree)?&quot;R&quot;:&quot;b&quot;, key, direction &#x3D;&#x3D; 1?&quot;right&quot;:&quot;left&quot;);
+			print(tree.left, tree.key, -1);
+			print(tree.right, tree.key, 1);
+		&#125;
+	&#125;
+&#125;</code></pre><p>       下面附上测试程序吧：</p><pre class="line-numbers language-java" data-language="java"><code class="language-java">package test;
+ 
+import tree.RBTree;
+ 
+public class RBTreeTest &#123;
+	
+	private static final int a[] &#x3D; &#123;10, 40, 30, 60, 90, 70, 20, 50, 80&#125;;
+	private static final boolean mDebugInsert &#x3D; true;    &#x2F;&#x2F; &quot;插入&quot;动作的检测开关(false，关闭；true，打开)
+        private static final boolean mDebugDelete &#x3D; true;    &#x2F;&#x2F; &quot;删除&quot;动作的检测开关(false，关闭；true，打开)
+ 
+	public static void main(String[] args) &#123;
+		int i, ilen &#x3D; a.length;
+                RBTree&lt;Integer&gt; tree &#x3D; new RBTree&lt;Integer&gt;();
+ 
+                System.out.printf(&quot;&#x3D;&#x3D; 原始数据: &quot;);
+                for(i&#x3D;0; i&lt;ilen; i++)
+                    System.out.printf(&quot;%d &quot;, a[i]);
+                System.out.printf(&quot;\n&quot;);
+ 
+                for(i&#x3D;0; i&lt;ilen; i++) &#123;
+                   tree.insert(a[i]);
+                    &#x2F;&#x2F; 设置mDebugInsert&#x3D;true,测试&quot;添加函数&quot;
+                    if (mDebugInsert) &#123;
+                        System.out.printf(&quot;&#x3D;&#x3D; 添加节点: %d\n&quot;, a[i]);
+                        System.out.printf(&quot;&#x3D;&#x3D; 树的详细信息: \n&quot;);
+                        tree.print();
+                        System.out.printf(&quot;\n&quot;);
+                    &#125;
+                &#125;
+ 
+                System.out.printf(&quot;&#x3D;&#x3D; 前序遍历: &quot;);
+                tree.preOrder();
+ 
+                System.out.printf(&quot;\n&#x3D;&#x3D; 中序遍历: &quot;);
+                tree.inOrder();
+ 
+                System.out.printf(&quot;\n&#x3D;&#x3D; 后序遍历: &quot;);
+                tree.postOrder();
+                System.out.printf(&quot;\n&quot;);
+ 
+                System.out.printf(&quot;&#x3D;&#x3D; 最小值: %s\n&quot;, tree.minValue());
+                System.out.printf(&quot;&#x3D;&#x3D; 最大值: %s\n&quot;, tree.maxValue());
+                System.out.printf(&quot;&#x3D;&#x3D; 树的详细信息: \n&quot;);
+                tree.print();
+                System.out.printf(&quot;\n&quot;);
+        
+                &#x2F;&#x2F; 设置mDebugDelete&#x3D;true,测试&quot;删除函数&quot;
+                if (mDebugDelete) &#123;
+                    for(i&#x3D;0; i&lt;ilen; i++)
+                    &#123;
+                        tree.remove(a[i]);
+ 
+                        System.out.printf(&quot;&#x3D;&#x3D; 删除节点: %d\n&quot;, a[i]);
+                        System.out.printf(&quot;&#x3D;&#x3D; 树的详细信息: \n&quot;);
+                        tree.print();
+                        System.out.printf(&quot;\n&quot;);
+                    &#125;
+                &#125;
+        &#125;
+ 
+&#125;</code></pre><h1 id="5-红-黑树的复杂度"><a href="#5-红-黑树的复杂度" class="headerlink" title="5. 红 - 黑树的复杂度"></a>5. 红 - 黑树的复杂度</h1><p>前面也说了，当数据以升序或降序插入时，二叉搜索树的性能就会下降到最低，但是红 - 黑树的自我修复功能保证了即使在最坏的情况下，也能保证时间复杂度在 O(logN) 的级别上。</p></div></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright"> &copy; <span itemprop="copyrightYear">2021</span><span class="with-love"><i class="fa fa-heart"></i></span> <span class="author" itemprop="copyrightHolder">JIAHE</span><span class="with-love"><i class="fa fa-heart"></i></span> <a href="https://beian.miit.gov.cn/" target="_blank">湘ICP备19011756号-1</a></div><div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动</div></div></footer><script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.0/components/prism-core.min.js" integrity="sha256-dz05jjFU9qYuMvQQlE6iWDtNAnEsmu6uMb1vWhKdkEM=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha256-sttoa+EIAvFFfeeIkmPn8ypyOOb6no2sZ2NbxtBXgqU=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/prismjs@1.24.0/plugins/line-numbers/prism-line-numbers.min.js" integrity="sha256-K837BwIyiXo5k/9fCYgqUyA14bN4/Ve9P2SIT0KmZD0=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/lozad@1.16.0/dist/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script><script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/third-party/search/local-search.js"></script><script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.5/pdfobject.min.js","integrity":"sha256-YuNlP9i6s/WH7EaU2kErloo9Vc85C3WVqhoMDgsEVpY="},"url":"/lib/pdf/web/viewer.html"}</script><script src="/js/third-party/tags/pdf.js"></script><script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script><script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"ignores":null,"url":"https://www.xiaojianzheng.cn/data-structure/red-black-tree.html"}</script><script src="/js/third-party/quicklink.js"></script></body></html>
