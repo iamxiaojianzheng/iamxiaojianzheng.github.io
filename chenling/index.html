@@ -16,8 +16,8 @@
 						<span class="say"> </span><br>`
     }).reduce((a, b) => {
         return a + b;
-    }))
-    $("#clock-box-inside-text").html(`${config.names[0]}<span class="STYLE1">与</span>${config.names[1]}<span class="STYLE1">已经相识了</span>`)</script><script>(function () {
+    }));
+    $("#clock-box-inside-text").html(`${config.names[0]}<span class="STYLE1">与</span>${config.names[1]}<span class="STYLE1">已经相识了</span>`);</script><script>(function () {
         var canvas = $('#canvas');
 
         if (!canvas[0].getContext) {
@@ -81,6 +81,11 @@
                 canvas.unbind("click");
                 canvas.unbind("mousemove");
                 canvas.removeClass('hand');
+            }
+            let m = document.querySelector('.song-audio-autoplay');
+            if (m.paused) {
+                m.play();
+                m.className = 'rotateImages';
             }
         }).mousemove(function (e) {
             var offset = canvas.offset(), x, y;
