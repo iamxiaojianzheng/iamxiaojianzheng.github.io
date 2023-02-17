@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>JiaHe&#39;s Blog</title>
+  <icon>http://xiaojianzheng.cn/icon.png</icon>
+  <subtitle>读万卷书，行万里路</subtitle>
+  <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
+  
+  <link href="http://xiaojianzheng.cn/"/>
+  <updated>2023-02-10T16:00:00.000Z</updated>
+  <id>http://xiaojianzheng.cn/</id>
+  
+  <author>
+    <name>JiaHe</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2023年JRebel最新激活方式</title>
+    <link href="http://xiaojianzheng.cn/archives/e33e7636.html"/>
+    <id>http://xiaojianzheng.cn/archives/e33e7636.html</id>
+    <published>2023-02-10T16:00:00.000Z</published>
+    <updated>2023-02-10T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&quot;https://www.cnblogs.com/sansui6/p/17043448.html&quot;&gt;https://www.cnblogs.com/sansui6/p/17043448.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;Rebel-介绍&quot;&gt;&lt;a href=&quot;#Rebel-介绍&quot; class=&quot;headerlink&quot; title=&quot;Rebel 介绍&quot;&gt;&lt;/a&gt;Rebel 介绍&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;JRebel 是一款 JVM 插件，它使得 Java 代码修改后不用重启系统，立即生效。IDEA 上原生是不支持热部署的，一般更新了 Java 文件后要手动重启 Tomcat 服务器，修改才能生效；所以推荐使用 JRebel 插件进行热部署。&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vim中的按键标识符</title>
+    <link href="http://xiaojianzheng.cn/archives/49ba5a02.html"/>
+    <id>http://xiaojianzheng.cn/archives/49ba5a02.html</id>
+    <published>2023-02-09T16:00:00.000Z</published>
+    <updated>2023-02-09T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&quot;https://yianwillis.github.io/vimcdoc/doc/intro.html#key-notation&quot;&gt;https://yianwillis.github.io/vimcdoc/doc/intro.html#key-notation&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="Vim" scheme="http://xiaojianzheng.cn/tags/Vim/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS7下docker二进制文件编译</title>
+    <link href="http://xiaojianzheng.cn/archives/3fdb1eb0.html"/>
+    <id>http://xiaojianzheng.cn/archives/3fdb1eb0.html</id>
+    <published>2023-02-08T16:00:00.000Z</published>
+    <updated>2023-02-08T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&quot;https://o-my-chenjian.com/2017/10/11/Make-Docker-Executable-File-On-CentOS7/&quot;&gt;https://o-my-chenjian.com/2017/10/11/Make-Docker-Executable-File-On-CentOS7/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;相关博文&quot;&gt;&lt;a href=&quot;#相关博文&quot; class=&quot;headerlink&quot; title=&quot;相关博文&quot;&gt;&lt;/a&gt;相关博文&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https://o-my-chenjian.com/2016/07/04/Easy-With-Docker/&quot;&gt;带你玩转Docker&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;系统环境与软件版本&quot;&gt;&lt;a href=&quot;#系统环境与软件版本&quot; class=&quot;headerlink&quot; title=&quot;系统环境与软件版本&quot;&gt;&lt;/a&gt;系统环境与软件版本&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;OS：Centos7 64bit&lt;/li&gt;
+&lt;li&gt;Kernel Version：3.10.0-693.2.2.el7.x86_64&lt;/li&gt;
+&lt;li&gt;Golang Version: go1.8.4 linux&amp;#x2F;amd64&lt;/li&gt;
+&lt;li&gt;Docker: 17.05.0-ce&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="CentOS7" scheme="http://xiaojianzheng.cn/tags/CentOS7/"/>
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Scoop使用异常</title>
+    <link href="http://xiaojianzheng.cn/archives/529a2b6.html"/>
+    <id>http://xiaojianzheng.cn/archives/529a2b6.html</id>
+    <published>2023-02-07T16:00:00.000Z</published>
+    <updated>2023-02-07T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;问题：Cannot set property. Property setting is supported only on core types in this language mode.&lt;/p&gt;
+&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Scoop" scheme="http://xiaojianzheng.cn/tags/Scoop/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>安装cnocr</title>
+    <link href="http://xiaojianzheng.cn/archives/9eb269f7.html"/>
+    <id>http://xiaojianzheng.cn/archives/9eb269f7.html</id>
+    <published>2023-02-01T16:00:00.000Z</published>
+    <updated>2023-02-01T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip install</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Python" scheme="http://xiaojianzheng.cn/tags/Python/"/>
+    
+    <category term="OCR" scheme="http://xiaojianzheng.cn/tags/OCR/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>银河麒麟系统忘记root密码</title>
+    <link href="http://xiaojianzheng.cn/archives/a7e6503d.html"/>
+    <id>http://xiaojianzheng.cn/archives/a7e6503d.html</id>
+    <published>2023-02-01T16:00:00.000Z</published>
+    <updated>2023-02-01T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;银河麒麟高级服务器操作系统通过修改引导参数重置root用户密码&lt;/p&gt;
+&lt;p&gt;以 银河麒麟高级服务器操作系统 V10SP2-X86-64 为例&lt;/p&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="银河麒麟" scheme="http://xiaojianzheng.cn/tags/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>验房手册</title>
+    <link href="http://xiaojianzheng.cn/archives/3e8054d9.html"/>
+    <id>http://xiaojianzheng.cn/archives/3e8054d9.html</id>
+    <published>2023-01-31T16:00:00.000Z</published>
+    <updated>2023-01-31T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;验房手册&quot;&gt;&lt;a href=&quot;#验房手册&quot; class=&quot;headerlink&quot; title=&quot;验房手册&quot;&gt;&lt;/a&gt;验房手册&lt;/h1&gt;&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a href=&quot;#准备工作&quot; class=&quot;headerlink&quot; title=&quot;准备工作&quot;&gt;&lt;/a&gt;准备工作&lt;/h2&gt;&lt;h3 id=&quot;准备工具&quot;&gt;&lt;a href=&quot;#准备工具&quot; class=&quot;headerlink&quot; title=&quot;准备工具&quot;&gt;&lt;/a&gt;准备工具&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;空鼓锤：墙面地面空鼓敲击用的小锤子&lt;/li&gt;
+&lt;li&gt;卷尺：主要检测各类细节尺寸问题&lt;/li&gt;
+&lt;li&gt;记号笔：标记问题处，方便整改&lt;/li&gt;
+&lt;li&gt;手电筒&lt;/li&gt;
+&lt;li&gt;相位检测仪：是用来测试电路内是否正常的一项必备工具&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;须知概念&quot;&gt;&lt;a href=&quot;#须知概念&quot; class=&quot;headerlink&quot; title=&quot;须知概念&quot;&gt;&lt;/a&gt;须知概念&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;空鼓：空鼓是由于原砌体和粉灰层中存在空气引起的，检测的时候，用空鼓锤或硬物轻敲抹灰层及找平层发出咚咚声为空鼓&lt;/li&gt;
+&lt;li&gt;裂缝：地面不出现裂痕，若有裂痕则可要求整改&lt;/li&gt;
+&lt;li&gt;起沙：混凝土强度不够，用硬物（钥匙或镙丝刀）划地面，能轻易地划进地面则可算起沙了&lt;/li&gt;
+&lt;li&gt;平整度：地面不出现明显的凹凸&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+    <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA入门手册</title>
+    <link href="http://xiaojianzheng.cn/archives/c410bef7.html"/>
+    <id>http://xiaojianzheng.cn/archives/c410bef7.html</id>
+    <published>2023-01-30T16:00:00.000Z</published>
+    <updated>2023-01-30T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h3 id=&quot;一、视图查看&quot;&gt;&lt;a href=&quot;#一、视图查看&quot; class=&quot;headerlink&quot; title=&quot;一、视图查看&quot;&gt;&lt;/a&gt;一、视图查看&lt;/h3&gt;&lt;h4 id=&quot;Ctrl-F12-查看file，method结构图、类继承机构图&quot;&gt;&lt;a href=&quot;#Ctrl-F12-查看file，method结构图、类继承机构图&quot; class=&quot;headerlink&quot; title=&quot;Ctrl+F12 查看file，method结构图、类继承机构图&quot;&gt;&lt;/a&gt;Ctrl+F12 查看file，method结构图、类继承机构图&lt;/h4&gt;&lt;p&gt;（不知道方法结构，Ctrl+F12一下，方法，参数，返回值，一清二楚的展现出来）&lt;/p&gt;
+&lt;h4 id=&quot;Ctrl-shift-Alt-U-查看maven依赖，类图&quot;&gt;&lt;a href=&quot;#Ctrl-shift-Alt-U-查看maven依赖，类图&quot; class=&quot;headerlink&quot; title=&quot;Ctrl+shift+Alt+U  查看maven依赖，类图&quot;&gt;&lt;/a&gt;Ctrl+shift+Alt+U  查看maven依赖，类图&lt;/h4&gt;&lt;p&gt;　　使用maven做项目时，依赖往往非常多，在配置依赖的文件中只需要Ctrl+shift+Alt+U，所有依赖都以拓扑图的方式展现出来，所有的关系和位置都能找到；&lt;/p&gt;
+&lt;p&gt;　　如下图（抱歉，项目依赖太多，具体的依赖需要放大）&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16752175644801675217563612.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;类图：我们阅读源码的时候，想知道各个类之间的关系怎么办，Ctrl+shift+Alt+U，所有依赖都以拓扑图的方式展现出来，所有的关系和位置都能找到，以ArrayList为例：&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16752175854861675217585091.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt; Ctrl＋Alt+H  查看方法调用层次；&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>归途</title>
+    <link href="http://xiaojianzheng.cn/archives/6287ea21.html"/>
+    <id>http://xiaojianzheng.cn/archives/6287ea21.html</id>
+    <published>2023-01-18T16:00:00.000Z</published>
+    <updated>2023-01-18T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+&lt;p&gt;高铁似箭三五载 &lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+&lt;p&gt;班车徐徐归家途</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>yum安装本地rpm包及依赖</title>
+    <link href="http://xiaojianzheng.cn/archives/495890f9.html"/>
+    <id>http://xiaojianzheng.cn/archives/495890f9.html</id>
+    <published>2023-01-15T08:04:00.000Z</published>
+    <updated>2023-01-15T08:04:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;一、背景说明&quot;&gt;&lt;a href=&quot;#一、背景说明&quot; class=&quot;headerlink&quot; title=&quot;一、背景说明&quot;&gt;&lt;/a&gt;一、背景说明&lt;/h2&gt;&lt;p&gt;需求：安装Readline-devel&lt;/p&gt;
+&lt;p&gt;平时我们机器有网络的情况下一般安装软件如下yum install即可。&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install readline-devel&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;但是在内网机上要去这样安装，就没法直接用了，没有网络下载源，这时候如果包少，我们可以去rpm包网站搜索下来手动一个个传进去rpm安装即可，但是依赖较多就麻烦了。&lt;/p&gt;
+&lt;p&gt;如readline-devel包&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16737699684831673769967963.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16737699864851673769986130.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;安装readline-devel 依赖包有5个，5个我们也可以手动1个个rpm很快搞定， 但是遇到其它包中又有依赖包，依赖几十个，顺序先后都是问题，这时候我们不能用rpm一个个安装了。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在Linux上挂载Windows共享目录</title>
+    <link href="http://xiaojianzheng.cn/archives/bcef9a10.html"/>
+    <id>http://xiaojianzheng.cn/archives/bcef9a10.html</id>
+    <published>2023-01-15T07:54:00.000Z</published>
+    <updated>2023-01-15T07:54:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;启用SMB，重启&quot;&gt;&lt;a href=&quot;#启用SMB，重启&quot; class=&quot;headerlink&quot; title=&quot;启用SMB，重启&quot;&gt;&lt;/a&gt;启用SMB，重启&lt;/h2&gt;&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16737693114911673769310596.png&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SSH连接Windows默认启用Powershell</title>
+    <link href="http://xiaojianzheng.cn/archives/dca26af3.html"/>
+    <id>http://xiaojianzheng.cn/archives/dca26af3.html</id>
+    <published>2023-01-15T07:51:00.000Z</published>
+    <updated>2023-01-15T07:51:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;New-ItemProperty&lt;/span&gt;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="SSH" scheme="http://xiaojianzheng.cn/tags/SSH/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rsync用法教程</title>
+    <link href="http://xiaojianzheng.cn/archives/e1db0f8f.html"/>
+    <id>http://xiaojianzheng.cn/archives/e1db0f8f.html</id>
+    <published>2023-01-14T03:33:00.000Z</published>
+    <updated>2023-01-14T03:33:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;  原文地址：&lt;a href=&quot;https://www.ruanyifeng.com/blog/2020/08/rsync.html&quot;&gt;https://www.ruanyifeng.com/blog/2020/08/rsync.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;一、简介&quot;&gt;&lt;a href=&quot;#一、简介&quot; class=&quot;headerlink&quot; title=&quot;一、简介&quot;&gt;&lt;/a&gt;一、简介&lt;/h2&gt;&lt;p&gt;rsync 是一个常用的 Linux 应用程序，用于文件同步。&lt;/p&gt;
+&lt;p&gt;它可以在本地计算机与远程计算机之间，或者两个本地目录之间同步文件（但不支持两台远程计算机之间的同步）。它也可以当作文件复制工具，替代&lt;code&gt;cp&lt;/code&gt;和&lt;code&gt;mv&lt;/code&gt;命令。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://www.wangbase.com/blogimg/asset/202008/bg2020082602.jpg&quot; alt=&quot;img&quot;&gt;&lt;/p&gt;
+&lt;p&gt;它名称里面的&lt;code&gt;r&lt;/code&gt;指的是 remote，rsync 其实就是&amp;quot;远程同步&amp;quot;（remote sync）的意思。与其他文件传输工具（如 FTP 或 scp）不同，rsync 的最大特点是会检查发送方和接收方已有的文件，仅传输有变动的部分（默认规则是文件大小或修改时间有变动）。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>XtraBackup使用</title>
+    <link href="http://xiaojianzheng.cn/archives/e39731dc.html"/>
+    <id>http://xiaojianzheng.cn/archives/e39731dc.html</id>
+    <published>2023-01-11T12:08:00.000Z</published>
+    <updated>2023-01-11T12:08:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install https://repo.percona.com/yum/percona-release-latest.noarch.rpm&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum install -y percona-xtrabackup-24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS7同步网络时间</title>
+    <link href="http://xiaojianzheng.cn/archives/216e38e4.html"/>
+    <id>http://xiaojianzheng.cn/archives/216e38e4.html</id>
+    <published>2023-01-09T07:26:26.000Z</published>
+    <updated>2023-01-09T07:26:26.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum -y install ntp ntpdate&lt;/span&gt;&lt;br&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    
+    <category term="CentOS7" scheme="http://xiaojianzheng.cn/tags/CentOS7/"/>
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VMware学习</title>
+    <link href="http://xiaojianzheng.cn/archives/363dca68.html"/>
+    <id>http://xiaojianzheng.cn/archives/363dca68.html</id>
+    <published>2023-01-09T02:20:47.000Z</published>
+    <updated>2023-01-09T02:20:47.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;网络适配器:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;进行数据串行传输和并行传输的转换；&lt;/li&gt;
+&lt;li&gt;对数据进行缓存，对接收速率进行匹配；&lt;/li&gt;
+&lt;li&gt;对接收的数据进行差错检测；&lt;/li&gt;
+&lt;li&gt;跟主机当中的存储器、CPU等部件进行协调；&lt;/li&gt;
+&lt;li&gt;实现以太网协议，</summary>
+        
+      
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>离线安装xtrabackup</title>
+    <link href="http://xiaojianzheng.cn/archives/e085e197.html"/>
+    <id>http://xiaojianzheng.cn/archives/e085e197.html</id>
+    <published>2023-01-09T02:20:47.000Z</published>
+    <updated>2023-01-09T02:20:47.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;找一台可以访问外网的CentOS7，然后执行命令下载离线rmp依赖包&lt;/p&gt;
+&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mkdir</summary>
+        
+      
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="离线安装" scheme="http://xiaojianzheng.cn/tags/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL使用LOAD DATA INFILE导入大批量数据</title>
+    <link href="http://xiaojianzheng.cn/archives/6b8041e2.html"/>
+    <id>http://xiaojianzheng.cn/archives/6b8041e2.html</id>
+    <published>2023-01-09T01:29:10.000Z</published>
+    <updated>2023-01-09T01:29:10.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;导入大量带有时间格式的数据&lt;/p&gt;
+&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;load data &lt;span</summary>
+        
+      
+    
+    
+    
+    
+    <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>思乡</title>
+    <link href="http://xiaojianzheng.cn/archives/b52e2e24.html"/>
+    <id>http://xiaojianzheng.cn/archives/b52e2e24.html</id>
+    <published>2022-12-13T16:00:00.000Z</published>
+    <updated>2022-12-13T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+&lt;p&gt;举头孤星无月陪 &lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+&lt;p&gt;地上点点藕丝连</summary>
+        
+      
+    
+    
+    
+    
+    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>分布式最佳实践：分布式锁</title>
+    <link href="http://xiaojianzheng.cn/archives/e820f23.html"/>
+    <id>http://xiaojianzheng.cn/archives/e820f23.html</id>
+    <published>2022-09-25T01:11:46.000Z</published>
+    <updated>2022-09-25T01:11:46.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;为什么&quot;&gt;&lt;a href=&quot;#为什么&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="分布式" scheme="http://xiaojianzheng.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+</feed>
