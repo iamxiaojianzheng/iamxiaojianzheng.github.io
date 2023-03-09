@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-03-09T06:38:12.000Z</updated>
+  <updated>2023-03-09T12:55:28.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>网易易盾——滑动拼图验证码</title>
+    <link href="http://xiaojianzheng.cn/archives/c0e855f2.html"/>
+    <id>http://xiaojianzheng.cn/archives/c0e855f2.html</id>
+    <published>2023-03-09T12:55:28.000Z</published>
+    <updated>2023-03-09T12:55:28.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;问题和思路&quot;&gt;&lt;a href=&quot;#问题和思路&quot; class=&quot;headerlink&quot; title=&quot;问题和思路&quot;&gt;&lt;/a&gt;问题和思路&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://dun.163.com/trial/jigsaw&quot;&gt;滑动拼图验证码&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16783668644441678366863559.png&quot;&gt;&lt;/p&gt;
+&lt;p&gt;如何使用自动化手段模拟人为操作完成该验证码的验证流程？&lt;/p&gt;
+&lt;p&gt;思路：计算拼图与缺口之间的距离，通过控制拖动的方式，将拼图拖动至缺口位置，确保误差越小越好。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="验证码" scheme="http://xiaojianzheng.cn/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>禁止Chrome自动更新</title>
@@ -28,7 +48,8 @@
       
         
         
-    <summary type="html">&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;figcaption&gt;&lt;span&gt;disable-chrome-auto-update.ps1&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;chrome历史版本下载: &lt;a</summary>
         
       
     
@@ -479,35 +500,6 @@
     
     
     <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>思乡</title>
-    <link href="http://xiaojianzheng.cn/archives/b52e2e24.html"/>
-    <id>http://xiaojianzheng.cn/archives/b52e2e24.html</id>
-    <published>2022-12-13T16:00:00.000Z</published>
-    <updated>2022-12-13T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;举头孤星无月陪 &lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;地上点点藕丝连</summary>
-        
-      
-    
-    
-    
-    
-    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
     
   </entry>
   
