@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-03-09T12:55:28.000Z</updated>
+  <updated>2023-03-15T06:51:43.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,123 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用npm出现一些问题的解决办法</title>
+    <link href="http://xiaojianzheng.cn/archives/7b9d40fe.html"/>
+    <id>http://xiaojianzheng.cn/archives/7b9d40fe.html</id>
+    <published>2023-03-15T06:51:43.000Z</published>
+    <updated>2023-03-15T06:51:43.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;ol&gt;
+&lt;li&gt;出现VScode或C++ BuildTools相关问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;下载安装&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="npm" scheme="http://xiaojianzheng.cn/tags/npm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Arthas常用命令</title>
+    <link href="http://xiaojianzheng.cn/archives/0.html"/>
+    <id>http://xiaojianzheng.cn/archives/0.html</id>
+    <published>2023-03-10T16:00:00.000Z</published>
+    <updated>2023-03-10T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;基础命令&quot;&gt;&lt;a href=&quot;#基础命令&quot; class=&quot;headerlink&quot; title=&quot;基础命令&quot;&gt;&lt;/a&gt;基础命令&lt;/h1&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;含义&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;help&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看命令帮助信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;cls&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;清空当前屏幕区域&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;session&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看当前会话的信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;reset&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;重置增强类，将被 Arthas 增强过的类全部还原，Arthas 服务端关闭时会重置所有增强过的类&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;version&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;输出当前目标 Java 进程所加载的 Arthas 版本号&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;history&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;打印命令历史&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;quit&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;退出当前 Arthas 客户端，其他 Arthas 客户端不受影响&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;stop&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;和shutdown命令一致&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;shutdown&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;关闭 Arthas 服务端，所有 Arthas 客户端全部退出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;keymap&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Arthas快捷键列表及自定义快捷键&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;options&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看或设置Arthas全局开关&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;</summary>
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring中的一些类</title>
+    <link href="http://xiaojianzheng.cn/archives/d4b0840d.html"/>
+    <id>http://xiaojianzheng.cn/archives/d4b0840d.html</id>
+    <published>2023-03-10T16:00:00.000Z</published>
+    <updated>2023-03-10T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;h2 id=&quot;RequestContextHolder&quot;&gt;&lt;a href=&quot;#RequestContextHolder&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Spring" scheme="http://xiaojianzheng.cn/tags/Spring/"/>
+    
+  </entry>
   
   <entry>
     <title>网易易盾——滑动拼图验证码</title>
@@ -48,7 +165,7 @@
       
         
         
-    <summary type="html">&lt;blockquote&gt;
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;blockquote&gt;
 &lt;p&gt;chrome历史版本下载: &lt;a</summary>
         
       
@@ -125,9 +242,9 @@
     
     
     
-    <category term="CentOS7" scheme="http://xiaojianzheng.cn/tags/CentOS7/"/>
-    
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="CentOS7" scheme="http://xiaojianzheng.cn/tags/CentOS7/"/>
     
   </entry>
   
@@ -143,8 +260,8 @@
       
         
         
-    <summary type="html">&lt;p&gt;问题：Cannot set property. Property setting is supported only on core types in this language mode.&lt;/p&gt;
-&lt;figure class=&quot;highlight</summary>
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;p&gt;问题：Cannot set property. Property setting is supported only on core types in this language mode.&lt;/p&gt;
+&lt;figure</summary>
         
       
     
@@ -167,7 +284,7 @@
       
         
         
-    <summary type="html">&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip install</summary>
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;pip install</summary>
         
       
     
@@ -188,15 +305,8 @@
     <updated>2023-02-01T16:00:00.000Z</updated>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;p&gt;银河麒麟高级服务器操作系统通过修改引导参数重置root用户密码&lt;/p&gt;
-&lt;p&gt;以 银河麒麟高级服务器操作系统 V10SP2-X86-64 为例&lt;/p&gt;
-&lt;p&gt;&lt;img</summary>
-        
-      
+&lt;p&gt;以 银河麒麟高级服务器操作系统 V10SP2-X86-64 为例&lt;/p&gt;</summary>
     
     
     
@@ -247,10 +357,7 @@
     <summary type="html">&lt;h3 id=&quot;一、视图查看&quot;&gt;&lt;a href=&quot;#一、视图查看&quot; class=&quot;headerlink&quot; title=&quot;一、视图查看&quot;&gt;&lt;/a&gt;一、视图查看&lt;/h3&gt;&lt;h4 id=&quot;Ctrl-F12-查看file，method结构图、类继承机构图&quot;&gt;&lt;a href=&quot;#Ctrl-F12-查看file，method结构图、类继承机构图&quot; class=&quot;headerlink&quot; title=&quot;Ctrl+F12 查看file，method结构图、类继承机构图&quot;&gt;&lt;/a&gt;Ctrl+F12 查看file，method结构图、类继承机构图&lt;/h4&gt;&lt;p&gt;（不知道方法结构，Ctrl+F12一下，方法，参数，返回值，一清二楚的展现出来）&lt;/p&gt;
 &lt;h4 id=&quot;Ctrl-shift-Alt-U-查看maven依赖，类图&quot;&gt;&lt;a href=&quot;#Ctrl-shift-Alt-U-查看maven依赖，类图&quot; class=&quot;headerlink&quot; title=&quot;Ctrl+shift+Alt+U  查看maven依赖，类图&quot;&gt;&lt;/a&gt;Ctrl+shift+Alt+U  查看maven依赖，类图&lt;/h4&gt;&lt;p&gt;　　使用maven做项目时，依赖往往非常多，在配置依赖的文件中只需要Ctrl+shift+Alt+U，所有依赖都以拓扑图的方式展现出来，所有的关系和位置都能找到；&lt;/p&gt;
 &lt;p&gt;　　如下图（抱歉，项目依赖太多，具体的依赖需要放大）&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16752175644801675217563612.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;类图：我们阅读源码的时候，想知道各个类之间的关系怎么办，Ctrl+shift+Alt+U，所有依赖都以拓扑图的方式展现出来，所有的关系和位置都能找到，以ArrayList为例：&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16752175854861675217585091.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt; Ctrl＋Alt+H  查看方法调用层次；&lt;/p&gt;</summary>
+&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16752175644801675217563612.png&quot;&gt;&lt;/p&gt;</summary>
     
     
     
@@ -271,13 +378,12 @@
       
         
         
-    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;blockquote class=&quot;blockquote-center&quot;&gt;
 &lt;p&gt;高铁似箭三五载 &lt;/p&gt;
 
 &lt;/blockquote&gt;
 
-&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;班车徐徐归家途</summary>
+&lt;blockquote</summary>
         
       
     
@@ -326,9 +432,9 @@
     
     
     
-    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
-    
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
     
   </entry>
   
@@ -344,7 +450,7 @@
       
         
         
-    <summary type="html">&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;New-ItemProperty&lt;/span&gt;</summary>
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;figure class=&quot;highlight powershell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span</summary>
         
       
     
@@ -374,9 +480,9 @@
     
     
     
-    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
-    
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
     
   </entry>
   
@@ -411,95 +517,16 @@
       
         
         
-    <summary type="html">&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum -y install ntp ntpdate&lt;/span&gt;&lt;br&gt;&lt;span</summary>
+    <summary type="html">&lt;div id=&quot;readmore-container&quot;&gt;&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum -y install ntp</summary>
         
       
     
     
     
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
     
     <category term="CentOS7" scheme="http://xiaojianzheng.cn/tags/CentOS7/"/>
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VMware学习</title>
-    <link href="http://xiaojianzheng.cn/archives/363dca68.html"/>
-    <id>http://xiaojianzheng.cn/archives/363dca68.html</id>
-    <published>2023-01-09T02:20:47.000Z</published>
-    <updated>2023-01-09T02:20:47.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;网络适配器:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;进行数据串行传输和并行传输的转换；&lt;/li&gt;
-&lt;li&gt;对数据进行缓存，对接收速率进行匹配；&lt;/li&gt;
-&lt;li&gt;对接收的数据进行差错检测；&lt;/li&gt;
-&lt;li&gt;跟主机当中的存储器、CPU等部件进行协调；&lt;/li&gt;
-&lt;li&gt;实现以太网协议，</summary>
-        
-      
-    
-    
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>离线安装xtrabackup</title>
-    <link href="http://xiaojianzheng.cn/archives/e085e197.html"/>
-    <id>http://xiaojianzheng.cn/archives/e085e197.html</id>
-    <published>2023-01-09T02:20:47.000Z</published>
-    <updated>2023-01-09T02:20:47.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;找一台可以访问外网的CentOS7，然后执行命令下载离线rmp依赖包&lt;/p&gt;
-&lt;figure class=&quot;highlight shell&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;mkdir</summary>
-        
-      
-    
-    
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-    <category term="离线安装" scheme="http://xiaojianzheng.cn/tags/%E7%A6%BB%E7%BA%BF%E5%AE%89%E8%A3%85/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL使用LOAD DATA INFILE导入大批量数据</title>
-    <link href="http://xiaojianzheng.cn/archives/6b8041e2.html"/>
-    <id>http://xiaojianzheng.cn/archives/6b8041e2.html</id>
-    <published>2023-01-09T01:29:10.000Z</published>
-    <updated>2023-01-09T01:29:10.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;导入大量带有时间格式的数据&lt;/p&gt;
-&lt;figure class=&quot;highlight sql&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;load data &lt;span</summary>
-        
-      
-    
-    
-    
-    
-    <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
     
   </entry>
   
