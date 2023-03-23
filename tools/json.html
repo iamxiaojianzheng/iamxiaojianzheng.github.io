@@ -1,0 +1,126 @@
+<!doctypehtml><meta charset=utf-8><title>CodeMirror Example</title><link href=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css rel=stylesheet><style>body,
+      html {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .toolbar {
+        display: flex;
+        align-items: center;
+        padding: 1em;
+        background-color: #f2f2f2;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 0.5em 1em;
+        margin-right: 0.5em;
+        background-color: #2d9cdb;
+        color: white;
+        border-radius: 0.25em;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease-out;
+      }
+
+      .button:hover {
+        background-color: #2b8ac6;
+      }
+
+      label {
+        margin-left: 0.5em;
+        font-weight: bold;
+      }
+
+      select {
+        margin-left: 0.5em;
+        padding: 0.25em;
+        font-size: 1em;
+        border-radius: 0.25em;
+        border: 1px solid #c4c4c4;
+        outline: none;
+        transition: border-color 0.3s ease-out;
+      }
+
+      select:focus {
+        border-color: #2d9cdb;
+      }
+
+      .editor-wrapper {
+        height: calc(100% - 4em);
+        overflow: auto;
+      }
+
+      .CodeMirror {
+        height: 100%;
+      }</style><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/javascript/javascript.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/xml/xml.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/htmlmixed/htmlmixed.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.0/beautify.min.js></script><body><div class=toolbar><button class=button onclick=format()>Format</button><button class=button onclick=compress()>Compress</button><label for=tab-size>Tab Size:</label><select id=tab-size name=tab-size onchange=setTabSize(this.value)><option selected value=2>2<option value=4>4</select></div><div class=editor-wrapper><textarea id=code></textarea></div><script>let mode = "javascript";
+      let tabSize = 2;
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.has("mode")) {
+        mode = params.get("mode");
+      }
+      if (params.has("tabSize")) {
+        tabSize = parseInt(params.get("tabSize"));
+      }
+
+      const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        mode: mode,
+        theme: "default",
+        lineNumbers: true,
+        tabSize: tabSize,
+        indentWithTabs: true,
+      });
+
+      function format() {
+        const value = editor.getValue();
+        try {
+          let formatted;
+          if (editor.getOption("mode") === "application/json") {
+            formatted = JSON.stringify(JSON.parse(value), null, tabSize);
+          } else {
+            formatted = js_beautify(value, { indent_size: tabSize });
+          }
+          editor.setValue(formatted);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      function compress() {
+        const value = editor.getValue();
+        try {
+          let compressed;
+          if (editor.getOption("mode") === "application/json") {
+            compressed = JSON.stringify(JSON.parse(value)).replace(/\s+/g, "");
+          } else {
+            compressed = js_beautify(value, { indent_size: 0 })
+              .replace(/\n/g, "")
+              .replace(/\s+/g, " ");
+          }
+          editor.setValue(compressed);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      function setTabSize(size) {
+        tabSize = parseInt(size);
+        editor.setOption("tabSize", tabSize);
+      }
+
+      // Resize editor to fill remaining height
+      function resizeEditor() {
+        const toolbarHeight = document.querySelector(".toolbar").offsetHeight;
+        const windowHeight = window.innerHeight;
+        const editorWrapper = document.querySelector(".editor-wrapper");
+        editorWrapper.style.height = windowHeight - toolbarHeight + "px";
+        editor.refresh();
+      }
+
+      // Resize editor on window resize event
+      window.addEventListener("resize", resizeEditor);
+
+      // Initial resize of editor
+      resizeEditor();</script>
