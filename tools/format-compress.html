@@ -2,9 +2,10 @@
         mode: "application/ld+json",
         theme: "gruvbox-dark",
         lineNumbers: true,
-        lineWrapping: true,
-        tabSize: 2,
-        indentWithTabs: true,
+        // lineWrapping: true,
+        indentUnit: 4, // 缩进多少个空格
+        tabSize: 2,    // 制表符宽度
+        // indentWithTabs: false,
         foldGutter: {
           rangeFinder: new CodeMirror.fold.combine(
             CodeMirror.fold.indent,
@@ -27,11 +28,33 @@
         },
         //括号匹配
         matchBrackets: true,
+        showInvisibles: true, // 显示空格和制表符
+        nonBreakingSpaceChar: '\u00a0', // 用 ( ) 表示非断行空格
+        invisibleChar: '\u00b7' // 用 (·) 表示普通空格
       });
       CodeMirror.commands.autocomplete = function (cm) {
         cm.showHint({ hint: CodeMirror.hint.anyword });
       };
-
+      editor.setOption("extraKeys", {  
+        Tab: (cm) => {
+            if (cm.somethingSelected()) {      // 存在文本选择
+                cm.indentSelection('add');    // 正向缩进文本
+            } else {                    // 无文本选择  
+                cm.replaceSelection(Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");  // 光标处插入 indentUnit 个空格
+            }   
+        },  
+        "Shift-Tab": (cm) => {              // 反向缩进   
+            if (cm.somethingSelected()) {
+                cm.indentSelection('subtract');  // 反向缩进
+            } else {
+                // cm.indentLine(cm.getCursor().line, "subtract");  // 直接缩进整行
+                const cursor = cm.getCursor();
+                cm.setCursor({line: cursor.line, ch: cursor.ch - 4});  // 光标回退 indexUnit 字符
+            }   
+            return ;
+        },
+      });
+      
       new ClipboardJS("#copycode", {
         text: function (trigger) {
           return editor.getDoc().getValue();
@@ -89,4 +112,4 @@
       window.addEventListener("resize", resizeEditor);
 
       // Initial resize of editor
-      resizeEditor();</script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/json-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/javascript-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/html-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/css-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/yaml-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/sql-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/xml-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/javascript-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/html-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/css-hint.js></script><!-- 语法高亮 --><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/xml/xml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/css/css.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/yaml/yaml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/sql/sql.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/htmlmixed/htmlmixed.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/xml-fold.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/markdown-fold.js></script><script defer src=https://cdn.jsdelivr.net/npm/sql-formatter/dist/sql-formatter.min.js></script><script defer src=/tools/js/format.js></script><script defer src=/tools/js/jquery.format.js></script><script defer src=/tools/js/ObjTree.js></script><script defer src=/tools/js/JKL.js></script><script defer src=/tools/js/beautify-css.min.js></script><script defer src=/tools/js/format-compress.js></script>
+      resizeEditor();</script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/json-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/javascript-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/html-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/css-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/yaml-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/sql-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/xml-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/javascript-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/html-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/css-hint.js></script><!-- 语法高亮 --><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/xml/xml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/css/css.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/yaml/yaml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/sql/sql.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/htmlmixed/htmlmixed.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/xml-fold.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/markdown-fold.js></script><script defer src=https://cdn.jsdelivr.net/npm/sql-formatter/dist/sql-formatter.min.js></script><script defer src=/tools/js/format.js></script><script defer src=/tools/js/jquery.format.js></script><script defer src=/tools/js/ObjTree.js></script><script defer src=/tools/js/JKL.js></script><script defer src=/tools/js/beautify-css.min.js></script><script defer src=/tools/js/java-format.js></script><script defer src=/tools/js/format-compress.js></script>
