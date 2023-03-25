@@ -1,14 +1,5 @@
-<!doctypehtml><meta charset=utf-8><title>工具集</title><!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> --><script src=https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js></script><link href=/tools/index.css rel=stylesheet><body><div id=app><div class=menu><ul><li @click="activeTab = 'json'" id=format-compress>格式化 | 压缩 | 转换<li @click="activeTab = 'json'" id=image-icon>图片 | 图标</ul></div><iframe src=../tools/format-compress2.html></iframe></div><script>$("ul > li").each(function (index, element) {
+<!doctypehtml><meta charset=utf-8><title>工具集</title><meta content="代码格式化, JSON修复、转换, XML转换, CSV转换, 代码压缩" name=keywords><!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> --><script src=https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js></script><link href=/tools/index.css rel=stylesheet><body><div id=app><div class=menu><ul><li @click="activeTab = 'json'" id=format-compress>格式化 | 压缩 | 转换<li @click="activeTab = 'json'" id=image-icon>图片 | 图标</ul></div><iframe src=../tools/format-compress.html></iframe></div><script>$("ul > li").each(function (index, element) {
         $(this).click(function () {
           $("iframe").attr("src", "/tools/" + $(this).attr("id") + ".html");
         });
-      });
-      // var app = new Vue({
-      //   el: "#app",
-      //   data: {
-      //     activeTab: "json",
-      //     jsonString: "",
-      //   },
-      //   methods: {
-      //   },
-      // });</script>
+      });</script>
