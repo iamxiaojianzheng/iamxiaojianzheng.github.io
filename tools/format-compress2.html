@@ -1,0 +1,201 @@
+<!doctypehtml><meta charset=utf-8><title>Format/Compress</title><link href=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.css rel=stylesheet><link href=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/theme/gruvbox-dark.css rel=stylesheet><link href=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/foldgutter.css rel=stylesheet><link href=/tools/css/format-compress.css rel=stylesheet><script src=https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/codemirror.min.js></script><!-- 语法高亮 --><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/javascript/javascript.min.js></script><!-- 折叠 --><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/foldcode.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/indent-fold.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/comment-fold.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/foldgutter.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/brace-fold.js></script><!-- 括号匹配 --><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/edit/matchbrackets.js></script><!-- 语法错误提示 --><link href=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/lint.css rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/lint.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/jsonlint/1.6.0/jsonlint.min.js></script><!-- 代码提示 --><link href=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/show-hint.css rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/show-hint.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/anyword-hint.js></script><!-- 复制 --><script src=https://cdn.staticfile.org/clipboard.js/2.0.4/clipboard.min.js></script><body><div class=toolbar><button style="background-color: green" class=button id=copycode>复制代码</button><button class=button id=format-btn>格式化</button><button class=button id=compress-btn>压缩</button><span id=jsonTool> <button class=button id=json-repair>修复JSON</button> <button class=button id=json-xml-btn>JSON转XML</button> <button class=button id=json-csv-btn>JSON转CSV</button> <button class=button id=json-yaml-btn>JSON转YAML</button> </span><span id=yamlTool> <button class=button id=yaml-json-btn>YAML转JSON</button> </span><span id=xmlTool> <button class=button id=xml-json-btn>XML转JSON</button> </span><span id=csvTool> <button class=button id=csv-json-btn>CSV转JSON</button> </span><label for=mode>语法:</label><select id=mode><option mode=application/ld+json value=json>JSON<option mode=text/javascript value=js>JavaScript<option mode=text/html value=html>HTML<option mode=text/css value=css>CSS<option mode=application/xml value=xml>XML<option mode=text/x-yaml value=yaml>YAML<option mode=text/x-yaml value=csv>CSV<option mode=text/x-sql value=sql>SQL<option mode=text/x-java module=clike value=java>JAVA</select></div><div class=code-area><div class=editor-wrapper><textarea id=code></textarea></div><div class=options id=options><div class=options-select><select id=tabsize name=tabsize><option value=1>Tab缩进<option value=2>2空格缩进<option value=3>3空格缩进<option value=4>4空格缩进<option value=8>8空格缩进</select><select id=max-preserve-newlines name=max-preserve-newlines><option value=-1>删除所有空行<option value=1>最多保留1个空行<option value=2>最多保留2个空行<option value=5>最多保留5个空行<option value=10>最多保留10个空行<option value=0>保留任意空行</select><select id=wrap-line-length name=wrap-line-length><option value=0>不自动换行<option value=40>超过40字符换行<option value=70>超过70字符换行<option value=80>超过80字符换行<option value=110>超过110字符换行<option value=120>超过120字符换行<option value=160>超过160字符换行</select><select id=brace-style><option value=collapse>左花括号跟随控制语句<option value=expand>左花括号另起一行<option value=end-expand>右花括号另起一行<option value=none>不做改变</select><div><p style="margin: 6px 0 0 0">HTML &LTstyle>, &LTscript> 格式化:</p><select id=indent-scripts><option value=keep>保持标签的缩进水平<option value=normal>添加一级缩进<option value=separate>单独缩进</select></div></div><div class=options-checkboxes><input class=checkbox id=end-with-newline type=checkbox><label for=end-with-newline>script和style标签后添加新行 ?</label><br><input class=checkbox id=e4x type=checkbox><label for=e4x>支持 e4x/jsx 语法</label><br><input class=checkbox id=comma-first type=checkbox><label for=comma-first>使用 comma-first 风格 ?</label><br><input class=checkbox id=detect-packers type=checkbox><label for=detect-packers>检测 packers 和 obfuscators ?</label><br><input class=checkbox id=brace-preserve-inline type=checkbox><label for=brace-preserve-inline>保留内联大括号/代码块 ?</label><br><input class=checkbox id=keep-array-indentation type=checkbox><label for=keep-array-indentation>保持数组缩进 ?</label><br><input class=checkbox id=break-chained-methods type=checkbox><label for=break-chained-methods>链式方法上的断行 ?</label><br><input class=checkbox id=space-before-conditional type=checkbox><label for=space-before-conditional>条件前的空格: "if(x)" / "if (x)"</label><br><input class=checkbox id=unescape-strings type=checkbox><label for=unescape-strings>转义编码为 \xNN 或 \uNNNN 的可打印字符 ?</label><br><input class=checkbox id=jslint-happy type=checkbox><label for=jslint-happy>使用 JSLint-happy 格式调整 ?</label><br><input class=checkbox id=indent-inner-html type=checkbox><label for=indent-inner-html>缩进 &LThead> 和 &LTbody> 部分?</label><br><input class=checkbox id=indent-empty-lines type=checkbox><label for=indent-empty-lines>在空行上保持缩进 ?</label></div></div></div><script>$('#yamlTool').hide()
+      $('#xmlTool').hide()
+      $('#csvTool').hide()</script><script type=module>
+      import { jsonrepair } from '../tools/js/jsonrepair.js'
+      import * as utils from '../tools/js/util/index.js'
+      import * as formatUtils from '../tools/js/format/index.js'
+      import * as convertUtils from '../tools/js/convert/index.js'
+
+      const editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+        mode: 'application/ld+json',
+        theme: 'gruvbox-dark',
+        lineNumbers: true,
+        // lineWrapping: true,
+        indentUnit: 4, // 缩进多少个空格
+        tabSize: 2, // 制表符宽度
+        // indentWithTabs: false,
+        foldGutter: {
+          rangeFinder: new CodeMirror.fold.combine(CodeMirror.fold.indent, CodeMirror.fold.comment),
+        },
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+        foldOptions: {
+          widget: '…',
+        },
+        // 语法报错
+        lint: true,
+        extraKeys: {
+          //配置按键
+          Alt: 'autocomplete', // 按下`alt`时出现代码提示
+        },
+        // 提示
+        hintOptions: {
+          completeSingle: false,
+        },
+        //括号匹配
+        matchBrackets: true,
+        showInvisibles: true, // 显示空格和制表符
+        nonBreakingSpaceChar: '\u00a0', // 用 ( ) 表示非断行空格
+        invisibleChar: '\u00b7', // 用 (·) 表示普通空格
+      })
+      CodeMirror.commands.autocomplete = function (cm) {
+        cm.showHint({ hint: CodeMirror.hint.anyword })
+      }
+      editor.setOption('extraKeys', {
+        Tab: cm => {
+          if (cm.somethingSelected()) {
+            // 存在文本选择
+            cm.indentSelection('add') // 正向缩进文本
+          } else {
+            // 无文本选择
+            cm.replaceSelection(Array(cm.getOption('indentUnit') + 1).join(' '), 'end', '+input') // 光标处插入 indentUnit 个空格
+          }
+        },
+        'Shift-Tab': cm => {
+          // 反向缩进
+          if (cm.somethingSelected()) {
+            cm.indentSelection('subtract') // 反向缩进
+          } else {
+            // cm.indentLine(cm.getCursor().line, "subtract");  // 直接缩进整行
+            const cursor = cm.getCursor()
+            cm.setCursor({ line: cursor.line, ch: cursor.ch - 4 }) // 光标回退 indexUnit 字符
+          }
+          return
+        },
+      })
+      editor.setValue(
+        '{"sites":{"site":[{"id":"1","name":"菜鸟教程","url":"www.runoob.com"},{"id":"2","name":"菜鸟工具","url":"c.runoob.com"},{"id":"3","name":"Google","url":"www.google.com"}]}}'
+      )
+      window.editor = editor
+
+      new ClipboardJS('#copycode', {
+        text: function (trigger) {
+          return editor.getDoc().getValue()
+        },
+      })
+        .on('success', function (e) {
+          $('#copycode').text('已复制')
+          editor.execCommand('selectAll')
+          setTimeout(function () {
+            $('#copycode').html('<i class="fa fa-copy"></i> 复制代码')
+          }, 2000)
+          e.clearSelection()
+        })
+        .on('error', function (e) {
+          alert('Error!')
+        })
+
+      // $('#format-btn').on('click', () => format(editor))
+      $('.options select').change(format)
+      $(':checkbox').change(format)
+
+      $('#format-btn').on('click', format)
+      $('#compress-btn').on('click', () => compress(editor))
+
+      $('#json-repair').on('click', () => {
+        try {
+          formatUtils.json(jsonrepair(editor.getValue())).then(v => editor.setValue(v))
+        } catch (err) {
+          alert('修复失败')
+        }
+      })
+      $('#xml-json-btn').on('click', () => xml2json(editor))
+      $('#json-xml-btn').on('click', () => json2xml(editor))
+      // $('#json-csv-btn').on('click', () => json2csv(editor))
+      $('#json-csv-btn').on('click', () => {
+        // convertUtils.jsonToCsv(editor.getValue()).then(v => editor.setValue(v))
+        json2csv(editor)
+        $('#mode').val('csv').change()
+      })
+      $('#json-yaml-btn').on('click', () => {
+        convertUtils.json2yaml(editor.getValue()).then(v => {
+          editor.setValue(v)
+          $('#mode').val('yaml').change()
+          $('#format-btn').click()
+        })
+      })
+      $('#yaml-json-btn').on('click', () => {
+        convertUtils.yaml2json(editor.getValue()).then(v => {
+          editor.setValue(v)
+          $('#mode').val('json').change()
+          $('#format-btn').click()
+        })
+      })
+      $('#csv-json-btn').on('click', () => {
+        convertUtils.csv2Json(editor.getValue()).then(v => {
+          editor.setValue(v)
+          $('#mode').val('json').change()
+          $('#format-btn').click()
+        })
+      })
+      $('#mode').on('change', e => {
+        const el = e.target
+        const selectedEl = $(el.options[el.selectedIndex])
+        let mode = selectedEl.attr('mode')
+        const value = e.target.value
+
+        value === 'json' ? $('#jsonTool').show() : $('#jsonTool').hide()
+        value === 'yaml' ? $('#yamlTool').show() : $('#yamlTool').hide()
+        value === 'xml' ? $('#xmlTool').show() : $('#xmlTool').hide()
+        value === 'csv' ? $('#csvTool').show() : $('#csvTool').hide()
+
+        if (['json', 'js', 'css', 'html', 'xml', 'java'].includes(value)) {
+          $('#options').show()
+        } else {
+          $('#options').hide()
+        }
+
+        setMode(editor, mode)
+      })
+
+      function format() {
+        const mode = $('#mode').val()
+        const code = editor.getValue()
+
+        formatUtils[mode](code).then(v => editor.setValue(v))
+        // switch (mode) {
+        //   case 'json':
+        //     formatUtils.json(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'js':
+        //     formatUtils.js(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'css':
+        //     formatUtils.css(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'html':
+        //     formatUtils.html(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'sql':
+        //     formatUtils.sql(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'java':
+        //     formatUtils.java(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'xml':
+        //     formatUtils.xml(code).then(v => editor.setValue(v))
+        //     break
+        //   case 'yaml':
+        //     formatXml(code).then((v) => editor.setValue(v))
+        //     break
+        // }
+      }
+
+      function setMode(editor, mode) {
+        editor.setOption('mode', mode)
+      }
+
+      // Resize editor to fill remaining height
+      function resizeEditor() {
+        const toolbarHeight = document.querySelector('.toolbar').offsetHeight
+        const windowHeight = window.innerHeight
+        const editorWrapper = document.querySelector('.editor-wrapper')
+        editorWrapper.style.height = windowHeight - toolbarHeight + 'px'
+        editor.refresh()
+      }
+
+      // Resize editor on window resize event
+      window.addEventListener('resize', resizeEditor)
+
+      // Initial resize of editor
+      resizeEditor()
+    </script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/json-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/javascript-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/html-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/css-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/csslint/1.0.5/csslint.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/jshint/2.13.6/jshint.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/yaml-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/sql-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/xml-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/javascript-hint.js></script><script defer src=/tools/js/htmlhint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/html-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/css-hint.js></script><!-- 语法高亮 --><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/xml/xml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/css/css.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/yaml/yaml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/sql/sql.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/htmlmixed/htmlmixed.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/xml-fold.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/markdown-fold.js></script><script defer src=https://cdn.jsdelivr.net/npm/sql-formatter/dist/sql-formatter.min.js></script><!-- <script defer src="/tools/js/format.js"></script> --><script defer src=/tools/js/jquery.format.js></script><script defer src=/tools/js/ObjTree.js></script><script defer src=/tools/js/JKL.js></script><script defer src=/tools/js/format-compress.js></script>
