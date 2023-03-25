@@ -150,34 +150,7 @@
       function format() {
         const mode = $('#mode').val()
         const code = editor.getValue()
-
         formatUtils[mode](code).then(v => editor.setValue(v))
-        // switch (mode) {
-        //   case 'json':
-        //     formatUtils.json(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'js':
-        //     formatUtils.js(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'css':
-        //     formatUtils.css(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'html':
-        //     formatUtils.html(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'sql':
-        //     formatUtils.sql(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'java':
-        //     formatUtils.java(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'xml':
-        //     formatUtils.xml(code).then(v => editor.setValue(v))
-        //     break
-        //   case 'yaml':
-        //     formatXml(code).then((v) => editor.setValue(v))
-        //     break
-        // }
       }
 
       function setMode(editor, mode) {
