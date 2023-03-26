@@ -4,31 +4,31 @@
       $('#propertiesTool').hide()
 
       function dataURItoBlob(dataURI) {
-        const byteString = atob(dataURI.split(',')[1]);
-        const ab = new ArrayBuffer(byteString.length);
-        const ia = new Uint8Array(ab);
+        const byteString = atob(dataURI.split(',')[1])
+        const ab = new ArrayBuffer(byteString.length)
+        const ia = new Uint8Array(ab)
         for (let i = 0; i < byteString.length; i++) {
-          ia[i] = byteString.charCodeAt(i);
+          ia[i] = byteString.charCodeAt(i)
         }
-        return new Blob([ab], { type: 'image/png' });
+        return new Blob([ab], { type: 'image/png' })
       }
 
       function showMessage(message, type) {
-        const messageBox = document.createElement("div");
-        const messageContainer = document.querySelector(".message-container");
-        messageBox.textContent = message;
-        messageBox.classList.add("message-box");
-        messageBox.classList.add(type);
-        messageContainer.appendChild(messageBox);
-        setTimeout(function() {
-          messageBox.classList.remove("show");
-          messageBox.addEventListener("transitionend", function() {
-            messageBox.remove();
-          });
-        }, 3000);
-        setTimeout(function() {
-          messageBox.classList.add("show");
-        }, 10);
+        const messageBox = document.createElement('div')
+        const messageContainer = document.querySelector('.message-container')
+        messageBox.textContent = message
+        messageBox.classList.add('message-box')
+        messageBox.classList.add(type)
+        messageContainer.appendChild(messageBox)
+        setTimeout(function () {
+          messageBox.classList.remove('show')
+          messageBox.addEventListener('transitionend', function () {
+            messageBox.remove()
+          })
+        }, 3000)
+        setTimeout(function () {
+          messageBox.classList.add('show')
+        }, 10)
       }</script><script type=module>
       import { jsonrepair } from '../tools/js/jsonrepair.js'
       import * as utils from '../tools/js/util/index.js'
@@ -114,38 +114,32 @@
       editor.setValue(
         '{"sites":{"site":[{"id":"1","name":"Apple","url":"www.apple.com"},{"id":"2","name":"Google","url":"www.google.com"},{"id":"3","name":"Bing","url":"www.bing.com"}]}}'
       )
-      
+
       // 生成代码图片
       $('#createImage').on('click', () => {
-        html2canvas(editor.getWrapperElement()).then(function(canvas) {
-          const dataURL = canvas.toDataURL();
-          const blob = dataURItoBlob(dataURL);
-          const clipboardItem = new ClipboardItem({ 'image/png': blob });
-          navigator.clipboard.write([clipboardItem]);
+        html2canvas(editor.getWrapperElement()).then(function (canvas) {
+          const dataURL = canvas.toDataURL()
+          const blob = dataURItoBlob(dataURL)
+          const clipboardItem = new ClipboardItem({ 'image/png': blob })
+          navigator.clipboard.write([clipboardItem])
           // document.getElementById('image-container').innerHTML = '';
           // document.getElementById('image-container').appendChild(canvas);
           showMessage('图片已存放至剪切板', 'success')
-        });
+        })
       })
 
       window.editor = editor
 
       new ClipboardJS('#copycode', {
-        text: function (trigger) {
-          return editor.getDoc().getValue()
-        },
+        text: trigger => editor.getDoc().getValue(),
       })
         .on('success', function (e) {
           $('#copycode').text('已复制')
           editor.execCommand('selectAll')
-          setTimeout(function () {
-            $('#copycode').html('<i class="fa fa-copy"></i> 复制代码')
-          }, 2000)
+          setTimeout(() => $('#copycode').html('<i class="fa fa-copy"></i> 复制代码'), 2000)
           e.clearSelection()
         })
-        .on('error', function (e) {
-          alert('Error!')
-        })
+        .on('error', e => showMessage('复制失败', 'error'))
 
       // $('#format-btn').on('click', () => format(editor))
       $('.options select').change(format)
@@ -158,7 +152,7 @@
         try {
           formatUtils.json(jsonrepair(editor.getValue())).then(v => editor.setValue(v))
         } catch (err) {
-          alert('修复失败')
+          showMessage('修复失败', 'error')
         }
       })
 
@@ -174,47 +168,6 @@
           })
         })
       })
-
-      // $('#xml-json-btn').on('click', () =>
-      //   convertUtils.xml2json(editor.getValue()).then(v => {
-      //     editor.setValue(v)
-      //     $('#mode').val('json').change()
-      //     $('#format-btn').click()
-      //   })
-      // )
-      // $('#json-xml-btn').on('click', () =>
-      //   convertUtils.json2xml(editor.getValue()).then(v => {
-      //     editor.setValue(v)
-      //     $('#mode').val('xml').change()
-      //     $('#format-btn').click()
-      //   })
-      // )
-      // $('#json-csv-btn').on('click', () => {
-      //   // convertUtils.json2csv(editor.getValue()).then(v => editor.setValue(v))
-      //   editor.setValue(convertUtils.json2csv(editor.getValue()))
-      //   $('#mode').val('csv').change()
-      // })
-      // $('#json-yaml-btn').on('click', () => {
-      //   convertUtils.json2yaml(editor.getValue()).then(v => {
-      //     editor.setValue(v)
-      //     $('#mode').val('yaml').change()
-      //     $('#format-btn').click()
-      //   })
-      // })
-      // $('#yaml-json-btn').on('click', () => {
-      //   convertUtils.yaml2json(editor.getValue()).then(v => {
-      //     editor.setValue(v)
-      //     $('#mode').val('json').change()
-      //     $('#format-btn').click()
-      //   })
-      // })
-      // $('#csv-json-btn').on('click', () => {
-      //   convertUtils.csv2json(editor.getValue()).then(v => {
-      //     editor.setValue(v)
-      //     $('#mode').val('json').change()
-      //     $('#format-btn').click()
-      //   })
-      // })
 
       $('#mode').on('change', e => {
         const el = e.target
@@ -251,7 +204,42 @@
         const mode = $('#mode').val()
         const code = editor.getValue()
         const fn = formatUtils[mode]
-        fn && fn(code).then(v => editor.setValue(v))
+        fn &&
+          fn(code)
+            .then(v => editor.setValue(v))
+            .catch(e => showMessage('抱歉，格式化错误。'))
+      }
+
+      function compress(editor) {
+        const value = editor.getValue()
+        if (!value) {
+          return
+        }
+        try {
+          let compressed = value
+          let mode = editor.getOption('mode')
+          if (mode.endsWith('json')) {
+            compressed = JSON.stringify(JSON.parse(value)).replace(/\s+/g, '')
+          } else if (mode.endsWith('html')) {
+            compressed = new Packer().pack(value, 0, 0)
+          } else if (mode.endsWith('javascript')) {
+            compressed = js_beautify(value, { indent_size: 0 }).replace(/\n/g, '').replace(/\s+/g, ' ')
+          } else if (mode.endsWith('xml')) {
+            compressed = $.format(value, { method: 'xmlmin' })
+          } else if (mode.endsWith('css')) {
+            compressed = $.format(value, { method: 'cssmin' })
+          } else if (mode.endsWith('sql')) {
+            compressed = $.format(value, { method: 'sqlmin' })
+          } else if (mode.endsWith('java')) {
+            compressed = value.replace(/\n/g, '').replace(/\s+/g, ' ')
+          } else {
+            alert('do not support')
+          }
+          editor.setValue(compressed)
+        } catch (error) {
+          showMessage('压缩失败', 'error')
+          console.error(error)
+        }
       }
 
       function setMode(editor, mode) {
@@ -272,4 +260,4 @@
 
       // Initial resize of editor
       resizeEditor()
-    </script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/json-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/javascript-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/html-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/css-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/csslint/1.0.5/csslint.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/jshint/2.13.6/jshint.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/yaml-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/sql-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/xml-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/javascript-hint.js></script><script defer src=/tools/js/htmlhint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/html-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/css-hint.js></script><!-- 语法高亮 --><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/xml/xml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/css/css.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/yaml/yaml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/sql/sql.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/htmlmixed/htmlmixed.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/properties/properties.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/xml-fold.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/markdown-fold.js></script><script defer src=https://cdn.jsdelivr.net/npm/sql-formatter/dist/sql-formatter.min.js></script><script defer src=/tools/js/jquery.format.js></script><script defer src=/tools/js/format-compress.js></script>
+    </script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/json-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/javascript-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/html-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/css-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/csslint/1.0.5/csslint.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/jshint/2.13.6/jshint.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/lint/yaml-lint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/sql-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/xml-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/javascript-hint.js></script><script defer src=/tools/js/htmlhint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/html-hint.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/hint/css-hint.js></script><!-- 语法高亮 --><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/xml/xml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/css/css.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/yaml/yaml.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/sql/sql.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/clike/clike.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/htmlmixed/htmlmixed.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/mode/properties/properties.min.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/xml-fold.js></script><script defer src=https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.0/addon/fold/markdown-fold.js></script><script defer src=https://cdn.jsdelivr.net/npm/sql-formatter/dist/sql-formatter.min.js></script><script defer src=/tools/js/jquery.format.js></script>
