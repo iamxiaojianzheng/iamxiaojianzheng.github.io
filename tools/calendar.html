@@ -1,0 +1,22 @@
+<!doctypehtml><html lang=en><meta charset=UTF-8><meta content=IE=edge http-equiv=X-UA-Compatible><meta content=width=device-width,initial-scale=1.0 name=viewport><title>工具集 - 日历</title><link href=../tools/css/almanac.css rel=stylesheet><script src=https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js></script><script src=/tools/js/almanac.js></script><body><div class=zh-almanac data-id=2 id=id_almanac><div class="hint-bar clearfix"><span class=title-bar id=GZ> </span><div class=control-bar><div class="control-module year-control"><a action=prev class=prev href=javascript:; id=nianjian></a><div class=control><i class=trigger></i><div class="field year" val=2015>2015年</div></div><a action=next class=next href=javascript:; id=nianjia></a><ul class="list year-list hidden"></ul></div><div class="control-module month-control"><a action=prev class=prev href=javascript:; id=yuejian></a><div class=control><i class=trigger></i><div class="field month" val=7>7月</div></div><a action=next class=next href=javascript:; id=yuejia></a><ul class="list month-list hidden"></ul></div><div class=btn-today>返回今天</div></div></div><div class=alc-container><div class=left><ul class="dates-hd clearfix"><li class="days-title last" data-id=6>日<li class=days-title data-id=0>一<li class=days-title data-id=1>二<li class=days-title data-id=2>三<li class=days-title data-id=3>四<li class=days-title data-id=4>五<li class=days-title data-id=5>六</ul><ol class="dates-bd clearfix"></ol></div><div class=right><div class=almanac-tips><div class=dates-bar><span class=date></span><span class=weekday></span></div><div class=date-show-panel></div><div class=desc><div class=lunar></div><div class=lunar-ganzhi></div><div class=lunar-term></div></div></div><div class="almanac-extra clearfix"><div class=suited><h3 class=st-label>宜</h3><ul class="st-items clearfix"></ul></div><div class=tapu><h3 class=st-label>忌</h3><ul class="st-items clearfix"></ul></div><div class="ban hidden"><ul class="st-items clearfix"></ul></div></div></div></div></div><script>$('#id_almanac').almanac({
+        /**
+         * 画日历之后调用函数
+         */
+        afterDrawCld: function (year, month) {
+          console.log('加载完成')
+        },
+        /**
+         * 双击某一天的事件
+         */
+        dbClickDay: function (elem) {
+          var _this = $(elem)
+          console.log('阳历：' + _this.attr('data-year') + '年' + _this.attr('data-month') + '月' + _this.attr('data-solor'))
+        },
+        /**
+         * 单击某一天的事件
+         */
+        clickDay: function (elem) {
+          var _this = $(elem)
+          console.log('阳历：' + _this.attr('data-year') + '年' + _this.attr('data-month') + '月' + _this.attr('data-solor'))
+        },
+      })</script>
