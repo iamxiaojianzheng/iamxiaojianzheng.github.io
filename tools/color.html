@@ -1,0 +1,74 @@
+<!doctypehtml><html lang=zh><meta charset=UTF-8><script src=https://cdn.staticfile.org/clipboard.js/2.0.4/clipboard.min.js></script><style>.message-container {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        z-index: 9999;
+      }
+      .message-box {
+        padding: 16px;
+        background-color: #fff;
+        color: #333;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease-out;
+
+        /* 新增样式规则 */
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        max-width: 500px;
+      }
+      .message-box.show {
+        opacity: 1;
+      }
+
+      /* 新增样式规则 */
+      .message-box .icon {
+        font-size: 24px;
+      }
+
+      /* 新增样式规则 */
+      .message-box.success {
+        background-color: #c3e6cb;
+        color: #155724;
+      }
+      .message-box.warning {
+        background-color: #ffc107;
+        color: #856404;
+      }
+      .message-box.error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      /* 新增样式规则 */
+      @keyframes fadeInOut {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }</style><body><div id=root></div><div class=message-container></div><script src=/tools/js/color/index.js></script><script>function showMessage(message, type) {
+        const messageBox = document.createElement('div')
+        const messageContainer = document.querySelector('.message-container')
+        messageBox.textContent = message
+        messageBox.classList.add('message-box')
+        messageBox.classList.add(type)
+        messageContainer.appendChild(messageBox)
+        setTimeout(function () {
+          messageBox.classList.remove('show')
+          messageBox.addEventListener('transitionend', function () {
+            messageBox.remove()
+          })
+        }, 3000)
+        setTimeout(function () {
+          messageBox.classList.add('show')
+        }, 10)
+      }</script>
