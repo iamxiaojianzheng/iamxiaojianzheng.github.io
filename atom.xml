@@ -24,12 +24,8 @@
     <updated>2023-04-07T16:00:00.000Z</updated>
     
     
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;   官方文档：&lt;a href=&quot;https://links.jianshu.com/go?to=https://github.com/openatx/uiautomator2&quot;&gt;https://github.com/openatx/uiautomator2&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;连接ADB设备&quot;&gt;&lt;a href=&quot;#连接ADB设备&quot; class=&quot;headerlink&quot; title=&quot;连接ADB设备&quot;&gt;&lt;/a&gt;连接ADB设备&lt;/h3&gt;&lt;p&gt;可以通过USB或Wifi与ADB设备进行连接，进而调用Uiautomator2框架，支持同时连接单个或多个ADB设备。&lt;/p&gt;
-&lt;h4 id=&quot;USB连接&quot;&gt;&lt;a href=&quot;#USB连接&quot; class=&quot;headerlink&quot; title=&quot;USB连接&quot;&gt;&lt;/a&gt;USB连接&lt;/h4&gt;&lt;p&gt;只有一个设备也可以省略参数，多个设备则需要序列号来区分&lt;/p&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; uiautomator2 &lt;span class=&quot;keyword&quot;&gt;as&lt;/span&gt; u2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;d = u2.connect(&lt;span class=&quot;string&quot;&gt;&amp;quot;--serial-here--&amp;quot;&lt;/span&gt;) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 一个设备时，可简写&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;d = u2.connect() &lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    <summary type="html">&lt;h3 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h3&gt;&lt;p&gt;uiautomator2是一个自动化测试开源工具，仅支持android平台的自动化测试，其封装了谷歌自带的uiautomator2测试框架，可以运行在支持Python的任一系统上，目前版本为2.10.2&lt;/p&gt;
+&lt;p&gt;开源库地址：&lt;a href=&quot;https://github.com/openatx/uiautomator2&quot;&gt;https://github.com/openatx/uiautomator2&lt;/a&gt;&lt;/p&gt;</summary>
     
     
     
