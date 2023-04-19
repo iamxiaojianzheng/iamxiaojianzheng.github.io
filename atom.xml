@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-04-07T16:00:00.000Z</updated>
+  <updated>2023-04-18T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL-JDBC参数说明</title>
+    <link href="http://xiaojianzheng.cn/archives/da58db1.html"/>
+    <id>http://xiaojianzheng.cn/archives/da58db1.html</id>
+    <published>2023-04-18T16:00:00.000Z</published>
+    <updated>2023-04-18T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">MySQL-JDBC参数说明</summary>
+    
+    
+    
+    
+    <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>海康威视sdk错误码大全</title>
+    <link href="http://xiaojianzheng.cn/archives/1efb16b1.html"/>
+    <id>http://xiaojianzheng.cn/archives/1efb16b1.html</id>
+    <published>2023-04-16T16:00:00.000Z</published>
+    <updated>2023-04-16T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">海康威视sdk错误码大全</summary>
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+  </entry>
   
   <entry>
     <title>UIAutomator2 简明教程</title>
@@ -488,55 +522,6 @@
     
     
     <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDEA入门手册</title>
-    <link href="http://xiaojianzheng.cn/archives/c410bef7.html"/>
-    <id>http://xiaojianzheng.cn/archives/c410bef7.html</id>
-    <published>2023-01-30T16:00:00.000Z</published>
-    <updated>2023-01-30T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;h3 id=&quot;一、视图查看&quot;&gt;&lt;a href=&quot;#一、视图查看&quot; class=&quot;headerlink&quot; title=&quot;一、视图查看&quot;&gt;&lt;/a&gt;一、视图查看&lt;/h3&gt;&lt;h4 id=&quot;Ctrl-F12-查看file，method结构图、类继承机构图&quot;&gt;&lt;a href=&quot;#Ctrl-F12-查看file，method结构图、类继承机构图&quot; class=&quot;headerlink&quot; title=&quot;Ctrl+F12 查看file，method结构图、类继承机构图&quot;&gt;&lt;/a&gt;Ctrl+F12 查看file，method结构图、类继承机构图&lt;/h4&gt;&lt;p&gt;（不知道方法结构，Ctrl+F12一下，方法，参数，返回值，一清二楚的展现出来）&lt;/p&gt;
-&lt;h4 id=&quot;Ctrl-shift-Alt-U-查看maven依赖，类图&quot;&gt;&lt;a href=&quot;#Ctrl-shift-Alt-U-查看maven依赖，类图&quot; class=&quot;headerlink&quot; title=&quot;Ctrl+shift+Alt+U  查看maven依赖，类图&quot;&gt;&lt;/a&gt;Ctrl+shift+Alt+U  查看maven依赖，类图&lt;/h4&gt;&lt;p&gt;　　使用maven做项目时，依赖往往非常多，在配置依赖的文件中只需要Ctrl+shift+Alt+U，所有依赖都以拓扑图的方式展现出来，所有的关系和位置都能找到；&lt;/p&gt;
-&lt;p&gt;　　如下图（抱歉，项目依赖太多，具体的依赖需要放大）&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16752175644801675217563612.png&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>归途</title>
-    <link href="http://xiaojianzheng.cn/archives/6287ea21.html"/>
-    <id>http://xiaojianzheng.cn/archives/6287ea21.html</id>
-    <published>2023-01-18T16:00:00.000Z</published>
-    <updated>2023-01-18T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;高铁似箭三五载 &lt;/p&gt;
-
-&lt;/blockquote&gt;
-
-&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;班车徐徐归家途</summary>
-        
-      
-    
-    
-    
-    
-    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
     
   </entry>
   
