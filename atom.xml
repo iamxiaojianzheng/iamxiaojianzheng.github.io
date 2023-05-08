@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-04-19T16:00:00.000Z</updated>
+  <updated>2023-05-07T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>什么是软路由</title>
+    <link href="http://xiaojianzheng.cn/archives/1c8a3792.html"/>
+    <id>http://xiaojianzheng.cn/archives/1c8a3792.html</id>
+    <published>2023-05-07T16:00:00.000Z</published>
+    <updated>2023-05-07T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;什么是硬路由？&quot;&gt;&lt;a href=&quot;#什么是硬路由？&quot; class=&quot;headerlink&quot; title=&quot;什么是硬路由？&quot;&gt;&lt;/a&gt;什么是硬路由？&lt;/h2&gt;&lt;p&gt;简单说，就是我们目前家里普遍用的路由器，比如常用的华为、小米、TP-LINK等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;硬路由&lt;/strong&gt;是使用ASIC(专用集成电路)达成路由功能的路由器，是厂商把软硬件打包好的成品，通常只能作为路由器使用，功能比较单一。&lt;/p&gt;
+&lt;p&gt;现在有些厂商也在路由器后台系统集成了部分插件，比如海淘加速、游戏加速、智能家居等，但是一般功能有限，而且大多数都要付费使用。&lt;/p&gt;
+&lt;h2 id=&quot;什么是软路由？&quot;&gt;&lt;a href=&quot;#什么是软路由？&quot; class=&quot;headerlink&quot; title=&quot;什么是软路由？&quot;&gt;&lt;/a&gt;什么是软路由？&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;软路由&lt;/strong&gt;是PC的硬件加上路由系统来实现路由器的功能的，就是说在电脑上安装一个路由器的系统，比如OpenWrt、梅林固件、老毛子等。&lt;/p&gt;
+&lt;p&gt;可以说&lt;strong&gt;软路由&lt;/strong&gt;是使用软件达成路由功能的路由器，可以是旧电脑、笔记本、各种盒子或者电脑安装个虚拟机。&lt;/p&gt;
+&lt;p&gt;但是软路由由于硬件上没有无线芯片和天线，只能作为有线路由使用。&lt;/p&gt;
+&lt;p&gt;软路由有单网口、双网口以及多网口可供选择。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="路由器" scheme="http://xiaojianzheng.cn/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>ip2region 入门手册</title>
@@ -494,26 +517,6 @@
     <category term="Python" scheme="http://xiaojianzheng.cn/tags/Python/"/>
     
     <category term="OCR" scheme="http://xiaojianzheng.cn/tags/OCR/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>银河麒麟系统忘记root密码</title>
-    <link href="http://xiaojianzheng.cn/archives/a7e6503d.html"/>
-    <id>http://xiaojianzheng.cn/archives/a7e6503d.html</id>
-    <published>2023-02-01T16:00:00.000Z</published>
-    <updated>2023-02-01T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;银河麒麟高级服务器操作系统通过修改引导参数重置root用户密码&lt;/p&gt;
-&lt;p&gt;以 银河麒麟高级服务器操作系统 V10SP2-X86-64 为例&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-    <category term="银河麒麟" scheme="http://xiaojianzheng.cn/tags/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9F/"/>
     
   </entry>
   
