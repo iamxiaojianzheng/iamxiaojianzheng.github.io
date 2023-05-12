@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-05-10T16:00:00.000Z</updated>
+  <updated>2023-05-11T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Office Word使用VBA拆分邮件合并文件</title>
+    <link href="http://xiaojianzheng.cn/archives/3164e2df.html"/>
+    <id>http://xiaojianzheng.cn/archives/3164e2df.html</id>
+    <published>2023-05-11T16:00:00.000Z</published>
+    <updated>2023-05-11T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;将当前邮件合并文件拆分为单独的word和pdf，文件名称以数据源中的“姓名”字段重命名。&lt;/p&gt;
+&lt;figure class=&quot;highlight vb&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Office" scheme="http://xiaojianzheng.cn/tags/Office/"/>
+    
+    <category term="VBA" scheme="http://xiaojianzheng.cn/tags/VBA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用VBA批量将Word转成PDF</title>
+    <link href="http://xiaojianzheng.cn/archives/5624f4f3.html"/>
+    <id>http://xiaojianzheng.cn/archives/5624f4f3.html</id>
+    <published>2023-05-11T16:00:00.000Z</published>
+    <updated>2023-05-11T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;figure class=&quot;highlight vb&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Sub&lt;/span&gt;</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Office" scheme="http://xiaojianzheng.cn/tags/Office/"/>
+    
+    <category term="VBA" scheme="http://xiaojianzheng.cn/tags/VBA/"/>
+    
+  </entry>
   
   <entry>
     <title>CentOS7+OpenVPN2.4+EasyRsa3的安装和配置</title>
@@ -491,55 +542,6 @@
     
     
     <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Vim中的按键标识符</title>
-    <link href="http://xiaojianzheng.cn/archives/49ba5a02.html"/>
-    <id>http://xiaojianzheng.cn/archives/49ba5a02.html</id>
-    <published>2023-02-09T16:00:00.000Z</published>
-    <updated>2023-02-09T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;原文地址：&lt;a href=&quot;https://yianwillis.github.io/vimcdoc/doc/intro.html#key-notation&quot;&gt;https://yianwillis.github.io/vimcdoc/doc/intro.html#key-notation&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    
-    <category term="Vim" scheme="http://xiaojianzheng.cn/tags/Vim/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS7下docker二进制文件编译</title>
-    <link href="http://xiaojianzheng.cn/archives/3fdb1eb0.html"/>
-    <id>http://xiaojianzheng.cn/archives/3fdb1eb0.html</id>
-    <published>2023-02-08T16:00:00.000Z</published>
-    <updated>2023-02-08T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;原文地址：&lt;a href=&quot;https://o-my-chenjian.com/2017/10/11/Make-Docker-Executable-File-On-CentOS7/&quot;&gt;https://o-my-chenjian.com/2017/10/11/Make-Docker-Executable-File-On-CentOS7/&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;相关博文&quot;&gt;&lt;a href=&quot;#相关博文&quot; class=&quot;headerlink&quot; title=&quot;相关博文&quot;&gt;&lt;/a&gt;相关博文&lt;/h3&gt;&lt;ol&gt;
-&lt;li&gt;&lt;a href=&quot;https://o-my-chenjian.com/2016/07/04/Easy-With-Docker/&quot;&gt;带你玩转Docker&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id=&quot;系统环境与软件版本&quot;&gt;&lt;a href=&quot;#系统环境与软件版本&quot; class=&quot;headerlink&quot; title=&quot;系统环境与软件版本&quot;&gt;&lt;/a&gt;系统环境与软件版本&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;OS：Centos7 64bit&lt;/li&gt;
-&lt;li&gt;Kernel Version：3.10.0-693.2.2.el7.x86_64&lt;/li&gt;
-&lt;li&gt;Golang Version: go1.8.4 linux&amp;#x2F;amd64&lt;/li&gt;
-&lt;li&gt;Docker: 17.05.0-ce&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-    <category term="CentOS7" scheme="http://xiaojianzheng.cn/tags/CentOS7/"/>
     
   </entry>
   
