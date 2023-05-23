@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-05-11T16:00:00.000Z</updated>
+  <updated>2023-05-22T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>谈谈对序列化和反序列化的理解</title>
+    <link href="http://xiaojianzheng.cn/archives/656d66bf.html"/>
+    <id>http://xiaojianzheng.cn/archives/656d66bf.html</id>
+    <published>2023-05-22T16:00:00.000Z</published>
+    <updated>2023-05-22T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;序列化和反序列化是 Java</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>Office Word使用VBA拆分邮件合并文件</title>
@@ -520,28 +543,6 @@
     
     
     <category term="Chrome" scheme="http://xiaojianzheng.cn/tags/Chrome/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>2023年JRebel最新激活方式</title>
-    <link href="http://xiaojianzheng.cn/archives/e33e7636.html"/>
-    <id>http://xiaojianzheng.cn/archives/e33e7636.html</id>
-    <published>2023-02-10T16:00:00.000Z</published>
-    <updated>2023-02-10T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;原文地址：&lt;a href=&quot;https://www.cnblogs.com/sansui6/p/17043448.html&quot;&gt;https://www.cnblogs.com/sansui6/p/17043448.html&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;Rebel-介绍&quot;&gt;&lt;a href=&quot;#Rebel-介绍&quot; class=&quot;headerlink&quot; title=&quot;Rebel 介绍&quot;&gt;&lt;/a&gt;Rebel 介绍&lt;/h3&gt;&lt;blockquote&gt;
-&lt;p&gt;JRebel 是一款 JVM 插件，它使得 Java 代码修改后不用重启系统，立即生效。IDEA 上原生是不支持热部署的，一般更新了 Java 文件后要手动重启 Tomcat 服务器，修改才能生效；所以推荐使用 JRebel 插件进行热部署。&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    
-    <category term="IDEA" scheme="http://xiaojianzheng.cn/tags/IDEA/"/>
     
   </entry>
   
