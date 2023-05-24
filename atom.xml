@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-05-22T16:00:00.000Z</updated>
+  <updated>2023-05-23T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,80 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JAVA SPI入门</title>
+    <link href="http://xiaojianzheng.cn/archives/639d1883.html"/>
+    <id>http://xiaojianzheng.cn/archives/639d1883.html</id>
+    <published>2023-05-23T16:00:00.000Z</published>
+    <updated>2023-05-23T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Java的SPI机制（Service Provider Interface）是一种让应用程序能够通过在运行时动态加载实现模块的机制。它允许第三方库或框架定义服务接口和实现，从而使得应用程序可以在不需要修改源代码的情况下轻松地替换服务提供者。&lt;/p&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>谈谈Fail-Safe和Fail-Fast</title>
+    <link href="http://xiaojianzheng.cn/archives/12ec3901.html"/>
+    <id>http://xiaojianzheng.cn/archives/12ec3901.html</id>
+    <published>2023-05-23T16:00:00.000Z</published>
+    <updated>2023-05-23T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;“Fail-Safe” 和 “Fail-Fast” 是两种常见的故障处理机制，它们在软件开发中有不同的作用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Fail-Safe（安全失败）机制：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fail-Safe</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>谈谈熔断与降级</title>
+    <link href="http://xiaojianzheng.cn/archives/85bc6551.html"/>
+    <id>http://xiaojianzheng.cn/archives/85bc6551.html</id>
+    <published>2023-05-23T16:00:00.000Z</published>
+    <updated>2023-05-23T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;熔断（Circuit</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
+    
+  </entry>
   
   <entry>
     <title>谈谈对序列化和反序列化的理解</title>
@@ -476,73 +550,6 @@
     
     
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Spring中的一些类</title>
-    <link href="http://xiaojianzheng.cn/archives/d4b0840d.html"/>
-    <id>http://xiaojianzheng.cn/archives/d4b0840d.html</id>
-    <published>2023-03-10T16:00:00.000Z</published>
-    <updated>2023-03-10T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;RequestContextHolder&quot;&gt;&lt;a href=&quot;#RequestContextHolder&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Spring" scheme="http://xiaojianzheng.cn/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>网易易盾——滑动拼图验证码</title>
-    <link href="http://xiaojianzheng.cn/archives/c0e855f2.html"/>
-    <id>http://xiaojianzheng.cn/archives/c0e855f2.html</id>
-    <published>2023-03-09T12:55:28.000Z</published>
-    <updated>2023-03-09T12:55:28.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;问题和思路&quot;&gt;&lt;a href=&quot;#问题和思路&quot; class=&quot;headerlink&quot; title=&quot;问题和思路&quot;&gt;&lt;/a&gt;问题和思路&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://dun.163.com/trial/jigsaw&quot;&gt;滑动拼图验证码&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16783668644441678366863559.png&quot;&gt;&lt;/p&gt;
-&lt;p&gt;如何使用自动化手段模拟人为操作完成该验证码的验证流程？&lt;/p&gt;
-&lt;p&gt;思路：计算拼图与缺口之间的距离，通过控制拖动的方式，将拼图拖动至缺口位置，确保误差越小越好。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="验证码" scheme="http://xiaojianzheng.cn/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>禁止Chrome自动更新</title>
-    <link href="http://xiaojianzheng.cn/archives/6d521259.html"/>
-    <id>http://xiaojianzheng.cn/archives/6d521259.html</id>
-    <published>2023-03-09T06:38:12.000Z</published>
-    <updated>2023-03-09T06:38:12.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;chrome历史版本下载: &lt;a</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Chrome" scheme="http://xiaojianzheng.cn/tags/Chrome/"/>
     
   </entry>
   
