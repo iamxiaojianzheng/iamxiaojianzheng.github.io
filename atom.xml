@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-05-23T16:00:00.000Z</updated>
+  <updated>2023-05-25T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -17,6 +17,23 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>前后端数据加解密</title>
+    <link href="http://xiaojianzheng.cn/archives/b2e522af.html"/>
+    <id>http://xiaojianzheng.cn/archives/b2e522af.html</id>
+    <published>2023-05-25T16:00:00.000Z</published>
+    <updated>2023-05-25T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">前后端加解密</summary>
+    
+    
+    
+    
+    <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
     <title>JAVA SPI入门</title>
     <link href="http://xiaojianzheng.cn/archives/639d1883.html"/>
     <id>http://xiaojianzheng.cn/archives/639d1883.html</id>
@@ -24,14 +41,7 @@
     <updated>2023-05-23T16:00:00.000Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Java的SPI机制（Service Provider Interface）是一种让应用程序能够通过在运行时动态加载实现模块的机制。它允许第三方库或框架定义服务接口和实现，从而使得应用程序可以在不需要修改源代码的情况下轻松地替换服务提供者。&lt;/p&gt;
-&lt;h2</summary>
-        
-      
+    <summary type="html">&lt;p&gt;Java的SPI机制（Service Provider Interface）是一种让应用程序能够通过在运行时动态加载实现模块的机制。它允许第三方库或框架定义服务接口和实现，从而使得应用程序可以在不需要修改源代码的情况下轻松地替换服务提供者。&lt;/p&gt;</summary>
     
     
     
@@ -482,74 +492,6 @@
     
     
     <category term="npm" scheme="http://xiaojianzheng.cn/tags/npm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Arthas常用命令</title>
-    <link href="http://xiaojianzheng.cn/archives/0.html"/>
-    <id>http://xiaojianzheng.cn/archives/0.html</id>
-    <published>2023-03-10T16:00:00.000Z</published>
-    <updated>2023-03-10T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;基础命令&quot;&gt;&lt;a href=&quot;#基础命令&quot; class=&quot;headerlink&quot; title=&quot;基础命令&quot;&gt;&lt;/a&gt;基础命令&lt;/h1&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;命令&lt;/th&gt;
-&lt;th&gt;含义&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;help&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;查看命令帮助信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;cls&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;清空当前屏幕区域&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;session&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;查看当前会话的信息&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;reset&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;重置增强类，将被 Arthas 增强过的类全部还原，Arthas 服务端关闭时会重置所有增强过的类&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;version&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;输出当前目标 Java 进程所加载的 Arthas 版本号&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;history&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;打印命令历史&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;quit&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;退出当前 Arthas 客户端，其他 Arthas 客户端不受影响&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;stop&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;和shutdown命令一致&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;shutdown&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;关闭 Arthas 服务端，所有 Arthas 客户端全部退出&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;keymap&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Arthas快捷键列表及自定义快捷键&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;options&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;查看或设置Arthas全局开关&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;</summary>
-    
-    
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
