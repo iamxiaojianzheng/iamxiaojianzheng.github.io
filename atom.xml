@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-05-27T16:00:00.000Z</updated>
+  <updated>2023-05-28T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -17,6 +17,33 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>闲谈常见SQL语句加锁</title>
+    <link href="http://xiaojianzheng.cn/archives/506ded6e.html"/>
+    <id>http://xiaojianzheng.cn/archives/506ded6e.html</id>
+    <published>2023-05-28T16:00:00.000Z</published>
+    <updated>2023-05-28T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;原文：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/250666652&quot;&gt;https://zhuanlan.zhihu.com/p/250666652&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;锁是使用数据库时避不开的问题，MySQL 中的锁可以分成两个粒度：表锁和行锁。&lt;/p&gt;
+&lt;p&gt;表锁：表级读锁，表级写锁，读意向锁，写意向锁，自增锁&lt;/p&gt;
+&lt;p&gt;行锁：读记录锁，写记录锁，间隙锁，Next-key 锁，插入意向锁。&lt;/p&gt;
+&lt;p&gt;这些锁一旦冲突就会导致死锁问题的产生。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="转载" scheme="http://xiaojianzheng.cn/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+    <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
+    
+    <category term="SQL" scheme="http://xiaojianzheng.cn/tags/SQL/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Nacos+OpenFeign请求原理简要分析</title>
     <link href="http://xiaojianzheng.cn/archives/55992a41.html"/>
     <id>http://xiaojianzheng.cn/archives/55992a41.html</id>
@@ -24,13 +51,7 @@
     <updated>2023-05-27T16:00:00.000Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;Idea-Debug断点配置&quot;&gt;&lt;a href=&quot;#Idea-Debug断点配置&quot; class=&quot;headerlink&quot; title=&quot;Idea Debug断点配置&quot;&gt;&lt;/a&gt;Idea Debug断点配置&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
-        
-      
+    <summary type="html">&lt;h2 id=&quot;Idea-Debug断点配置&quot;&gt;&lt;a href=&quot;#Idea-Debug断点配置&quot; class=&quot;headerlink&quot; title=&quot;Idea Debug断点配置&quot;&gt;&lt;/a&gt;Idea Debug断点配置&lt;/h2&gt;&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16852892430971685289243043.png&quot; alt=&quot;Idea Debug断点配置&quot;&gt;&lt;/p&gt;</summary>
     
     
     
@@ -462,32 +483,6 @@
     <category term="虚拟机" scheme="http://xiaojianzheng.cn/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
     
     <category term="Hyper-V" scheme="http://xiaojianzheng.cn/tags/Hyper-V/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>VMware-Workstation-Pro_SYSTEM-THREAD-EXCEPTION-NOT-HANDLED</title>
-    <link href="http://xiaojianzheng.cn/archives/a19a64e4.html"/>
-    <id>http://xiaojianzheng.cn/archives/a19a64e4.html</id>
-    <published>2023-03-31T06:28:34.000Z</published>
-    <updated>2023-03-31T06:28:34.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;问题：Windows10虚拟机启动报错：SYSTEM-THREAD-EXCEPTION-NOT-HANDLED&lt;/p&gt;
-&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    
-    <category term="虚拟机" scheme="http://xiaojianzheng.cn/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-    <category term="VMWare" scheme="http://xiaojianzheng.cn/tags/VMWare/"/>
     
   </entry>
   
