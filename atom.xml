@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-05-28T16:00:00.000Z</updated>
+  <updated>2023-06-03T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jmeter查看QPS和响应时间随着时间的变化曲线</title>
+    <link href="http://xiaojianzheng.cn/archives/77c8c326.html"/>
+    <id>http://xiaojianzheng.cn/archives/77c8c326.html</id>
+    <published>2023-06-03T16:00:00.000Z</published>
+    <updated>2023-06-03T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;jmeter官方版自带的图表不多，只有聚合报告、察看结果树等有限几个。但是Jmeter支持插件，我们可以在jmeter的官网上找到这些图表的插件。&lt;/p&gt;
+&lt;p&gt;现在我需要以下图标插件&lt;/p&gt;
+&lt;p&gt;--- Response Times Over</summary>
+        
+      
+    
+    
+    
+    
+    <category term="测试" scheme="http://xiaojianzheng.cn/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+    <category term="jmeter" scheme="http://xiaojianzheng.cn/tags/jmeter/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>单机和分布式场景下，有哪些流控方案</title>
+    <link href="http://xiaojianzheng.cn/archives/34ffa3ea.html"/>
+    <id>http://xiaojianzheng.cn/archives/34ffa3ea.html</id>
+    <published>2023-06-03T16:00:00.000Z</published>
+    <updated>2023-06-03T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;原文地址：&lt;a href=&quot;https://developer.aliyun.com/article/765912&quot;&gt;https://developer.aliyun.com/article/765912&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="转载" scheme="http://xiaojianzheng.cn/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+    <category term="流控" scheme="http://xiaojianzheng.cn/tags/%E6%B5%81%E6%8E%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>闲谈常见SQL语句加锁</title>
@@ -431,58 +479,6 @@
     
     
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Selenium驱动IE模式下的Edge</title>
-    <link href="http://xiaojianzheng.cn/archives/6e4553ac.html"/>
-    <id>http://xiaojianzheng.cn/archives/6e4553ac.html</id>
-    <published>2023-04-03T16:00:00.000Z</published>
-    <updated>2023-04-03T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;原文地址：&lt;a href=&quot;https://titusfortner.com/2022/09/28/edge-ie-mode.html&quot;&gt;https://titusfortner.com/2022/09/28/edge-ie-mode.html&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;blockquote&gt;
-&lt;p&gt;  Internet Explorer 已死！ IE 模式万岁。 Selenium 不再支持独立浏览器，但它支持在 IE 模式下执行 Microsoft Edge。 我编写了 C++ 代码（第一次！）以使 v4.5 中的 IEDriverServer 更易于使用。 另外，我将展示如何解决两个常见问题。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;Windows-10&quot;&gt;&lt;a href=&quot;#Windows-10&quot; class=&quot;headerlink&quot; title=&quot;Windows 10&quot;&gt;&lt;/a&gt;Windows 10&lt;/h2&gt;&lt;p&gt;在 Windows 10 上，您可能同时安装了 IE 和 Edge 浏览器。&lt;/p&gt;
-&lt;h3 id=&quot;Standalone-IE&quot;&gt;&lt;a href=&quot;#Standalone-IE&quot; class=&quot;headerlink&quot; title=&quot;Standalone IE&quot;&gt;&lt;/a&gt;Standalone IE&lt;/h3&gt;&lt;p&gt;只要您将缩放级别设置为 100% 并使所有保护模式设置相同，就不需要额外的自定义选项来使用独立的 Internet Explorer 运行测试。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="自动化" scheme="http://xiaojianzheng.cn/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-    <category term="Selenium" scheme="http://xiaojianzheng.cn/tags/Selenium/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>启用Hyper-V</title>
-    <link href="http://xiaojianzheng.cn/archives/d2c3adb0.html"/>
-    <id>http://xiaojianzheng.cn/archives/d2c3adb0.html</id>
-    <published>2023-04-01T02:06:59.000Z</published>
-    <updated>2023-04-01T02:06:59.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;新建bat文件保存，并以管理员模式运行。&lt;/p&gt;
-&lt;figure class=&quot;highlight bat&quot;&gt;&lt;figcaption&gt;&lt;span&gt;Hyper-V.bat&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
-        
-      
-    
-    
-    
-    
-    <category term="虚拟机" scheme="http://xiaojianzheng.cn/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/"/>
-    
-    <category term="Hyper-V" scheme="http://xiaojianzheng.cn/tags/Hyper-V/"/>
     
   </entry>
   
