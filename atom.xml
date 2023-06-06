@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-06-03T16:00:00.000Z</updated>
+  <updated>2023-06-05T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>发布依赖到Maven中央仓库</title>
+    <link href="http://xiaojianzheng.cn/archives/369df43c.html"/>
+    <id>http://xiaojianzheng.cn/archives/369df43c.html</id>
+    <published>2023-06-05T16:00:00.000Z</published>
+    <updated>2023-06-05T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;创建Sonatype账号&quot;&gt;&lt;a href=&quot;#创建Sonatype账号&quot; class=&quot;headerlink&quot; title=&quot;创建Sonatype账号&quot;&gt;&lt;/a&gt;创建Sonatype账号&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;  Sign up for Jira  &lt;a href=&quot;https://issues.sonatype.org/secure/Signup!default.jspa&quot;&gt;https://issues.sonatype.org/secure/Signup!default.jspa&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</summary>
+    
+    
+    
+    
+    <category term="Maven" scheme="http://xiaojianzheng.cn/tags/Maven/"/>
+    
+  </entry>
   
   <entry>
     <title>Jmeter查看QPS和响应时间随着时间的变化曲线</title>
@@ -458,27 +477,6 @@
     
     
     <category term="自动化" scheme="http://xiaojianzheng.cn/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>安装vsftpd</title>
-    <link href="http://xiaojianzheng.cn/archives/26a6c7fc.html"/>
-    <id>http://xiaojianzheng.cn/archives/26a6c7fc.html</id>
-    <published>2023-04-07T16:00:00.000Z</published>
-    <updated>2023-04-07T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;一、安装ftp服务&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install -y vsftp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 安装虚拟用户数据库&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;yum -y install libdb-utils&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;二、增加一个系统用户‘virftp’ ，所有虚拟用户都会映射到此用户后对文件系统进行读写操作&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 添加用户，用户登录时使用nologin&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;useradd -s /sbin/nologin virftp&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# 设置用户密码&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;passwd virftp&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
     
   </entry>
   
