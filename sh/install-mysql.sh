@@ -1,8 +1,5 @@
 #!/bin/bash
-## Author: xiaojianzheng
-## Modified: 2023-07-01
-## License: MIT
-## Website: https://xiaojianzheng.com
+
 ##############################################################################
 
 version_list=(
@@ -140,7 +137,7 @@ function EnvJudgment() {
 	## 判断系统和其版本是否受本脚本支持
 	case "${SYSTEM_JUDGMENT}" in
 	"${SYSTEM_DEBIAN}")
-		if [[ "${SYSTEM_VERSION_NUMBER:0:1}" != [8-9] && "${SYSTEM_VERSION_NUMBER:0:2}" != 1[0-2] ]]; then
+		if [[ "${SYSTEM_VERSION_NUMBER:0:1}" != [8-9] && "${SYSTEM_VERSION_NUMBER:0:2}" != 1[0-1] ]]; then
 			Output_Error "当前系统版本不在本脚本的支持范围内"
 		fi
 		;;
@@ -351,51 +348,51 @@ function StartTitle() {
 
 ## 打印软件源列表
 function PrintMirrorsList() {
-	local tmp_mirror_name tmp_mirror_version arr_num default_mirror_name_length tmp_mirror_name_length tmp_spaces_nums a i j
-	## 计算字符串长度
-	function StringLength() {
-		local text=$1
-		echo "${#text}"
-	}
-	echo -e ''
+    local tmp_mirror_name tmp_mirror_version arr_num default_mirror_name_length tmp_mirror_name_length tmp_spaces_nums a i j
+    ## 计算字符串长度
+    function StringLength() {
+        local text=$1
+        echo "${#text}"
+    }
+    echo -e ''
 
-	local list_arr=()
-	local list_arr_sum="$(eval echo \${#$1[@]})"
-	for ((a = 0; a < $list_arr_sum; a++)); do
-		list_arr[$a]="$(eval echo \${$1[a]})"
-	done
-	if [ -x /usr/bin/printf ]; then
-		for ((i = 0; i < ${#list_arr[@]}; i++)); do
-			tmp_mirror_name=$(echo "${list_arr[i]}" | awk -F '@' '{print$1}') # 软件源名称
-			arr_num=$((i + 1))
-			default_mirror_name_length=${2:-"30"} # 默认软件源名称打印长度
-			## 补齐长度差异（中文的引号在等宽字体中占1格而非2格）
-			[[ $(echo "${tmp_mirror_name}" | grep -c "“") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "“")
-			[[ $(echo "${tmp_mirror_name}" | grep -c "”") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "”")
-			[[ $(echo "${tmp_mirror_name}" | grep -c "‘") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "‘")
-			[[ $(echo "${tmp_mirror_name}" | grep -c "’") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "’")
-			# 非一般字符长度
-			tmp_mirror_name_length=$(StringLength $(echo "${tmp_mirror_name}" | sed "s| ||g" | sed "s|[0-9a-zA-Z\.\=\:\_\(\)\'\"-\/\!·]||g;"))
-			## 填充空格
-			tmp_spaces_nums=$(($(($default_mirror_name_length - ${tmp_mirror_name_length} - $(StringLength "${tmp_mirror_name}"))) / 2))
-			for ((j = 1; j <= ${tmp_spaces_nums}; j++)); do
-				tmp_mirror_name="${tmp_mirror_name} "
-			done
-			printf " ❖  %-$(($default_mirror_name_length + ${tmp_mirror_name_length}))s %4s\n" "${tmp_mirror_name}" "$arr_num)"
-		done
-	else
-		for ((i = 0; i < ${#list_arr[@]}; i++)); do
-			tmp_mirror_name=$(echo "${list_arr[i]}" | awk -F '@' '{print$1}')    # 软件源名称
-			tmp_mirror_version=$(echo "${list_arr[i]}" | awk -F '@' '{print$2}') # 软件源地址
-			arr_num=$((i + 1))
-			echo -e " ❖  $arr_num. ${tmp_mirror_version} | ${tmp_mirror_name}"
-		done
-	fi
+    local list_arr=()
+    local list_arr_sum="$(eval echo \${#$1[@]})"
+    for ((a = 0; a < $list_arr_sum; a++)); do
+        list_arr[$a]="$(eval echo \${$1[a]})"
+    done
+    if [ -x /usr/bin/printf ]; then
+        for ((i = 0; i < ${#list_arr[@]}; i++)); do
+            tmp_mirror_name=$(echo "${list_arr[i]}" | awk -F '@' '{print$1}') # 软件源名称
+            arr_num=$((i + 1))
+            default_mirror_name_length=${2:-"30"} # 默认软件源名称打印长度
+            ## 补齐长度差异（中文的引号在等宽字体中占1格而非2格）
+            [[ $(echo "${tmp_mirror_name}" | grep -c "“") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "“")
+            [[ $(echo "${tmp_mirror_name}" | grep -c "”") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "”")
+            [[ $(echo "${tmp_mirror_name}" | grep -c "‘") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "‘")
+            [[ $(echo "${tmp_mirror_name}" | grep -c "’") -gt 0 ]] && let default_mirror_name_length+=$(echo "${tmp_mirror_name}" | grep -c "’")
+            # 非一般字符长度
+            tmp_mirror_name_length=$(StringLength $(echo "${tmp_mirror_name}" | sed "s| ||g" | sed "s|[0-9a-zA-Z\.\=\:\_\(\)\'\"-\/\!·]||g;"))
+            ## 填充空格
+            tmp_spaces_nums=$(($(($default_mirror_name_length - ${tmp_mirror_name_length} - $(StringLength "${tmp_mirror_name}"))) / 2))
+            for ((j = 1; j <= ${tmp_spaces_nums}; j++)); do
+                tmp_mirror_name="${tmp_mirror_name} "
+            done
+            printf " ❖  %-$(($default_mirror_name_length + ${tmp_mirror_name_length}))s %4s\n" "${tmp_mirror_name}" "$arr_num)"
+        done
+    else
+        for ((i = 0; i < ${#list_arr[@]}; i++)); do
+            tmp_mirror_name=$(echo "${list_arr[i]}" | awk -F '@' '{print$1}')    # 软件源名称
+            tmp_mirror_version=$(echo "${list_arr[i]}" | awk -F '@' '{print$2}') # 软件源地址
+            arr_num=$((i + 1))
+            echo -e " ❖  $arr_num. ${tmp_mirror_version} | ${tmp_mirror_name}"
+        done
+    fi
 }
 
 ## 安装MySQL
 function InstallMySQL() {
-
+	
 	local list_name="version_list"
 	PrintMirrorsList "${list_name}" 10
 
@@ -420,13 +417,20 @@ function InstallMySQL() {
 		esac
 	done
 
-	InstallParams
-
 	case "${SYSTEM_FACTIONS}" in
 	"${SYSTEM_DEBIAN}")
 		InstallMySQLForDebian
 		;;
 	"${SYSTEM_REDHAT}")
+        local CHOICE=$(echo -e "\n${BOLD}└─ 请输入MySQL密码? [admin] ${PLAIN}")
+        read -p "${CHOICE}" MYSQL_PASSWORD
+        [[ -z "${MYSQL_PASSWORD}" ]] && MYSQL_PASSWORD=admin
+        
+        
+        local CHOICE=$(echo -e "\n${BOLD}└─ 请输入MySQL数据存放目录? [/var/lib/mysql] ${PLAIN}")
+        read -p "${CHOICE}" MYSQL_DATA_DIR
+        [[ -z "${MYSQL_DATA_DIR}" ]] && MYSQL_DATA_DIR=/var/lib/mysql
+        
 		InstallMySQLRedHat
 		;;
 	"${SYSTEM_OPENCLOUDOS}")
@@ -442,19 +446,6 @@ function InstallMySQL() {
 		InstallMySQLArch
 		;;
 	esac
-}
-
-## MySQL 参数配置
-function InstallParams() {
-
-	local CHOICE=$(echo -e "\n${BOLD}└─ 请输入MySQL密码? [admin] ${PLAIN}")
-	read -p "${CHOICE}" MYSQL_PASSWORD
-	[[ -z "${MYSQL_PASSWORD}" ]] && MYSQL_PASSWORD=admin
-
-	local CHOICE=$(echo -e "\n${BOLD}└─ 请输入MySQL数据存放目录? [/var/lib/mysql] ${PLAIN}")
-	read -p "${CHOICE}" MYSQL_DATA_DIR
-	[[ -z "${MYSQL_DATA_DIR}" ]] && MYSQL_DATA_DIR=/var/lib/mysql
-
 }
 
 ## Redhat 安装MySQL
@@ -474,7 +465,7 @@ function InstallMySQLRedHat() {
 		;;
 	esac
 
-	yum install -y yum-utils
+    yum install -y yum-utils
 	case "${MYSQL_VERSION}" in
 	5)
 		yum-config-manager --disable mysql80-community
@@ -485,56 +476,95 @@ function InstallMySQLRedHat() {
 		yum-config-manager --enable mysql80-community
 		;;
 	esac
-
+    
 	yum install -y mysql-community-server
-
-	sed -i "s#datadir=/var/lib/mysql#datadir=$MYSQL_DATA_DIR#" /etc/my.cnf
-
-	# 启动MySQL，获取临时密码
+    
+    sed -i "s#datadir=/var/lib/mysql#datadir=$MYSQL_DATA_DIR#" /etc/my.cnf
+    
+    # 启动MySQL，获取临时密码
 	systemctl start mysqld
 	INIT_PW=$(grep "temporary password" /var/log/mysqld.log | awk -F' ' 'END{print $NF}')
-
-	# 修改密码
-	case "${MYSQL_VERSION}" in
+    
+    # 修改密码
+    case "${MYSQL_VERSION}" in
 	5)
-		mysql --connect-expired-password -uroot -p$INIT_PW mysql -N -e "set global validate_password_policy=0;set global validate_password_length=1;alter user 'root'@'localhost' identified by '$MYSQL_PASSWORD';flush privileges;set global validate_password_policy=default;set global validate_password_length=default;flush privileges;"
-		mysql -uroot -p$MYSQL_PASSWORD -N -e "SELECT 1;"
+        mysql --connect-expired-password -uroot -p$INIT_PW mysql -N -e "set global validate_password_policy=0;set global validate_password_length=1;alter user 'root'@'localhost' identified by '$MYSQL_PASSWORD';flush privileges;set global validate_password_policy=default;set global validate_password_length=default;flush privileges;"
+        mysql -uroot -p$MYSQL_PASSWORD -N -e "SELECT 1;"
 		;;
 	8)
-		echo '由于MySQL8.0 无法通过外部命令修改初始化密码，请您执行 mysql -uroot -p$INIT_PW 自行修改'
-		echo
-		echo 'set global validate_password.policy = LOW;'
-		echo 'set global validate_password.length = 1;'
-		echo "alter user 'root'@'localhost' identified with mysql_native_password BY '$MYSQL_PASSWORD' password expire never;"
-		echo 'set global validate_password.policy = default;'
-		echo 'set global validate_password.length = default;'
-		echo 'flush privileges;'
-		#mysql --connect-expired-password -uroot -p$INIT_PW mysql -N -e "set global validate_password.policy = LOW; set global validate_password.length = 1; alter user 'root'@'localhost' identified with mysql_native_password BY '$MYSQL_PASSWORD' password expire never; flush privileges; set global validate_password.policy = default; set global validate_password.length = default; flush privileges; "
+        echo '由于MySQL8.0 无法通过外部命令修改初始化密码，请您执行 mysql -uroot -p$INIT_PW 自行修改'
+        echo 
+        echo 'set global validate_password.policy = LOW;'
+        echo 'set global validate_password.length = 1;'
+        echo "alter user 'root'@'localhost' identified with mysql_native_password BY '$MYSQL_PASSWORD' password expire never;"
+        echo 'set global validate_password.policy = default;'
+        echo 'set global validate_password.length = default;'
+        echo 'flush privileges;'
+        #mysql --connect-expired-password -uroot -p$INIT_PW mysql -N -e "set global validate_password.policy = LOW; set global validate_password.length = 1; alter user 'root'@'localhost' identified with mysql_native_password BY '$MYSQL_PASSWORD' password expire never; flush privileges; set global validate_password.policy = default; set global validate_password.length = default; flush privileges; "
 		;;
 	esac
-
+    
 }
 
 ## Ubuntu Debian 安装MySQL
 function InstallMySQLForDebian() {
-	#wget https://dev.mysql.com/get/mysql-apt-config_0.8.25-1_all.deb
-	#dpkg -i mysql-apt-config_0.8.25-1_all.deb
+    apt install -y gnupg debconf-utils
+    apt-key del 5072E1F5 > /dev/null
+    apt-key del 3A79BD29 > /dev/null
+    apt update
+    apt purge -y mysql-server mysql-client mysql-common mysql-server-core-* mysql-client-core-*
+    apt autoremove -y
+    apt autoclean -y
 	case "${MYSQL_VERSION}" in
 	5)
-		apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5
+		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5072E1F5
+        debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-server string mysql-5.7"
+        #debconf-set-selections <<< "mysql-community-server mysql-community-server/root_password password $MYSQL_PASSWORD"
+        #debconf-set-selections <<< "mysql-community-server mysql-community-server/root_password_again password $MYSQL_PASSWORD"
 		;;
 	8)
-		apt-key adv --keyserver pgp.mit.edu --recv-keys 3A79BD29
+		apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3A79BD29
+        debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-server string mysql-8.0"
+        #debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password $MYSQL_PASSWORD"
+        #debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password $MYSQL_PASSWORD"
+        #debconf-set-selections <<< "mysql-community-server mysql-community-server/data-dir string $MYSQL_DATA_DIR"
 		;;
 	esac
+
+    # 查看配置 debconf-show mysql-server
+    debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-distro string debian"
+    debconf-set-selections <<< "mysql-apt-config mysql-apt-config/repo-codename string buster"
+    debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-product select true"
+    # 启用历史版本
+    debconf-set-selections <<< "mysql-apt-config mysql-apt-config/select-preview select true"
+    
+    # 安装MySQL源
+    if [ $(dpkg -s mysql-apt-config | grep "install ok installed" | wc -l) == "0" ]; then
+        wget https://dev.mysql.com/get/mysql-apt-config_0.8.25-1_all.deb
+        dpkg -i mysql-apt-config_0.8.25-1_all.deb
+    else
+        if ! grep -q "mysql-${MYSQL_VERSION}" /etc/apt/sources.list.d/mysql.list ; then
+            # 重置配置 dpkg-reconfigure mysql-apt-config
+            dpkg-reconfigure mysql-apt-config
+            if ! grep -q "mysql-${MYSQL_VERSION}" /etc/apt/sources.list.d/mysql.list ; then
+                echo "dpkg-reconfigure mysql-apt-config 配置失败"
+                exit
+            fi
+        fi
+    fi
+    
+    # 静默安装mysql-server
+    #export DEBIAN_FRONTEND="noninteractive"
+    
 	apt update
-	apt install -y mysql-server
+    rm -rf /etc/mysql/ /var/lib/mysql
+	apt install -y mysql-common  mysql-server
 }
 
 ## 运行结束
 function RunEnd() {
 	echo -e "\n$COMPLETE 脚本执行结束"
-	echo -e "\n\033[1;34mPowered by linuxmirrors.cn\033[0m\n"
+	echo -e "\n\033[1;34mPowered by xiaojianzheng.cn\033[0m\n"
 }
 
 ## 处理命令选项
