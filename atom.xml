@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2023-06-28T08:30:00.000Z</updated>
+  <updated>2023-09-27T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用wireshark+rpcapd实现远程抓包</title>
+    <link href="http://xiaojianzheng.cn/archives/eb05bfea.html"/>
+    <id>http://xiaojianzheng.cn/archives/eb05bfea.html</id>
+    <published>2023-09-27T16:00:00.000Z</published>
+    <updated>2023-09-27T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Linux安装rpcapd&quot;&gt;&lt;a href=&quot;#Linux安装rpcapd&quot; class=&quot;headerlink&quot; title=&quot;Linux安装rpcapd&quot;&gt;&lt;/a&gt;Linux安装rpcapd&lt;/h2&gt;&lt;p&gt;可以访问&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="CentOS" scheme="http://xiaojianzheng.cn/tags/CentOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS7.9搭建内部yum源服务器同步阿里yum源</title>
+    <link href="http://xiaojianzheng.cn/archives/41779d3b.html"/>
+    <id>http://xiaojianzheng.cn/archives/41779d3b.html</id>
+    <published>2023-08-20T16:00:00.000Z</published>
+    <updated>2023-08-20T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;环境说明：&quot;&gt;&lt;a href=&quot;#环境说明：&quot; class=&quot;headerlink&quot; title=&quot;环境说明：&quot;&gt;&lt;/a&gt;环境说明：&lt;/h2&gt;&lt;p&gt;1、企业内网需求：企业内部许多服务器是不能连接互联网，但每台centos主机安装软件包时都配置本地yum源很麻烦，也缺少第三方yum源，因此在内网搭建一台yum源服务器满足这一需求，同时网络层面策略只允许此yum源服务器每周日晚限时联网同步阿里云的yum源。&lt;/p&gt;
+&lt;p&gt;2、准备两台测试主机，一台用作yum源服务器（能连互联网），一台用作客户端。&lt;/p&gt;
+&lt;p&gt;3、系统版本：CentOS 7.9&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="YUM" scheme="http://xiaojianzheng.cn/tags/YUM/"/>
+    
+    <category term="CentOS" scheme="http://xiaojianzheng.cn/tags/CentOS/"/>
+    
+  </entry>
   
   <entry>
     <title>Rocky Linux 9.2 安装MySQL5.7</title>
@@ -455,50 +501,6 @@
     
     
     <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>什么是软路由</title>
-    <link href="http://xiaojianzheng.cn/archives/1c8a3792.html"/>
-    <id>http://xiaojianzheng.cn/archives/1c8a3792.html</id>
-    <published>2023-05-07T16:00:00.000Z</published>
-    <updated>2023-05-07T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;什么是硬路由？&quot;&gt;&lt;a href=&quot;#什么是硬路由？&quot; class=&quot;headerlink&quot; title=&quot;什么是硬路由？&quot;&gt;&lt;/a&gt;什么是硬路由？&lt;/h2&gt;&lt;p&gt;简单说，就是我们目前家里普遍用的路由器，比如常用的华为、小米、TP-LINK等。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;硬路由&lt;/strong&gt;是使用ASIC(专用集成电路)达成路由功能的路由器，是厂商把软硬件打包好的成品，通常只能作为路由器使用，功能比较单一。&lt;/p&gt;
-&lt;p&gt;现在有些厂商也在路由器后台系统集成了部分插件，比如海淘加速、游戏加速、智能家居等，但是一般功能有限，而且大多数都要付费使用。&lt;/p&gt;
-&lt;h2 id=&quot;什么是软路由？&quot;&gt;&lt;a href=&quot;#什么是软路由？&quot; class=&quot;headerlink&quot; title=&quot;什么是软路由？&quot;&gt;&lt;/a&gt;什么是软路由？&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;软路由&lt;/strong&gt;是PC的硬件加上路由系统来实现路由器的功能的，就是说在电脑上安装一个路由器的系统，比如OpenWrt、梅林固件、老毛子等。&lt;/p&gt;
-&lt;p&gt;可以说&lt;strong&gt;软路由&lt;/strong&gt;是使用软件达成路由功能的路由器，可以是旧电脑、笔记本、各种盒子或者电脑安装个虚拟机。&lt;/p&gt;
-&lt;p&gt;但是软路由由于硬件上没有无线芯片和天线，只能作为有线路由使用。&lt;/p&gt;
-&lt;p&gt;软路由有单网口、双网口以及多网口可供选择。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="路由器" scheme="http://xiaojianzheng.cn/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ip2region 入门手册</title>
-    <link href="http://xiaojianzheng.cn/archives/380ac627.html"/>
-    <id>http://xiaojianzheng.cn/archives/380ac627.html</id>
-    <published>2023-04-19T16:00:00.000Z</published>
-    <updated>2023-04-19T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;  &lt;a href=&quot;https://github.com/lionsoul2014/ip2region&quot;&gt;ip2region&lt;/a&gt; - 是一个离线IP地址定位库和IP定位数据管理框架，10微秒级别的查询效率，提供了众多主流编程语言的 &lt;code&gt;xdb&lt;/code&gt; 数据生成和查询客户端实现。&lt;/p&gt;
-&lt;/blockquote&gt;</summary>
-    
-    
-    
-    
-    <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
-    
-    <category term="IP" scheme="http://xiaojianzheng.cn/tags/IP/"/>
     
   </entry>
   
