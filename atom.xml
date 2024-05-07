@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-05-02T01:35:47.885Z</updated>
+  <updated>2024-05-07T14:11:15.736Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>Git Bundle</title>
     <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
     <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-05-02T01:35:47.885Z</published>
-    <updated>2024-05-02T01:35:47.885Z</updated>
+    <published>2024-05-07T14:11:15.736Z</published>
+    <updated>2024-05-07T14:11:15.736Z</updated>
     
     
     <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
