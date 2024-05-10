@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>JiaHe&#39;s Blog</title>
+  <title>Jiahe</title>
   <icon>http://xiaojianzheng.cn/icon.png</icon>
-  <subtitle>读万卷书，行万里路</subtitle>
+  <subtitle>相遇即是缘</subtitle>
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-05-10T03:39:34.727Z</updated>
+  <updated>2024-05-10T05:49:49.927Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>Git Bundle</title>
     <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
     <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-05-10T03:39:34.727Z</published>
-    <updated>2024-05-10T03:39:34.727Z</updated>
+    <published>2024-05-10T05:49:49.927Z</published>
+    <updated>2024-05-10T05:49:49.927Z</updated>
     
     
     <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
