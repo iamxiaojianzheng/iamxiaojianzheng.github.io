@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-05-31T23:39:40.109Z</updated>
+  <updated>2024-06-05T01:59:04.277Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>字符集和字符编码（Charset &amp; Encoding）</title>
     <link href="http://xiaojianzheng.cn/archives/97db36cb.html"/>
     <id>http://xiaojianzheng.cn/archives/97db36cb.html</id>
-    <published>2024-05-31T23:39:40.109Z</published>
-    <updated>2024-05-31T23:39:40.109Z</updated>
+    <published>2024-06-05T01:59:04.277Z</published>
+    <updated>2024-06-05T01:59:04.277Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -45,8 +45,8 @@
     <title>Git Bundle</title>
     <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
     <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-05-31T23:39:40.101Z</published>
-    <updated>2024-05-31T23:39:40.101Z</updated>
+    <published>2024-06-05T01:59:04.269Z</published>
+    <updated>2024-06-05T01:59:04.269Z</updated>
     
     
     <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
@@ -69,6 +69,56 @@
     
     
     <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git批量修改已提交的用户名和邮箱</title>
+    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
+    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
+    <published>2024-06-05T01:59:04.269Z</published>
+    <updated>2024-06-05T01:59:04.269Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
+        
+      
+    
+    
+    
+    
+    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jsconfig.json</title>
+    <link href="http://xiaojianzheng.cn/archives/3c9ea8d8.html"/>
+    <id>http://xiaojianzheng.cn/archives/3c9ea8d8.html</id>
+    <published>2024-06-05T01:59:04.269Z</published>
+    <updated>2024-06-05T01:59:04.269Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;转载：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="前端" scheme="http://xiaojianzheng.cn/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="前端" scheme="http://xiaojianzheng.cn/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
@@ -434,57 +484,6 @@
     
     
     <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Office Word使用VBA拆分邮件合并文件</title>
-    <link href="http://xiaojianzheng.cn/archives/3164e2df.html"/>
-    <id>http://xiaojianzheng.cn/archives/3164e2df.html</id>
-    <published>2023-05-11T16:00:00.000Z</published>
-    <updated>2023-05-11T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;将当前邮件合并文件拆分为单独的word和pdf，文件名称以数据源中的“姓名”字段重命名。&lt;/p&gt;
-&lt;figure class=&quot;highlight vb&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Office" scheme="http://xiaojianzheng.cn/tags/Office/"/>
-    
-    <category term="VBA" scheme="http://xiaojianzheng.cn/tags/VBA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用VBA批量将Word转成PDF</title>
-    <link href="http://xiaojianzheng.cn/archives/5624f4f3.html"/>
-    <id>http://xiaojianzheng.cn/archives/5624f4f3.html</id>
-    <published>2023-05-11T16:00:00.000Z</published>
-    <updated>2023-05-11T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;figure class=&quot;highlight vb&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;Sub&lt;/span&gt;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Office" scheme="http://xiaojianzheng.cn/tags/Office/"/>
-    
-    <category term="VBA" scheme="http://xiaojianzheng.cn/tags/VBA/"/>
     
   </entry>
   
