@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-07-08T01:41:45.336Z</updated>
+  <updated>2024-07-20T02:26:45.126Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>字符集和字符编码（Charset &amp; Encoding）</title>
     <link href="http://xiaojianzheng.cn/archives/97db36cb.html"/>
     <id>http://xiaojianzheng.cn/archives/97db36cb.html</id>
-    <published>2024-07-08T01:41:45.336Z</published>
-    <updated>2024-07-08T01:41:45.336Z</updated>
+    <published>2024-07-20T02:26:45.126Z</published>
+    <updated>2024-07-20T02:26:45.126Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -42,61 +42,11 @@
   </entry>
   
   <entry>
-    <title>git批量修改已提交的用户名和邮箱</title>
-    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
-    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
-    <published>2024-07-08T01:41:45.328Z</published>
-    <updated>2024-07-08T01:41:45.328Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
-        
-      
-    
-    
-    
-    
-    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>jsconfig.json</title>
-    <link href="http://xiaojianzheng.cn/archives/3c9ea8d8.html"/>
-    <id>http://xiaojianzheng.cn/archives/3c9ea8d8.html</id>
-    <published>2024-07-08T01:41:45.328Z</published>
-    <updated>2024-07-08T01:41:45.328Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;转载：&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="前端" scheme="http://xiaojianzheng.cn/categories/%E5%89%8D%E7%AB%AF/"/>
-    
-    
-    <category term="前端" scheme="http://xiaojianzheng.cn/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Git Bundle</title>
     <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
     <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-07-08T01:41:45.324Z</published>
-    <updated>2024-07-08T01:41:45.324Z</updated>
+    <published>2024-07-20T02:26:45.118Z</published>
+    <updated>2024-07-20T02:26:45.118Z</updated>
     
     
     <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
@@ -119,6 +69,56 @@
     
     
     <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git批量修改已提交的用户名和邮箱</title>
+    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
+    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
+    <published>2024-07-20T02:26:45.118Z</published>
+    <updated>2024-07-20T02:26:45.118Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
+        
+      
+    
+    
+    
+    
+    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>jsconfig.json</title>
+    <link href="http://xiaojianzheng.cn/archives/3c9ea8d8.html"/>
+    <id>http://xiaojianzheng.cn/archives/3c9ea8d8.html</id>
+    <published>2024-07-20T02:26:45.118Z</published>
+    <updated>2024-07-20T02:26:45.118Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;转载：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="前端" scheme="http://xiaojianzheng.cn/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="前端" scheme="http://xiaojianzheng.cn/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
