@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-07-25T01:15:27.375Z</updated>
+  <updated>2024-08-03T10:01:57.535Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>字符集和字符编码（Charset &amp; Encoding）</title>
     <link href="http://xiaojianzheng.cn/archives/97db36cb.html"/>
     <id>http://xiaojianzheng.cn/archives/97db36cb.html</id>
-    <published>2024-07-25T01:15:27.375Z</published>
-    <updated>2024-07-25T01:15:27.375Z</updated>
+    <published>2024-08-03T10:01:57.535Z</published>
+    <updated>2024-08-03T10:01:57.535Z</updated>
     
     
     <summary type="html">&lt;blockquote&gt;
@@ -42,11 +42,35 @@
   </entry>
   
   <entry>
+    <title>git批量修改已提交的用户名和邮箱</title>
+    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
+    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
+    <published>2024-08-03T10:01:57.527Z</published>
+    <updated>2024-08-03T10:01:57.527Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
+        
+      
+    
+    
+    
+    
+    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Git Bundle</title>
     <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
     <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-07-25T01:15:27.367Z</published>
-    <updated>2024-07-25T01:15:27.367Z</updated>
+    <published>2024-08-03T10:01:57.523Z</published>
+    <updated>2024-08-03T10:01:57.523Z</updated>
     
     
     <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
@@ -73,26 +97,24 @@
   </entry>
   
   <entry>
-    <title>git批量修改已提交的用户名和邮箱</title>
-    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
-    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
-    <published>2024-07-25T01:15:27.367Z</published>
-    <updated>2024-07-25T01:15:27.367Z</updated>
+    <title>倪海厦 生平介绍</title>
+    <link href="http://xiaojianzheng.cn/archives/90bd9736.html"/>
+    <id>http://xiaojianzheng.cn/archives/90bd9736.html</id>
+    <published>2024-08-02T16:00:00.000Z</published>
+    <updated>2024-08-02T16:00:00.000Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
-        
-      
+    <summary type="html">&lt;p&gt;前言&lt;/p&gt;
+&lt;p&gt;其实我最没有资格动笔写倪老师的生平。 入门最晚，从师习艺时间也不长，早年倪师众多学问也没亲炙其授。 老师与我距离也不算近，大概就在看到人和看到名字知道是学生这样的程度而已，一点都谈不上得到传授或是亲近的弟子。&lt;/p&gt;
+&lt;p&gt;我非常欣羡从早年就能随侍师侧的师兄们，可以随时上门请教，可以与老师饮茶煮酒论天谈地针砭古今，论老师所授，我一无可取，所以我很早就立志，希望能将老师生平梗概，和他内心的想法公诸于世，破除外界对他的误解和迷思，也能客观公正的正视他对中华文化的历史贡献。&lt;/p&gt;
+&lt;p&gt;倪师过往这些年，我透过老师家人及众多师兄姐的帮忙，拼凑出倪师的生平纪录，众多轶事趣闻，及瞠目结舌的事迹，惟笔力浅陋，史料涉及隐私不取，能给大家看的，精彩度不免就大打折扣了。&lt;/p&gt;
+&lt;p&gt;这一系列的文字，将会集结收录在即将出版的「第一届台北汉唐经方论坛医案实录」里，更多梳扒的史料也会陆续撰写补充，如果有能提供倪师生平事迹的师兄姐、先进及诸位前辈，也请不吝与我们连络，感谢！&lt;/p&gt;
+&lt;p&gt;某药厂董事长曾经说过，从他皈依的信仰，观想开示得到的结论，倪师是历代名医转世，生而知之，追溯根源，应该是扁鹊华陀。 倪师曾在自美返台时，赠送一尊华陀雕塑给家族唯一对中医有兴趣的晚辈。 对做为学生的我们而言，这为倪师增添神秘的色彩，也提供无限的想象。&lt;/p&gt;
+&lt;p&gt;倪师祖父当年笃信地理风水，曾向倪师父亲志凌公讲述到，当年先祖大川之墓穴内，不时有吵闹声，引起附近居民不安，村民们好奇，聚集众人一起将墓穴的龙门打开，发现里面有一只金色麻雀和一条鲤鱼相斗，不久村民们目睹金雀远飞，鲤鱼驾跃向山丘地后向不见，村民于是将此墓地命名为「金雀坟」，鲤鱼遁走的山丘名之为「鲤鱼驾」， 至今浙江瑞安林下村（今岭下村）当地，依然沿用此地名。&lt;/p&gt;
+&lt;p&gt;倪师祖父因此延请各地著名风水师多达十八位前往堪舆，众家风水师观测结果，一致认为后代必出名医，为此倪师祖父变卖了二十五亩水田，供志凌公向学，但志凌公无意习医，家中虽藏有许多医书，只能沦为装饰。 之后倪师成为名医，家族便常以此为谈资，谓家中终于出名医，倪师感念祖上，便将「金雀」及「鲤鱼」请人设计成商标图标，置于倪师网站和诊所商标使用，并重新命名祖坟为「金鹰鲤鱼穴」。&lt;/p&gt;</summary>
     
     
     
-    
-    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
     
   </entry>
   
@@ -100,8 +122,8 @@
     <title>jsconfig.json</title>
     <link href="http://xiaojianzheng.cn/archives/3c9ea8d8.html"/>
     <id>http://xiaojianzheng.cn/archives/3c9ea8d8.html</id>
-    <published>2024-07-25T01:15:27.367Z</published>
-    <updated>2024-07-25T01:15:27.367Z</updated>
+    <published>2024-06-23T16:00:00.000Z</published>
+    <updated>2024-06-23T16:00:00.000Z</updated>
     
     
       
@@ -454,29 +476,6 @@
         
         
     <summary type="html">&lt;p&gt;&lt;strong&gt;熔断（Circuit</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谈谈对序列化和反序列化的理解</title>
-    <link href="http://xiaojianzheng.cn/archives/656d66bf.html"/>
-    <id>http://xiaojianzheng.cn/archives/656d66bf.html</id>
-    <published>2023-05-22T16:00:00.000Z</published>
-    <updated>2023-05-22T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;序列化和反序列化是 Java</summary>
         
       
     
