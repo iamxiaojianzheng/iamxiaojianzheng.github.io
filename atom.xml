@@ -35,6 +35,8 @@
     
     
     
+    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
+    
     
   </entry>
   
@@ -83,8 +85,10 @@
     
     
     
+    <category term="Git" scheme="http://xiaojianzheng.cn/categories/Git/"/>
     
-    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+    <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
     
   </entry>
   
@@ -107,6 +111,8 @@
 &lt;p&gt;&lt;strong&gt;字符编码（Character Encoding）&lt;/strong&gt;：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。&lt;/p&gt;</summary>
     
     
+    
+    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
     
     
     <category term="编程技术" scheme="http://xiaojianzheng.cn/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
@@ -139,8 +145,10 @@
     
     
     
+    <category term="Git" scheme="http://xiaojianzheng.cn/categories/Git/"/>
     
-    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+    <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
     
   </entry>
   
@@ -161,6 +169,8 @@
       
     
     
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
@@ -183,6 +193,10 @@
     
     
     
+    <category term="Linux" scheme="http://xiaojianzheng.cn/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
     
     <category term="YUM" scheme="http://xiaojianzheng.cn/tags/YUM/"/>
     
@@ -207,6 +221,8 @@
       
     
     
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
@@ -257,6 +273,8 @@
     
     
     
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
     
     <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
     
@@ -273,10 +291,12 @@
     
     
     <summary type="html">&lt;h2 id=&quot;创建Sonatype账号&quot;&gt;&lt;a href=&quot;#创建Sonatype账号&quot; class=&quot;headerlink&quot; title=&quot;创建Sonatype账号&quot;&gt;&lt;/a&gt;创建Sonatype账号&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;  Sign up for Jira  &lt;a href=&quot;https://issues.sonatype.org/secure/Signup!default.jspa&quot;&gt;https://issues.sonatype.org/secure/Signup!default.jspa&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Sign up for Jira &lt;a href=&quot;https://issues.sonatype.org/secure/Signup!default.jspa&quot;&gt;https://issues.sonatype.org/secure/Signup!default.jspa&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;</summary>
     
     
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="Maven" scheme="http://xiaojianzheng.cn/tags/Maven/"/>
@@ -303,6 +323,8 @@
     
     
     
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
     
     <category term="测试" scheme="http://xiaojianzheng.cn/tags/%E6%B5%8B%E8%AF%95/"/>
     
@@ -323,6 +345,8 @@
 &lt;/blockquote&gt;</summary>
     
     
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="转载" scheme="http://xiaojianzheng.cn/tags/%E8%BD%AC%E8%BD%BD/"/>
@@ -349,6 +373,8 @@
     
     
     
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
     
     <category term="转载" scheme="http://xiaojianzheng.cn/tags/%E8%BD%AC%E8%BD%BD/"/>
     
@@ -369,6 +395,8 @@
     <summary type="html">&lt;h2 id=&quot;Idea-Debug断点配置&quot;&gt;&lt;a href=&quot;#Idea-Debug断点配置&quot; class=&quot;headerlink&quot; title=&quot;Idea Debug断点配置&quot;&gt;&lt;/a&gt;Idea Debug断点配置&lt;/h2&gt;&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/xiao1272209235/hexo-image@main/16852892430971685289243043.png&quot; alt=&quot;Idea Debug断点配置&quot;&gt;&lt;/p&gt;</summary>
     
     
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="Nacos" scheme="http://xiaojianzheng.cn/tags/Nacos/"/>
@@ -395,6 +423,8 @@
     
     
     
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
     
     <category term="Nacos" scheme="http://xiaojianzheng.cn/tags/Nacos/"/>
     
@@ -414,6 +444,10 @@
     
     
     
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Vue" scheme="http://xiaojianzheng.cn/tags/Vue/"/>
     
     <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
     
@@ -430,6 +464,8 @@
     <summary type="html">&lt;p&gt;Java的SPI机制（Service Provider Interface）是一种让应用程序能够通过在运行时动态加载实现模块的机制。它允许第三方库或框架定义服务接口和实现，从而使得应用程序可以在不需要修改源代码的情况下轻松地替换服务提供者。&lt;/p&gt;</summary>
     
     
+    
+    <category term="Java" scheme="http://xiaojianzheng.cn/categories/Java/"/>
     
     
     <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
@@ -458,6 +494,8 @@
     
     
     
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
     
     <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
     
@@ -480,6 +518,8 @@
       
     
     
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
     
     
     <category term="Java面试" scheme="http://xiaojianzheng.cn/tags/Java%E9%9D%A2%E8%AF%95/"/>
