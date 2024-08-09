@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-08-03T10:01:57.535Z</updated>
+  <updated>2024-08-02T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,86 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>字符集和字符编码（Charset &amp; Encoding）</title>
-    <link href="http://xiaojianzheng.cn/archives/97db36cb.html"/>
-    <id>http://xiaojianzheng.cn/archives/97db36cb.html</id>
-    <published>2024-08-03T10:01:57.535Z</published>
-    <updated>2024-08-03T10:01:57.535Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;作者：吴秦&lt;/p&gt;
-&lt;p&gt;出处：&lt;a href=&quot;http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html&quot;&gt;http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;字符集和字符编码 —— 每个软件开发人员应该无条件掌握的知识！&lt;/p&gt;
-&lt;p&gt;相信大家一定碰到过，打开某个网页，却显示一堆像乱码？还记得HTTP中的Accept-Charset、Accept-Encoding、Accept-Language、Content-Encoding、Content-Language等消息头字段？这些就是接下来我们要探讨的。&lt;/p&gt;
-&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a href=&quot;#基础知识&quot; class=&quot;headerlink&quot; title=&quot;基础知识&quot;&gt;&lt;/a&gt;基础知识&lt;/h2&gt;&lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;#39;a&amp;#39;用什么表示，称为&amp;quot;编码&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;解码&amp;quot;，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致&amp;#39;a&amp;#39;解析成&amp;#39;b&amp;#39;或者乱码。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;字符集（Charset）&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;字符编码（Character Encoding）&lt;/strong&gt;：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="编程技术" scheme="http://xiaojianzheng.cn/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>git批量修改已提交的用户名和邮箱</title>
-    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
-    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
-    <published>2024-08-03T10:01:57.527Z</published>
-    <updated>2024-08-03T10:01:57.527Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
-        
-      
-    
-    
-    
-    
-    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git Bundle</title>
-    <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
-    <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-08-03T10:01:57.523Z</published>
-    <updated>2024-08-03T10:01:57.523Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
-&lt;h2 id=&quot;作用&quot;&gt;&lt;a href=&quot;#作用&quot; class=&quot;headerlink&quot; title=&quot;作用&quot;&gt;&lt;/a&gt;作用&lt;/h2&gt;&lt;p&gt;先来简单了解一下这个命令是干嘛的，在官方文档中对这个命令名称的描述翻译过来为：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;git-bundle：通过归档移动对象和引用&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;听起来有点抽象，那我们就不用纠结官方对这个命令的描述了，通俗点讲就是：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;用于将本地数据或分支打包到一个文件中，然后共享给别人。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;使用场景&quot;&gt;&lt;a href=&quot;#使用场景&quot; class=&quot;headerlink&quot; title=&quot;使用场景&quot;&gt;&lt;/a&gt;使用场景&lt;/h2&gt;&lt;p&gt;那么有哪些使用场景呢，比如：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在网络不通畅时（网络断了或无法直连公司内网），你希望将你的提交通过U盘或邮件等方式传给你项目的协作开发者们。&lt;/li&gt;
-&lt;li&gt;又或者你现在没有共享服务器的权限，你又希望通过邮件将更新发送给别人，却不希望通过 &lt;code&gt;git format-patch&lt;/code&gt; 的方式传输 30 个提交。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;像最近由于疫情原因，时不时就需要在家办公，而又不方便直连公司内网拉取代码，直接将整个项目打包成&lt;code&gt;zip&lt;/code&gt;又显得笨重还不灵活，一个人开发还好，多个人协作时就不能方便的记录互相之间的修改了。有了 &lt;code&gt;git bundle&lt;/code&gt;，我们就可以变得灵活方便了，下面就来看看怎么玩~&lt;/p&gt;</summary>
-    
-    
-    
-    
-    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
-    
-  </entry>
   
   <entry>
     <title>倪海厦 生平介绍</title>
@@ -141,6 +61,86 @@
     
     
     <category term="前端" scheme="http://xiaojianzheng.cn/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>git批量修改已提交的用户名和邮箱</title>
+    <link href="http://xiaojianzheng.cn/archives/bf0f9a1b.html"/>
+    <id>http://xiaojianzheng.cn/archives/bf0f9a1b.html</id>
+    <published>2024-05-29T01:25:00.000Z</published>
+    <updated>2024-05-29T01:25:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
+        
+      
+    
+    
+    
+    
+    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>字符集和字符编码（Charset &amp; Encoding）</title>
+    <link href="http://xiaojianzheng.cn/archives/97db36cb.html"/>
+    <id>http://xiaojianzheng.cn/archives/97db36cb.html</id>
+    <published>2024-05-20T01:38:00.000Z</published>
+    <updated>2024-05-20T01:38:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;作者：吴秦&lt;/p&gt;
+&lt;p&gt;出处：&lt;a href=&quot;http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html&quot;&gt;http://www.cnblogs.com/skynet/archive/2011/05/03/2035105.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;字符集和字符编码 —— 每个软件开发人员应该无条件掌握的知识！&lt;/p&gt;
+&lt;p&gt;相信大家一定碰到过，打开某个网页，却显示一堆像乱码？还记得HTTP中的Accept-Charset、Accept-Encoding、Accept-Language、Content-Encoding、Content-Language等消息头字段？这些就是接下来我们要探讨的。&lt;/p&gt;
+&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a href=&quot;#基础知识&quot; class=&quot;headerlink&quot; title=&quot;基础知识&quot;&gt;&lt;/a&gt;基础知识&lt;/h2&gt;&lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;#39;a&amp;#39;用什么表示，称为&amp;quot;编码&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;解码&amp;quot;，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致&amp;#39;a&amp;#39;解析成&amp;#39;b&amp;#39;或者乱码。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;字符集（Charset）&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;字符编码（Character Encoding）&lt;/strong&gt;：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="编程技术" scheme="http://xiaojianzheng.cn/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git Bundle</title>
+    <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
+    <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
+    <published>2024-04-03T03:17:00.000Z</published>
+    <updated>2024-04-03T03:17:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
+&lt;h2 id=&quot;作用&quot;&gt;&lt;a href=&quot;#作用&quot; class=&quot;headerlink&quot; title=&quot;作用&quot;&gt;&lt;/a&gt;作用&lt;/h2&gt;&lt;p&gt;先来简单了解一下这个命令是干嘛的，在官方文档中对这个命令名称的描述翻译过来为：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;git-bundle：通过归档移动对象和引用&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;听起来有点抽象，那我们就不用纠结官方对这个命令的描述了，通俗点讲就是：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;用于将本地数据或分支打包到一个文件中，然后共享给别人。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;使用场景&quot;&gt;&lt;a href=&quot;#使用场景&quot; class=&quot;headerlink&quot; title=&quot;使用场景&quot;&gt;&lt;/a&gt;使用场景&lt;/h2&gt;&lt;p&gt;那么有哪些使用场景呢，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在网络不通畅时（网络断了或无法直连公司内网），你希望将你的提交通过U盘或邮件等方式传给你项目的协作开发者们。&lt;/li&gt;
+&lt;li&gt;又或者你现在没有共享服务器的权限，你又希望通过邮件将更新发送给别人，却不希望通过 &lt;code&gt;git format-patch&lt;/code&gt; 的方式传输 30 个提交。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;像最近由于疫情原因，时不时就需要在家办公，而又不方便直连公司内网拉取代码，直接将整个项目打包成&lt;code&gt;zip&lt;/code&gt;又显得笨重还不灵活，一个人开发还好，多个人协作时就不能方便的记录互相之间的修改了。有了 &lt;code&gt;git bundle&lt;/code&gt;，我们就可以变得灵活方便了，下面就来看看怎么玩~&lt;/p&gt;</summary>
+    
+    
+    
+    
+    <category term="git" scheme="http://xiaojianzheng.cn/tags/git/"/>
     
   </entry>
   
