@@ -1,1 +1,68 @@
-!function(){function e(e,t,n){return Number(e.getAttribute(t))||n}var n,i,t=document.getElementsByTagName("script"),t=t[t.length-1],t=(config={z:e(t,"zIndex",-1),a:e(t,"alpha",.6),s:e(t,"size",90)},document.createElement("canvas")),o=t.getContext("2d"),c=window.devicePixelRatio||1,a=window.innerWidth,l=window.innerHeight,d=config.s,r=Math,g=0,h=2*r.PI,s=r.cos,f=r.random;function u(){for(o.clearRect(0,0,a,l),n=[{x:0,y:.7*l+d},{x:0,y:.7*l-d}];n[1].x<a+d;){e=void 0;t=void 0;var e=n[0];var t=n[1];o.beginPath(),o.moveTo(e.x,e.y),o.lineTo(t.x,t.y);e=t.x+(2*f()-.25)*d,t=function e(t){i=t+(2*f()-1.1)*d;return l<i||i<0?e(t):i}(t.y);o.lineTo(e,t),o.closePath(),g-=h/-50,o.fillStyle="#"+(127*s(g)+128<<16|127*s(g+h/3)+128<<8|127*s(g+h/3*2)+128).toString(16),o.fill(),n[0]=n[1],n[1]={x:e,y:t}}}t.width=a*c,t.height=l*c,o.scale(c,c),o.globalAlpha=config.a,t.style.cssText="opacity: "+config.a+";position:fixed;top:0;left:0;z-index: "+config.z+";width:100%;height:100%;pointer-events:none;",document.getElementsByTagName("body")[0].appendChild(t),document.onclick=u,(document.ontouchstart=u)()}();
+/**
+ * Copyright (c) 2016 hustcc
+ * License: MIT
+ * Version: v1.0.1
+ * GitHub: https://github.com/hustcc/ribbon.js
+**/
+/*jshint -W030 */
+! function() {
+  function attr(node, attr, default_value) {
+    return Number(node.getAttribute(attr)) || default_value;
+  }
+
+  // get user config
+  var scripts = document.getElementsByTagName('script'),
+    script = scripts[scripts.length - 1]; // 当前加载的script
+  config = {
+    z: attr(script, "zIndex", -1), // z-index
+    a: attr(script, "alpha", 0.6), // alpha
+    s: attr(script, "size", 90), // size
+  };
+
+  var canvas = document.createElement('canvas'),
+    g2d = canvas.getContext('2d'),
+    pr = window.devicePixelRatio || 1,
+    width = window.innerWidth,
+    height = window.innerHeight,
+    f = config.s,
+    q, t,
+    m = Math,
+    r = 0,
+    pi = m.PI*2,
+    cos = m.cos,
+    random = m.random;
+  canvas.width = width * pr;
+  canvas.height = height * pr;
+  g2d.scale(pr, pr);
+  g2d.globalAlpha = config.a;
+  canvas.style.cssText = 'opacity: ' + config.a + ';position:fixed;top:0;left:0;z-index: ' + config.z + ';width:100%;height:100%;pointer-events:none;';
+  // create canvas
+  document.getElementsByTagName('body')[0].appendChild(canvas);
+
+  function redraw() {
+    g2d.clearRect(0, 0, width, height);
+    q = [{x: 0, y: height * 0.7 + f}, {x: 0, y: height * 0.7 - f}];
+    while(q[1].x < width + f) draw(q[0], q[1]);
+  }
+  function draw(i, j) {
+    g2d.beginPath();
+    g2d.moveTo(i.x, i.y);
+    g2d.lineTo(j.x, j.y);
+    var k = j.x + (random()*2-0.25)*f, n = line(j.y);
+    g2d.lineTo(k, n);
+    g2d.closePath();
+    r -= pi / -50;
+    g2d.fillStyle = '#'+(cos(r)*127+128<<16 | cos(r+pi/3)*127+128<<8 | cos(r+pi/3*2)*127+128).toString(16);
+    g2d.fill();
+    q[0] = q[1];
+    q[1] = {x: k, y: n};
+  }
+  function line(p){
+    t = p + (random() * 2 - 1.1) * f;
+    return (t > height || t < 0) ? line(p) : t;
+  }
+
+  document.onclick = redraw;
+  document.ontouchstart = redraw;
+  redraw();
+}();

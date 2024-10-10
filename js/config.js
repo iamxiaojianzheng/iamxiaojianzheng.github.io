@@ -1,1 +1,9 @@
-window.NexT||(window.NexT={}),function(){const o={};let c={};const i=e=>{var n=document.querySelector(`.next-config[data-name="${e}"]`);n&&(n=n.text,n=JSON.parse(n||"{}"),"main"===e?Object.assign(o,n):c[e]=n)};i("main"),window.CONFIG=new Proxy({},{get(e,n){let t;if(t=(n in o?o:(n in c||i(n),c))[n],n in e||"object"!=typeof t||(e[n]={}),n in e){const o=e[n];return"object"==typeof o&&"object"==typeof t?new Proxy({...t,...o},{set:(e,n,t)=>(e[n]=t,o[n]=t,!0)}):o}return t}}),document.addEventListener("pjax:success",()=>{c={}})}();
+window.NexT||(window.NexT={}),function(){const e={};let n={};const t=t=>{const o=document.querySelector(`.next-config[data-name="${t}"]`);if(!o)return;const c=(i=o.text,JSON.parse(i||"{}"));var i;"main"===t?Object.assign(e,c):n[t]=c};t("main"),window.CONFIG=new Proxy({},{get(o,c){let i;if(c in e?i=e[c]:(c in n||t(c),i=n[c]),
+// For unset override and mixable existing
+c in o||"object"!=typeof i||(
+// Get ready to mix.
+o[c]={}),c in o){const e=o[c];
+// When mixable
+return"object"==typeof e&&"object"==typeof i?new Proxy({...i,...e},{set:(n,t,o)=>(n[t]=o,e[t]=o,!0)}):e}
+// Only when not mixable and override hasn't been set.
+return i}}),document.addEventListener("pjax:success",(()=>{n={}}))}();
