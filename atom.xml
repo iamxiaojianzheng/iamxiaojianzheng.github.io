@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-10-11T03:28:00.000Z</updated>
+  <updated>2024-10-13T07:45:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>检测端口是否被监听</title>
+    <link href="http://xiaojianzheng.cn/archives/e81a9a2.html"/>
+    <id>http://xiaojianzheng.cn/archives/e81a9a2.html</id>
+    <published>2024-10-13T07:45:00.000Z</published>
+    <updated>2024-10-13T07:45:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;telnet&quot;&gt;&lt;a href=&quot;#telnet&quot; class=&quot;headerlink&quot; title=&quot;telnet&quot;&gt;&lt;/a&gt;telnet&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/categories/Linux/"/>
+    
+    
+    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL慢查询日志全解析</title>
@@ -65,6 +92,34 @@
     
     
     <category term="npm" scheme="http://xiaojianzheng.cn/tags/npm/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 Spring Boot 中记录完整的请求体和响应体日志</title>
+    <link href="http://xiaojianzheng.cn/archives/b9bfcd9e.html"/>
+    <id>http://xiaojianzheng.cn/archives/b9bfcd9e.html</id>
+    <published>2024-08-09T16:00:00.000Z</published>
+    <updated>2024-08-09T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;完整的请求日志对于 &lt;strong&gt;故障排查&lt;/strong&gt; 和 &lt;strong&gt;审计&lt;/strong&gt; 来说极其重要。通过查看日志，可以检查数据的准确性、参数的传递方式以及服务器返回的数据。&lt;/p&gt;
+&lt;p&gt;由于 Socket 流不能重读，所以需要一种实现来把读取和写入的数据缓存起来，并且可以多次重复读取缓存的内容。&lt;/p&gt;
+&lt;p&gt;Spring 提供 2 个可重复读取请求、响应的 Wrapper 工具类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ContentCachingRequestWrapper&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ContentCachingResponseWrapper&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过类名不难看出，这是典型的装饰者设计模式。它俩的作用就是把读取到的 &lt;strong&gt;请求体&lt;/strong&gt; 和写出的 &lt;strong&gt;响应体&lt;/strong&gt; 都缓存起来，并且提供了访问缓存数据的 API。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="SpringBoot" scheme="http://xiaojianzheng.cn/categories/SpringBoot/"/>
+    
+    
+    <category term="SpringBoot" scheme="http://xiaojianzheng.cn/tags/SpringBoot/"/>
+    
+    <category term="日志" scheme="http://xiaojianzheng.cn/tags/%E6%97%A5%E5%BF%97/"/>
     
   </entry>
   
@@ -484,46 +539,6 @@
     <category term="Nacos" scheme="http://xiaojianzheng.cn/tags/Nacos/"/>
     
     <category term="ChatGPT" scheme="http://xiaojianzheng.cn/tags/ChatGPT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前后端数据加解密</title>
-    <link href="http://xiaojianzheng.cn/archives/b2e522af.html"/>
-    <id>http://xiaojianzheng.cn/archives/b2e522af.html</id>
-    <published>2023-05-25T16:00:00.000Z</published>
-    <updated>2023-05-25T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">前后端加解密</summary>
-    
-    
-    
-    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
-    
-    <category term="Vue" scheme="http://xiaojianzheng.cn/tags/Vue/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JAVA SPI入门</title>
-    <link href="http://xiaojianzheng.cn/archives/639d1883.html"/>
-    <id>http://xiaojianzheng.cn/archives/639d1883.html</id>
-    <published>2023-05-23T16:00:00.000Z</published>
-    <updated>2023-05-23T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Java的SPI机制（Service Provider Interface）是一种让应用程序能够通过在运行时动态加载实现模块的机制。它允许第三方库或框架定义服务接口和实现，从而使得应用程序可以在不需要修改源代码的情况下轻松地替换服务提供者。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Java" scheme="http://xiaojianzheng.cn/categories/Java/"/>
-    
-    
-    <category term="Java" scheme="http://xiaojianzheng.cn/tags/Java/"/>
     
   </entry>
   
