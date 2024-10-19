@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-10-13T07:45:00.000Z</updated>
+  <updated>2024-10-19T06:24:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>股市</title>
+    <link href="http://xiaojianzheng.cn/archives/f5a77129.html"/>
+    <id>http://xiaojianzheng.cn/archives/f5a77129.html</id>
+    <published>2024-10-19T06:24:00.000Z</published>
+    <updated>2024-10-19T06:24:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+&lt;p&gt;万鬼入市血眼开 &lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;blockquote class=&quot;blockquote-center&quot;&gt;
+&lt;p&gt;红鬼愁来绿鬼哀</summary>
+        
+      
+    
+    
+    
+    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
+    
+  </entry>
   
   <entry>
     <title>检测端口是否被监听</title>
@@ -514,31 +545,6 @@
     <category term="OpenFeign" scheme="http://xiaojianzheng.cn/tags/OpenFeign/"/>
     
     <category term="SpringCloud" scheme="http://xiaojianzheng.cn/tags/SpringCloud/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nacos 学习文档</title>
-    <link href="http://xiaojianzheng.cn/archives/f9f13e8.html"/>
-    <id>http://xiaojianzheng.cn/archives/f9f13e8.html</id>
-    <published>2023-05-26T16:00:00.000Z</published>
-    <updated>2023-05-26T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;内容由ChatGPT-3.5 生成&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/alibaba/nacos&quot;&gt;Nacos&lt;/a&gt; 是阿里巴巴开源的一款动态服务发现、配置管理和服务管理平台。它提供了注册中心、配置中心和可视化界面三大功能。在微服务架构中，Nacos 可以作为服务发现和配置中心的核心组件，帮助开发者解决微服务架构下的配置管理和服务发现问题。&lt;/p&gt;
-&lt;p&gt;本文档将介绍 Nacos 的安装、使用以及相关概念，并提供一些实际应用场景的示例。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Nacos" scheme="http://xiaojianzheng.cn/categories/Nacos/"/>
-    
-    
-    <category term="Nacos" scheme="http://xiaojianzheng.cn/tags/Nacos/"/>
-    
-    <category term="ChatGPT" scheme="http://xiaojianzheng.cn/tags/ChatGPT/"/>
     
   </entry>
   
