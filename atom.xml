@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2024-11-02T12:57:00.000Z</updated>
+  <updated>2024-11-22T06:26:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,24 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux dnf 包管理工具使用教程</title>
+    <link href="http://xiaojianzheng.cn/archives/530bf718.html"/>
+    <id>http://xiaojianzheng.cn/archives/530bf718.html</id>
+    <published>2024-11-22T06:26:00.000Z</published>
+    <updated>2024-11-22T06:26:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;&lt;code&gt;dnf&lt;/code&gt; 是基于 &lt;code&gt;Red Hat Linux&lt;/code&gt; 发行版的下一代包管理工具，它代替 &lt;code&gt;yum&lt;/code&gt; 提供更好的性能、更好的依赖处理和更好的模块化架构。&lt;/p&gt;
+&lt;h2 id=&quot;基础语法&quot;&gt;&lt;a href=&quot;#基础语法&quot; class=&quot;headerlink&quot; title=&quot;基础语法&quot;&gt;&lt;/a&gt;基础语法&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dnf [options] [&lt;span class=&quot;built_in&quot;&gt;command&lt;/span&gt;] [package]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="http://xiaojianzheng.cn/categories/Linux/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>家</title>
@@ -533,35 +551,6 @@
     
     
     <category term="Maven" scheme="http://xiaojianzheng.cn/tags/Maven/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Jmeter查看QPS和响应时间随着时间的变化曲线</title>
-    <link href="http://xiaojianzheng.cn/archives/77c8c326.html"/>
-    <id>http://xiaojianzheng.cn/archives/77c8c326.html</id>
-    <published>2023-06-03T16:00:00.000Z</published>
-    <updated>2023-06-03T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;jmeter官方版自带的图表不多，只有聚合报告、察看结果树等有限几个。但是Jmeter支持插件，我们可以在jmeter的官网上找到这些图表的插件。&lt;/p&gt;
-&lt;p&gt;现在我需要以下图标插件&lt;/p&gt;
-&lt;p&gt;--- Response Times Over</summary>
-        
-      
-    
-    
-    
-    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="测试" scheme="http://xiaojianzheng.cn/tags/%E6%B5%8B%E8%AF%95/"/>
-    
-    <category term="jmeter" scheme="http://xiaojianzheng.cn/tags/jmeter/"/>
     
   </entry>
   
