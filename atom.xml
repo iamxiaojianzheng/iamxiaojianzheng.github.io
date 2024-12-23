@@ -28,13 +28,17 @@
       
         
         
-    <summary type="html">&lt;h1 id=&quot;环境&quot;&gt;&lt;a href=&quot;#环境&quot; class=&quot;headerlink&quot; title=&quot;环境&quot;&gt;&lt;/a&gt;环境&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;mysql 8.0&lt;/p&gt;
+    <summary type="html">&lt;h1&gt;环境&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;mysql 8.0&lt;/p&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Django 3.2&lt;/p&gt;
+&lt;li&gt;
+&lt;p&gt;Django 3.2&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h1</summary>
+&lt;h1&gt;(No changes detected)及解决&lt;/h1&gt;
+&lt;h2 id=&quot;问题情景&quot;&gt;&lt;a</summary>
         
       
     
@@ -81,13 +85,20 @@
     <updated>2024-12-05T03:22:00.000Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;分享一下自己的观影实践&quot;&gt;&lt;a href=&quot;#分享一下自己的观影实践&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;h2 id=&quot;分享一下自己的观影实践&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#分享一下自己的观影实践&quot;&gt;¶&lt;/a&gt;分享一下自己的观影实践&lt;/h2&gt;
+&lt;p&gt;面向群体：非新手，有一定实践经验&lt;br&gt;
+电视设备：小米电视S75（开启ADB、未知软件安装）&lt;br&gt;
+观影目标：看直播（CCTV、地方台）、看动漫、电视剧、电源等杂七杂八的盗版资源 😅&lt;/p&gt;
+&lt;p&gt;我是通过adb命令直接安装apk，&lt;code&gt;adb install apk文件路径&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;注意事项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;尝试&lt;code&gt;adb connect&lt;/code&gt;时，如果提示未授权 unauthorized 类似的关键词，先尝试&lt;code&gt;adb kill-server&lt;/code&gt;，再&lt;code&gt;adb start-server&lt;/code&gt;，然后尝试连接，这个时候电视上会出现提示授权的弹窗，确认授权即可。&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;Kodi&lt;/code&gt;中的&lt;code&gt;IPTV&lt;/code&gt;观影时，强烈建议开启路由器的IPV6。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不方便下载的，可以回复提出来。我能下载到的，就统一放到蓝奏云。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;以下提到的软件包都放在这里：&lt;/strong&gt; &lt;a href=&quot;https://xiaojianzheng.lanzouw.com/b00wm56sgb&quot;&gt;https://xiaojianzheng.lanzouw.com/b00wm56sgb&lt;/a&gt; 密码:jiahe&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/lwj0126/p/17591654.html&quot;&gt;adb常用命令 https://www.cnblogs.com/lwj0126/p/17591654.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;使用小米手机或者安卓机的朋友，可以安装&lt;strong&gt;小米电视助手&lt;/strong&gt;进行APP安装。我没尝试过，不知道方不方便。可以参考这个视频： &lt;a href=&quot;https://b23.tv/iOYIx8a&quot;&gt;https://b23.tv/iOYIx8a&lt;/a&gt;&lt;/p&gt;</summary>
     
     
     
@@ -110,7 +121,8 @@
       
         
         
-    <summary type="html">&lt;h2 id=&quot;Bat脚本&quot;&gt;&lt;a href=&quot;#Bat脚本&quot; class=&quot;headerlink&quot; title=&quot;Bat脚本&quot;&gt;&lt;/a&gt;Bat脚本&lt;/h2&gt;&lt;figure class=&quot;highlight</summary>
+    <summary type="html">&lt;h2 id=&quot;Bat脚本&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Bat脚本&quot;&gt;¶&lt;/a&gt;Bat脚本&lt;/h2&gt;
+&lt;figure class=&quot;highlight</summary>
         
       
     
@@ -133,8 +145,10 @@
     <updated>2024-11-22T06:26:00.000Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h2&gt;&lt;p&gt;&lt;code&gt;dnf&lt;/code&gt; 是基于 &lt;code&gt;Red Hat Linux&lt;/code&gt; 发行版的下一代包管理工具，它代替 &lt;code&gt;yum&lt;/code&gt; 提供更好的性能、更好的依赖处理和更好的模块化架构。&lt;/p&gt;
-&lt;h2 id=&quot;基础语法&quot;&gt;&lt;a href=&quot;#基础语法&quot; class=&quot;headerlink&quot; title=&quot;基础语法&quot;&gt;&lt;/a&gt;基础语法&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dnf [options] [&lt;span class=&quot;built_in&quot;&gt;command&lt;/span&gt;] [package]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#简介&quot;&gt;¶&lt;/a&gt;简介&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;dnf&lt;/code&gt; 是基于 &lt;code&gt;Red Hat Linux&lt;/code&gt; 发行版的下一代包管理工具，它代替 &lt;code&gt;yum&lt;/code&gt; 提供更好的性能、更好的依赖处理和更好的模块化架构。&lt;/p&gt;
+&lt;h2 id=&quot;基础语法&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#基础语法&quot;&gt;¶&lt;/a&gt;基础语法&lt;/h2&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dnf [options] [&lt;span class=&quot;built_in&quot;&gt;command&lt;/span&gt;] [package]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
     
     
     
@@ -156,12 +170,10 @@
         
         
     <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;青山绕绿水 &lt;/p&gt;
+&lt;p&gt;青山绕绿水&lt;/p&gt;
 
 &lt;/blockquote&gt;
-
-&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;炊烟携风云</summary>
+&lt;blockquote</summary>
         
       
     
@@ -187,11 +199,10 @@
         
         
     <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;秋高风急卷愁心 &lt;/p&gt;
+&lt;p&gt;秋高风急卷愁心&lt;/p&gt;
 
 &lt;/blockquote&gt;
-&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;举杯对影难自醒</summary>
+&lt;blockquote</summary>
         
       
     
@@ -217,12 +228,10 @@
         
         
     <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;万鬼入市血眼开 &lt;/p&gt;
+&lt;p&gt;万鬼入市血眼开&lt;/p&gt;
 
 &lt;/blockquote&gt;
-
-&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;红鬼愁来绿鬼哀</summary>
+&lt;blockquote</summary>
         
       
     
@@ -247,7 +256,8 @@
       
         
         
-    <summary type="html">&lt;h2 id=&quot;telnet&quot;&gt;&lt;a href=&quot;#telnet&quot; class=&quot;headerlink&quot; title=&quot;telnet&quot;&gt;&lt;/a&gt;telnet&lt;/h2&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+    <summary type="html">&lt;h2 id=&quot;telnet&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#telnet&quot;&gt;¶&lt;/a&gt;telnet&lt;/h2&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
         
       
     
@@ -270,8 +280,10 @@
     <updated>2024-10-11T03:28:00.000Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;慢查询日志在日常数据库运维中经常会用到，我们可以通过查看慢查询日志来获得效率较差的 SQL ，然后可以进行 SQL 优化。本篇文章我们一起来学习下慢查询日志相关知识。&lt;/p&gt;
-&lt;h2 id=&quot;慢查询日志简介&quot;&gt;&lt;a href=&quot;#慢查询日志简介&quot; class=&quot;headerlink&quot; title=&quot;慢查询日志简介&quot;&gt;&lt;/a&gt;慢查询日志简介&lt;/h2&gt;&lt;p&gt;慢查询日志（Slow Query Log），主要用来记录在 MySQL 中执行时间超过指定时间的 SQL 语句。通过慢查询日志，可以查找出哪些语句的执行效率低，以便进行优化。&lt;/p&gt;
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#前言&quot;&gt;¶&lt;/a&gt;前言&lt;/h2&gt;
+&lt;p&gt;慢查询日志在日常数据库运维中经常会用到，我们可以通过查看慢查询日志来获得效率较差的 SQL ，然后可以进行 SQL 优化。本篇文章我们一起来学习下慢查询日志相关知识。&lt;/p&gt;
+&lt;h2 id=&quot;慢查询日志简介&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#慢查询日志简介&quot;&gt;¶&lt;/a&gt;慢查询日志简介&lt;/h2&gt;
+&lt;p&gt;慢查询日志（Slow Query Log），主要用来记录在 MySQL 中执行时间超过指定时间的 SQL 语句。通过慢查询日志，可以查找出哪些语句的执行效率低，以便进行优化。&lt;/p&gt;
 &lt;p&gt;默认情况下，MySQL 并没有开启慢查询日志，可以通过修改 slow_query_log 参数来打开慢查询日志。与慢查询日志相关的参数介绍如下：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;slow_query_log&lt;/strong&gt;：是否启用慢查询日志，默认为0，可设置为0、1，1表示开启。&lt;/li&gt;
@@ -302,7 +314,8 @@
     <updated>2024-10-09T06:25:00.000Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;描述&quot;&gt;&lt;a href=&quot;#描述&quot; class=&quot;headerlink&quot; title=&quot;描述&quot;&gt;&lt;/a&gt;描述&lt;/h2&gt;&lt;p&gt;&lt;code&gt;package.json&lt;/code&gt; 文件必须是一个 JSON 格式的文件，而不是一个 JavaScript Object 对象。&lt;/p&gt;
+    <summary type="html">&lt;h2 id=&quot;描述&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#描述&quot;&gt;¶&lt;/a&gt;描述&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;package.json&lt;/code&gt; 文件必须是一个 JSON 格式的文件，而不是一个 JavaScript Object 对象。&lt;/p&gt;
 &lt;p&gt;本节内容将要介绍的大多数要点都与 &lt;a href=&quot;https://docs.npmjs.com/cli/v6/using-npm/config&quot;&gt;config&lt;/a&gt; 里介绍过的配置设置有关。&lt;/p&gt;</summary>
     
     
@@ -378,7 +391,7 @@
       
         
         
-    <summary type="html">&lt;h2 id=&quot;jsconfig-json是什么&quot;&gt;&lt;a href=&quot;#jsconfig-json是什么&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h2 id=&quot;jsconfig-json是什么&quot;&gt;&lt;a class=&quot;header-anchor&quot;</summary>
         
       
     
@@ -404,7 +417,10 @@
         
         
     <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;为改变已经提交的 commit 的用户名和&amp;#x2F;或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo</summary>
+&lt;p&gt;为改变已经提交的 commit 的用户名和/或邮箱地址，你必须重写你 Git repo 的整个历史。执行这段脚本会重写 repo 所有协作者的历史。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;完成以下操作后，任何</summary>
         
       
     
@@ -431,7 +447,8 @@
 &lt;/blockquote&gt;
 &lt;p&gt;字符集和字符编码 —— 每个软件开发人员应该无条件掌握的知识！&lt;/p&gt;
 &lt;p&gt;相信大家一定碰到过，打开某个网页，却显示一堆像乱码？还记得HTTP中的Accept-Charset、Accept-Encoding、Accept-Language、Content-Encoding、Content-Language等消息头字段？这些就是接下来我们要探讨的。&lt;/p&gt;
-&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a href=&quot;#基础知识&quot; class=&quot;headerlink&quot; title=&quot;基础知识&quot;&gt;&lt;/a&gt;基础知识&lt;/h2&gt;&lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如&amp;#39;a&amp;#39;用什么表示，称为&amp;quot;编码&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;解码&amp;quot;，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致&amp;#39;a&amp;#39;解析成&amp;#39;b&amp;#39;或者乱码。&lt;/p&gt;
+&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#基础知识&quot;&gt;¶&lt;/a&gt;基础知识&lt;/h2&gt;
+&lt;p&gt;计算机中储存的信息都是用二进制数表示的；而我们在屏幕上看到的英文、汉字等字符是二进制数转换之后的结果。通俗的说，按照何种规则将字符存储在计算机中，如’a’用什么表示，称为&amp;quot;编码&amp;quot;；反之，将存储在计算机中的二进制数解析显示出来，称为&amp;quot;解码&amp;quot;，如同密码学中的加密和解密。在解码过程中，如果使用了错误的解码规则，则导致’a’解析成’b’或者乱码。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;字符集（Charset）&lt;/strong&gt;：是一个系统支持的所有抽象字符的集合。字符是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;字符编码（Character Encoding）&lt;/strong&gt;：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系，它是信息处理的一项基本技术。通常人们用符号集合（一般情况下就是文字）来表达信息。而以计算机为基础的信息处理系统则是利用元件（硬件）不同状态的组合来存储和处理信息的。元件不同状态的组合能代表数字系统的数字，因此字符编码就是将符号转换为计算机可以接受的数字系统的数，称为数字代码。&lt;/p&gt;</summary>
     
@@ -453,7 +470,8 @@
     
     
     <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
-&lt;h2 id=&quot;作用&quot;&gt;&lt;a href=&quot;#作用&quot; class=&quot;headerlink&quot; title=&quot;作用&quot;&gt;&lt;/a&gt;作用&lt;/h2&gt;&lt;p&gt;先来简单了解一下这个命令是干嘛的，在官方文档中对这个命令名称的描述翻译过来为：&lt;/p&gt;
+&lt;h2 id=&quot;作用&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#作用&quot;&gt;¶&lt;/a&gt;作用&lt;/h2&gt;
+&lt;p&gt;先来简单了解一下这个命令是干嘛的，在官方文档中对这个命令名称的描述翻译过来为：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;git-bundle：通过归档移动对象和引用&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -461,7 +479,8 @@
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;用于将本地数据或分支打包到一个文件中，然后共享给别人。&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;使用场景&quot;&gt;&lt;a href=&quot;#使用场景&quot; class=&quot;headerlink&quot; title=&quot;使用场景&quot;&gt;&lt;/a&gt;使用场景&lt;/h2&gt;&lt;p&gt;那么有哪些使用场景呢，比如：&lt;/p&gt;
+&lt;h2 id=&quot;使用场景&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#使用场景&quot;&gt;¶&lt;/a&gt;使用场景&lt;/h2&gt;
+&lt;p&gt;那么有哪些使用场景呢，比如：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;在网络不通畅时（网络断了或无法直连公司内网），你希望将你的提交通过U盘或邮件等方式传给你项目的协作开发者们。&lt;/li&gt;
 &lt;li&gt;又或者你现在没有共享服务器的权限，你又希望通过邮件将更新发送给别人，却不希望通过 &lt;code&gt;git format-patch&lt;/code&gt; 的方式传输 30 个提交。&lt;/li&gt;
@@ -489,7 +508,8 @@
       
         
         
-    <summary type="html">&lt;h2 id=&quot;Linux安装rpcapd&quot;&gt;&lt;a href=&quot;#Linux安装rpcapd&quot; class=&quot;headerlink&quot; title=&quot;Linux安装rpcapd&quot;&gt;&lt;/a&gt;Linux安装rpcapd&lt;/h2&gt;&lt;p&gt;可以访问&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;Linux安装rpcapd&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Linux安装rpcapd&quot;&gt;¶&lt;/a&gt;Linux安装rpcapd&lt;/h2&gt;
+&lt;p&gt;可以访问&lt;a</summary>
         
       
     
@@ -512,7 +532,8 @@
     <updated>2023-08-20T16:00:00.000Z</updated>
     
     
-    <summary type="html">&lt;h2 id=&quot;环境说明：&quot;&gt;&lt;a href=&quot;#环境说明：&quot; class=&quot;headerlink&quot; title=&quot;环境说明：&quot;&gt;&lt;/a&gt;环境说明：&lt;/h2&gt;&lt;p&gt;1、企业内网需求：企业内部许多服务器是不能连接互联网，但每台centos主机安装软件包时都配置本地yum源很麻烦，也缺少第三方yum源，因此在内网搭建一台yum源服务器满足这一需求，同时网络层面策略只允许此yum源服务器每周日晚限时联网同步阿里云的yum源。&lt;/p&gt;
+    <summary type="html">&lt;h2 id=&quot;环境说明：&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#环境说明：&quot;&gt;¶&lt;/a&gt;环境说明：&lt;/h2&gt;
+&lt;p&gt;1、企业内网需求：企业内部许多服务器是不能连接互联网，但每台centos主机安装软件包时都配置本地yum源很麻烦，也缺少第三方yum源，因此在内网搭建一台yum源服务器满足这一需求，同时网络层面策略只允许此yum源服务器每周日晚限时联网同步阿里云的yum源。&lt;/p&gt;
 &lt;p&gt;2、准备两台测试主机，一台用作yum源服务器（能连互联网），一台用作客户端。&lt;/p&gt;
 &lt;p&gt;3、系统版本：CentOS 7.9&lt;/p&gt;</summary>
     
