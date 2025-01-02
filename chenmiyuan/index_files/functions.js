@@ -1,5 +1,0 @@
-/*
- * http://love.hackerzhou.me
- */
-// variables
-var $win=$(window),clientWidth=$win.width(),clientHeight=$win.height();function timeElapse(t){var i=(+new Date-t.getTime())/1e3,n=Math.floor(i/86400);i%=86400;var a=Math.floor(i/3600);a<10&&(a="0"+a),i%=3600;var e=Math.floor(i/60);e<10&&(e="0"+e);var l='<span class="digit">'+n+'</span> 天 <span class="digit">'+a+'</span> 小时 <span class="digit">'+e+'</span> 分钟 <span class="digit">'+(i=((i=Math.floor(i%60))+"").replace(/\.\d*/,""))+"</span> 秒";$("#clock").html(l)}$(window).resize((function(){var t=$win.width(),i=$win.height();t!=clientWidth&&i!=clientHeight&&location.replace(location)})),function(t){t.fn.typewriter=function(){return this.each((function(){var i=t(this),n=i.html(),a=0;i.html("");var e=setInterval((function(){"<"==n.substr(a,1)?a=n.indexOf(">",a)+1:a++,i.html(n.substring(0,a)+(1&a?"_":"")),a>=n.length&&clearInterval(e)}),75)})),this}}(jQuery);
