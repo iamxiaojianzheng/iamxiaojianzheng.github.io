@@ -52,6 +52,15 @@ a {
   color: #000;
 }
 
+@media screen and (min-width: 960px) {
+  #code {
+    font-size: 2.5em;
+  }
+  #wrap {
+    height: 780px;
+  }
+}
+
 #clock-box {
   position: absolute;
   left: 60px;
