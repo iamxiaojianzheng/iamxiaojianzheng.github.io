@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>JiaHe</title>
+  <title>JiaHe - 家和的学习分享</title>
   <icon>http://xiaojianzheng.cn/icon.png</icon>
   <subtitle>相遇即是缘</subtitle>
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
