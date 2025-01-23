@@ -11,7 +11,7 @@
         0%{ -webkit-transform: rotate(0deg);}
         50%{ -webkit-transform: rotate(180deg);}
         100%{ -webkit-transform: rotate(360deg);}
-    }</style><div id=main><div id=error>本页面采用HTML5编辑，目前您的浏览器无法显示，请换成谷歌(<a href=http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI>Chrome</a>)或者火狐(<a href=http://firefox.com.cn/download/>Firefox</a>)浏览器，或者其他游览器的最新版本。</div><div id=wrap><div id=text><div id=code></div></div><div id=clock-box><span id=clock-box-inside-text></span><div id=clock></div></div><canvas height=680 id=canvas width=1100></canvas></div></div><script>$('#code').html(config.lines.map(item => {
+    }</style><div id=main><div id=error>本页面采用HTML5编辑，目前您的浏览器无法显示，请换成谷歌(<a href=http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI>Chrome</a>)或者火狐(<a href=http://firefox.com.cn/download/>Firefox</a>)浏览器，或者其他游览器的最新版本。</div><div id=wrap><div id=text><div id=code></div></div><div id=clock-box><span id=clock-box-inside-text></span><div id=clock></div></div><canvas height=680 id=canvas width=1300></canvas></div></div><script>$('#code').html(config.lines.map(item => {
         return `<span class="say">${item}</span><br>
 						<span class="say"> </span><br>`
     }).reduce((a, b) => {
@@ -57,15 +57,37 @@
             ],
             bloom: {
                 num: 700,
-                width: 1080,
+                width: 1180,
                 height: 650,
             },
             footer: {
-                width: 1200,
+                width: 1300,
                 height: 5,
                 speed: 10,
             }
         }
+
+      function modifyBranchX(branch, valueToAdd) {
+        branch.forEach(item => {
+            // 检查当前项是否是数组，且长度足够
+            if (Array.isArray(item)) {
+                // 如果数组长度至少为5，修改第0、2、4个元素
+                if (item.length >= 5) {
+                    item[0] += valueToAdd;  // 修改第0个元素
+                    item[2] += valueToAdd;  // 修改第2个元素
+                    item[4] += valueToAdd;  // 修改第4个元素
+                }
+
+                // 如果当前项还包含嵌套的数组（例如第8个元素），递归处理
+                if (Array.isArray(item[8])) {
+                    modifyBranchX(item[8], valueToAdd);
+                }
+            }
+        });
+      }
+
+      // 调用函数来递归修改 branch 变量中的 x 坐标值
+      modifyBranchX(opts.branch, 90); // 将每个数组的第0、2、4个数字增加 20
 
         var tree = new Tree(canvas[0], width, height, opts);
         var seed = tree.seed;
@@ -124,14 +146,15 @@
             } while (tree.canFlower());
         }));
 
+        var offset = 600;
         var moveAnimate = eval(Jscex.compile("async", function () {
-            tree.snapshot("p1", 240, 0, 610, 680);
-            while (tree.move("p1", 500, 0)) {
+            tree.snapshot("p1", 240, 0, 630, height);
+            while (tree.move("p1", offset, 0)) {
                 foot.draw();
                 $await(Jscex.Async.sleep(10));
             }
             foot.draw();
-            tree.snapshot("p2", 500, 0, 610, 680);
+            tree.snapshot("p2", offset, 0, 630, height);
 
             // 会有闪烁不得以这样做, (＞﹏＜)
             canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
