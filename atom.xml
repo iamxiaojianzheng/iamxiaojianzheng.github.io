@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-03-03T04:30:00.000Z</updated>
+  <updated>2025-03-04T02:10:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GitHub Actions上关于“Cannot Find Matching Keyid”或“Corepack/PNPM Not Found”的错误</title>
+    <link href="http://xiaojianzheng.cn/archives/42df9516.html"/>
+    <id>http://xiaojianzheng.cn/archives/42df9516.html</id>
+    <published>2025-03-04T02:10:00.000Z</published>
+    <updated>2025-03-04T02:10:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;如何使用 GitHub 操作调试并解决此 corepack 问题。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;如果你的构建突然出现 &lt;code&gt;cannot find matching keyid:</summary>
+        
+      
+    
+    
+    
+    <category term="Github" scheme="http://xiaojianzheng.cn/categories/Github/"/>
+    
+    
+    <category term="Github Actions" scheme="http://xiaojianzheng.cn/tags/Github-Actions/"/>
+    
+  </entry>
   
   <entry>
     <title>如何正确用药?</title>
@@ -541,34 +569,6 @@
     
     
     <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用wireshark+rpcapd实现远程抓包</title>
-    <link href="http://xiaojianzheng.cn/archives/eb05bfea.html"/>
-    <id>http://xiaojianzheng.cn/archives/eb05bfea.html</id>
-    <published>2023-09-27T16:00:00.000Z</published>
-    <updated>2023-09-27T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;Linux安装rpcapd&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Linux安装rpcapd&quot;&gt;¶&lt;/a&gt;Linux安装rpcapd&lt;/h2&gt;
-&lt;p&gt;可以访问&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="编程技术" scheme="http://xiaojianzheng.cn/categories/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
-    
-    
-    <category term="运维" scheme="http://xiaojianzheng.cn/tags/%E8%BF%90%E7%BB%B4/"/>
-    
-    <category term="CentOS" scheme="http://xiaojianzheng.cn/tags/CentOS/"/>
     
   </entry>
   
