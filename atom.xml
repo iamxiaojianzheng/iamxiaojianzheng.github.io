@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-03-04T02:10:00.000Z</updated>
+  <updated>2025-03-07T03:30:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从 Git 历史记录中永久删除文件的指南</title>
+    <link href="http://xiaojianzheng.cn/archives/e74da3e4.html"/>
+    <id>http://xiaojianzheng.cn/archives/e74da3e4.html</id>
+    <published>2025-03-07T03:30:00.000Z</published>
+    <updated>2025-03-07T03:30:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#介绍&quot;&gt;¶&lt;/a&gt;介绍&lt;/h2&gt;
+&lt;p&gt;有时，您可能需要从 Git 历史记录中永久删除文件。这可能是因为意外提交了敏感信息，或者只是为了减少仓库大小。本指南介绍了两种常用的方法：使用 BFG</summary>
+        
+      
+    
+    
+    
+    <category term="Git" scheme="http://xiaojianzheng.cn/categories/Git/"/>
+    
+    
+    <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
+    
+    <category term="AI" scheme="http://xiaojianzheng.cn/tags/AI/"/>
+    
+  </entry>
   
   <entry>
     <title>GitHub Actions上关于“Cannot Find Matching Keyid”或“Corepack/PNPM Not Found”的错误</title>
@@ -534,41 +562,6 @@
     
     
     <category term="编程技术" scheme="http://xiaojianzheng.cn/tags/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Git Bundle</title>
-    <link href="http://xiaojianzheng.cn/archives/9b9e73ce.html"/>
-    <id>http://xiaojianzheng.cn/archives/9b9e73ce.html</id>
-    <published>2024-04-03T03:17:00.000Z</published>
-    <updated>2024-04-03T03:17:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;今天我们来认识一下 &lt;code&gt;git bundle&lt;/code&gt; 这个命令。&lt;/p&gt;
-&lt;h2 id=&quot;作用&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#作用&quot;&gt;¶&lt;/a&gt;作用&lt;/h2&gt;
-&lt;p&gt;先来简单了解一下这个命令是干嘛的，在官方文档中对这个命令名称的描述翻译过来为：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;git-bundle：通过归档移动对象和引用&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;听起来有点抽象，那我们就不用纠结官方对这个命令的描述了，通俗点讲就是：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;用于将本地数据或分支打包到一个文件中，然后共享给别人。&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;使用场景&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#使用场景&quot;&gt;¶&lt;/a&gt;使用场景&lt;/h2&gt;
-&lt;p&gt;那么有哪些使用场景呢，比如：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;在网络不通畅时（网络断了或无法直连公司内网），你希望将你的提交通过U盘或邮件等方式传给你项目的协作开发者们。&lt;/li&gt;
-&lt;li&gt;又或者你现在没有共享服务器的权限，你又希望通过邮件将更新发送给别人，却不希望通过 &lt;code&gt;git format-patch&lt;/code&gt; 的方式传输 30 个提交。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;像最近由于疫情原因，时不时就需要在家办公，而又不方便直连公司内网拉取代码，直接将整个项目打包成&lt;code&gt;zip&lt;/code&gt;又显得笨重还不灵活，一个人开发还好，多个人协作时就不能方便的记录互相之间的修改了。有了 &lt;code&gt;git bundle&lt;/code&gt;，我们就可以变得灵活方便了，下面就来看看怎么玩~&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Git" scheme="http://xiaojianzheng.cn/categories/Git/"/>
-    
-    
-    <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
     
   </entry>
   
