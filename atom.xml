@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-03-13T16:00:00.000Z</updated>
+  <updated>2025-03-16T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>维生素C的历史——从征服“海上凶神”到诺贝尔奖</title>
+    <link href="http://xiaojianzheng.cn/archives/7d10feb9.html"/>
+    <id>http://xiaojianzheng.cn/archives/7d10feb9.html</id>
+    <published>2025-03-16T16:00:00.000Z</published>
+    <updated>2025-03-16T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;回顾了人类认识维生素C的历程，从最初水手们碰到的“海上凶神”到重挫英国海军的坏血病，人类的认识也在一点一点地进步。直到近代有了先进理论的指导，伴随着化学研究飞速发展，人类终于认识了维生素C，战胜了坏血病。这标志着一个新时代的到来。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;维生素是一类小分子有机物，它们虽然不提供生命活动所需的能量，却是身体代谢过程中必需的物质。经过上百年的研究，人们已了解了15种维生素的结构，维生素C就是其中很重要的一种。它可治疗牙龈出血、灼伤；能加速手术后的恢复；增强治疗尿路感染药物的疗效……但是维生素C最为著名的用途是治疗“坏血病”。人们认识维生素C也是从防治“坏血病”开始的，这是一段漫长而充满血腥的历史。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="医疗" scheme="http://xiaojianzheng.cn/categories/%E5%8C%BB%E7%96%97/"/>
+    
+    
+    <category term="维生素" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>使用Arthas远程更新Class</title>
@@ -537,31 +559,6 @@
     
     <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>jsconfig.json</title>
-    <link href="http://xiaojianzheng.cn/archives/3c9ea8d8.html"/>
-    <id>http://xiaojianzheng.cn/archives/3c9ea8d8.html</id>
-    <published>2024-06-23T16:00:00.000Z</published>
-    <updated>2024-06-23T16:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;jsconfig-json是什么&quot;&gt;&lt;a class=&quot;header-anchor&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="npm" scheme="http://xiaojianzheng.cn/categories/npm/"/>
-    
-    
-    <category term="前端" scheme="http://xiaojianzheng.cn/tags/%E5%89%8D%E7%AB%AF/"/>
     
   </entry>
   
