@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-03-16T16:00:00.000Z</updated>
+  <updated>2025-03-19T08:50:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,75 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>怀孕与大剂量维生素C</title>
+    <link href="http://xiaojianzheng.cn/archives/493f22d3.html"/>
+    <id>http://xiaojianzheng.cn/archives/493f22d3.html</id>
+    <published>2025-03-19T08:50:00.000Z</published>
+    <updated>2025-03-19T08:50:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;How safe is vitamin C in high doses . . . during pregnancy?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;孕期服用大剂量维生素 C 的安全性如何？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="医疗" scheme="http://xiaojianzheng.cn/categories/%E5%8C%BB%E7%96%97/"/>
+    
+    
+    <category term="维生素C" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用大剂量维生素C治疗传染病</title>
+    <link href="http://xiaojianzheng.cn/archives/f3868f32.html"/>
+    <id>http://xiaojianzheng.cn/archives/f3868f32.html</id>
+    <published>2025-03-18T16:00:00.000Z</published>
+    <updated>2025-03-18T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">关于如何在生病期间口服高剂量维生素C的说明</summary>
+    
+    
+    
+    <category term="医疗" scheme="http://xiaojianzheng.cn/categories/%E5%8C%BB%E7%96%97/"/>
+    
+    
+    <category term="维生素C" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0C/"/>
+    
+    <category term="维生素" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>维生素C的剂量表</title>
+    <link href="http://xiaojianzheng.cn/archives/ae1ce117.html"/>
+    <id>http://xiaojianzheng.cn/archives/ae1ce117.html</id>
+    <published>2025-03-18T16:00:00.000Z</published>
+    <updated>2025-03-18T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;A Therapeutic Level of Vitamin C Supplementation as Employed by F .R. Klenner, M.D.&lt;/strong&gt; (from “The</summary>
+        
+      
+    
+    
+    
+    <category term="医疗" scheme="http://xiaojianzheng.cn/categories/%E5%8C%BB%E7%96%97/"/>
+    
+    
+    <category term="维生素C" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0C/"/>
+    
+  </entry>
   
   <entry>
     <title>维生素C的历史——从征服“海上凶神”到诺贝尔奖</title>
@@ -34,7 +103,7 @@
     <category term="医疗" scheme="http://xiaojianzheng.cn/categories/%E5%8C%BB%E7%96%97/"/>
     
     
-    <category term="维生素" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0/"/>
+    <category term="维生素C" scheme="http://xiaojianzheng.cn/tags/%E7%BB%B4%E7%94%9F%E7%B4%A0C/"/>
     
   </entry>
   
@@ -486,79 +555,6 @@
     
     
     <category term="MySQL" scheme="http://xiaojianzheng.cn/tags/MySQL/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>package.json 指南</title>
-    <link href="http://xiaojianzheng.cn/archives/b45a8a72.html"/>
-    <id>http://xiaojianzheng.cn/archives/b45a8a72.html</id>
-    <published>2024-10-09T06:25:00.000Z</published>
-    <updated>2024-10-09T06:25:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;描述&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#描述&quot;&gt;¶&lt;/a&gt;描述&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;package.json&lt;/code&gt; 文件必须是一个 JSON 格式的文件，而不是一个 JavaScript Object 对象。&lt;/p&gt;
-&lt;p&gt;本节内容将要介绍的大多数要点都与 &lt;a href=&quot;https://docs.npmjs.com/cli/v6/using-npm/config&quot;&gt;config&lt;/a&gt; 里介绍过的配置设置有关。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="npm" scheme="http://xiaojianzheng.cn/categories/npm/"/>
-    
-    
-    <category term="npm" scheme="http://xiaojianzheng.cn/tags/npm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在 Spring Boot 中记录完整的请求体和响应体日志</title>
-    <link href="http://xiaojianzheng.cn/archives/b9bfcd9e.html"/>
-    <id>http://xiaojianzheng.cn/archives/b9bfcd9e.html</id>
-    <published>2024-08-09T16:00:00.000Z</published>
-    <updated>2024-08-09T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;完整的请求日志对于 &lt;strong&gt;故障排查&lt;/strong&gt; 和 &lt;strong&gt;审计&lt;/strong&gt; 来说极其重要。通过查看日志，可以检查数据的准确性、参数的传递方式以及服务器返回的数据。&lt;/p&gt;
-&lt;p&gt;由于 Socket 流不能重读，所以需要一种实现来把读取和写入的数据缓存起来，并且可以多次重复读取缓存的内容。&lt;/p&gt;
-&lt;p&gt;Spring 提供 2 个可重复读取请求、响应的 Wrapper 工具类：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;ContentCachingRequestWrapper&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ContentCachingResponseWrapper&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;通过类名不难看出，这是典型的装饰者设计模式。它俩的作用就是把读取到的 &lt;strong&gt;请求体&lt;/strong&gt; 和写出的 &lt;strong&gt;响应体&lt;/strong&gt; 都缓存起来，并且提供了访问缓存数据的 API。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="SpringBoot" scheme="http://xiaojianzheng.cn/categories/SpringBoot/"/>
-    
-    
-    <category term="SpringBoot" scheme="http://xiaojianzheng.cn/tags/SpringBoot/"/>
-    
-    <category term="日志" scheme="http://xiaojianzheng.cn/tags/%E6%97%A5%E5%BF%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>倪海厦 生平介绍</title>
-    <link href="http://xiaojianzheng.cn/archives/90bd9736.html"/>
-    <id>http://xiaojianzheng.cn/archives/90bd9736.html</id>
-    <published>2024-08-02T16:00:00.000Z</published>
-    <updated>2024-08-02T16:00:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;前言&lt;/p&gt;
-&lt;p&gt;其实我最没有资格动笔写倪老师的生平。 入门最晚，从师习艺时间也不长，早年倪师众多学问也没亲炙其授。 老师与我距离也不算近，大概就在看到人和看到名字知道是学生这样的程度而已，一点都谈不上得到传授或是亲近的弟子。&lt;/p&gt;
-&lt;p&gt;我非常欣羡从早年就能随侍师侧的师兄们，可以随时上门请教，可以与老师饮茶煮酒论天谈地针砭古今，论老师所授，我一无可取，所以我很早就立志，希望能将老师生平梗概，和他内心的想法公诸于世，破除外界对他的误解和迷思，也能客观公正的正视他对中华文化的历史贡献。&lt;/p&gt;
-&lt;p&gt;倪师过往这些年，我透过老师家人及众多师兄姐的帮忙，拼凑出倪师的生平纪录，众多轶事趣闻，及瞠目结舌的事迹，惟笔力浅陋，史料涉及隐私不取，能给大家看的，精彩度不免就大打折扣了。&lt;/p&gt;
-&lt;p&gt;这一系列的文字，将会集结收录在即将出版的「第一届台北汉唐经方论坛医案实录」里，更多梳扒的史料也会陆续撰写补充，如果有能提供倪师生平事迹的师兄姐、先进及诸位前辈，也请不吝与我们连络，感谢！&lt;/p&gt;
-&lt;p&gt;某药厂董事长曾经说过，从他皈依的信仰，观想开示得到的结论，倪师是历代名医转世，生而知之，追溯根源，应该是扁鹊华陀。 倪师曾在自美返台时，赠送一尊华陀雕塑给家族唯一对中医有兴趣的晚辈。 对做为学生的我们而言，这为倪师增添神秘的色彩，也提供无限的想象。&lt;/p&gt;
-&lt;p&gt;倪师祖父当年笃信地理风水，曾向倪师父亲志凌公讲述到，当年先祖大川之墓穴内，不时有吵闹声，引起附近居民不安，村民们好奇，聚集众人一起将墓穴的龙门打开，发现里面有一只金色麻雀和一条鲤鱼相斗，不久村民们目睹金雀远飞，鲤鱼驾跃向山丘地后向不见，村民于是将此墓地命名为「金雀坟」，鲤鱼遁走的山丘名之为「鲤鱼驾」， 至今浙江瑞安林下村（今岭下村）当地，依然沿用此地名。&lt;/p&gt;
-&lt;p&gt;倪师祖父因此延请各地著名风水师多达十八位前往堪舆，众家风水师观测结果，一致认为后代必出名医，为此倪师祖父变卖了二十五亩水田，供志凌公向学，但志凌公无意习医，家中虽藏有许多医书，只能沦为装饰。 之后倪师成为名医，家族便常以此为谈资，谓家中终于出名医，倪师感念祖上，便将「金雀」及「鲤鱼」请人设计成商标图标，置于倪师网站和诊所商标使用，并重新命名祖坟为「金鹰鲤鱼穴」。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
-    
     
   </entry>
   
