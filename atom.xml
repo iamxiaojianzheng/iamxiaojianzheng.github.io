@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-04-14T07:40:00.000Z</updated>
+  <updated>2025-04-24T07:10:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>利用Playwright Stealth来避免自动化检测</title>
+    <link href="http://xiaojianzheng.cn/archives/93795e60.html"/>
+    <id>http://xiaojianzheng.cn/archives/93795e60.html</id>
+    <published>2025-04-24T07:10:00.000Z</published>
+    <updated>2025-04-24T07:10:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Python&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Python&quot;&gt;¶&lt;/a&gt;Python&lt;/h2&gt;
+&lt;p&gt;安装 Playwright Stealth 插件：&lt;/p&gt;
+&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    <category term="自动化" scheme="http://xiaojianzheng.cn/categories/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
+    
+    
+    <category term="Playwright" scheme="http://xiaojianzheng.cn/tags/Playwright/"/>
+    
+  </entry>
   
   <entry>
     <title>4款驱蚊液</title>
@@ -524,35 +551,6 @@
         
     <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
 &lt;p&gt;青山绕绿水&lt;/p&gt;
-
-&lt;/blockquote&gt;
-&lt;blockquote</summary>
-        
-      
-    
-    
-    
-    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
-    
-    
-    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>思念</title>
-    <link href="http://xiaojianzheng.cn/archives/f86c37e8.html"/>
-    <id>http://xiaojianzheng.cn/archives/f86c37e8.html</id>
-    <published>2024-10-24T03:21:00.000Z</published>
-    <updated>2024-10-24T03:21:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;秋高风急卷愁心&lt;/p&gt;
 
 &lt;/blockquote&gt;
 &lt;blockquote</summary>
