@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-04-24T07:10:00.000Z</updated>
+  <updated>2025-05-22T02:08:46.515Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,106 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>毛主席关于“人性”问题的认识</title>
+    <link href="http://xiaojianzheng.cn/archives/843c7071.html"/>
+    <id>http://xiaojianzheng.cn/archives/843c7071.html</id>
+    <published>2025-05-22T02:08:46.515Z</published>
+    <updated>2025-05-22T02:08:46.515Z</updated>
+    
+    
+    
+    
+    <category term="哲学" scheme="http://xiaojianzheng.cn/categories/%E5%93%B2%E5%AD%A6/"/>
+    
+    
+    <category term="毛主席" scheme="http://xiaojianzheng.cn/tags/%E6%AF%9B%E4%B8%BB%E5%B8%AD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MailMessageInfo 邮件对象</title>
+    <link href="http://xiaojianzheng.cn/archives/3a6c432c.html"/>
+    <id>http://xiaojianzheng.cn/archives/3a6c432c.html</id>
+    <published>2025-05-20T16:00:00.000Z</published>
+    <updated>2025-05-20T16:00:00.000Z</updated>
+    
+    
+    <summary type="html">更方便的获取邮件信息</summary>
+    
+    
+    
+    <category term="Java" scheme="http://xiaojianzheng.cn/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>LlamaIndex 与 LangChain：有什么区别？</title>
+    <link href="http://xiaojianzheng.cn/archives/abdcab23.html"/>
+    <id>http://xiaojianzheng.cn/archives/abdcab23.html</id>
+    <published>2025-05-13T07:05:00.000Z</published>
+    <updated>2025-05-13T07:05:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/llamaindex&quot;&gt;LlamaIndex&lt;/a&gt; 和 &lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/langchain&quot;&gt;LangChain&lt;/a&gt; 是两个可助力创建和实施&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/retrieval-augmented-generation&quot;&gt;检索增强生成&lt;/a&gt; (RAG) 系统的平台。LlamaIndex 专为简化搜索和检索而构建，而 LangChain 是一个多功能模块化平台，支持众多用例。&lt;/p&gt;
+&lt;p&gt;RAG 可以为&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/large-language-models&quot;&gt;大型语言模型&lt;/a&gt; (LLM) 配备特定领域的知识，以提高&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/chatbots&quot;&gt;聊天机器人&lt;/a&gt;和其他&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/artificial-intelligence&quot;&gt;人工智能&lt;/a&gt; (AI) 应用程序的准确性和实用性。虽然 LlamaIndex 和 LangChain 的用例存在重叠，但它们各自完成 RAG 系统创建任务的方式有所不同。&lt;/p&gt;
+&lt;p&gt;LlamaIndex 专注于从基于文本的数据源进行索引、&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/data-ingestion&quot;&gt;数据摄取&lt;/a&gt;和&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/information-retrieval&quot;&gt;信息检索&lt;/a&gt;，因此成为了比较简单的&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/workflow&quot;&gt;工作流&lt;/a&gt;和 AI 应用程序的理想之选。相比之下，LangChain 的模块化框架在构建多种&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/natural-language-processing&quot;&gt;自然语言处理&lt;/a&gt; (NLP) 和&lt;a href=&quot;https://www.ibm.com/cn-zh/think/topics/ai-agents&quot;&gt;agentic AI&lt;/a&gt; 应用程序方面表现出色。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AI" scheme="http://xiaojianzheng.cn/categories/AI/"/>
+    
+    
+    <category term="RAG" scheme="http://xiaojianzheng.cn/tags/RAG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>什么是 RAG（检索增强生成）？</title>
+    <link href="http://xiaojianzheng.cn/archives/6f3627e0.html"/>
+    <id>http://xiaojianzheng.cn/archives/6f3627e0.html</id>
+    <published>2025-05-13T07:00:00.000Z</published>
+    <updated>2025-05-13T07:00:00.000Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;检索增强生成（RAG）是一种通过将人工智能（AI）模型与外部知识库连接来优化其性能的架构。RAG 可帮助大型语言模型 (LLM) 以更高的质量提供更相关的响应。&lt;/p&gt;
+&lt;p&gt;生成式人工智能（gen AI）模型在大型数据集上进行训练，并参考这些信息生成输出结果。然而，训练数据集是有限的，而且仅限于人工智能开发人员可以访问的信息–公共领域作品、互联网文章、社交媒体内容和其他可公开访问的数据。&lt;/p&gt;
+&lt;p&gt;RAG 允许人工智能生成模型访问额外的外部知识库，如内部组织数据、学术期刊和专业数据集。通过将相关信息整合到生成过程中，聊天机器人和其他自然语言处理（NLP）工具无需进一步培训就能创建更准确的特定领域内容。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="AI" scheme="http://xiaojianzheng.cn/categories/AI/"/>
+    
+    
+    <category term="RAG" scheme="http://xiaojianzheng.cn/tags/RAG/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>电视专题片《反腐为了人民》</title>
+    <link href="http://xiaojianzheng.cn/archives/c028a5ac.html"/>
+    <id>http://xiaojianzheng.cn/archives/c028a5ac.html</id>
+    <published>2025-05-06T07:20:00.000Z</published>
+    <updated>2025-05-06T07:20:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://news.cnr.cn/native/gd/20250105/t20250105_527031925.shtml&quot;&gt;电视专题片《反腐为了人民》第一集《惩治蝇贪蚁腐》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>利用Playwright Stealth来避免自动化检测</title>
@@ -428,141 +528,6 @@
     
     
     <category term="Django" scheme="http://xiaojianzheng.cn/tags/Django/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python-ldap安装失败</title>
-    <link href="http://xiaojianzheng.cn/archives/5f9f9bcc.html"/>
-    <id>http://xiaojianzheng.cn/archives/5f9f9bcc.html</id>
-    <published>2024-12-06T03:37:20.000Z</published>
-    <updated>2024-12-06T03:37:20.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;安装 python-ldap 包时出现错误，如下：&lt;/p&gt;
-&lt;figure class=&quot;highlight txt&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;quot;C:&#92;Program</summary>
-        
-      
-    
-    
-    
-    <category term="Pip" scheme="http://xiaojianzheng.cn/categories/Pip/"/>
-    
-    
-    <category term="LDAP" scheme="http://xiaojianzheng.cn/tags/LDAP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小米电视观影实践</title>
-    <link href="http://xiaojianzheng.cn/archives/c92f1ba5.html"/>
-    <id>http://xiaojianzheng.cn/archives/c92f1ba5.html</id>
-    <published>2024-12-05T03:22:00.000Z</published>
-    <updated>2024-12-05T03:22:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;分享一下自己的观影实践&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#分享一下自己的观影实践&quot;&gt;¶&lt;/a&gt;分享一下自己的观影实践&lt;/h2&gt;
-&lt;p&gt;面向群体：非新手，有一定实践经验&lt;br&gt;
-电视设备：小米电视S75（开启ADB、未知软件安装）&lt;br&gt;
-观影目标：看直播（CCTV、地方台）、看动漫、电视剧、电源等杂七杂八的盗版资源 😅&lt;/p&gt;
-&lt;p&gt;我是通过adb命令直接安装apk，&lt;code&gt;adb install apk文件路径&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;注意事项：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;尝试&lt;code&gt;adb connect&lt;/code&gt;时，如果提示未授权 unauthorized 类似的关键词，先尝试&lt;code&gt;adb kill-server&lt;/code&gt;，再&lt;code&gt;adb start-server&lt;/code&gt;，然后尝试连接，这个时候电视上会出现提示授权的弹窗，确认授权即可。&lt;/li&gt;
-&lt;li&gt;使用&lt;code&gt;Kodi&lt;/code&gt;中的&lt;code&gt;IPTV&lt;/code&gt;观影时，强烈建议开启路由器的IPV6。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;不方便下载的，可以回复提出来。我能下载到的，就统一放到蓝奏云。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;以下提到的软件包都放在这里：&lt;/strong&gt; &lt;a href=&quot;https://xiaojianzheng.lanzouw.com/b00wm56sgb&quot;&gt;https://xiaojianzheng.lanzouw.com/b00wm56sgb&lt;/a&gt; 密码:jiahe&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.cnblogs.com/lwj0126/p/17591654.html&quot;&gt;adb常用命令 https://www.cnblogs.com/lwj0126/p/17591654.htm&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;使用小米手机或者安卓机的朋友，可以安装&lt;strong&gt;小米电视助手&lt;/strong&gt;进行APP安装。我没尝试过，不知道方不方便。可以参考这个视频： &lt;a href=&quot;https://b23.tv/iOYIx8a&quot;&gt;https://b23.tv/iOYIx8a&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
-    
-    
-    <category term="TV" scheme="http://xiaojianzheng.cn/tags/TV/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Navicat17重置试用脚本</title>
-    <link href="http://xiaojianzheng.cn/archives/f170d7c7.html"/>
-    <id>http://xiaojianzheng.cn/archives/f170d7c7.html</id>
-    <published>2024-12-04T07:00:00.000Z</published>
-    <updated>2024-12-04T07:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;Bat脚本&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Bat脚本&quot;&gt;¶&lt;/a&gt;Bat脚本&lt;/h2&gt;
-&lt;figure class=&quot;highlight</summary>
-        
-      
-    
-    
-    
-    <category term="软件" scheme="http://xiaojianzheng.cn/categories/%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-    <category term="Windows" scheme="http://xiaojianzheng.cn/tags/Windows/"/>
-    
-    <category term="Navicat" scheme="http://xiaojianzheng.cn/tags/Navicat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux dnf 包管理工具使用教程</title>
-    <link href="http://xiaojianzheng.cn/archives/530bf718.html"/>
-    <id>http://xiaojianzheng.cn/archives/530bf718.html</id>
-    <published>2024-11-22T06:26:00.000Z</published>
-    <updated>2024-11-22T06:26:00.000Z</updated>
-    
-    
-    <summary type="html">&lt;h2 id=&quot;简介&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#简介&quot;&gt;¶&lt;/a&gt;简介&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;dnf&lt;/code&gt; 是基于 &lt;code&gt;Red Hat Linux&lt;/code&gt; 发行版的下一代包管理工具，它代替 &lt;code&gt;yum&lt;/code&gt; 提供更好的性能、更好的依赖处理和更好的模块化架构。&lt;/p&gt;
-&lt;h2 id=&quot;基础语法&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#基础语法&quot;&gt;¶&lt;/a&gt;基础语法&lt;/h2&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dnf [options] [&lt;span class=&quot;built_in&quot;&gt;command&lt;/span&gt;] [package]&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    <category term="Linux" scheme="http://xiaojianzheng.cn/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>家</title>
-    <link href="http://xiaojianzheng.cn/archives/42ee4c87.html"/>
-    <id>http://xiaojianzheng.cn/archives/42ee4c87.html</id>
-    <published>2024-11-02T12:57:00.000Z</published>
-    <updated>2024-11-02T12:57:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote class=&quot;blockquote-center&quot;&gt;
-&lt;p&gt;青山绕绿水&lt;/p&gt;
-
-&lt;/blockquote&gt;
-&lt;blockquote</summary>
-        
-      
-    
-    
-    
-    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
-    
-    
-    <category term="诗" scheme="http://xiaojianzheng.cn/tags/%E8%AF%97/"/>
     
   </entry>
   
