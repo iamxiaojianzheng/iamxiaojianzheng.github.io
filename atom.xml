@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-05-22T02:08:46.515Z</updated>
+  <updated>2025-05-21T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -17,19 +17,52 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>毛主席关于“人性”问题的认识</title>
-    <link href="http://xiaojianzheng.cn/archives/843c7071.html"/>
-    <id>http://xiaojianzheng.cn/archives/843c7071.html</id>
-    <published>2025-05-22T02:08:46.515Z</published>
-    <updated>2025-05-22T02:08:46.515Z</updated>
+    <title>基于Gemini+提示词分析报告类文档</title>
+    <link href="http://xiaojianzheng.cn/archives/1579b0a8.html"/>
+    <id>http://xiaojianzheng.cn/archives/1579b0a8.html</id>
+    <published>2025-05-21T16:00:00.000Z</published>
+    <updated>2025-05-21T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/iamxiaojianzheng/hexo-image@main/17478812322361747881231421.png&quot;</summary>
+        
+      
     
     
     
+    <category term="AI" scheme="http://xiaojianzheng.cn/categories/AI/"/>
     
-    <category term="哲学" scheme="http://xiaojianzheng.cn/categories/%E5%93%B2%E5%AD%A6/"/>
+    
+    <category term="AI" scheme="http://xiaojianzheng.cn/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小米集团2024年度报告分析(AI)</title>
+    <link href="http://xiaojianzheng.cn/archives/342c30f1.html"/>
+    <id>http://xiaojianzheng.cn/archives/342c30f1.html</id>
+    <published>2025-05-21T16:00:00.000Z</published>
+    <updated>2025-05-21T16:00:00.000Z</updated>
     
     
-    <category term="毛主席" scheme="http://xiaojianzheng.cn/tags/%E6%AF%9B%E4%B8%BB%E5%B8%AD/"/>
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img data-src=&quot;https://fastly.jsdelivr.net/gh/iamxiaojianzheng/hexo-image@main/17478833312371747883330945.png&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="AI" scheme="http://xiaojianzheng.cn/categories/AI/"/>
+    
+    
+    <category term="AI" scheme="http://xiaojianzheng.cn/tags/AI/"/>
     
   </entry>
   
@@ -113,6 +146,23 @@
     
     <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
     
+    
+  </entry>
+  
+  <entry>
+    <title>毛主席关于“人性”问题的认识</title>
+    <link href="http://xiaojianzheng.cn/archives/843c7071.html"/>
+    <id>http://xiaojianzheng.cn/archives/843c7071.html</id>
+    <published>2025-05-05T16:00:00.000Z</published>
+    <updated>2025-05-05T16:00:00.000Z</updated>
+    
+    
+    
+    
+    <category term="哲学" scheme="http://xiaojianzheng.cn/categories/%E5%93%B2%E5%AD%A6/"/>
+    
+    
+    <category term="毛主席" scheme="http://xiaojianzheng.cn/tags/%E6%AF%9B%E4%B8%BB%E5%B8%AD/"/>
     
   </entry>
   
@@ -414,9 +464,9 @@
     <category term="Git" scheme="http://xiaojianzheng.cn/categories/Git/"/>
     
     
-    <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
-    
     <category term="AI" scheme="http://xiaojianzheng.cn/tags/AI/"/>
+    
+    <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
     
   </entry>
   
@@ -470,64 +520,6 @@
     
     
     <category term="医疗" scheme="http://xiaojianzheng.cn/tags/%E5%8C%BB%E7%96%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>ScriptObjectMirror转Java类型</title>
-    <link href="http://xiaojianzheng.cn/archives/1e87b699.html"/>
-    <id>http://xiaojianzheng.cn/archives/1e87b699.html</id>
-    <published>2025-01-24T08:00:00.000Z</published>
-    <updated>2025-01-24T08:00:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; Object &lt;span</summary>
-        
-      
-    
-    
-    
-    <category term="Java" scheme="http://xiaojianzheng.cn/categories/Java/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Django 执行python manage.py makemigrations报错的解决方案</title>
-    <link href="http://xiaojianzheng.cn/archives/7b348dcb.html"/>
-    <id>http://xiaojianzheng.cn/archives/7b348dcb.html</id>
-    <published>2024-12-06T07:33:00.000Z</published>
-    <updated>2024-12-06T07:33:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1&gt;环境&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;mysql 8.0&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Django 3.2&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1&gt;(No changes detected)及解决&lt;/h1&gt;
-&lt;h2 id=&quot;问题情景&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="Python" scheme="http://xiaojianzheng.cn/categories/Python/"/>
-    
-    
-    <category term="Django" scheme="http://xiaojianzheng.cn/tags/Django/"/>
     
   </entry>
   
