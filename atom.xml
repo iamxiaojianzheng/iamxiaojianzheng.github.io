@@ -6,7 +6,7 @@
   <link href="http://xiaojianzheng.cn/atom.xml" rel="self"/>
   
   <link href="http://xiaojianzheng.cn/"/>
-  <updated>2025-05-21T16:00:00.000Z</updated>
+  <updated>2025-05-27T16:00:00.000Z</updated>
   <id>http://xiaojianzheng.cn/</id>
   
   <author>
@@ -15,6 +15,54 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>旅行者1号回望地球</title>
+    <link href="http://xiaojianzheng.cn/archives/3917573c.html"/>
+    <id>http://xiaojianzheng.cn/archives/3917573c.html</id>
+    <published>2025-05-27T16:00:00.000Z</published>
+    <updated>2025-05-27T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;旅行者1号在距离地球60亿公里处拍摄的地球&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://www.nasachina.cn/wp-content/uploads/2020/02/3-1581740691.jpeg&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="杂文" scheme="http://xiaojianzheng.cn/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL5.7修改登录密码的几种方式</title>
+    <link href="http://xiaojianzheng.cn/archives/a32cf2fd.html"/>
+    <id>http://xiaojianzheng.cn/archives/a32cf2fd.html</id>
+    <published>2025-05-22T16:00:00.000Z</published>
+    <updated>2025-05-22T16:00:00.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;1-更新mysql-user表&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#1-更新mysql-user表&quot;&gt;¶&lt;/a&gt;1. 更新mysql.user表&lt;/h3&gt;
+&lt;figure class=&quot;highlight</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="http://xiaojianzheng.cn/categories/MySQL/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>基于Gemini+提示词分析报告类文档</title>
@@ -467,59 +515,6 @@
     <category term="AI" scheme="http://xiaojianzheng.cn/tags/AI/"/>
     
     <category term="Git" scheme="http://xiaojianzheng.cn/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GitHub Actions上关于“Cannot Find Matching Keyid”或“Corepack/PNPM Not Found”的错误</title>
-    <link href="http://xiaojianzheng.cn/archives/42df9516.html"/>
-    <id>http://xiaojianzheng.cn/archives/42df9516.html</id>
-    <published>2025-03-04T02:10:00.000Z</published>
-    <updated>2025-03-04T02:10:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;如何使用 GitHub 操作调试并解决此 corepack 问题。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;如果你的构建突然出现 &lt;code&gt;cannot find matching keyid:</summary>
-        
-      
-    
-    
-    
-    <category term="Github" scheme="http://xiaojianzheng.cn/categories/Github/"/>
-    
-    
-    <category term="Github Actions" scheme="http://xiaojianzheng.cn/tags/Github-Actions/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何正确用药?</title>
-    <link href="http://xiaojianzheng.cn/archives/81bed3ae.html"/>
-    <id>http://xiaojianzheng.cn/archives/81bed3ae.html</id>
-    <published>2025-03-03T04:30:00.000Z</published>
-    <updated>2025-03-03T04:30:00.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;怎样服药才正确？一个简单又复杂的问题&quot;&gt;&lt;a class=&quot;header-anchor&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="医疗" scheme="http://xiaojianzheng.cn/categories/%E5%8C%BB%E7%96%97/"/>
-    
-    
-    <category term="医疗" scheme="http://xiaojianzheng.cn/tags/%E5%8C%BB%E7%96%97/"/>
     
   </entry>
   
