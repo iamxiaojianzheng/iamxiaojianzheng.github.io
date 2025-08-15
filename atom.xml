@@ -79,6 +79,23 @@
   </entry>
   
   <entry>
+    <title>如何在 Rocky Linux 9 或 8 上安装 Google Chrome 浏览器</title>
+    <link href="http://xiaojianzheng.cn/archives/9bcafae2.html"/>
+    <id>http://xiaojianzheng.cn/archives/9bcafae2.html</id>
+    <published>2025-05-28T16:00:00.000Z</published>
+    <updated>2025-05-28T16:00:00.000Z</updated>
+    
+    
+    
+    
+    <category term="安装" scheme="http://xiaojianzheng.cn/categories/%E5%AE%89%E8%A3%85/"/>
+    
+    
+    <category term="Rocky" scheme="http://xiaojianzheng.cn/tags/Rocky/"/>
+    
+  </entry>
+  
+  <entry>
     <title>在 Rocky 9.4 上全系安装 pyenv/python</title>
     <link href="http://xiaojianzheng.cn/archives/d4594df2.html"/>
     <id>http://xiaojianzheng.cn/archives/d4594df2.html</id>
@@ -94,23 +111,6 @@
     <category term="Rocky" scheme="http://xiaojianzheng.cn/tags/Rocky/"/>
     
     <category term="python" scheme="http://xiaojianzheng.cn/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何在 Rocky Linux 9 或 8 上安装 Google Chrome 浏览器</title>
-    <link href="http://xiaojianzheng.cn/archives/9bcafae2.html"/>
-    <id>http://xiaojianzheng.cn/archives/9bcafae2.html</id>
-    <published>2025-05-28T16:00:00.000Z</published>
-    <updated>2025-05-28T16:00:00.000Z</updated>
-    
-    
-    
-    
-    <category term="安装" scheme="http://xiaojianzheng.cn/categories/%E5%AE%89%E8%A3%85/"/>
-    
-    
-    <category term="Rocky" scheme="http://xiaojianzheng.cn/tags/Rocky/"/>
     
   </entry>
   
